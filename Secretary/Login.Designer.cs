@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.panelDireita = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnFechar = new System.Windows.Forms.Button();
+            this.btnMinimizar = new System.Windows.Forms.Button();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.lblFazerLogin = new System.Windows.Forms.Label();
@@ -42,8 +44,6 @@
             this.btnEntrar = new System.Windows.Forms.Button();
             this.linkLabelEsqueciSenha = new System.Windows.Forms.LinkLabel();
             this.cboxMostrarSenha = new System.Windows.Forms.CheckBox();
-            this.btnFechar = new System.Windows.Forms.Button();
-            this.btnMinimizar = new System.Windows.Forms.Button();
             this.panelEsquerda = new System.Windows.Forms.Panel();
             this.panelEsquerda.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +59,40 @@
             this.panelDireita.Name = "panelDireita";
             this.panelDireita.Size = new System.Drawing.Size(631, 467);
             this.panelDireita.TabIndex = 0;
+            // 
+            // btnFechar
+            // 
+            this.btnFechar.AccessibleDescription = "";
+            this.btnFechar.AccessibleName = "";
+            this.btnFechar.FlatAppearance.BorderSize = 0;
+            this.btnFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFechar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnFechar.Location = new System.Drawing.Point(393, 3);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(34, 30);
+            this.btnFechar.TabIndex = 21;
+            this.btnFechar.Text = "X";
+            this.toolTip.SetToolTip(this.btnFechar, "Fechar");
+            this.btnFechar.UseVisualStyleBackColor = true;
+            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+            // 
+            // btnMinimizar
+            // 
+            this.btnMinimizar.AccessibleDescription = "";
+            this.btnMinimizar.AccessibleName = "";
+            this.btnMinimizar.FlatAppearance.BorderSize = 0;
+            this.btnMinimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinimizar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMinimizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnMinimizar.Location = new System.Drawing.Point(357, 3);
+            this.btnMinimizar.Name = "btnMinimizar";
+            this.btnMinimizar.Size = new System.Drawing.Size(32, 30);
+            this.btnMinimizar.TabIndex = 20;
+            this.btnMinimizar.Text = "—";
+            this.toolTip.SetToolTip(this.btnMinimizar, "Minimizar");
+            this.btnMinimizar.UseVisualStyleBackColor = true;
+            this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
             // 
             // txtUsuario
             // 
@@ -180,40 +214,6 @@
             this.cboxMostrarSenha.Text = "Mostrar Senha";
             this.cboxMostrarSenha.UseVisualStyleBackColor = true;
             this.cboxMostrarSenha.CheckedChanged += new System.EventHandler(this.cboxMostrarSenha_CheckedChanged);
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AccessibleDescription = "";
-            this.btnFechar.AccessibleName = "";
-            this.btnFechar.FlatAppearance.BorderSize = 0;
-            this.btnFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFechar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnFechar.Location = new System.Drawing.Point(393, 3);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(34, 30);
-            this.btnFechar.TabIndex = 21;
-            this.btnFechar.Text = "X";
-            this.toolTip.SetToolTip(this.btnFechar, "Fechar");
-            this.btnFechar.UseVisualStyleBackColor = true;
-            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
-            // 
-            // btnMinimizar
-            // 
-            this.btnMinimizar.AccessibleDescription = "";
-            this.btnMinimizar.AccessibleName = "";
-            this.btnMinimizar.FlatAppearance.BorderSize = 0;
-            this.btnMinimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimizar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMinimizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnMinimizar.Location = new System.Drawing.Point(357, 3);
-            this.btnMinimizar.Name = "btnMinimizar";
-            this.btnMinimizar.Size = new System.Drawing.Size(32, 30);
-            this.btnMinimizar.TabIndex = 20;
-            this.btnMinimizar.Text = "—";
-            this.toolTip.SetToolTip(this.btnMinimizar, "Minimizar");
-            this.btnMinimizar.UseVisualStyleBackColor = true;
-            this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
             // 
             // panelEsquerda
             // 

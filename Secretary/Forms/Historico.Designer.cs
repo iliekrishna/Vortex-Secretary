@@ -50,7 +50,7 @@ namespace Secretary.Forms
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(40, 71);
+            this.label1.Location = new System.Drawing.Point(43, 71);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 14);
@@ -61,7 +61,7 @@ namespace Secretary.Forms
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(527, 71);
+            this.label2.Location = new System.Drawing.Point(463, 71);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 14);
@@ -72,7 +72,7 @@ namespace Secretary.Forms
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(309, 71);
+            this.label3.Location = new System.Drawing.Point(277, 71);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 14);
@@ -82,8 +82,8 @@ namespace Secretary.Forms
             // txtFiltrarNomeRA
             // 
             this.txtFiltrarNomeRA.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFiltrarNomeRA.Location = new System.Drawing.Point(619, 66);
-            this.txtFiltrarNomeRA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFiltrarNomeRA.Location = new System.Drawing.Point(555, 66);
+            this.txtFiltrarNomeRA.Margin = new System.Windows.Forms.Padding(4);
             this.txtFiltrarNomeRA.Name = "txtFiltrarNomeRA";
             this.txtFiltrarNomeRA.Size = new System.Drawing.Size(227, 22);
             this.txtFiltrarNomeRA.TabIndex = 17;
@@ -94,10 +94,10 @@ namespace Secretary.Forms
             this.dateTimePickerFiltro.CustomFormat = "";
             this.dateTimePickerFiltro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePickerFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerFiltro.Location = new System.Drawing.Point(373, 66);
-            this.dateTimePickerFiltro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dateTimePickerFiltro.Location = new System.Drawing.Point(341, 66);
+            this.dateTimePickerFiltro.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePickerFiltro.Name = "dateTimePickerFiltro";
-            this.dateTimePickerFiltro.Size = new System.Drawing.Size(135, 22);
+            this.dateTimePickerFiltro.Size = new System.Drawing.Size(113, 22);
             this.dateTimePickerFiltro.TabIndex = 18;
             this.dateTimePickerFiltro.Value = new System.DateTime(2025, 5, 23, 0, 0, 0, 0);
             // 
@@ -133,8 +133,6 @@ namespace Secretary.Forms
             // 
             // dgvHistorico
             // 
-            this.dgvHistorico.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvHistorico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHistorico.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dgvHistorico.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -149,9 +147,9 @@ namespace Secretary.Forms
             this.acoes});
             this.dgvHistorico.GridColor = System.Drawing.Color.White;
             this.dgvHistorico.Location = new System.Drawing.Point(43, 160);
-            this.dgvHistorico.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvHistorico.Margin = new System.Windows.Forms.Padding(4);
             this.dgvHistorico.Name = "dgvHistorico";
-            this.dgvHistorico.Size = new System.Drawing.Size(1003, 434);
+            this.dgvHistorico.Size = new System.Drawing.Size(813, 454);
             this.dgvHistorico.TabIndex = 19;
             // 
             // cboxStatusFiltrar
@@ -165,17 +163,17 @@ namespace Secretary.Forms
             "Em andamento",
             "Concluído",
             "Cancelado"});
-            this.cboxStatusFiltrar.Location = new System.Drawing.Point(92, 69);
-            this.cboxStatusFiltrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboxStatusFiltrar.Location = new System.Drawing.Point(95, 69);
+            this.cboxStatusFiltrar.Margin = new System.Windows.Forms.Padding(4);
             this.cboxStatusFiltrar.Name = "cboxStatusFiltrar";
-            this.cboxStatusFiltrar.Size = new System.Drawing.Size(196, 22);
+            this.cboxStatusFiltrar.Size = new System.Drawing.Size(172, 22);
             this.cboxStatusFiltrar.TabIndex = 20;
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(853, 65);
+            this.btnFiltrar.Location = new System.Drawing.Point(789, 65);
             this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(75, 23);
+            this.btnFiltrar.Size = new System.Drawing.Size(69, 23);
             this.btnFiltrar.TabIndex = 21;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
@@ -194,7 +192,7 @@ namespace Secretary.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Historico";
             this.Text = "Historico";
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorico)).EndInit();

@@ -50,9 +50,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panelPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -61,11 +59,9 @@
             // 
             // panelPrincipal
             // 
-            this.panelPrincipal.Controls.Add(this.panel2);
             this.panelPrincipal.Controls.Add(this.panel1);
             this.panelPrincipal.Controls.Add(this.panel4);
             this.panelPrincipal.Controls.Add(this.panel3);
-            this.panelPrincipal.Controls.Add(this.label14);
             this.panelPrincipal.Controls.Add(this.label13);
             this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPrincipal.Location = new System.Drawing.Point(0, 0);
@@ -299,16 +295,6 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "Status";
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(18, 175);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(163, 25);
-            this.label14.TabIndex = 7;
-            this.label14.Text = "Requerimentos:";
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -318,13 +304,6 @@
             this.label13.Size = new System.Drawing.Size(328, 25);
             this.label13.TabIndex = 6;
             this.label13.Text = "Sem requerimentos no momento.";
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(291, 100);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 100);
-            this.panel2.TabIndex = 10;
             // 
             // Requerimentos
             // 
@@ -350,7 +329,6 @@
 
         private System.Windows.Forms.Panel panelPrincipal;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -372,6 +350,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Panel panel2;
     }
 }
