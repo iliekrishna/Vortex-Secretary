@@ -298,10 +298,10 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(18, 60);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(328, 25);
+            this.label13.Size = new System.Drawing.Size(368, 25);
             this.label13.TabIndex = 6;
             this.label13.Text = "Sem requerimentos no momento.";
             // 

@@ -31,6 +31,11 @@ namespace Secretary
         {
             InitializeComponent();
 
+            string senha = "Senha123!";
+            string senhaHash = BCrypt.Net.BCrypt.HashPassword(senha);
+            Console.WriteLine(senhaHash);
+
+
             // Define o texto padrão e a cor cinza no campo de usuário
             txtUsuario.Text = "Inserir usuário";
             txtUsuario.ForeColor = Color.Gray;
@@ -108,13 +113,71 @@ namespace Secretary
         // Evento de clique no botão de entrar
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            string nome = txtUsuario.Text;
-
-            // Cria e exibe a tela inicial, passando o nome do usuário, e oculta a tela de login
+            string nome = txtUsuario.Text.Trim();
+            string senhaDigitada = txtSenha.Text;
             Inicial telaInicial = new Inicial(nome);
             telaInicial.Show();
             this.Hide();
+
+            //if (nome == "Inserir usuário" || string.IsNullOrEmpty(nome))
+            //{
+            //    MessageBox.Show("Por favor, insira o nome de usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            //if (string.IsNullOrEmpty(senhaDigitada) || senhaDigitada == "Senha")
+            //{
+            //    MessageBox.Show("Por favor, insira a senha.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            //// String de conexão 
+            //string connectionString = "server=localhost;port=3306;user=root;password=Patinhoborrachudo123;database=fatec_solicitacoes";
+
+            //try
+            //{
+            //    using (MySqlConnection conn = new MySqlConnection(connectionString))
+            //    {
+            //        conn.Open();
+
+            //        // Query para pegar o hash da senha do usuário informado
+            //        string sql = "SELECT senha FROM usuarios WHERE nome = @nome LIMIT 1";
+            //        using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            //        {
+            //            cmd.Parameters.AddWithValue("@nome", nome);
+
+            //            var result = cmd.ExecuteScalar();
+
+            //            if (result == null)
+            //            {
+            //                MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                return;
+            //            }
+
+            //            string senhaHashDoBanco = result.ToString();
+
+            //            // Verifica a senha digitada com o hash armazenado
+            //            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashDoBanco);
+
+            //            if (senhaValida)
+            //            {
+            //                Inicial telaInicial = new Inicial(nome);
+            //                telaInicial.Show();
+            //                this.Hide();
+            //            }
+            //            else
+            //            {
+            //                MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
+
 
         // Evento de clique na checkbox para mostrar ou ocultar senha
         private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
