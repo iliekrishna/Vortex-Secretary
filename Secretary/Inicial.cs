@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using Secretary.Forms;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace Secretary
@@ -24,13 +26,16 @@ namespace Secretary
         // Construtor que recebe o nome do usuário para exibir na tela
         public Inicial(string nomeRecebido)
         {
-            InitializeComponent();
+            InitializeComponent();    
+            string loginUsuario = nomeRecebido;
+            lblUsuario.Text = nomeRecebido;
 
             // Formatar nome com capitalização correta
             var textoInfo = CultureInfo.CurrentCulture.TextInfo;
             string nomeFormatado = textoInfo.ToTitleCase(nomeRecebido.ToLower());
 
             // Exibir nome formatado
+            btnPerfil.Text = "  " + nomeFormatado;
             lblNomeUsuario.Text = nomeFormatado;
 
             // Configurar cultura pt-BR para formatação de data
@@ -401,6 +406,23 @@ namespace Secretary
         {
             pboxCanceladas.Size = originalSize;
             pboxCanceladas.Location = originalLocation;
+        }
+
+        private void trocarLoginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnPerfil_Click_1(object sender, EventArgs e)
+        {
+            //Ao clicar no botão com a foto de perfil, abre o menu de opções
+            menuOpcoes.Show(Cursor.Position);
+            menuOpcoes.Show(btnPerfil, new Point(0, btnPerfil.Height));
+        }
+        private void trocarUsuárioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Envia os dados do usuário para o FormPerfilUsuario.cs
+            OpenChildForm(new Forms.FormPerfilUsuario(lblNomeUsuario.Text, lblUsuario.Text), sender);
         }
     }
 }

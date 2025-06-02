@@ -30,24 +30,38 @@ namespace Secretary.Forms
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.lblMensagem = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(356, 191);
+            this.label1.Location = new System.Drawing.Point(16, 29);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(228, 55);
+            this.label1.Size = new System.Drawing.Size(0, 55);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Recentes";
+            // 
+            // lblMensagem
+            // 
+            this.lblMensagem.AutoSize = true;
+            this.lblMensagem.Font = new System.Drawing.Font("Verdana", 15.75F);
+            this.lblMensagem.Location = new System.Drawing.Point(21, 29);
+            this.lblMensagem.Name = "lblMensagem";
+            this.lblMensagem.Size = new System.Drawing.Size(391, 25);
+            this.lblMensagem.TabIndex = 3;
+            this.lblMensagem.Text = "Sem novas atividades no momento!";
             // 
             // Recentes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 630);
+            this.ClientSize = new System.Drawing.Size(1096, 666);
+            this.Controls.Add(this.lblMensagem);
             this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "Recentes";
             this.Text = "Recentes";
             this.ResumeLayout(false);
@@ -58,5 +72,6 @@ namespace Secretary.Forms
         #endregion
 
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblMensagem;
     }
 }

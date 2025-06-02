@@ -43,6 +43,8 @@ namespace Secretary.Forms
             this.dgvHistorico = new System.Windows.Forms.DataGridView();
             this.cboxStatusFiltrar = new System.Windows.Forms.ComboBox();
             this.btnFiltrar = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorico)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +63,7 @@ namespace Secretary.Forms
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(463, 71);
+            this.label2.Location = new System.Drawing.Point(444, 71);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 14);
@@ -72,7 +74,7 @@ namespace Secretary.Forms
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(277, 71);
+            this.label3.Location = new System.Drawing.Point(258, 71);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 14);
@@ -82,7 +84,7 @@ namespace Secretary.Forms
             // txtFiltrarNomeRA
             // 
             this.txtFiltrarNomeRA.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFiltrarNomeRA.Location = new System.Drawing.Point(555, 66);
+            this.txtFiltrarNomeRA.Location = new System.Drawing.Point(536, 66);
             this.txtFiltrarNomeRA.Margin = new System.Windows.Forms.Padding(4);
             this.txtFiltrarNomeRA.Name = "txtFiltrarNomeRA";
             this.txtFiltrarNomeRA.Size = new System.Drawing.Size(227, 22);
@@ -93,11 +95,11 @@ namespace Secretary.Forms
             this.dateTimePickerFiltro.Cursor = System.Windows.Forms.Cursors.No;
             this.dateTimePickerFiltro.CustomFormat = "";
             this.dateTimePickerFiltro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePickerFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerFiltro.Location = new System.Drawing.Point(341, 66);
+            this.dateTimePickerFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerFiltro.Location = new System.Drawing.Point(322, 66);
             this.dateTimePickerFiltro.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePickerFiltro.Name = "dateTimePickerFiltro";
-            this.dateTimePickerFiltro.Size = new System.Drawing.Size(113, 22);
+            this.dateTimePickerFiltro.Size = new System.Drawing.Size(114, 22);
             this.dateTimePickerFiltro.TabIndex = 18;
             this.dateTimePickerFiltro.Value = new System.DateTime(2025, 5, 23, 0, 0, 0, 0);
             // 
@@ -166,23 +168,51 @@ namespace Secretary.Forms
             this.cboxStatusFiltrar.Location = new System.Drawing.Point(95, 69);
             this.cboxStatusFiltrar.Margin = new System.Windows.Forms.Padding(4);
             this.cboxStatusFiltrar.Name = "cboxStatusFiltrar";
-            this.cboxStatusFiltrar.Size = new System.Drawing.Size(172, 22);
+            this.cboxStatusFiltrar.Size = new System.Drawing.Size(157, 22);
             this.cboxStatusFiltrar.TabIndex = 20;
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(789, 65);
+            this.btnFiltrar.Location = new System.Drawing.Point(770, 65);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(69, 23);
             this.btnFiltrar.TabIndex = 21;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Mais antigos",
+            "Mais recentes"});
+            this.comboBox1.Location = new System.Drawing.Point(684, 130);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(172, 22);
+            this.comboBox1.TabIndex = 23;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(608, 134);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 14);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Filtrar por:";
+            // 
             // Historico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1323, 607);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnFiltrar);
             this.Controls.Add(this.cboxStatusFiltrar);
             this.Controls.Add(this.dgvHistorico);
@@ -216,5 +246,7 @@ namespace Secretary.Forms
         private System.Windows.Forms.DataGridView dgvHistorico;
         private System.Windows.Forms.ComboBox cboxStatusFiltrar;
         private System.Windows.Forms.Button btnFiltrar;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label4;
     }
 }
