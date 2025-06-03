@@ -24,15 +24,15 @@ namespace Secretary
         private Form activeForm;
 
         // Construtor que recebe o nome do usuário para exibir na tela
-        public Inicial(string nomeRecebido)
+        public Inicial(string loginRecebido)
         {
             InitializeComponent();    
-            string loginUsuario = nomeRecebido;
-            lblUsuario.Text = nomeRecebido;
+            string loginUsuario = loginRecebido;
+            lblUsuario.Text = loginRecebido;
 
             // Formatar nome com capitalização correta
             var textoInfo = CultureInfo.CurrentCulture.TextInfo;
-            string nomeFormatado = textoInfo.ToTitleCase(nomeRecebido.ToLower());
+            string nomeFormatado = textoInfo.ToTitleCase(loginRecebido.ToLower());
 
             // Exibir nome formatado
             btnPerfil.Text = "  " + nomeFormatado;
@@ -137,9 +137,47 @@ namespace Secretary
             int hora = DateTime.Now.Hour;
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
             lblSaudacao.Text = $"{saudacao}, {lblNomeUsuario.Text}!";
+            
+            // String de conexão com o banco de dados MySQL
+            string conexaoString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
 
-            // Fecha o formulário ativo, se existir
-            if (activeForm != null)
+            // Query para selecionar todos os tickets, ordenando do mais recente para o mais antigo
+            string email = lblNomeUsuario.Text;
+            string query = "SELECT nome FROM T_USUARIOS WHERE email = @email ;";
+
+            // Usando bloco using para garantir fechamento da conexão mesmo em caso de erro
+            using (MySqlConnection conexao = new MySqlConnection(conexaoString))
+            {
+                try
+                {
+                    // Abre conexão com banco de dados
+                    conexao.Open();
+
+                    // Executa comando SQL para leitura dos dados
+                    MySqlCommand cmd = new MySqlCommand(query, conexao);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    // Itera por cada registro retornado da consulta
+                    while (reader.Read())
+                    {
+                        Label lblSaudacao = new Label
+                        {
+                            Text = "Nome: " + reader["nome"].ToString(),
+                            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                            Location = new Point(10, 10),
+                            AutoSize = true
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao carregar tickets: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+
+                        // Fecha o formulário ativo, se existir
+                        if (activeForm != null)
                 activeForm.Close();
 
             // Reseta os estilos dos botões do menu
@@ -197,7 +235,7 @@ namespace Secretary
         private void CarregarAtendimentos()
         {
             // String de conexão com o banco de dados MySQL
-            string conexaoString = "server=localhost;user=root;password=Patinhoborrachudo123;database=fatec_solicitacoes";
+            string conexaoString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
             
             // Query para selecionar todos os tickets, ordenando do mais recente para o mais antigo
             string query = "SELECT * FROM tickets ORDER BY data_envio DESC";

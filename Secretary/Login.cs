@@ -115,69 +115,55 @@ namespace Secretary
         {
             string nome = txtUsuario.Text.Trim();
             string senhaDigitada = txtSenha.Text;
-            Inicial telaInicial = new Inicial(nome);
-            telaInicial.Show();
-            this.Hide();
 
-            //if (nome == "Inserir usuário" || string.IsNullOrEmpty(nome))
-            //{
-            //    MessageBox.Show("Por favor, insira o nome de usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+            if (nome == "Inserir usuário" || string.IsNullOrEmpty(nome))
+            {
+                MessageBox.Show("Por favor, insira o nome de usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //if (string.IsNullOrEmpty(senhaDigitada) || senhaDigitada == "Senha")
-            //{
-            //    MessageBox.Show("Por favor, insira a senha.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+            if (string.IsNullOrEmpty(senhaDigitada) || senhaDigitada == "Senha")
+            {
+                MessageBox.Show("Por favor, insira a senha.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //// String de conexão 
-            //string connectionString = "server=localhost;port=3306;user=root;password=Patinhoborrachudo123;database=fatec_solicitacoes";
+            // String de conexão (sem senha definida)
+            string connectionString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
 
-            //try
-            //{
-            //    using (MySqlConnection conn = new MySqlConnection(connectionString))
-            //    {
-            //        conn.Open();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
 
-            //        // Query para pegar o hash da senha do usuário informado
-            //        string sql = "SELECT senha FROM usuarios WHERE nome = @nome LIMIT 1";
-            //        using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-            //        {
-            //            cmd.Parameters.AddWithValue("@nome", nome);
+                    // Query segura com parâmetros
+                    string sql = "SELECT COUNT(*) FROM t_usuarios WHERE email = @nome AND senha = @senhaDigitada;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@nome", nome);
+                        cmd.Parameters.AddWithValue("@senhaDigitada", senhaDigitada);
 
-            //            var result = cmd.ExecuteScalar();
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
 
-            //            if (result == null)
-            //            {
-            //                MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //                return;
-            //            }
-
-            //            string senhaHashDoBanco = result.ToString();
-
-            //            // Verifica a senha digitada com o hash armazenado
-            //            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashDoBanco);
-
-            //            if (senhaValida)
-            //            {
-            //                Inicial telaInicial = new Inicial(nome);
-            //                telaInicial.Show();
-            //                this.Hide();
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                        if (count > 0)
+                        {
+                            Inicial telaInicial = new Inicial(nome);
+                            telaInicial.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Usuário ou senha inválidos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
 
         // Evento de clique na checkbox para mostrar ou ocultar senha
         private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)

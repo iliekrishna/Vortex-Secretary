@@ -16,5 +16,10 @@ namespace Secretary.Forms
         {
             InitializeComponent();
         }
+
+        private void Requerimentos_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

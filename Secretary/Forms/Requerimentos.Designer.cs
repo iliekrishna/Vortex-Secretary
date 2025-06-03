@@ -313,6 +313,7 @@
             this.Controls.Add(this.panelPrincipal);
             this.Name = "Requerimentos";
             this.Text = "Requerimentos";
+            this.Load += new System.EventHandler(this.Requerimentos_Load);
             this.panelPrincipal.ResumeLayout(false);
             this.panelPrincipal.PerformLayout();
             this.panel1.ResumeLayout(false);
