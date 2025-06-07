@@ -12,10 +12,18 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using BCrypt.Net;
 
+
 namespace Secretary
 {
+    
     public partial class FormLogin : Form
     {
+        string server = "162.241.40.214";
+        string port = "3306";
+        string user = "miltonb_userVortex";
+        string password = "gWLQqb~dRO0M";
+        string database = "miltonb_fatec_solicitacoes";
+
         // Importa função nativa para criar uma região com cantos arredondados
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
@@ -31,9 +39,12 @@ namespace Secretary
         {
             InitializeComponent();
 
-            string senha = "Senha123!";
+            string senha = "senhaTeste";
             string senhaHash = BCrypt.Net.BCrypt.HashPassword(senha);
+            Console.WriteLine("Senha: senhaTeste");
             Console.WriteLine(senhaHash);
+
+
 
 
             // Define o texto padrão e a cor cinza no campo de usuário
@@ -44,10 +55,7 @@ namespace Secretary
             txtSenha.Text = "Senha";
             txtSenha.ForeColor = Color.Gray;
 
-            // Teste: Gera e imprime no console a versão hasheada da senha "Senha123!"
-            string senhaEmTexto = "Senha123!";
-            string senhaHasheada = BCrypt.Net.BCrypt.HashPassword(senhaEmTexto);
-            Console.WriteLine("senha: " + senhaHasheada);
+            
 
             // Remove bordas do formulário e aplica cantos arredondados
             this.FormBorderStyle = FormBorderStyle.None;
@@ -110,6 +118,8 @@ namespace Secretary
             this.WindowState = FormWindowState.Minimized; // Minimiza o formulário
         }
 
+
+
         // Evento de clique no botão de entrar
         private void btnEntrar_Click(object sender, EventArgs e)
         {
@@ -128,8 +138,9 @@ namespace Secretary
                 return;
             }
 
-            // String de conexão (sem senha definida)
-            string connectionString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
+           
+
+            string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
 
             try
             {
@@ -137,24 +148,35 @@ namespace Secretary
                 {
                     conn.Open();
 
-                    // Query segura com parâmetros
-                    string sql = "SELECT COUNT(*) FROM t_usuarios WHERE email = @nome AND senha = @senhaDigitada;";
+                    // Busca apenas o hash da senha do usuário
+                    string sql = "SELECT senha FROM t_usuarios WHERE email = @nome LIMIT 1;";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@nome", nome);
-                        cmd.Parameters.AddWithValue("@senhaDigitada", senhaDigitada);
 
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        object result = cmd.ExecuteScalar();
 
-                        if (count > 0)
+                        if (result != null)
                         {
-                            Inicial telaInicial = new Inicial(nome);
-                            telaInicial.Show();
-                            this.Hide();
+                            string senhaHashBanco = result.ToString();
+
+                            // Verifica se a senha digitada bate com o hash do banco
+                            bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
+
+                            if (senhaCorreta)
+                            {
+                                Inicial telaInicial = new Inicial(nome);
+                                telaInicial.Show();
+                                this.Hide();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Usuário ou senha inválidos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -164,6 +186,7 @@ namespace Secretary
                 MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // Evento de clique na checkbox para mostrar ou ocultar senha
         private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
