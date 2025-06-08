@@ -57,6 +57,7 @@ namespace Secretary
             this.trocarUsuárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trocarLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNomeUsuario = new System.Windows.Forms.Label();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.panelPrincipal = new System.Windows.Forms.Panel();
             this.panelDivisor2 = new System.Windows.Forms.Panel();
             this.lblCanceladas = new System.Windows.Forms.Label();
@@ -68,7 +69,6 @@ namespace Secretary
             this.lblDataAtual = new System.Windows.Forms.Label();
             this.lblSaudacao = new System.Windows.Forms.Label();
             this.timerHorario = new System.Windows.Forms.Timer(this.components);
-            this.lblUsuario = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panelMenuSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxLogoCps)).BeginInit();
@@ -138,6 +138,7 @@ namespace Secretary
             this.btnSair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click_1);
             // 
             // btnGerenciamento
             // 
@@ -479,6 +480,16 @@ namespace Secretary
             this.lblNomeUsuario.TabIndex = 0;
             this.lblNomeUsuario.Text = "lbl";
             // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblUsuario.Location = new System.Drawing.Point(940, 41);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(41, 13);
+            this.lblUsuario.TabIndex = 25;
+            this.lblUsuario.Text = "label1";
+            // 
             // panelPrincipal
             // 
             this.panelPrincipal.BackColor = System.Drawing.Color.Gainsboro;
@@ -608,16 +619,6 @@ namespace Secretary
             // timerHorario
             // 
             this.timerHorario.Enabled = true;
-            // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUsuario.Location = new System.Drawing.Point(940, 41);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(41, 13);
-            this.lblUsuario.TabIndex = 25;
-            this.lblUsuario.Text = "label1";
             // 
             // Inicial
             // 

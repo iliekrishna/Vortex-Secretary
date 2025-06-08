@@ -51,7 +51,7 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label14 = new System.Windows.Forms.Label();
+            this.lblAtendimentos = new System.Windows.Forms.Label();
             this.tabControlAtendimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).BeginInit();
@@ -245,22 +245,24 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn1.HeaderText = "Nome";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
-            // label14
+            // lblAtendimentos
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(23, 26);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(143, 25);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Atendimentos";
+            this.lblAtendimentos.AutoSize = true;
+            this.lblAtendimentos.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblAtendimentos.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAtendimentos.Location = new System.Drawing.Point(0, 0);
+            this.lblAtendimentos.Name = "lblAtendimentos";
+            this.lblAtendimentos.Padding = new System.Windows.Forms.Padding(20, 20, 0, 0);
+            this.lblAtendimentos.Size = new System.Drawing.Size(177, 45);
+            this.lblAtendimentos.TabIndex = 8;
+            this.lblAtendimentos.Text = "Atendimentos";
             // 
             // Atendimentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(857, 676);
-            this.Controls.Add(this.label14);
+            this.Controls.Add(this.lblAtendimentos);
             this.Controls.Add(this.tabControlAtendimentos);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -300,7 +302,7 @@ namespace Secretary.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblAtendimentos;
         private System.Windows.Forms.Button btnSimular;
     }
 }

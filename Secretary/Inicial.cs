@@ -32,11 +32,9 @@ namespace Secretary
 
             // Formatar nome com capitalização correta
             var textoInfo = CultureInfo.CurrentCulture.TextInfo;
-            string nomeFormatado = textoInfo.ToTitleCase(loginRecebido.ToLower());
 
             // Exibir nome formatado
-            btnPerfil.Text = "  " + nomeFormatado;
-            lblNomeUsuario.Text = nomeFormatado;
+            btnPerfil.Text = "  " + loginUsuario;
 
             // Configurar cultura pt-BR para formatação de data
             CultureInfo cultura = new CultureInfo("pt-BR");
@@ -50,7 +48,7 @@ namespace Secretary
             // Definir saudação com base na hora
             int hora = DateTime.Now.Hour;
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
-            lblSaudacao.Text = $"{saudacao}, {nomeFormatado}!";
+            lblSaudacao.Text = $"{saudacao}, {loginUsuario}!";
         }
         private void Inicial_Load(object sender, EventArgs e)
         {
@@ -136,13 +134,13 @@ namespace Secretary
             // Definir saudação com base na hora
             int hora = DateTime.Now.Hour;
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
-            lblSaudacao.Text = $"{saudacao}, {lblNomeUsuario.Text}!";
+            lblSaudacao.Text = $"{saudacao}, {lblUsuario.Text}!";
             
             // String de conexão com o banco de dados MySQL
             string conexaoString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
 
             // Query para selecionar todos os tickets, ordenando do mais recente para o mais antigo
-            string email = lblNomeUsuario.Text;
+            string email = lblUsuario.Text;
             string query = "SELECT nome FROM T_USUARIOS WHERE email = @email ;";
 
             // Usando bloco using para garantir fechamento da conexão mesmo em caso de erro
@@ -460,7 +458,12 @@ namespace Secretary
         private void trocarUsuárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Envia os dados do usuário para o FormPerfilUsuario.cs
-            OpenChildForm(new Forms.FormPerfilUsuario(lblNomeUsuario.Text, lblUsuario.Text), sender);
+            OpenChildForm(new Forms.FormPerfilUsuario(lblUsuario.Text, lblUsuario.Text), sender);
+        }
+
+        private void btnSair_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

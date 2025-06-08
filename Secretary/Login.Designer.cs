@@ -104,6 +104,7 @@
             this.txtUsuario.Size = new System.Drawing.Size(305, 16);
             this.txtUsuario.TabIndex = 15;
             this.txtUsuario.Enter += new System.EventHandler(this.txtUsuario_Enter);
+            this.txtUsuario.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUsuario_KeyDown);
             this.txtUsuario.Leave += new System.EventHandler(this.txtUsuario_Leave);
             // 
             // txtSenha
@@ -116,6 +117,7 @@
             this.txtSenha.TabIndex = 16;
             this.txtSenha.UseSystemPasswordChar = true;
             this.txtSenha.Enter += new System.EventHandler(this.txtSenha_Enter);
+            this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
             // 
             // lblFazerLogin
             // 

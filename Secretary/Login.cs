@@ -118,28 +118,34 @@ namespace Secretary
             this.WindowState = FormWindowState.Minimized; // Minimiza o formulário
         }
 
-
-
-        // Evento de clique no botão de entrar
+        // Evento de clique no botão "Entrar"
         private void btnEntrar_Click(object sender, EventArgs e)
         {
+
             string nome = txtUsuario.Text.Trim();
             string senhaDigitada = txtSenha.Text;
 
-            if (nome == "Inserir usuário" || string.IsNullOrEmpty(nome))
+            bool usuarioVazio = string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "Inserir usuário";
+            bool senhaVazia = string.IsNullOrWhiteSpace(txtSenha.Text) || txtSenha.Text == "Senha";
+
+            if (usuarioVazio && senhaVazia)
             {
-                MessageBox.Show("Por favor, insira o nome de usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (usuarioVazio)
+            {
+                MessageBox.Show("Informe o login.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (senhaVazia)
+            {
+                MessageBox.Show("Insira a senha.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (string.IsNullOrEmpty(senhaDigitada) || senhaDigitada == "Senha")
-            {
-                MessageBox.Show("Por favor, insira a senha.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-           
-
+            // Conexão com banco só acontece se todos os campos estiverem preenchidos
             string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
 
             try
@@ -148,19 +154,15 @@ namespace Secretary
                 {
                     conn.Open();
 
-                    // Busca apenas o hash da senha do usuário
                     string sql = "SELECT senha FROM t_usuarios WHERE email = @nome LIMIT 1;";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@nome", nome);
-
                         object result = cmd.ExecuteScalar();
 
                         if (result != null)
                         {
                             string senhaHashBanco = result.ToString();
-
-                            // Verifica se a senha digitada bate com o hash do banco
                             bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
 
                             if (senhaCorreta)
@@ -193,6 +195,22 @@ namespace Secretary
         {
             // Alterna a visibilidade da senha com base no checkbox
             txtSenha.UseSystemPasswordChar = !cboxMostrarSenha.Checked;
+        }
+
+        private void txtSenha_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnEntrar.PerformClick(); // Simula o clique no botão de login
+            }
+        }
+
+        private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtSenha.Focus(); // Foco no campo da senha após apertar "Enter"
+            }
         }
     }
 }
