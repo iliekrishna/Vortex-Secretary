@@ -1,7 +1,6 @@
-﻿
-namespace Secretary.Forms
+﻿namespace Secretary.Forms
 {
-    partial class Gerenciamento
+    partial class GerenciamentoAdm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +30,6 @@ namespace Secretary.Forms
         {
             this.panelGerenciamentoForms = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.panelGerenciamentoItens = new System.Windows.Forms.Panel();
-            this.panelBotaoAdcionarRequerimento = new System.Windows.Forms.Panel();
-            this.btnAdicionarRequerimento = new System.Windows.Forms.Button();
             this.panelPrincipal = new System.Windows.Forms.Panel();
             this.panelRA = new System.Windows.Forms.Panel();
             this.rbtnAtivoRA = new System.Windows.Forms.RadioButton();
@@ -60,15 +56,40 @@ namespace Secretary.Forms
             this.rbtnInativoCertificado = new System.Windows.Forms.RadioButton();
             this.btnDetalhesCertificado = new System.Windows.Forms.Button();
             this.lblCertificado = new System.Windows.Forms.Label();
+            this.panelBotaoAdcionarRequerimento = new System.Windows.Forms.Panel();
+            this.btnAdicionarRequerimento = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.panelGerenciamentoForms.SuspendLayout();
-            this.panelGerenciamentoItens.SuspendLayout();
-            this.panelBotaoAdcionarRequerimento.SuspendLayout();
             this.panelPrincipal.SuspendLayout();
             this.panelRA.SuspendLayout();
             this.panelContProg.SuspendLayout();
             this.panelHistorico.SuspendLayout();
             this.panelDeclaracao.SuspendLayout();
             this.panelCertificado.SuspendLayout();
+            this.panelBotaoAdcionarRequerimento.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGerenciamentoForms
@@ -79,7 +100,7 @@ namespace Secretary.Forms
             this.panelGerenciamentoForms.Name = "panelGerenciamentoForms";
             this.panelGerenciamentoForms.Padding = new System.Windows.Forms.Padding(30);
             this.panelGerenciamentoForms.Size = new System.Drawing.Size(1240, 100);
-            this.panelGerenciamentoForms.TabIndex = 4;
+            this.panelGerenciamentoForms.TabIndex = 5;
             // 
             // label1
             // 
@@ -92,52 +113,22 @@ namespace Secretary.Forms
             this.label1.TabIndex = 2;
             this.label1.Text = "Gerenciamento de Formulários";
             // 
-            // panelGerenciamentoItens
-            // 
-            this.panelGerenciamentoItens.Controls.Add(this.panelBotaoAdcionarRequerimento);
-            this.panelGerenciamentoItens.Controls.Add(this.panelPrincipal);
-            this.panelGerenciamentoItens.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelGerenciamentoItens.Location = new System.Drawing.Point(20, 120);
-            this.panelGerenciamentoItens.Name = "panelGerenciamentoItens";
-            this.panelGerenciamentoItens.Size = new System.Drawing.Size(1240, 357);
-            this.panelGerenciamentoItens.TabIndex = 5;
-            // 
-            // panelBotaoAdcionarRequerimento
-            // 
-            this.panelBotaoAdcionarRequerimento.Controls.Add(this.btnAdicionarRequerimento);
-            this.panelBotaoAdcionarRequerimento.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBotaoAdcionarRequerimento.Location = new System.Drawing.Point(0, 295);
-            this.panelBotaoAdcionarRequerimento.Name = "panelBotaoAdcionarRequerimento";
-            this.panelBotaoAdcionarRequerimento.Padding = new System.Windows.Forms.Padding(80, 15, 15, 15);
-            this.panelBotaoAdcionarRequerimento.Size = new System.Drawing.Size(1240, 62);
-            this.panelBotaoAdcionarRequerimento.TabIndex = 4;
-            // 
-            // btnAdicionarRequerimento
-            // 
-            this.btnAdicionarRequerimento.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnAdicionarRequerimento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdicionarRequerimento.Location = new System.Drawing.Point(80, 15);
-            this.btnAdicionarRequerimento.Name = "btnAdicionarRequerimento";
-            this.btnAdicionarRequerimento.Size = new System.Drawing.Size(159, 32);
-            this.btnAdicionarRequerimento.TabIndex = 4;
-            this.btnAdicionarRequerimento.Text = "Novo Requerimento";
-            this.btnAdicionarRequerimento.UseVisualStyleBackColor = true;
-            // 
             // panelPrincipal
             // 
             this.panelPrincipal.AutoScroll = true;
             this.panelPrincipal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelPrincipal.Controls.Add(this.panelBotaoAdcionarRequerimento);
             this.panelPrincipal.Controls.Add(this.panelRA);
             this.panelPrincipal.Controls.Add(this.panelContProg);
             this.panelPrincipal.Controls.Add(this.panelHistorico);
             this.panelPrincipal.Controls.Add(this.panelDeclaracao);
             this.panelPrincipal.Controls.Add(this.panelCertificado);
-            this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelPrincipal.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panelPrincipal.Location = new System.Drawing.Point(0, 0);
+            this.panelPrincipal.Location = new System.Drawing.Point(20, 120);
             this.panelPrincipal.Name = "panelPrincipal";
             this.panelPrincipal.Size = new System.Drawing.Size(1240, 357);
-            this.panelPrincipal.TabIndex = 3;
+            this.panelPrincipal.TabIndex = 6;
             // 
             // panelRA
             // 
@@ -437,7 +428,7 @@ namespace Secretary.Forms
             this.btnDetalhesCertificado.TabIndex = 3;
             this.btnDetalhesCertificado.Text = "Editar detalhes";
             this.btnDetalhesCertificado.UseVisualStyleBackColor = true;
-            this.btnDetalhesCertificado.Click += new System.EventHandler(this.btnDetalhesCertificado_Click_1);
+            this.btnDetalhesCertificado.Click += new System.EventHandler(this.btnDetalhesCertificado_Click);
             // 
             // lblCertificado
             // 
@@ -450,22 +441,241 @@ namespace Secretary.Forms
             this.lblCertificado.TabIndex = 0;
             this.lblCertificado.Text = "Certificado de conclusão de curso";
             // 
-            // Gerenciamento
+            // panelBotaoAdcionarRequerimento
+            // 
+            this.panelBotaoAdcionarRequerimento.Controls.Add(this.btnAdicionarRequerimento);
+            this.panelBotaoAdcionarRequerimento.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBotaoAdcionarRequerimento.Location = new System.Drawing.Point(0, 291);
+            this.panelBotaoAdcionarRequerimento.Name = "panelBotaoAdcionarRequerimento";
+            this.panelBotaoAdcionarRequerimento.Padding = new System.Windows.Forms.Padding(80, 15, 15, 15);
+            this.panelBotaoAdcionarRequerimento.Size = new System.Drawing.Size(1236, 62);
+            this.panelBotaoAdcionarRequerimento.TabIndex = 5;
+            // 
+            // btnAdicionarRequerimento
+            // 
+            this.btnAdicionarRequerimento.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnAdicionarRequerimento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdicionarRequerimento.Location = new System.Drawing.Point(80, 15);
+            this.btnAdicionarRequerimento.Name = "btnAdicionarRequerimento";
+            this.btnAdicionarRequerimento.Size = new System.Drawing.Size(159, 32);
+            this.btnAdicionarRequerimento.TabIndex = 4;
+            this.btnAdicionarRequerimento.Text = "Novo Requerimento";
+            this.btnAdicionarRequerimento.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(20, 477);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(30);
+            this.panel1.Size = new System.Drawing.Size(1240, 100);
+            this.panel1.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label2.Font = new System.Drawing.Font("Verdana", 15.75F);
+            this.label2.Location = new System.Drawing.Point(30, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(304, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Gerenciamento de Usuários";
+            // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.panel3);
+            this.panel2.Controls.Add(this.panel5);
+            this.panel2.Controls.Add(this.panel6);
+            this.panel2.Controls.Add(this.panel7);
+            this.panel2.Controls.Add(this.panel8);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel2.Location = new System.Drawing.Point(20, 577);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1240, 338);
+            this.panel2.TabIndex = 8;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 272);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(80, 15, 15, 15);
+            this.panel3.Size = new System.Drawing.Size(1236, 62);
+            this.panel3.TabIndex = 5;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(80, 15);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(159, 32);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Novo Usuário";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.button3);
+            this.panel5.Controls.Add(this.label4);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 150);
+            this.panel5.Name = "panel5";
+            this.panel5.Padding = new System.Windows.Forms.Padding(5, 10, 300, 15);
+            this.panel5.Size = new System.Drawing.Size(1236, 50);
+            this.panel5.TabIndex = 3;
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(813, 10);
+            this.button3.Margin = new System.Windows.Forms.Padding(20);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(123, 25);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "Editar detalhes";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Location = new System.Drawing.Point(5, 10);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(70, 5, 0, 0);
+            this.label4.Size = new System.Drawing.Size(350, 23);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "mascos.varginha96@fatec.sp.gov.br";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.button4);
+            this.panel6.Controls.Add(this.label5);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel6.Location = new System.Drawing.Point(0, 100);
+            this.panel6.Name = "panel6";
+            this.panel6.Padding = new System.Windows.Forms.Padding(5, 10, 300, 15);
+            this.panel6.Size = new System.Drawing.Size(1236, 50);
+            this.panel6.TabIndex = 2;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(813, 10);
+            this.button4.Margin = new System.Windows.Forms.Padding(20);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(123, 25);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "Editar detalhes";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label5.Location = new System.Drawing.Point(5, 10);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(70, 5, 0, 0);
+            this.label5.Size = new System.Drawing.Size(335, 23);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "rafael.marques33@fatec.sp.gov.br";
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.button5);
+            this.panel7.Controls.Add(this.label6);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel7.Location = new System.Drawing.Point(0, 50);
+            this.panel7.Name = "panel7";
+            this.panel7.Padding = new System.Windows.Forms.Padding(5, 10, 300, 15);
+            this.panel7.Size = new System.Drawing.Size(1236, 50);
+            this.panel7.TabIndex = 1;
+            // 
+            // button5
+            // 
+            this.button5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(813, 10);
+            this.button5.Margin = new System.Windows.Forms.Padding(20);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(123, 25);
+            this.button5.TabIndex = 3;
+            this.button5.Text = "Editar detalhes";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label6.Location = new System.Drawing.Point(5, 10);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(70, 5, 0, 0);
+            this.label6.Size = new System.Drawing.Size(290, 23);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "julia.silva13@fatec.sp.gov.br";
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.button6);
+            this.panel8.Controls.Add(this.label7);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Padding = new System.Windows.Forms.Padding(5, 10, 300, 15);
+            this.panel8.Size = new System.Drawing.Size(1236, 50);
+            this.panel8.TabIndex = 0;
+            // 
+            // button6
+            // 
+            this.button6.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button6.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Location = new System.Drawing.Point(813, 10);
+            this.button6.Margin = new System.Windows.Forms.Padding(20);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(123, 25);
+            this.button6.TabIndex = 3;
+            this.button6.Text = "Editar detalhes";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label7.Location = new System.Drawing.Point(5, 10);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(70, 5, 0, 0);
+            this.label7.Size = new System.Drawing.Size(286, 23);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "sofia.maria@fatec.sp.gov.br";
+            // 
+            // GerenciamentoAdm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1280, 595);
-            this.Controls.Add(this.panelGerenciamentoItens);
+            this.ClientSize = new System.Drawing.Size(1280, 1061);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelPrincipal);
             this.Controls.Add(this.panelGerenciamentoForms);
-            this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "Gerenciamento";
+            this.Font = new System.Drawing.Font("Verdana", 8.25F);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Name = "GerenciamentoAdm";
             this.Padding = new System.Windows.Forms.Padding(20);
-            this.Text = "Gerenciamento";
+            this.Text = "GerenciamentoAdm";
             this.panelGerenciamentoForms.ResumeLayout(false);
             this.panelGerenciamentoForms.PerformLayout();
-            this.panelGerenciamentoItens.ResumeLayout(false);
-            this.panelBotaoAdcionarRequerimento.ResumeLayout(false);
             this.panelPrincipal.ResumeLayout(false);
             this.panelRA.ResumeLayout(false);
             this.panelRA.PerformLayout();
@@ -477,16 +687,27 @@ namespace Secretary.Forms
             this.panelDeclaracao.PerformLayout();
             this.panelCertificado.ResumeLayout(false);
             this.panelCertificado.PerformLayout();
+            this.panelBotaoAdcionarRequerimento.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
         private System.Windows.Forms.Panel panelGerenciamentoForms;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panelGerenciamentoItens;
-        private System.Windows.Forms.Panel panelBotaoAdcionarRequerimento;
-        private System.Windows.Forms.Button btnAdicionarRequerimento;
         private System.Windows.Forms.Panel panelPrincipal;
         private System.Windows.Forms.Panel panelRA;
         private System.Windows.Forms.RadioButton rbtnAtivoRA;
@@ -513,5 +734,24 @@ namespace Secretary.Forms
         private System.Windows.Forms.RadioButton rbtnInativoCertificado;
         private System.Windows.Forms.Button btnDetalhesCertificado;
         private System.Windows.Forms.Label lblCertificado;
+        private System.Windows.Forms.Panel panelBotaoAdcionarRequerimento;
+        private System.Windows.Forms.Button btnAdicionarRequerimento;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label7;
     }
 }

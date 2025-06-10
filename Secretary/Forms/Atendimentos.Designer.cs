@@ -52,23 +52,26 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblAtendimentos = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControlAtendimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).BeginInit();
             this.tpagRespondido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAtendimentos
             // 
             this.tabControlAtendimentos.Controls.Add(this.tpagAberto);
             this.tabControlAtendimentos.Controls.Add(this.tpagRespondido);
-            this.tabControlAtendimentos.Location = new System.Drawing.Point(23, 77);
+            this.tabControlAtendimentos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlAtendimentos.Location = new System.Drawing.Point(20, 120);
             this.tabControlAtendimentos.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlAtendimentos.Name = "tabControlAtendimentos";
             this.tabControlAtendimentos.SelectedIndex = 0;
-            this.tabControlAtendimentos.Size = new System.Drawing.Size(823, 488);
+            this.tabControlAtendimentos.Size = new System.Drawing.Size(934, 651);
             this.tabControlAtendimentos.TabIndex = 0;
             // 
             // tpagAberto
@@ -80,16 +83,17 @@ namespace Secretary.Forms
             this.tpagAberto.Margin = new System.Windows.Forms.Padding(4);
             this.tpagAberto.Name = "tpagAberto";
             this.tpagAberto.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagAberto.Size = new System.Drawing.Size(815, 457);
+            this.tpagAberto.Size = new System.Drawing.Size(926, 620);
             this.tpagAberto.TabIndex = 0;
             this.tpagAberto.Text = "Em aberto";
             this.tpagAberto.UseVisualStyleBackColor = true;
             // 
             // btnSimular
             // 
-            this.btnSimular.Location = new System.Drawing.Point(667, 34);
+            this.btnSimular.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnSimular.Location = new System.Drawing.Point(4, 566);
             this.btnSimular.Name = "btnSimular";
-            this.btnSimular.Size = new System.Drawing.Size(141, 50);
+            this.btnSimular.Size = new System.Drawing.Size(918, 50);
             this.btnSimular.TabIndex = 9;
             this.btnSimular.Text = "Simular Atendimento";
             this.btnSimular.UseVisualStyleBackColor = true;
@@ -98,7 +102,6 @@ namespace Secretary.Forms
             // datagvEmAberto
             // 
             this.datagvEmAberto.AllowDrop = true;
-            this.datagvEmAberto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.datagvEmAberto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.datagvEmAberto.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.datagvEmAberto.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -111,9 +114,10 @@ namespace Secretary.Forms
             this.colunaData,
             this.colunaID,
             this.colunaDetalhes});
-            this.datagvEmAberto.Location = new System.Drawing.Point(1, 0);
+            this.datagvEmAberto.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.datagvEmAberto.Location = new System.Drawing.Point(4, 4);
             this.datagvEmAberto.Name = "datagvEmAberto";
-            this.datagvEmAberto.Size = new System.Drawing.Size(813, 454);
+            this.datagvEmAberto.Size = new System.Drawing.Size(918, 612);
             this.datagvEmAberto.TabIndex = 2;
             // 
             // Column1
@@ -152,7 +156,7 @@ namespace Secretary.Forms
             this.tpagRespondido.Margin = new System.Windows.Forms.Padding(4);
             this.tpagRespondido.Name = "tpagRespondido";
             this.tpagRespondido.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagRespondido.Size = new System.Drawing.Size(815, 457);
+            this.tpagRespondido.Size = new System.Drawing.Size(926, 620);
             this.tpagRespondido.TabIndex = 1;
             this.tpagRespondido.Text = "Respondidos";
             this.tpagRespondido.UseVisualStyleBackColor = true;
@@ -172,9 +176,10 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10});
-            this.datagvRespondidos.Location = new System.Drawing.Point(1, 1);
+            this.datagvRespondidos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.datagvRespondidos.Location = new System.Drawing.Point(4, 4);
             this.datagvRespondidos.Name = "datagvRespondidos";
-            this.datagvRespondidos.Size = new System.Drawing.Size(813, 454);
+            this.datagvRespondidos.Size = new System.Drawing.Size(918, 612);
             this.datagvRespondidos.TabIndex = 5;
             // 
             // dataGridViewTextBoxColumn6
@@ -250,23 +255,34 @@ namespace Secretary.Forms
             this.lblAtendimentos.AutoSize = true;
             this.lblAtendimentos.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblAtendimentos.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAtendimentos.Location = new System.Drawing.Point(0, 0);
+            this.lblAtendimentos.Location = new System.Drawing.Point(30, 30);
+            this.lblAtendimentos.Margin = new System.Windows.Forms.Padding(0);
             this.lblAtendimentos.Name = "lblAtendimentos";
-            this.lblAtendimentos.Padding = new System.Windows.Forms.Padding(20, 20, 0, 0);
-            this.lblAtendimentos.Size = new System.Drawing.Size(177, 45);
+            this.lblAtendimentos.Size = new System.Drawing.Size(157, 25);
             this.lblAtendimentos.TabIndex = 8;
             this.lblAtendimentos.Text = "Atendimentos";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblAtendimentos);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(20, 20);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(30);
+            this.panel1.Size = new System.Drawing.Size(934, 100);
+            this.panel1.TabIndex = 1;
             // 
             // Atendimentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 676);
-            this.Controls.Add(this.lblAtendimentos);
+            this.ClientSize = new System.Drawing.Size(974, 791);
             this.Controls.Add(this.tabControlAtendimentos);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Atendimentos";
+            this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Atendimentos";
             this.tabControlAtendimentos.ResumeLayout(false);
             this.tpagAberto.ResumeLayout(false);
@@ -274,8 +290,9 @@ namespace Secretary.Forms
             this.tpagRespondido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -304,5 +321,6 @@ namespace Secretary.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Label lblAtendimentos;
         private System.Windows.Forms.Button btnSimular;
+        private System.Windows.Forms.Panel panel1;
     }
 }

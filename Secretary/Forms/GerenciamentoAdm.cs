@@ -10,13 +10,19 @@ using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
-    public partial class Gerenciamento : Form
+    public partial class GerenciamentoAdm : Form
     {
-        public Gerenciamento()
+        public GerenciamentoAdm()
         {
             InitializeComponent();
         }
-        private void btnDetalhesCertificado_Click_1(object sender, EventArgs e)
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDetalhesCertificado_Click(object sender, EventArgs e)
         {
             // Cria o fundo escurecido pegando a tela toda
             Form overlay = new Form();
@@ -42,6 +48,11 @@ namespace Secretary.Forms
 
             // Fecha o fundo escurecido após o atendimento
             overlay.Close();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

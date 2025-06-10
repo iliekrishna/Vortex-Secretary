@@ -218,7 +218,7 @@ namespace Secretary
         // Evento do botão Recentes (segunda definição, pode ser duplicado no designer): abre formulário Recentes e ativa botão
         private void btnRecentes_Click_1(object sender, EventArgs e)
         {
-            OpenChildForm(new Forms.Recentes(), sender);
+            OpenChildForm(new Forms.GerenciamentoAdm(), sender);
             ActivateButton(sender);
         }
         

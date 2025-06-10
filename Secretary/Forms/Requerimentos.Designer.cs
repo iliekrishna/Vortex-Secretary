@@ -42,11 +42,10 @@ namespace Secretary.Forms
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnLimpar = new System.Windows.Forms.Button();
-            this.btnAtualizar = new System.Windows.Forms.Button();
-            this.label22 = new System.Windows.Forms.Label();
             this.panelFiltros = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
@@ -55,27 +54,22 @@ namespace Secretary.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.panelTitulo = new System.Windows.Forms.Panel();
-            this.lblRequerimentos = new System.Windows.Forms.Label();
             this.panelPrincipal.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.materialExpansionPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panelFiltros.SuspendLayout();
-            this.panelTitulo.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelPrincipal
             // 
             this.panelPrincipal.Controls.Add(this.flowLayoutPanel1);
-            this.panelPrincipal.Controls.Add(this.panel2);
             this.panelPrincipal.Controls.Add(this.panelFiltros);
-            this.panelPrincipal.Controls.Add(this.panelTitulo);
             this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPrincipal.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panelPrincipal.Location = new System.Drawing.Point(0, 0);
+            this.panelPrincipal.Location = new System.Drawing.Point(20, 20);
             this.panelPrincipal.Name = "panelPrincipal";
-            this.panelPrincipal.Size = new System.Drawing.Size(983, 749);
+            this.panelPrincipal.Size = new System.Drawing.Size(1171, 709);
             this.panelPrincipal.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -83,16 +77,16 @@ namespace Secretary.Forms
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.materialExpansionPanel1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 140);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 60);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(50, 20, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(983, 609);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1171, 649);
             this.flowLayoutPanel1.TabIndex = 19;
             // 
             // materialExpansionPanel1
             // 
             this.materialExpansionPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialExpansionPanel1.CancelButtonText = "RESPONDER";
+            this.materialExpansionPanel1.CancelButtonText = "Cancelar";
             this.materialExpansionPanel1.Collapse = true;
             this.materialExpansionPanel1.Controls.Add(this.button1);
             this.materialExpansionPanel1.Controls.Add(this.label16);
@@ -117,7 +111,7 @@ namespace Secretary.Forms
             this.materialExpansionPanel1.TabIndex = 2;
             this.materialExpansionPanel1.Title = "Tipo de Documento";
             this.materialExpansionPanel1.ValidationButtonEnable = true;
-            this.materialExpansionPanel1.ValidationButtonText = "Deletar";
+            this.materialExpansionPanel1.ValidationButtonText = "Responder";
             this.materialExpansionPanel1.SaveClick += new System.EventHandler(this.materialExpansionPanel1_SaveClick);
             this.materialExpansionPanel1.CancelClick += new System.EventHandler(this.materialExpansionPanel1_CancelClick_1);
             // 
@@ -221,53 +215,10 @@ namespace Secretary.Forms
             this.label17.TabIndex = 15;
             this.label17.Text = "Data: 11/11/2011";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnLimpar);
-            this.panel2.Controls.Add(this.btnAtualizar);
-            this.panel2.Controls.Add(this.label22);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 115);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.panel2.Size = new System.Drawing.Size(983, 25);
-            this.panel2.TabIndex = 18;
-            // 
-            // btnLimpar
-            // 
-            this.btnLimpar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLimpar.Location = new System.Drawing.Point(791, 0);
-            this.btnLimpar.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.btnLimpar.Name = "btnLimpar";
-            this.btnLimpar.Size = new System.Drawing.Size(96, 20);
-            this.btnLimpar.TabIndex = 22;
-            this.btnLimpar.Text = "Limpar";
-            this.btnLimpar.UseVisualStyleBackColor = true;
-            // 
-            // btnAtualizar
-            // 
-            this.btnAtualizar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAtualizar.Location = new System.Drawing.Point(887, 0);
-            this.btnAtualizar.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.btnAtualizar.Name = "btnAtualizar";
-            this.btnAtualizar.Size = new System.Drawing.Size(96, 20);
-            this.btnAtualizar.TabIndex = 20;
-            this.btnAtualizar.Text = "Atualizar";
-            this.btnAtualizar.UseVisualStyleBackColor = true;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label22.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(0, 0);
-            this.label22.Name = "label22";
-            this.label22.Padding = new System.Windows.Forms.Padding(20, 3, 0, 0);
-            this.label22.Size = new System.Drawing.Size(20, 21);
-            this.label22.TabIndex = 19;
-            // 
             // panelFiltros
             // 
+            this.panelFiltros.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelFiltros.Controls.Add(this.panel1);
             this.panelFiltros.Controls.Add(this.comboBox1);
             this.panelFiltros.Controls.Add(this.label5);
             this.panelFiltros.Controls.Add(this.comboBox3);
@@ -278,10 +229,44 @@ namespace Secretary.Forms
             this.panelFiltros.Controls.Add(this.label18);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panelFiltros.Location = new System.Drawing.Point(0, 80);
+            this.panelFiltros.Location = new System.Drawing.Point(0, 0);
             this.panelFiltros.Name = "panelFiltros";
-            this.panelFiltros.Size = new System.Drawing.Size(983, 35);
+            this.panelFiltros.Padding = new System.Windows.Forms.Padding(15);
+            this.panelFiltros.Size = new System.Drawing.Size(1171, 60);
             this.panelFiltros.TabIndex = 12;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(916, 15);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(30, 0, 3, 3);
+            this.panel1.Size = new System.Drawing.Size(236, 30);
+            this.panel1.TabIndex = 19;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button2.Location = new System.Drawing.Point(129, 0);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(98, 27);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "Limpar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button3.Location = new System.Drawing.Point(30, 0);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(99, 27);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "Atualizar";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
@@ -290,7 +275,7 @@ namespace Secretary.Forms
             this.comboBox1.Items.AddRange(new object[] {
             "Mais recente",
             "Mais antigo"});
-            this.comboBox1.Location = new System.Drawing.Point(759, 0);
+            this.comboBox1.Location = new System.Drawing.Point(774, 15);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(142, 22);
@@ -301,7 +286,7 @@ namespace Secretary.Forms
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
             this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(649, 0);
+            this.label5.Location = new System.Drawing.Point(664, 15);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label5.Size = new System.Drawing.Size(110, 18);
@@ -318,7 +303,7 @@ namespace Secretary.Forms
             "Histórico Escolar",
             "Conteúdo Programático",
             "Carteira de Identidade Escolar (RA)"});
-            this.comboBox3.Location = new System.Drawing.Point(463, 0);
+            this.comboBox3.Location = new System.Drawing.Point(478, 15);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(186, 22);
@@ -329,7 +314,7 @@ namespace Secretary.Forms
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Left;
             this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(351, 0);
+            this.label8.Location = new System.Drawing.Point(366, 15);
             this.label8.Name = "label8";
             this.label8.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label8.Size = new System.Drawing.Size(112, 18);
@@ -340,7 +325,7 @@ namespace Secretary.Forms
             // 
             this.dateTimePicker1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(268, 0);
+            this.dateTimePicker1.Location = new System.Drawing.Point(283, 15);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(83, 22);
             this.dateTimePicker1.TabIndex = 14;
@@ -350,7 +335,7 @@ namespace Secretary.Forms
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Left;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(209, 0);
+            this.label7.Location = new System.Drawing.Point(224, 15);
             this.label7.Name = "label7";
             this.label7.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label7.Size = new System.Drawing.Size(59, 18);
@@ -366,7 +351,7 @@ namespace Secretary.Forms
             "Em andamento",
             "Finalizado",
             "Cancelado"});
-            this.comboBox2.Location = new System.Drawing.Point(66, 0);
+            this.comboBox2.Location = new System.Drawing.Point(81, 15);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(143, 22);
@@ -377,52 +362,29 @@ namespace Secretary.Forms
             this.label18.AutoSize = true;
             this.label18.Dock = System.Windows.Forms.DockStyle.Left;
             this.label18.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(0, 0);
+            this.label18.Location = new System.Drawing.Point(15, 15);
             this.label18.Name = "label18";
             this.label18.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label18.Size = new System.Drawing.Size(66, 18);
             this.label18.TabIndex = 11;
             this.label18.Text = "Status";
             // 
-            // panelTitulo
-            // 
-            this.panelTitulo.Controls.Add(this.lblRequerimentos);
-            this.panelTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTitulo.Location = new System.Drawing.Point(0, 0);
-            this.panelTitulo.Name = "panelTitulo";
-            this.panelTitulo.Size = new System.Drawing.Size(983, 80);
-            this.panelTitulo.TabIndex = 11;
-            // 
-            // lblRequerimentos
-            // 
-            this.lblRequerimentos.AutoSize = true;
-            this.lblRequerimentos.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblRequerimentos.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRequerimentos.Location = new System.Drawing.Point(0, 0);
-            this.lblRequerimentos.Name = "lblRequerimentos";
-            this.lblRequerimentos.Padding = new System.Windows.Forms.Padding(20, 30, 0, 0);
-            this.lblRequerimentos.Size = new System.Drawing.Size(191, 55);
-            this.lblRequerimentos.TabIndex = 12;
-            this.lblRequerimentos.Text = "Requerimentos";
-            // 
             // Requerimentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(983, 749);
+            this.ClientSize = new System.Drawing.Size(1211, 749);
             this.Controls.Add(this.panelPrincipal);
             this.Name = "Requerimentos";
+            this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Requerimentos";
             this.panelPrincipal.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.materialExpansionPanel1.ResumeLayout(false);
             this.materialExpansionPanel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panelFiltros.ResumeLayout(false);
             this.panelFiltros.PerformLayout();
-            this.panelTitulo.ResumeLayout(false);
-            this.panelTitulo.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -430,13 +392,7 @@ namespace Secretary.Forms
         #endregion
 
         private System.Windows.Forms.Panel panelPrincipal;
-        private System.Windows.Forms.Panel panelTitulo;
         private System.Windows.Forms.Panel panelFiltros;
-        private System.Windows.Forms.Label lblRequerimentos;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnLimpar;
-        private System.Windows.Forms.Button btnAtualizar;
-        private System.Windows.Forms.Label label22;
         private ComboBox comboBox1;
         private Label label5;
         private ComboBox comboBox3;
@@ -455,5 +411,8 @@ namespace Secretary.Forms
         private Label label12;
         private Label label11;
         private Label label17;
+        private Panel panel1;
+        private Button button2;
+        private Button button3;
     }
 }
