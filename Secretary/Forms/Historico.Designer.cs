@@ -142,6 +142,7 @@ namespace Secretary.Forms
             this.cboxStatusFiltrar.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboxStatusFiltrar.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboxStatusFiltrar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxStatusFiltrar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxStatusFiltrar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboxStatusFiltrar.FormattingEnabled = true;
             this.cboxStatusFiltrar.Items.AddRange(new object[] {
@@ -191,6 +192,7 @@ namespace Secretary.Forms
             this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;

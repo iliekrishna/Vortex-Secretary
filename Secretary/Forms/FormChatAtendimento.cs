@@ -39,10 +39,5 @@ namespace SeuProjeto
             MessageBox.Show("Dúvida excluída com justificativa.", "Excluir Dúvida");
             this.Close();
         }
-
-        private void FormChatAtendimento_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

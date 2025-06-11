@@ -240,10 +240,10 @@ namespace Secretary.Forms
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(916, 15);
+            this.panel1.Location = new System.Drawing.Point(922, 15);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(30, 0, 3, 3);
-            this.panel1.Size = new System.Drawing.Size(236, 30);
+            this.panel1.Size = new System.Drawing.Size(230, 30);
             this.panel1.TabIndex = 19;
             // 
             // button2
@@ -271,11 +271,12 @@ namespace Secretary.Forms
             // comboBox1
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Mais recente",
             "Mais antigo"});
-            this.comboBox1.Location = new System.Drawing.Point(774, 15);
+            this.comboBox1.Location = new System.Drawing.Point(780, 15);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(142, 22);
@@ -286,7 +287,7 @@ namespace Secretary.Forms
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
             this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(664, 15);
+            this.label5.Location = new System.Drawing.Point(670, 15);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label5.Size = new System.Drawing.Size(110, 18);
@@ -296,14 +297,16 @@ namespace Secretary.Forms
             // comboBox3
             // 
             this.comboBox3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
+            "Todos",
             "Certificado de Conclusão de Curso",
             "Declaração de Conclusão de Curso",
             "Histórico Escolar",
             "Conteúdo Programático",
             "Carteira de Identidade Escolar (RA)"});
-            this.comboBox3.Location = new System.Drawing.Point(478, 15);
+            this.comboBox3.Location = new System.Drawing.Point(484, 15);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(186, 22);
@@ -314,7 +317,7 @@ namespace Secretary.Forms
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Left;
             this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(366, 15);
+            this.label8.Location = new System.Drawing.Point(372, 15);
             this.label8.Name = "label8";
             this.label8.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label8.Size = new System.Drawing.Size(112, 18);
@@ -327,7 +330,7 @@ namespace Secretary.Forms
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(283, 15);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(83, 22);
+            this.dateTimePicker1.Size = new System.Drawing.Size(89, 22);
             this.dateTimePicker1.TabIndex = 14;
             // 
             // label7
@@ -345,6 +348,7 @@ namespace Secretary.Forms
             // comboBox2
             // 
             this.comboBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Todos",

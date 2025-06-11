@@ -52,8 +52,7 @@ namespace Secretary
         }
         private void Inicial_Load(object sender, EventArgs e)
         {
-            // Carregar lista de atendimentos/tickets ao abrir a tela inicial
-            CarregarAtendimentos();
+
         }
 
         // Método para abrir um formulário filho dentro do painel principal da tela inicial
@@ -136,42 +135,6 @@ namespace Secretary
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
             lblSaudacao.Text = $"{saudacao}, {lblUsuario.Text}!";
             
-            // String de conexão com o banco de dados MySQL
-            string conexaoString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
-
-            // Query para selecionar todos os tickets, ordenando do mais recente para o mais antigo
-            string email = lblUsuario.Text;
-            string query = "SELECT nome FROM T_USUARIOS WHERE email = @email ;";
-
-            // Usando bloco using para garantir fechamento da conexão mesmo em caso de erro
-            using (MySqlConnection conexao = new MySqlConnection(conexaoString))
-            {
-                try
-                {
-                    // Abre conexão com banco de dados
-                    conexao.Open();
-
-                    // Executa comando SQL para leitura dos dados
-                    MySqlCommand cmd = new MySqlCommand(query, conexao);
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    // Itera por cada registro retornado da consulta
-                    while (reader.Read())
-                    {
-                        Label lblSaudacao = new Label
-                        {
-                            Text = "Nome: " + reader["nome"].ToString(),
-                            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                            Location = new Point(10, 10),
-                            AutoSize = true
-                        };
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao carregar tickets: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
 
 
                         // Fecha o formulário ativo, se existir
@@ -210,161 +173,56 @@ namespace Secretary
 
         // Evento do botão Gerenciamento: abre formulário Gerenciamento e ativa botão visualmente
         private void btnGerenciamento_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.Gerenciamento(), sender);
-            ActivateButton(sender);
+        {   
+            string server = "162.241.40.214";
+            string port = "3306";
+            string user = "miltonb_userVortex";
+            string password = "gWLQqb~dRO0M";
+            string database = "miltonb_fatec_solicitacoes";
+
+            // Conexão com banco só acontece se todos os campos estiverem preenchidos
+            string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
+
+            string email_usu_logago = lblUsuario.Text;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT tipo_perfil FROM t_usuarios WHERE email_usuario = @email_usu_logago LIMIT 1;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@email_usu_logago", email_usu_logago);
+                        object result = cmd.ExecuteScalar();
+
+                        if (result.ToString() == "ADM")
+                        {
+                            OpenChildForm(new Forms.GerenciamentoAdm(), sender);
+                            ActivateButton(sender);
+                        }
+                        else
+                        {
+                            OpenChildForm(new Forms.Gerenciamento(), sender);
+                            ActivateButton(sender);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         
         // Evento do botão Recentes (segunda definição, pode ser duplicado no designer): abre formulário Recentes e ativa botão
         private void btnRecentes_Click_1(object sender, EventArgs e)
         {
-            OpenChildForm(new Forms.GerenciamentoAdm(), sender);
+            OpenChildForm(new Forms.Recentes(), sender);
             ActivateButton(sender);
         }
         
-        // Evento do botão Atualizar Atendimentos: recarrega os atendimentos e ativa botão
-        private void BtnAtualizarAtendimentos_Click(object sender, EventArgs e)
-        {
-            CarregarAtendimentos();
-            ActivateButton(sender);
-        }
-
-        // Método para carregar os atendimentos da base de dados e exibir na interface
-        private void CarregarAtendimentos()
-        {
-            // String de conexão com o banco de dados MySQL
-            string conexaoString = "server=localhost;port=3306;user=root;password=;database=fatec_solicitacoes;";
-            
-            // Query para selecionar todos os tickets, ordenando do mais recente para o mais antigo
-            string query = "SELECT * FROM tickets ORDER BY data_envio DESC";
-
-            // Usando bloco using para garantir fechamento da conexão mesmo em caso de erro
-            using (MySqlConnection conexao = new MySqlConnection(conexaoString))
-            {
-                try
-                {
-                    // Abre conexão com banco de dados
-                    conexao.Open();
-
-                    // Executa comando SQL para leitura dos dados
-                    MySqlCommand cmd = new MySqlCommand(query, conexao);
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    // Itera por cada registro retornado da consulta
-                    while (reader.Read())
-                    {
-                        string ra = reader["ra"].ToString();
-
-                        // Cria o painel para exibir o atendimento
-                        Panel painel = new Panel
-                        {
-                            BorderStyle = BorderStyle.FixedSingle,
-                            Width = 320,
-                            Height = 240,
-                            Margin = new Padding(10)
-                        };
-
-                        Label lblNome = new Label
-                        {
-                            Text = "Nome: " + reader["nome"].ToString(),
-                            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                            Location = new Point(10, 10),
-                            AutoSize = true
-                        };
-
-                        Label lblCurso = new Label
-                        {
-                            Text = "Curso: " + reader["curso"].ToString(),
-                            Location = new Point(10, 35),
-                            AutoSize = true
-                        };
-
-                        Label lblRa = new Label
-                        {
-                            Text = "RA: " + ra,
-                            Location = new Point(10, 60),
-                            AutoSize = true
-                        };
-
-                        Label lblEmail = new Label
-                        {
-                            Text = "Email: " + reader["email"].ToString(),
-                            Location = new Point(10, 85),
-                            AutoSize = true
-                        };
-
-                        Label lblAssunto = new Label
-                        {
-                            Text = "Assunto: " + reader["assunto"].ToString(),
-                            Location = new Point(10, 110),
-                            AutoSize = true
-                        };
-
-                        TextBox txtResposta = new TextBox
-                        {
-                            Multiline = true,
-                            Width = 290,
-                            Height = 50,
-                            Location = new Point(10, 135),
-                            Name = "txtResposta_" + ra
-                        };
-
-                        Button btnResponder = new Button
-                        {
-                            Text = "Responder",
-                            Width = 120,
-                            Height = 40,
-                            Location = new Point(10, 193)
-                        };
-
-                        btnResponder.Click += (s, ev) =>
-                        {
-                            string respostaTexto = txtResposta.Text.Trim();
-
-                            if (string.IsNullOrEmpty(respostaTexto))
-                            {
-                                MessageBox.Show("Digite uma resposta antes de enviar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-
-                            try
-                            {
-                                using (MySqlConnection con = new MySqlConnection(conexaoString))
-                                {
-                                    con.Open();
-                                    string updateQuery = "UPDATE tickets SET resposta = @resposta WHERE ra = @ra";
-                                    MySqlCommand cmdUpdate = new MySqlCommand(updateQuery, con);
-                                    cmdUpdate.Parameters.AddWithValue("@resposta", respostaTexto);
-                                    cmdUpdate.Parameters.AddWithValue("@ra", ra);
-                                    cmdUpdate.ExecuteNonQuery();
-                                }
-
-                                MessageBox.Show("Resposta enviada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Erro ao enviar resposta: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        };
-
-                        painel.Controls.Add(lblNome);
-                        painel.Controls.Add(lblCurso);
-                        painel.Controls.Add(lblRa);
-                        painel.Controls.Add(lblEmail);
-                        painel.Controls.Add(lblAssunto);
-                        painel.Controls.Add(txtResposta);
-                        painel.Controls.Add(btnResponder);
-
-                    }
-
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao carregar tickets: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
         private void btnPerfil_Click(object sender, EventArgs e)
         {
             menuOpcoes.Show(btnPerfil, new Point(0, btnPerfil.Height));

@@ -135,11 +135,11 @@
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUsuario.Location = new System.Drawing.Point(60, 150);
+            this.lblUsuario.Location = new System.Drawing.Point(60, 145);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(75, 22);
+            this.lblUsuario.Size = new System.Drawing.Size(62, 22);
             this.lblUsuario.TabIndex = 1;
-            this.lblUsuario.Text = "Usuário";
+            this.lblUsuario.Text = "E-mail";
             // 
             // lblSenha
             // 

@@ -1,6 +1,6 @@
 ﻿namespace Secretary.Forms
 {
-    partial class FormEditarRequerimento
+    partial class FormEditarDocumento
     {
         /// <summary>
         /// Required designer variable.
@@ -34,6 +34,9 @@
             this.txtPrazo = new System.Windows.Forms.TextBox();
             this.lblNomeRequerimento = new System.Windows.Forms.Label();
             this.lblPrazo = new System.Windows.Forms.Label();
+            this.lblNumID = new System.Windows.Forms.Label();
+            this.rbtnAtivo = new System.Windows.Forms.RadioButton();
+            this.rbtnInativo = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // txtNomeRequerimento
@@ -46,24 +49,26 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(353, 140);
+            this.btnSalvar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalvar.Location = new System.Drawing.Point(364, 166);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(88, 23);
             this.btnSalvar.TabIndex = 2;
-            this.btnSalvar.Text = "Salvar";
+            this.btnSalvar.Text = "SALVAR";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnExcluirRequerimento
             // 
-            this.btnExcluirRequerimento.Location = new System.Drawing.Point(206, 140);
+            this.btnExcluirRequerimento.Location = new System.Drawing.Point(272, 166);
             this.btnExcluirRequerimento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnExcluirRequerimento.Name = "btnExcluirRequerimento";
-            this.btnExcluirRequerimento.Size = new System.Drawing.Size(139, 23);
+            this.btnExcluirRequerimento.Size = new System.Drawing.Size(84, 23);
             this.btnExcluirRequerimento.TabIndex = 3;
-            this.btnExcluirRequerimento.Text = "Apagar requerimento";
+            this.btnExcluirRequerimento.Text = "Deletar";
             this.btnExcluirRequerimento.UseVisualStyleBackColor = true;
+            this.btnExcluirRequerimento.Click += new System.EventHandler(this.btnExcluirRequerimento_Click);
             // 
             // txtPrazo
             // 
@@ -93,11 +98,46 @@
             this.lblPrazo.TabIndex = 7;
             this.lblPrazo.Text = "Prazo:";
             // 
-            // FormEditarRequerimento
+            // lblNumID
+            // 
+            this.lblNumID.AutoSize = true;
+            this.lblNumID.Location = new System.Drawing.Point(95, 132);
+            this.lblNumID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNumID.Name = "lblNumID";
+            this.lblNumID.Size = new System.Drawing.Size(48, 13);
+            this.lblNumID.TabIndex = 8;
+            this.lblNumID.Text = "Status:";
+            // 
+            // rbtnAtivo
+            // 
+            this.rbtnAtivo.AutoSize = true;
+            this.rbtnAtivo.Checked = true;
+            this.rbtnAtivo.Location = new System.Drawing.Point(155, 132);
+            this.rbtnAtivo.Name = "rbtnAtivo";
+            this.rbtnAtivo.Size = new System.Drawing.Size(54, 17);
+            this.rbtnAtivo.TabIndex = 9;
+            this.rbtnAtivo.TabStop = true;
+            this.rbtnAtivo.Text = "Ativo";
+            this.rbtnAtivo.UseVisualStyleBackColor = true;
+            // 
+            // rbtnInativo
+            // 
+            this.rbtnInativo.AutoSize = true;
+            this.rbtnInativo.Location = new System.Drawing.Point(217, 132);
+            this.rbtnInativo.Name = "rbtnInativo";
+            this.rbtnInativo.Size = new System.Drawing.Size(65, 17);
+            this.rbtnInativo.TabIndex = 10;
+            this.rbtnInativo.Text = "Inativo";
+            this.rbtnInativo.UseVisualStyleBackColor = true;
+            // 
+            // FormEditarDocumento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 228);
+            this.ClientSize = new System.Drawing.Size(534, 249);
+            this.Controls.Add(this.rbtnInativo);
+            this.Controls.Add(this.rbtnAtivo);
+            this.Controls.Add(this.lblNumID);
             this.Controls.Add(this.lblPrazo);
             this.Controls.Add(this.lblNomeRequerimento);
             this.Controls.Add(this.txtPrazo);
@@ -107,7 +147,7 @@
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "FormEditarRequerimento";
+            this.Name = "FormEditarDocumento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar Requerimento";
             this.ResumeLayout(false);
@@ -123,5 +163,8 @@
         private System.Windows.Forms.TextBox txtPrazo;
         private System.Windows.Forms.Label lblNomeRequerimento;
         private System.Windows.Forms.Label lblPrazo;
+        private System.Windows.Forms.Label lblNumID;
+        private System.Windows.Forms.RadioButton rbtnAtivo;
+        private System.Windows.Forms.RadioButton rbtnInativo;
     }
 }

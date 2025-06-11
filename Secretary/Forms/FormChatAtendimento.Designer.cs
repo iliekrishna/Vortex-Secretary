@@ -157,7 +157,6 @@ namespace SeuProjeto
             this.Name = "FormChatAtendimento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chat de Atendimento";
-            this.Load += new System.EventHandler(this.FormChatAtendimento_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

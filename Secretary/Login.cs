@@ -39,16 +39,11 @@ namespace Secretary
         {
             InitializeComponent();
 
-            string senha = "senhaTeste";
+            string senha = txtSenha.Text;
             string senhaHash = BCrypt.Net.BCrypt.HashPassword(senha);
-            Console.WriteLine("Senha: senhaTeste");
-            Console.WriteLine(senhaHash);
-
-
-
 
             // Define o texto padrão e a cor cinza no campo de usuário
-            txtUsuario.Text = "Inserir usuário";
+            txtUsuario.Text = "Inserir e-mail";
             txtUsuario.ForeColor = Color.Gray;
 
             // Define o texto padrão e a cor cinza no campo de senha
@@ -66,7 +61,7 @@ namespace Secretary
         private void txtUsuario_Enter(object sender, EventArgs e)
         {
             // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtUsuario.Text == "Inserir usuário")
+            if (txtUsuario.Text == "Inserir e-mail")
             {
                 txtUsuario.Text = "";
                 txtUsuario.ForeColor = Color.Black;
@@ -79,7 +74,7 @@ namespace Secretary
             // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
             if (string.IsNullOrWhiteSpace(txtUsuario.Text))
             {
-                txtUsuario.Text = "Inserir usuário";
+                txtUsuario.Text = "Inserir e-mail";
                 txtUsuario.ForeColor = Color.Gray;
             }
         }
@@ -125,72 +120,68 @@ namespace Secretary
             string nome = txtUsuario.Text.Trim();
             string senhaDigitada = txtSenha.Text;
 
-            Inicial telaInicial = new Inicial(nome);
-            telaInicial.Show();
-            this.Hide();
+            bool usuarioVazio = string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "Inserir e-mail";
+            bool senhaVazia = string.IsNullOrWhiteSpace(txtSenha.Text) || txtSenha.Text == "Senha";
 
-            //bool usuarioVazio = string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "Inserir usuário";
-            //bool senhaVazia = string.IsNullOrWhiteSpace(txtSenha.Text) || txtSenha.Text == "Senha";
-
-            //if (usuarioVazio && senhaVazia)
-            //{
-            //    MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            //else if (usuarioVazio)
-            //{
-            //    MessageBox.Show("Informe o login.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            //else if (senhaVazia)
-            //{
-            //    MessageBox.Show("Insira a senha.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+            if (usuarioVazio && senhaVazia)
+            {
+                MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (usuarioVazio)
+            {
+                MessageBox.Show("Informe o e-mail.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (senhaVazia)
+            {
+                MessageBox.Show("Insira a senha.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
 
-            //// Conexão com banco só acontece se todos os campos estiverem preenchidos
-            //string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
+            // Conexão com banco só acontece se todos os campos estiverem preenchidos
+            string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
 
-            //try
-            //{
-            //    using (MySqlConnection conn = new MySqlConnection(connectionString))
-            //    {
-            //        conn.Open();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
 
-            //        string sql = "SELECT senha FROM t_usuarios WHERE email = @nome LIMIT 1;";
-            //        using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-            //        {
-            //            cmd.Parameters.AddWithValue("@nome", nome);
-            //            object result = cmd.ExecuteScalar();
+                    string sql = "SELECT senha FROM t_usuarios WHERE email_usuario = @nome LIMIT 1;";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@nome", nome);
+                        object result = cmd.ExecuteScalar();
 
-            //            if (result != null)
-            //            {
-            //                string senhaHashBanco = result.ToString();
-            //                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
+                        if (result != null)
+                        {
+                            string senhaHashBanco = result.ToString();
+                            bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
 
-            //                if (senhaCorreta)
-            //                {
-            //                    Inicial telaInicial = new Inicial(nome);
-            //                    telaInicial.Show();
-            //                    this.Hide();
-            //                }
-            //                else
-            //                {
-            //                    MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //                }
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                            if (senhaCorreta)
+                            {
+                                Inicial telaInicial = new Inicial(nome);
+                                telaInicial.Show();
+                                this.Hide();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 

@@ -19,26 +19,5 @@ namespace Secretary.Forms
             txtNomeUsuario.Text = nomeUsuario;
             txtLoginUsuario.Text = email;
         }
-
-        private void btnSalvarSair_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void cboxExibirSenhaAtual_CheckedChanged(object sender, EventArgs e)
-        {
-            // Alterna a visibilidade da senha com base no checkbox
-            txtSenhaAtual.UseSystemPasswordChar = !cboxExibirSenhaAtual.Checked;
-        }
-
-        private void cboxExibirNovaSenha_CheckedChanged(object sender, EventArgs e)
-        {
-            txtNovaSenha.UseSystemPasswordChar = !cboxExibirNovaSenha.Checked;
-        }
-
-        private void cboxExibirConfirmarSenha_CheckedChanged(object sender, EventArgs e)
-        {
-            txtConfirmarSenha.UseSystemPasswordChar = !cboxExibirConfirmarSenha.Checked;
-        }
     }
 }

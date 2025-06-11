@@ -71,7 +71,7 @@ namespace Secretary.Forms
             this.tabControlAtendimentos.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlAtendimentos.Name = "tabControlAtendimentos";
             this.tabControlAtendimentos.SelectedIndex = 0;
-            this.tabControlAtendimentos.Size = new System.Drawing.Size(934, 651);
+            this.tabControlAtendimentos.Size = new System.Drawing.Size(934, 609);
             this.tabControlAtendimentos.TabIndex = 0;
             // 
             // tpagAberto
@@ -83,7 +83,7 @@ namespace Secretary.Forms
             this.tpagAberto.Margin = new System.Windows.Forms.Padding(4);
             this.tpagAberto.Name = "tpagAberto";
             this.tpagAberto.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagAberto.Size = new System.Drawing.Size(926, 620);
+            this.tpagAberto.Size = new System.Drawing.Size(926, 578);
             this.tpagAberto.TabIndex = 0;
             this.tpagAberto.Text = "Em aberto";
             this.tpagAberto.UseVisualStyleBackColor = true;
@@ -91,7 +91,7 @@ namespace Secretary.Forms
             // btnSimular
             // 
             this.btnSimular.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSimular.Location = new System.Drawing.Point(4, 566);
+            this.btnSimular.Location = new System.Drawing.Point(4, 524);
             this.btnSimular.Name = "btnSimular";
             this.btnSimular.Size = new System.Drawing.Size(918, 50);
             this.btnSimular.TabIndex = 9;
@@ -117,7 +117,7 @@ namespace Secretary.Forms
             this.datagvEmAberto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.datagvEmAberto.Location = new System.Drawing.Point(4, 4);
             this.datagvEmAberto.Name = "datagvEmAberto";
-            this.datagvEmAberto.Size = new System.Drawing.Size(918, 612);
+            this.datagvEmAberto.Size = new System.Drawing.Size(918, 570);
             this.datagvEmAberto.TabIndex = 2;
             // 
             // Column1
@@ -276,7 +276,7 @@ namespace Secretary.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 791);
+            this.ClientSize = new System.Drawing.Size(974, 749);
             this.Controls.Add(this.tabControlAtendimentos);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
