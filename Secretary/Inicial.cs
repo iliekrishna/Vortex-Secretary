@@ -49,10 +49,55 @@ namespace Secretary
             int hora = DateTime.Now.Hour;
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
             lblSaudacao.Text = $"{saudacao}, {loginUsuario}!";
+            AtualizarContadores();// Só pra ter certeza que vai iniciar junto com o programa. 
         }
         private void Inicial_Load(object sender, EventArgs e)
         {
+            AtualizarContadores(); //Vai atualizar os contadores quando iniciar ;)
+        }
+        private void AtualizarContadores()
+        {
+            int novas = 0, andamento = 0, canceladas = 0;
 
+            try
+            {
+                using (MySqlConnection conn = ConexaoBD.ObterConexao()) //conexão com o bd
+                {
+                    string sql = "SELECT status_doc, COUNT(*) AS total FROM t_requerimentos GROUP BY status_doc";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string status = reader["status_doc"].ToString();
+                            int total = Convert.ToInt32(reader["total"]);
+
+                            switch (status)
+                            {
+                                case "Novo":
+                                    novas = total;
+                                    break;
+                                case "Andamento":
+                                    andamento = total;
+                                    break;
+                                case "Cancelado":
+                                    canceladas = total;
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                // Atualiza os labels na interface e exibe a quantidade de solicitações
+                lblNovasSolicitacoes.Text ="Novas Solicitações: " + novas.ToString();
+                lblEmAndamento.Text = "Em Andamento: " + andamento.ToString();
+                lblCanceladas.Text = "Canceladas: " + canceladas.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar os contadores: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); //Mensagem caso não carregue os contadores
+            }
         }
 
         // Método para abrir um formulário filho dentro do painel principal da tela inicial
@@ -322,6 +367,11 @@ namespace Secretary
         private void btnSair_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void pboxNovasSolicitacoes_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

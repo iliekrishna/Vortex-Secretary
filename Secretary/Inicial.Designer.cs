@@ -454,19 +454,19 @@ namespace Secretary
             this.trocarUsuárioToolStripMenuItem,
             this.trocarLoginToolStripMenuItem});
             this.menuOpcoes.Name = "menuOpcoes";
-            this.menuOpcoes.Size = new System.Drawing.Size(172, 48);
+            this.menuOpcoes.Size = new System.Drawing.Size(170, 48);
             // 
             // trocarUsuárioToolStripMenuItem
             // 
             this.trocarUsuárioToolStripMenuItem.Name = "trocarUsuárioToolStripMenuItem";
-            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.trocarUsuárioToolStripMenuItem.Text = "👤 Visualizar perfil ";
             this.trocarUsuárioToolStripMenuItem.Click += new System.EventHandler(this.trocarUsuárioToolStripMenuItem_Click);
             // 
             // trocarLoginToolStripMenuItem
             // 
             this.trocarLoginToolStripMenuItem.Name = "trocarLoginToolStripMenuItem";
-            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.trocarLoginToolStripMenuItem.Text = "🚪 Sair";
             this.trocarLoginToolStripMenuItem.Click += new System.EventHandler(this.trocarLoginToolStripMenuItem_Click);
             // 
@@ -588,6 +588,7 @@ namespace Secretary
             this.pboxNovasSolicitacoes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pboxNovasSolicitacoes.TabIndex = 5;
             this.pboxNovasSolicitacoes.TabStop = false;
+            this.pboxNovasSolicitacoes.Click += new System.EventHandler(this.pboxNovasSolicitacoes_Click);
             this.pboxNovasSolicitacoes.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pboxNovasSolicitacoes.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
