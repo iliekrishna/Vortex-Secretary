@@ -255,6 +255,7 @@ namespace Secretary.Forms
             this.Name = "Historico";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Historico";
+            this.Load += new System.EventHandler(this.Historico_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorico)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

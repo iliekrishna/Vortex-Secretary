@@ -30,6 +30,8 @@ namespace Secretary
             string loginUsuario = loginRecebido;
             lblUsuario.Text = loginRecebido;
 
+            
+
             // Formatar nome com capitalização correta
             var textoInfo = CultureInfo.CurrentCulture.TextInfo;
 
@@ -205,7 +207,10 @@ namespace Secretary
         // Evento do botão Atendimentos: abre formulário Atendimentos e ativa botão visualmente
         private void btnAtendimentos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Forms.Atendimentos(), sender);
+
+            //MessageBox.Show("ID do usuário na sessão: " + Sessao.UsuarioId);
+            
+            OpenChildForm(new Forms.Atendimentos(Sessao.UsuarioId), sender);
             ActivateButton(sender);
         }
 

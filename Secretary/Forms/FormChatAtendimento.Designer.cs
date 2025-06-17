@@ -83,6 +83,7 @@ namespace SeuProjeto
             this.lblAssunto.Size = new System.Drawing.Size(35, 13);
             this.lblAssunto.TabIndex = 3;
             this.lblAssunto.Text = "label4";
+            this.lblAssunto.Click += new System.EventHandler(this.lblAssunto_Click);
             // 
             // lblData
             // 

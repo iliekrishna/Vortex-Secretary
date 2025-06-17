@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace Secretary.Forms
         public Historico()
         {
             InitializeComponent();
+        }
+
+        private void Historico_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }

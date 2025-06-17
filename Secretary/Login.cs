@@ -149,35 +149,41 @@ namespace Secretary
                 {
                     conn.Open();
 
-                    string sql = "SELECT senha FROM t_usuarios WHERE email_usuario = @nome LIMIT 1;";
+                    string sql = "SELECT id_usuario, senha FROM t_usuarios WHERE email_usuario = @nome LIMIT 1;";
+
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@nome", nome);
-                        object result = cmd.ExecuteScalar();
-
-                        if (result != null)
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string senhaHashBanco = result.ToString();
-                            bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
-
-                            if (senhaCorreta)
+                            if (reader.Read())
                             {
-                                Inicial telaInicial = new Inicial(nome);
-                                telaInicial.Show();
-                                this.Hide();
+                                string senhaHashBanco = reader.GetString("senha");
+                                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
+
+                                if (senhaCorreta)
+                                {
+                                    // Corrigido: usa o nome correto da coluna no banco
+                                    int idUsuarioLogado = reader.GetInt32("id_usuario");
+                                    Sessao.UsuarioId = idUsuarioLogado;
+
+                                    Inicial telaInicial = new Inicial(nome);
+                                    telaInicial.Show();
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                             else
                             {
-                                MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
-            }
+                }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);

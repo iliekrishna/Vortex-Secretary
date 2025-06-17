@@ -53,6 +53,13 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblAtendimentos = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbCategoria = new System.Windows.Forms.ComboBox();
+            this.cbVinculo = new System.Windows.Forms.ComboBox();
+            this.cbCurso = new System.Windows.Forms.ComboBox();
             this.tabControlAtendimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).BeginInit();
@@ -71,7 +78,7 @@ namespace Secretary.Forms
             this.tabControlAtendimentos.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlAtendimentos.Name = "tabControlAtendimentos";
             this.tabControlAtendimentos.SelectedIndex = 0;
-            this.tabControlAtendimentos.Size = new System.Drawing.Size(934, 609);
+            this.tabControlAtendimentos.Size = new System.Drawing.Size(1328, 609);
             this.tabControlAtendimentos.TabIndex = 0;
             // 
             // tpagAberto
@@ -83,7 +90,7 @@ namespace Secretary.Forms
             this.tpagAberto.Margin = new System.Windows.Forms.Padding(4);
             this.tpagAberto.Name = "tpagAberto";
             this.tpagAberto.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagAberto.Size = new System.Drawing.Size(926, 578);
+            this.tpagAberto.Size = new System.Drawing.Size(1320, 578);
             this.tpagAberto.TabIndex = 0;
             this.tpagAberto.Text = "Em aberto";
             this.tpagAberto.UseVisualStyleBackColor = true;
@@ -93,11 +100,10 @@ namespace Secretary.Forms
             this.btnSimular.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSimular.Location = new System.Drawing.Point(4, 524);
             this.btnSimular.Name = "btnSimular";
-            this.btnSimular.Size = new System.Drawing.Size(918, 50);
+            this.btnSimular.Size = new System.Drawing.Size(1312, 50);
             this.btnSimular.TabIndex = 9;
             this.btnSimular.Text = "Simular Atendimento";
             this.btnSimular.UseVisualStyleBackColor = true;
-            this.btnSimular.Click += new System.EventHandler(this.btnSimular_Click);
             // 
             // datagvEmAberto
             // 
@@ -117,13 +123,16 @@ namespace Secretary.Forms
             this.datagvEmAberto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.datagvEmAberto.Location = new System.Drawing.Point(4, 4);
             this.datagvEmAberto.Name = "datagvEmAberto";
-            this.datagvEmAberto.Size = new System.Drawing.Size(918, 570);
+            this.datagvEmAberto.ReadOnly = true;
+            this.datagvEmAberto.Size = new System.Drawing.Size(1312, 570);
             this.datagvEmAberto.TabIndex = 2;
+            this.datagvEmAberto.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvEmAberto_CellDoubleClick);
             // 
             // Column1
             // 
             this.Column1.HeaderText = "Nome";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
             // colunaAssunto
             // 
@@ -141,11 +150,13 @@ namespace Secretary.Forms
             // 
             this.colunaID.HeaderText = "ID";
             this.colunaID.Name = "colunaID";
+            this.colunaID.ReadOnly = true;
             // 
             // colunaDetalhes
             // 
             this.colunaDetalhes.HeaderText = "Ação";
             this.colunaDetalhes.Name = "colunaDetalhes";
+            this.colunaDetalhes.ReadOnly = true;
             // 
             // tpagRespondido
             // 
@@ -156,7 +167,7 @@ namespace Secretary.Forms
             this.tpagRespondido.Margin = new System.Windows.Forms.Padding(4);
             this.tpagRespondido.Name = "tpagRespondido";
             this.tpagRespondido.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagRespondido.Size = new System.Drawing.Size(926, 620);
+            this.tpagRespondido.Size = new System.Drawing.Size(1320, 578);
             this.tpagRespondido.TabIndex = 1;
             this.tpagRespondido.Text = "Respondidos";
             this.tpagRespondido.UseVisualStyleBackColor = true;
@@ -179,13 +190,16 @@ namespace Secretary.Forms
             this.datagvRespondidos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.datagvRespondidos.Location = new System.Drawing.Point(4, 4);
             this.datagvRespondidos.Name = "datagvRespondidos";
-            this.datagvRespondidos.Size = new System.Drawing.Size(918, 612);
+            this.datagvRespondidos.ReadOnly = true;
+            this.datagvRespondidos.Size = new System.Drawing.Size(1312, 570);
             this.datagvRespondidos.TabIndex = 5;
+            this.datagvRespondidos.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvRespondidos_CellDoubleClick);
             // 
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.HeaderText = "Nome";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn7
             // 
@@ -203,11 +217,13 @@ namespace Secretary.Forms
             // 
             this.dataGridViewTextBoxColumn9.HeaderText = "ID";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "Status";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
             // 
             // dataGridView1
             // 
@@ -264,19 +280,96 @@ namespace Secretary.Forms
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.cbCategoria);
+            this.panel1.Controls.Add(this.cbVinculo);
+            this.panel1.Controls.Add(this.cbCurso);
             this.panel1.Controls.Add(this.lblAtendimentos);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(20, 20);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(30);
-            this.panel1.Size = new System.Drawing.Size(934, 100);
+            this.panel1.Size = new System.Drawing.Size(1328, 100);
             this.panel1.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(936, 37);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 18);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Categoria:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(628, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(126, 18);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Tipo de Vinculo:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(343, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 18);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Curso:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 15.75F);
+            this.label1.Location = new System.Drawing.Point(250, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 25);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Filtros:";
+            // 
+            // cbCategoria
+            // 
+            this.cbCategoria.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCategoria.FormattingEnabled = true;
+            this.cbCategoria.Location = new System.Drawing.Point(1029, 34);
+            this.cbCategoria.Name = "cbCategoria";
+            this.cbCategoria.Size = new System.Drawing.Size(212, 26);
+            this.cbCategoria.TabIndex = 11;
+            // 
+            // cbVinculo
+            // 
+            this.cbVinculo.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbVinculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVinculo.FormattingEnabled = true;
+            this.cbVinculo.Location = new System.Drawing.Point(760, 34);
+            this.cbVinculo.Name = "cbVinculo";
+            this.cbVinculo.Size = new System.Drawing.Size(170, 26);
+            this.cbVinculo.TabIndex = 10;
+            this.cbVinculo.SelectedIndexChanged += new System.EventHandler(this.cbVinculo_SelectedIndexChanged);
+            // 
+            // cbCurso
+            // 
+            this.cbCurso.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCurso.FormattingEnabled = true;
+            this.cbCurso.Location = new System.Drawing.Point(408, 34);
+            this.cbCurso.Name = "cbCurso";
+            this.cbCurso.Size = new System.Drawing.Size(214, 26);
+            this.cbCurso.TabIndex = 9;
             // 
             // Atendimentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 749);
+            this.ClientSize = new System.Drawing.Size(1368, 749);
             this.Controls.Add(this.tabControlAtendimentos);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -322,5 +415,12 @@ namespace Secretary.Forms
         private System.Windows.Forms.Label lblAtendimentos;
         private System.Windows.Forms.Button btnSimular;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox cbCategoria;
+        private System.Windows.Forms.ComboBox cbVinculo;
+        private System.Windows.Forms.ComboBox cbCurso;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
