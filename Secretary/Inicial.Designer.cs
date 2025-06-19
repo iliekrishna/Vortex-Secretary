@@ -454,19 +454,19 @@ namespace Secretary
             this.trocarUsuárioToolStripMenuItem,
             this.trocarLoginToolStripMenuItem});
             this.menuOpcoes.Name = "menuOpcoes";
-            this.menuOpcoes.Size = new System.Drawing.Size(170, 48);
+            this.menuOpcoes.Size = new System.Drawing.Size(172, 48);
             // 
             // trocarUsuárioToolStripMenuItem
             // 
             this.trocarUsuárioToolStripMenuItem.Name = "trocarUsuárioToolStripMenuItem";
-            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.trocarUsuárioToolStripMenuItem.Text = "👤 Visualizar perfil ";
             this.trocarUsuárioToolStripMenuItem.Click += new System.EventHandler(this.trocarUsuárioToolStripMenuItem_Click);
             // 
             // trocarLoginToolStripMenuItem
             // 
             this.trocarLoginToolStripMenuItem.Name = "trocarLoginToolStripMenuItem";
-            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.trocarLoginToolStripMenuItem.Text = "🚪 Sair";
             this.trocarLoginToolStripMenuItem.Click += new System.EventHandler(this.trocarLoginToolStripMenuItem_Click);
             // 
@@ -492,7 +492,7 @@ namespace Secretary
             // 
             // panelPrincipal
             // 
-            this.panelPrincipal.BackColor = System.Drawing.Color.Gainsboro;
+            this.panelPrincipal.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelPrincipal.ContextMenuStrip = this.menuOpcoes;
             this.panelPrincipal.Controls.Add(this.panelDivisor2);
             this.panelPrincipal.Controls.Add(this.lblCanceladas);

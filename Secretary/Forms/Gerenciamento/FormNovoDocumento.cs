@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Secretary.Models;
+using Secretary.DAO;
+using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Secretary.Forms.Gerenciamento
 {
@@ -18,15 +12,18 @@ namespace Secretary.Forms.Gerenciamento
             InitializeComponent();
         }
 
-        private void FormNovoDocumento_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
             string nome = txtNomeDoc.Text.Trim();
             string descricao = txtDescricao.Text.Trim();
+
+            DocumentoDAO dao = new DocumentoDAO(); // ✅ Criar primeiro
+
+            if (dao.ExisteDocumento(nome))
+            {
+                MessageBox.Show("Já existe um documento com esse nome.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(descricao))
             {
@@ -34,35 +31,22 @@ namespace Secretary.Forms.Gerenciamento
                 return;
             }
 
-            try
+            DocumentoDisponivel novoDoc = new DocumentoDisponivel
             {
-                using (var conexao = ConexaoBD.ObterConexao())
-                {
-                    string query = @"INSERT INTO t_disponibilidade_doc (nome_doc, descricao, status_atual) 
-                             VALUES (@nome, @descricao, 'Disponível')";
+                Nome = nome,
+                Descricao = descricao
+            };
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conexao))
-                    {
-                        cmd.Parameters.AddWithValue("@nome", nome);
-                        cmd.Parameters.AddWithValue("@descricao", descricao);
+            bool sucesso = dao.CadastrarDocumento(novoDoc);
 
-                        int linhasAfetadas = cmd.ExecuteNonQuery();
-
-                        if (linhasAfetadas > 0)
-                        {
-                            MessageBox.Show("Documento adicionado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Close(); // Fecha o formulário após adicionar
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nenhum registro foi inserido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                }
+            if (sucesso)
+            {
+                MessageBox.Show("Documento adicionado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro ao adicionar documento:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao adicionar o documento.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

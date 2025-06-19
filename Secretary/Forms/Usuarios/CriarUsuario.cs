@@ -1,39 +1,49 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Secretary.Models;
+using Secretary.DAO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
-
     public partial class CriarUsuario : Form
     {
 
+        private const string PlaceholderNome = "Digite o nome completo";
+        private const string PlaceholderEmail = "Digite o e-mail";
+        private const string PlaceholderSenha = "Digite a senha";
         public CriarUsuario()
         {
             InitializeComponent();
 
-            // Define o texto padrão e a cor cinza no campo de nome
-            txtNome.Text = "Digite o nome completo";
-            txtNome.ForeColor = Color.Gray;
-
-            // Define o texto padrão e a cor cinza no campo de email
-            txtEmail.Text = "Digite o e-mail";
-            txtEmail.ForeColor = Color.Gray;
-
-            // Define o texto padrão e a cor cinza no campo de senha
-            txtSenha.Text = "Digite a senha";
-            txtSenha.ForeColor = Color.Gray;
-
+            AplicarPlaceholder(txtNome, PlaceholderNome);
+            AplicarPlaceholder(txtEmail, PlaceholderEmail);
+            AplicarPlaceholder(txtSenha, PlaceholderSenha);
         }
 
-        
+        private void AplicarPlaceholder(TextBox textBox, string placeholder)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = placeholder;
+                textBox.ForeColor = Color.Gray;
+                if (textBox == txtSenha)
+                    textBox.UseSystemPasswordChar = false;
+            }
+        }
+
+        private void RemoverPlaceholder(TextBox textBox, string placeholder)
+        {
+            if (textBox.Text == placeholder)
+            {
+                textBox.Text = "";
+                textBox.ForeColor = Color.Black;
+                if (textBox == txtSenha)
+                    textBox.UseSystemPasswordChar = true;
+            }
+            if (textBox == txtSenha)
+                textBox.UseSystemPasswordChar = !cboxMostrarSenha.Checked;
+        }
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
@@ -42,113 +52,101 @@ namespace Secretary.Forms
             string senha = txtSenha.Text;
             string tipoSelecionado = cboxTipoUsuario.SelectedItem?.ToString();
 
-            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(senha) || string.IsNullOrWhiteSpace(tipoSelecionado))
+            if (nome == PlaceholderNome || email == PlaceholderEmail || senha == PlaceholderSenha)
+            {
+                MessageBox.Show("Preencha todos os campos corretamente!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(nome) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(senha) ||
+                string.IsNullOrWhiteSpace(tipoSelecionado))
             {
                 MessageBox.Show("Preencha todos os campos!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string tipoUsuario = tipoSelecionado == "Administrador" ? "ADM" : "USER";
-            string senhaHash = BCrypt.Net.BCrypt.HashPassword(senha);
-
-            try
+            if (senha.Length < 6)
             {
-                using (MySqlConnection conn = ConexaoBD.ObterConexao())
-                {
-                    string sql = @"INSERT INTO t_usuarios 
-                        (nome_usuario, email_usuario, senha, tipo_perfil, criado_em) 
-                        VALUES (@nome, @email, @senha, @tipo, NOW())";
-
-
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@nome", nome);
-                        cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@senha", senhaHash);
-                        cmd.Parameters.AddWithValue("@tipo", tipoUsuario);
-
-                        int linhasAfetadas = cmd.ExecuteNonQuery();
-
-                        if (linhasAfetadas > 0)
-                        {
-                            MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            txtNome.Clear();
-                            txtEmail.Clear();
-                            txtSenha.Clear();
-                            cboxTipoUsuario.SelectedIndex = -1;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Falha ao cadastrar o usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
+                MessageBox.Show("A senha deve ter pelo menos 6 caracteres.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (Exception ex)
+
+            string tipoUsuario = tipoSelecionado == "Administrador" ? "ADM" : "USER";
+
+            Usuario novoUsuario = new Usuario
             {
-                MessageBox.Show("Erro ao cadastrar usuário: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Nome = nome,
+                Email = email,
+                Senha = senha, // A DAO se encarrega de aplicar o hash
+                TipoPerfil = tipoUsuario
+            };
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if (usuarioDAO.EmailExiste(email))
+            {
+                MessageBox.Show("E-mail já cadastrado!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool sucesso = usuarioDAO.CadastrarUsuario(novoUsuario);
+
+            if (sucesso)
+            {
+                MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtNome.Clear();
+                txtEmail.Clear();
+                txtSenha.Clear();
+                cboxTipoUsuario.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("Falha ao cadastrar o usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void txtNome_Enter(object sender, EventArgs e)
         {
-            // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtNome.Text == "Digite o nome completo")
-            {
-                txtNome.Text = "";
-                txtNome.ForeColor = Color.Black;
-            }
+            RemoverPlaceholder(txtNome, PlaceholderNome);
         }
 
         private void txtNome_Leave(object sender, EventArgs e)
         {
-            // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
-            if (string.IsNullOrWhiteSpace(txtNome.Text))
-            {
-                txtNome.Text = "Digite o nome completo";
-                txtNome.ForeColor = Color.Gray;
-            }
+            AplicarPlaceholder(txtNome, PlaceholderNome);
         }
 
         private void txtEmail_Enter(object sender, EventArgs e)
         {
-            // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtEmail.Text == "Digite o e-mail")
-            {
-                txtEmail.Text = "";
-                txtEmail.ForeColor = Color.Black;
-            }
+            RemoverPlaceholder(txtEmail, PlaceholderEmail);
         }
 
         private void txtEmail_Leave(object sender, EventArgs e)
         {
-            // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
-            if (string.IsNullOrWhiteSpace(txtEmail.Text))
-            {
-                txtEmail.Text = "Digite o e-mail";
-                txtEmail.ForeColor = Color.Gray;
-            }
+            AplicarPlaceholder(txtEmail, PlaceholderEmail);
         }
 
         private void txtSenha_Enter(object sender, EventArgs e)
         {
-            // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtSenha.Text == "Digite a senha")
-            {
-                txtSenha.Text = "";
-                txtSenha.ForeColor = Color.Black;
-            }
+            RemoverPlaceholder(txtSenha, PlaceholderSenha);
         }
 
         private void txtSenha_Leave(object sender, EventArgs e)
         {
-            // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
+            AplicarPlaceholder(txtSenha, PlaceholderSenha);
+
             if (string.IsNullOrWhiteSpace(txtSenha.Text))
             {
-                txtSenha.Text = "Digite a senha";
+                txtSenha.Text = PlaceholderSenha;
                 txtSenha.ForeColor = Color.Gray;
+                txtSenha.UseSystemPasswordChar = false;
             }
+        }
+
+        private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
+        {
+            if (txtSenha.Text != PlaceholderSenha)
+                txtSenha.UseSystemPasswordChar = !cboxMostrarSenha.Checked;
         }
     }
 }

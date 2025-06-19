@@ -79,7 +79,7 @@ namespace Secretary.Forms
             this.lblTitulo.Location = new System.Drawing.Point(53, 23);
             this.lblTitulo.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(229, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(228, 32);
             this.lblTitulo.TabIndex = 13;
             this.lblTitulo.Text = "Editar Usuário";
             // 
@@ -296,6 +296,7 @@ namespace Secretary.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(884, 461);
             this.Controls.Add(this.btnExcluirUsuario);
             this.Controls.Add(this.panelAlterarSenha);

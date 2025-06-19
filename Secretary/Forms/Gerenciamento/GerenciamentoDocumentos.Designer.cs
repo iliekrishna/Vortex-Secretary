@@ -83,6 +83,7 @@ namespace Secretary.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1280, 595);
             this.Controls.Add(this.panelGerenciamentoItens);
             this.Controls.Add(this.panelGerenciamentoForms);

@@ -51,7 +51,7 @@
             // btnSalvar
             // 
             this.btnSalvar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Location = new System.Drawing.Point(388, 186);
+            this.btnSalvar.Location = new System.Drawing.Point(304, 190);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(88, 23);
@@ -63,7 +63,7 @@
             // btnExcluirRequerimento
             // 
             this.btnExcluirRequerimento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnExcluirRequerimento.Location = new System.Drawing.Point(296, 186);
+            this.btnExcluirRequerimento.Location = new System.Drawing.Point(396, 190);
             this.btnExcluirRequerimento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnExcluirRequerimento.Name = "btnExcluirRequerimento";
             this.btnExcluirRequerimento.Size = new System.Drawing.Size(84, 23);
@@ -147,6 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(534, 249);
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.rbtnInativo);
@@ -163,7 +164,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormEditarDocumento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Editar Requerimento";
+            this.Text = "Edição";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -15,5 +15,7 @@ namespace Secretary.Models
         public string SenhaHash { get; set; }    // senha (já vem criptografada)
         public string Tipo { get; set; }         // tipo_perfil (ex: ADM, USER)
         public DateTime CriadoEm { get; set; }   // criado_em (data de cadastro)
+        public string Senha { get; set; }        // A senha bruta (usada apenas antes de salvar)
+        public string TipoPerfil { get; set; }
     }
 }

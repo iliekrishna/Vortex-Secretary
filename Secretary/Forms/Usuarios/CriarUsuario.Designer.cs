@@ -43,6 +43,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.cboxMostrarSenha = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblNome
@@ -57,7 +58,7 @@
             // 
             // txtNome
             // 
-            this.txtNome.BackColor = System.Drawing.SystemColors.Control;
+            this.txtNome.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtNome.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNome.Location = new System.Drawing.Point(140, 154);
             this.txtNome.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -70,7 +71,7 @@
             // lblTipo
             // 
             this.lblTipo.AutoSize = true;
-            this.lblTipo.Location = new System.Drawing.Point(77, 282);
+            this.lblTipo.Location = new System.Drawing.Point(77, 283);
             this.lblTipo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblTipo.Name = "lblTipo";
             this.lblTipo.Size = new System.Drawing.Size(50, 18);
@@ -79,7 +80,7 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.BackColor = System.Drawing.SystemColors.Control;
+            this.txtSenha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtSenha.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSenha.Location = new System.Drawing.Point(140, 237);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -91,7 +92,7 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEmail.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Location = new System.Drawing.Point(140, 197);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -127,7 +128,7 @@
             this.cboxTipoUsuario.Items.AddRange(new object[] {
             "Administrador",
             "Usuário Comum"});
-            this.cboxTipoUsuario.Location = new System.Drawing.Point(140, 279);
+            this.cboxTipoUsuario.Location = new System.Drawing.Point(140, 280);
             this.cboxTipoUsuario.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.cboxTipoUsuario.Name = "cboxTipoUsuario";
             this.cboxTipoUsuario.Size = new System.Drawing.Size(199, 26);
@@ -135,7 +136,7 @@
             // 
             // btnCadastrar
             // 
-            this.btnCadastrar.Location = new System.Drawing.Point(462, 311);
+            this.btnCadastrar.Location = new System.Drawing.Point(462, 324);
             this.btnCadastrar.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnCadastrar.Name = "btnCadastrar";
             this.btnCadastrar.Size = new System.Drawing.Size(120, 32);
@@ -162,7 +163,7 @@
             this.lblTitulo.Location = new System.Drawing.Point(62, 24);
             this.lblTitulo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(451, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(450, 32);
             this.lblTitulo.TabIndex = 1;
             this.lblTitulo.Text = "👤 Cadastro de Novo Usuário";
             // 
@@ -198,12 +199,25 @@
             this.panel4.Size = new System.Drawing.Size(440, 1);
             this.panel4.TabIndex = 11;
             // 
+            // cboxMostrarSenha
+            // 
+            this.cboxMostrarSenha.AutoSize = true;
+            this.cboxMostrarSenha.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboxMostrarSenha.Location = new System.Drawing.Point(460, 264);
+            this.cboxMostrarSenha.Name = "cboxMostrarSenha";
+            this.cboxMostrarSenha.Size = new System.Drawing.Size(122, 20);
+            this.cboxMostrarSenha.TabIndex = 12;
+            this.cboxMostrarSenha.Text = "Mostrar Senha";
+            this.cboxMostrarSenha.UseVisualStyleBackColor = true;
+            this.cboxMostrarSenha.CheckedChanged += new System.EventHandler(this.cboxMostrarSenha_CheckedChanged);
+            // 
             // CriarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(673, 380);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(663, 380);
+            this.Controls.Add(this.cboxMostrarSenha);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -247,5 +261,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.CheckBox cboxMostrarSenha;
     }
 }

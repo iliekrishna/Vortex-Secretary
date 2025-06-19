@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Secretary.DAO;
+using Secretary.Models;
+using Secretary.Forms.Gerenciamento;
+
 
 namespace Secretary.Forms
 {
@@ -11,6 +16,7 @@ namespace Secretary.Forms
         public GerenciamentoAdm()
         {
             InitializeComponent();
+            Load += GerenciamentoAdm_Load;
         }
 
         private void GerenciamentoAdm_Load(object sender, EventArgs e)
@@ -19,100 +25,61 @@ namespace Secretary.Forms
             CarregarDocumentosDisponiveis();
         }
 
-        private void btnNovoUsuario_Click_1(object sender, EventArgs e)
-        {
-            Form overlay = new Form
-            {
-                FormBorderStyle = FormBorderStyle.None,
-                BackColor = Color.Black,
-                Opacity = 0.5,
-                StartPosition = FormStartPosition.Manual,
-                Bounds = Screen.PrimaryScreen.Bounds,
-                ShowInTaskbar = false,
-                TopMost = true
-            };
-
-            overlay.Show();
-
-            CriarUsuario chat = new CriarUsuario
-            {
-                StartPosition = FormStartPosition.CenterScreen,
-                TopMost = true
-            };
-
-            chat.ShowDialog();
-            overlay.Close();
-
-            CarregarUsuarios(); // Recarrega após novo usuário
-        }
-
-        // ----------------------------- DOCUMENTOS -----------------------------
+        // --- Seu método para carregar documentos ---
         private void CarregarDocumentosDisponiveis()
         {
             try
             {
                 panelFormularios.Controls.Clear();
 
-                using (var conexao = ConexaoBD.ObterConexao())
+                DocumentoDAO dao = new DocumentoDAO();
+                List<DocumentoDisponivel> documentos = dao.ListarTodos();
+
+                foreach (var doc in documentos)
                 {
-                    string query = "SELECT id_disponibilidade, nome_doc, descricao, status_atual FROM t_disponibilidade_doc";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conexao))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    Panel panelDoc = new Panel
                     {
-                        while (reader.Read())
-                        {
-                            int id = reader.GetInt32("id_disponibilidade");
-                            string nome = reader.GetString("nome_doc");
-                            string descricao = reader.GetString("descricao");
-                            string status = reader.GetString("status_atual");
+                        Name = $"panelDoc{doc.Id}",
+                        Size = new Size(1219, 50),
+                        Dock = DockStyle.Top,
+                        Padding = new Padding(5, 10, 300, 15),
+                        BackColor = Color.Transparent
+                    };
 
-                            Panel panelDoc = new Panel
-                            {
-                                Name = $"panelDoc{id}",
-                                Size = new Size(1219, 50),
-                                Dock = DockStyle.Top,
-                                Padding = new Padding(5, 10, 300, 15),
-                                BackColor = Color.Transparent
-                            };
+                    Label lblNome = new Label
+                    {
+                        Text = doc.Nome,
+                        AutoSize = true,
+                        Dock = DockStyle.Left,
+                        Padding = new Padding(70, 5, 0, 0),
+                        Font = new Font("Verdana", 10F, FontStyle.Bold)
+                    };
 
-                            Label lblNome = new Label
-                            {
-                                Text = nome,
-                                AutoSize = true,
-                                Dock = DockStyle.Left,
-                                Padding = new Padding(70, 5, 0, 0),
-                                Font = new Font("Verdana", 10F)
-                            };
+                    Label lblStatus = new Label
+                    {
+                        Text = doc.StatusAtual,
+                        ForeColor = doc.StatusAtual == "Disponível" ? Color.Green : Color.Red,
+                        AutoSize = true,
+                        Dock = DockStyle.Right,
+                        Padding = new Padding(15, 5, 120, 0),
+                        Font = new Font("Verdana", 9F, FontStyle.Regular)
+                    };
 
-                            Label lblStatus = new Label
-                            {
-                                Text = status, // "Disponível" ou "Indisponível"
-                                ForeColor = status == "Disponível" ? Color.Green : Color.Red,
-                                AutoSize = true,
-                                Dock = DockStyle.Right,
-                                Padding = new Padding(15, 5, 120, 0),
-                                Font = new Font("Verdana", 9F, FontStyle.Regular)
-                            };
+                    Button btnEditar = new Button
+                    {
+                        Text = "Editar detalhes",
+                        Font = new Font("Verdana", 9.75F),
+                        Dock = DockStyle.Right,
+                        Size = new Size(123, 25),
+                        Tag = doc
+                    };
+                    btnEditar.Click += BtnEditar_Click;
 
-                            Button btnEditar = new Button
-                            {
-                                Text = "Editar detalhes",
-                                Font = new Font("Verdana", 9.75F),
-                                Dock = DockStyle.Right,
-                                Size = new Size(123, 25),
-                                Tag = new DocumentoInfo { Id = id, Nome = nome, Descricao = descricao, Status = status }
-                            };
-
-                            btnEditar.Click += BtnEditarDocumento_Click;
-
-                            panelDoc.Controls.Add(lblNome);
-                            panelDoc.Controls.Add(lblStatus);
-                            panelDoc.Controls.Add(lblNome);
-                            panelDoc.Controls.Add(btnEditar);
-                            panelFormularios.Controls.Add(panelDoc);
-                            panelFormularios.Controls.SetChildIndex(panelDoc, 0);
-                        }
-                    }
+                    panelDoc.Controls.Add(lblNome);
+                    panelDoc.Controls.Add(lblStatus);
+                    panelDoc.Controls.Add(btnEditar);
+                    panelFormularios.Controls.Add(panelDoc);
+                    panelFormularios.Controls.SetChildIndex(panelDoc, 0);
                 }
 
                 AdicionarBotaoNovoDocumento();
@@ -121,16 +88,6 @@ namespace Secretary.Forms
             {
                 MessageBox.Show("Erro ao carregar documentos: " + ex.Message);
             }
-        }
-
-        private void BtnEditarDocumento_Click(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-            DocumentoInfo doc = btn.Tag as DocumentoInfo;
-
-            var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.Status);
-            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
-            form.ShowDialog();
         }
 
         private void AdicionarBotaoNovoDocumento()
@@ -152,21 +109,33 @@ namespace Secretary.Forms
                 Dock = DockStyle.Left,
                 FlatStyle = FlatStyle.Standard
             };
-            btnNovoDocumento.Click += (s, e) =>
-            {
-                var form = new FormEditarDocumento(0, "", "", "Ativo");
-                form.FormClosed += (x, y) => CarregarDocumentosDisponiveis();
-                form.ShowDialog();
-            };
+
+            // Aqui está o evento que abre o formulário correto:
+            btnNovoDocumento.Click += BtnNovoDocumento_Click;
 
             panelBotao.Controls.Add(btnNovoDocumento);
             panelFormularios.Controls.Add(panelBotao);
         }
+
         private void BtnNovoDocumento_Click(object sender, EventArgs e)
         {
-            Gerenciamento.FormNovoDocumento form = new Gerenciamento.FormNovoDocumento();
-            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis(); // Atualiza a lista
+            // Instancia e abre seu formulário de cadastro de documento
+            var form = new Secretary.Forms.Gerenciamento.FormNovoDocumento();
+            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
             form.ShowDialog();
+        }      
+
+        private void BtnEditar_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            DocumentoDisponivel doc = btn.Tag as DocumentoDisponivel;
+
+            if (doc != null)
+            {
+                var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.StatusAtual);
+                form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
+                form.ShowDialog();
+            }
         }
 
         // ----------------------------- USUÁRIOS -----------------------------
@@ -206,12 +175,12 @@ namespace Secretary.Forms
 
                     Label lblInfo = new Label
                     {
-                        Text = $" - {email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
-                        ForeColor = Color.Gray,
+                        Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
                         AutoSize = true,
-                        Dock = DockStyle.Left,
-                        Padding = new Padding(5, 5, 0, 0),
-                        Font = new Font("Verdana", 10F)
+                        Dock = DockStyle.Right,
+                        Padding = new Padding(15, 5, 80, 0),
+                        ForeColor = Color.Gray,
+                        Font = new Font("Verdana", 9F, FontStyle.Regular)
                     };
 
                     Button btn = new Button
@@ -224,10 +193,9 @@ namespace Secretary.Forms
                     };
                     btn.Click += BtnEditarUsuario_Click;
 
-                    panel.Controls.Add(btn);
-                    panel.Controls.Add(lbl);
                     panel.Controls.Add(lblInfo);
                     panel.Controls.Add(lbl);
+                    panel.Controls.Add(btn);
                     panelUsuarios.Controls.Add(panel);
                     panelUsuarios.Controls.SetChildIndex(panel, 0);
                 }
@@ -239,6 +207,7 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao carregar usuários: " + ex.Message);
             }
         }
+
         private void BtnEditarUsuario_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -283,8 +252,8 @@ namespace Secretary.Forms
             {
                 Name = "panelBotaoNovoUsu",
                 Dock = DockStyle.Bottom,
-                Padding = new Padding(80, 15, 15, 15),
-                Size = new Size(1219, 62),
+                Padding = new Padding(80, 25, 15, 25),
+                Size = new Size(1219, 80),
                 BackColor = Color.Transparent
             };
 
@@ -296,7 +265,13 @@ namespace Secretary.Forms
                 Dock = DockStyle.Left,
                 FlatStyle = FlatStyle.Standard
             };
-            btnNovoUsuario.Click += btnNovoUsuario_Click_1;
+
+            btnNovoUsuario.Click += (s, e) =>
+            {
+                var form = new Secretary.Forms.CriarUsuario();
+                form.FormClosed += (x, y) => CarregarUsuarios(); // Atualiza a lista após cadastrar
+                form.ShowDialog();
+            };
 
             panelBotao.Controls.Add(btnNovoUsuario);
             panelUsuarios.Controls.Add(panelBotao);
@@ -304,18 +279,9 @@ namespace Secretary.Forms
 
         private void btnAdicionarRequerimento_Click(object sender, EventArgs e)
         {
-             Gerenciamento.FormNovoDocumento form = new Gerenciamento.FormNovoDocumento();
-             form.FormClosed += (s, args) => CarregarDocumentosDisponiveis(); // Atualiza a lista
-             form.ShowDialog();           
-        }
-
-        // Classe auxiliar segura para editar documentos
-        private class DocumentoInfo
-        {
-            public int Id { get; set; }
-            public string Nome { get; set; }
-            public string Descricao { get; set; }
-            public string Status { get; set; }
+            Gerenciamento.FormNovoDocumento form = new Gerenciamento.FormNovoDocumento();
+            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis(); // Atualiza a lista
+            form.ShowDialog();
         }
     }
 }

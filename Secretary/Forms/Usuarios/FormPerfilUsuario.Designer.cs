@@ -57,7 +57,7 @@
             this.lblNome.Location = new System.Drawing.Point(267, 105);
             this.lblNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(50, 16);
+            this.lblNome.Size = new System.Drawing.Size(49, 16);
             this.lblNome.TabIndex = 4;
             this.lblNome.Text = "Nome:";
             // 
@@ -67,7 +67,7 @@
             this.label1.Location = new System.Drawing.Point(267, 136);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 16);
+            this.label1.Size = new System.Drawing.Size(47, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "Login:";
             // 
@@ -113,7 +113,7 @@
             this.lblSoliAtendidas.Location = new System.Drawing.Point(267, 177);
             this.lblSoliAtendidas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSoliAtendidas.Name = "lblSoliAtendidas";
-            this.lblSoliAtendidas.Size = new System.Drawing.Size(162, 16);
+            this.lblSoliAtendidas.Size = new System.Drawing.Size(161, 16);
             this.lblSoliAtendidas.TabIndex = 21;
             this.lblSoliAtendidas.Text = "Solicitações atendidas:";
             // 
@@ -121,6 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(784, 261);
             this.Controls.Add(this.txtSoliAtendidas);
             this.Controls.Add(this.lblSoliAtendidas);

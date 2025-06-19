@@ -1,94 +1,89 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using Secretary.DAO;
+using Secretary.Models;
+using Secretary.Forms.Gerenciamento;  
 
 namespace Secretary.Forms
 {
     public partial class GerenciamentoDocumentos : Form
     {
-        private void Gerenciamento_Load(object sender, EventArgs e)
-        {
-            CarregarDocumentosDisponiveis();
-        }
-
         public GerenciamentoDocumentos()
         {
             InitializeComponent();
-                    Load += Gerenciamento_Load;
+            Load += Gerenciamento_Load;
+        }
+
+        private void Gerenciamento_Load(object sender, EventArgs e)
+        {
+            CarregarDocumentosDisponiveis();
         }
 
         private void CarregarDocumentosDisponiveis()
         {
             try
             {
-                panelFormularios.Controls.Clear(); // Limpa tudo antes de começar
+                // Remove painel do botão "Novo Documento" para não duplicar
+                var painelBotaoExistente = panelFormularios.Controls.Find("panelBotaoNovoDoc", false);
+                if (painelBotaoExistente.Length > 0)
+                    panelFormularios.Controls.Remove(painelBotaoExistente[0]);
 
-                using (var conexao = ConexaoBD.ObterConexao())
+                panelFormularios.Controls.Clear();
+
+                DocumentoDAO dao = new DocumentoDAO();
+                List<DocumentoDisponivel> documentos = dao.ListarTodos();
+
+                foreach (var doc in documentos)
                 {
-                    string query = "SELECT id_disponibilidade, nome_doc, descricao, status_atual FROM t_disponibilidade_doc";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conexao))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    Panel panelDoc = new Panel
                     {
-                        while (reader.Read())
-                        {
-                            int id = reader.GetInt32("id_disponibilidade");
-                            string nome = reader.GetString("nome_doc");
-                            string descricao = reader.GetString("descricao");
-                            string status = reader.GetString("status_atual");
+                        Name = $"panelDoc{doc.Id}",
+                        Size = new Size(1219, 50),
+                        Dock = DockStyle.Top,
+                        Padding = new Padding(5, 10, 300, 15),
+                        BackColor = Color.Transparent
+                    };
 
-                            Panel panelDoc = new Panel
-                            {
-                                Name = $"panelDoc{id}",
-                                Size = new Size(1219, 50),
-                                Dock = DockStyle.Top,
-                                Padding = new Padding(5, 10, 300, 15),
-                                BackColor = Color.Transparent
-                            };
+                    Label lblNome = new Label
+                    {
+                        Text = doc.Nome,
+                        AutoSize = true,
+                        Dock = DockStyle.Left,
+                        Padding = new Padding(70, 5, 0, 0),
+                        Font = new Font("Verdana", 10F)
+                    };
 
-                            Label lblNome = new Label
-                            {
-                                Text = nome,
-                                AutoSize = true,
-                                Dock = DockStyle.Left,
-                                Padding = new Padding(70, 5, 0, 0),
-                                Font = new Font("Verdana", 10F, FontStyle.Bold)
-                            };
+                    Label lblStatus = new Label
+                    {
+                        Text = doc.StatusAtual,
+                        ForeColor = doc.StatusAtual == "Disponível" ? Color.Green : Color.Red,
+                        AutoSize = true,
+                        Dock = DockStyle.Right,
+                        Padding = new Padding(15, 5, 120, 0),
+                        Font = new Font("Verdana", 9F, FontStyle.Regular)
+                    };
 
-                            Label lblStatus = new Label
-                            {
-                                Text = status, // "Disponível" ou "Indisponível"
-                                ForeColor = status == "Disponível" ? Color.Green : Color.Red,
-                                AutoSize = true,
-                                Dock = DockStyle.Right,
-                                Padding = new Padding(15, 5, 120, 0),
-                                Font = new Font("Verdana", 9F, FontStyle.Regular)
-                            };
+                    Button btnEditar = new Button
+                    {
+                        Text = "Editar detalhes",
+                        Font = new Font("Verdana", 9.75F),
+                        Dock = DockStyle.Right,
+                        Size = new Size(123, 25),
+                        Tag = doc
+                    };
+                    btnEditar.Click += BtnEditar_Click;
 
-                            Button btnEditar = new Button
-                            {
-                                Text = "Editar detalhes",
-                                Font = new Font("Verdana", 9.75F),
-                                Dock = DockStyle.Right,
-                                Size = new Size(123, 25),
-                                Tag = new DocumentoInfo { Id = id, Nome = nome, Descricao = descricao, Status = status }
-                            };                           
+                    panelDoc.Controls.Add(lblNome);
+                    panelDoc.Controls.Add(lblStatus);
+                    panelDoc.Controls.Add(btnEditar);
 
-                            btnEditar.Click += BtnEditar_Click;
-
-
-                            panelDoc.Controls.Add(lblNome);
-                            panelDoc.Controls.Add(lblStatus);
-                            panelDoc.Controls.Add(lblNome);
-                            panelDoc.Controls.Add(btnEditar);
-                            panelFormularios.Controls.Add(panelDoc);
-                            panelFormularios.Controls.SetChildIndex(panelDoc, 0); // Adiciona no topo
-                        }
-                    }
+                    panelFormularios.Controls.Add(panelDoc);
+                    panelFormularios.Controls.SetChildIndex(panelDoc, 0); // Adiciona no topo
                 }
 
-                AdicionarBotaoNovoDocumento(); // sempre adiciona só uma vez
+                AdicionarBotaoNovoDocumento();
             }
             catch (Exception ex)
             {
@@ -98,7 +93,6 @@ namespace Secretary.Forms
 
         private void AdicionarBotaoNovoDocumento()
         {
-            // Painel que conterá o botão
             Panel panelBotao = new Panel
             {
                 Name = "panelBotaoNovoDoc",
@@ -125,31 +119,22 @@ namespace Secretary.Forms
 
         private void BtnNovoDocumento_Click(object sender, EventArgs e)
         {
-            Gerenciamento.FormNovoDocumento form = new Gerenciamento.FormNovoDocumento();
-            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis(); // Atualiza a lista
+            FormNovoDocumento form = new FormNovoDocumento();
+            form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
             form.ShowDialog();
         }
 
         private void BtnEditar_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            DocumentoInfo dados = btn.Tag as DocumentoInfo;
+            DocumentoDisponivel doc = btn.Tag as DocumentoDisponivel;
 
-            if (dados != null)
+            if (doc != null)
             {
-                var form = new FormEditarDocumento(dados.Id, dados.Nome, dados.Descricao, dados.Status);
+                var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.StatusAtual);
                 form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
                 form.ShowDialog();
             }
-        }
-
-        // Classe auxiliar para guardar dados do documento (substitui dynamic)
-        private class DocumentoInfo
-        {
-            public int Id { get; set; }
-            public string Nome { get; set; }
-            public string Descricao { get; set; }
-            public string Status { get; set; }
         }
     }
 }

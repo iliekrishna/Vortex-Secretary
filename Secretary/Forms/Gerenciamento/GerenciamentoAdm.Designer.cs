@@ -76,7 +76,7 @@
             this.panelTituloGerenciadorDeUsu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTituloGerenciadorDeUsu.Location = new System.Drawing.Point(20, 460);
             this.panelTituloGerenciadorDeUsu.Name = "panelTituloGerenciadorDeUsu";
-            this.panelTituloGerenciadorDeUsu.Padding = new System.Windows.Forms.Padding(30, 60, 30, 30);
+            this.panelTituloGerenciadorDeUsu.Padding = new System.Windows.Forms.Padding(30, 40, 30, 10);
             this.panelTituloGerenciadorDeUsu.Size = new System.Drawing.Size(1240, 129);
             this.panelTituloGerenciadorDeUsu.TabIndex = 11;
             // 
@@ -85,7 +85,7 @@
             this.lblGerenciamentoDeUsuarios.AutoSize = true;
             this.lblGerenciamentoDeUsuarios.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblGerenciamentoDeUsuarios.Font = new System.Drawing.Font("Verdana", 15.75F);
-            this.lblGerenciamentoDeUsuarios.Location = new System.Drawing.Point(30, 60);
+            this.lblGerenciamentoDeUsuarios.Location = new System.Drawing.Point(30, 40);
             this.lblGerenciamentoDeUsuarios.Name = "lblGerenciamentoDeUsuarios";
             this.lblGerenciamentoDeUsuarios.Size = new System.Drawing.Size(304, 25);
             this.lblGerenciamentoDeUsuarios.TabIndex = 2;
@@ -98,7 +98,9 @@
             this.panelUsuarios.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelUsuarios.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelUsuarios.Location = new System.Drawing.Point(20, 589);
+            this.panelUsuarios.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             this.panelUsuarios.Name = "panelUsuarios";
+            this.panelUsuarios.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
             this.panelUsuarios.Size = new System.Drawing.Size(1240, 329);
             this.panelUsuarios.TabIndex = 12;
             // 
@@ -107,6 +109,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1297, 749);
             this.Controls.Add(this.panelUsuarios);
             this.Controls.Add(this.panelTituloGerenciadorDeUsu);
@@ -115,7 +118,7 @@
             this.Font = new System.Drawing.Font("Verdana", 8.25F);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "GerenciamentoAdm";
-            this.Padding = new System.Windows.Forms.Padding(20);
+            this.Padding = new System.Windows.Forms.Padding(20, 20, 20, 60);
             this.Text = "GerenciamentoAdm";
             this.Load += new System.EventHandler(this.GerenciamentoAdm_Load);
             this.panelTituloGerenciamentoForms.ResumeLayout(false);
