@@ -1,5 +1,5 @@
 ﻿
-namespace SeuProjeto
+namespace Secretary.Forms.Atendimentos
 {
     partial class FormChatAtendimento
     {
@@ -42,7 +42,7 @@ namespace SeuProjeto
             // 
             // lblNome
             // 
-            this.lblNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(48, 30);
@@ -53,7 +53,7 @@ namespace SeuProjeto
             // 
             // lblRA
             // 
-            this.lblRA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblRA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRA.AutoSize = true;
             this.lblRA.Location = new System.Drawing.Point(48, 46);
@@ -64,7 +64,7 @@ namespace SeuProjeto
             // 
             // lblCurso
             // 
-            this.lblCurso.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblCurso.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCurso.AutoSize = true;
             this.lblCurso.Location = new System.Drawing.Point(48, 62);
@@ -75,7 +75,7 @@ namespace SeuProjeto
             // 
             // lblAssunto
             // 
-            this.lblAssunto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblAssunto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAssunto.AutoSize = true;
             this.lblAssunto.Location = new System.Drawing.Point(48, 78);
@@ -87,7 +87,7 @@ namespace SeuProjeto
             // 
             // lblData
             // 
-            this.lblData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblData.AutoSize = true;
             this.lblData.Location = new System.Drawing.Point(48, 94);
@@ -98,7 +98,7 @@ namespace SeuProjeto
             // 
             // txtHistorico
             // 
-            this.txtHistorico.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtHistorico.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHistorico.Location = new System.Drawing.Point(42, 118);
             this.txtHistorico.Multiline = true;
@@ -110,7 +110,7 @@ namespace SeuProjeto
             // 
             // txtResposta
             // 
-            this.txtResposta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtResposta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtResposta.Location = new System.Drawing.Point(42, 274);
             this.txtResposta.Multiline = true;
@@ -158,6 +158,7 @@ namespace SeuProjeto
             this.Name = "FormChatAtendimento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chat de Atendimento";
+            this.Load += new System.EventHandler(this.FormChatAtendimento_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

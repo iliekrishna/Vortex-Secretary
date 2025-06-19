@@ -56,7 +56,7 @@
             this.panelTituloGerenciamentoForms.Location = new System.Drawing.Point(20, 20);
             this.panelTituloGerenciamentoForms.Name = "panelTituloGerenciamentoForms";
             this.panelTituloGerenciamentoForms.Padding = new System.Windows.Forms.Padding(30);
-            this.panelTituloGerenciamentoForms.Size = new System.Drawing.Size(1223, 100);
+            this.panelTituloGerenciamentoForms.Size = new System.Drawing.Size(1240, 100);
             this.panelTituloGerenciamentoForms.TabIndex = 5;
             // 
             // panelFormularios
@@ -67,7 +67,7 @@
             this.panelFormularios.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelFormularios.Location = new System.Drawing.Point(20, 120);
             this.panelFormularios.Name = "panelFormularios";
-            this.panelFormularios.Size = new System.Drawing.Size(1223, 340);
+            this.panelFormularios.Size = new System.Drawing.Size(1240, 340);
             this.panelFormularios.TabIndex = 9;
             // 
             // panelTituloGerenciadorDeUsu
@@ -77,7 +77,7 @@
             this.panelTituloGerenciadorDeUsu.Location = new System.Drawing.Point(20, 460);
             this.panelTituloGerenciadorDeUsu.Name = "panelTituloGerenciadorDeUsu";
             this.panelTituloGerenciadorDeUsu.Padding = new System.Windows.Forms.Padding(30, 60, 30, 30);
-            this.panelTituloGerenciadorDeUsu.Size = new System.Drawing.Size(1223, 129);
+            this.panelTituloGerenciadorDeUsu.Size = new System.Drawing.Size(1240, 129);
             this.panelTituloGerenciadorDeUsu.TabIndex = 11;
             // 
             // lblGerenciamentoDeUsuarios
@@ -99,7 +99,7 @@
             this.panelUsuarios.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelUsuarios.Location = new System.Drawing.Point(20, 589);
             this.panelUsuarios.Name = "panelUsuarios";
-            this.panelUsuarios.Size = new System.Drawing.Size(1223, 329);
+            this.panelUsuarios.Size = new System.Drawing.Size(1240, 329);
             this.panelUsuarios.TabIndex = 12;
             // 
             // GerenciamentoAdm
@@ -107,7 +107,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1280, 749);
+            this.ClientSize = new System.Drawing.Size(1297, 749);
             this.Controls.Add(this.panelUsuarios);
             this.Controls.Add(this.panelTituloGerenciadorDeUsu);
             this.Controls.Add(this.panelFormularios);

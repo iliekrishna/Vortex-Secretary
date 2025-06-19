@@ -1,7 +1,7 @@
 ﻿
 namespace Secretary.Forms
 {
-    partial class Gerenciamento
+    partial class GerenciamentoDocumentos
     {
         /// <summary>
         /// Required designer variable.
@@ -78,7 +78,7 @@ namespace Secretary.Forms
             this.panelFormularios.Size = new System.Drawing.Size(1240, 357);
             this.panelFormularios.TabIndex = 3;
             // 
-            // Gerenciamento
+            // GerenciamentoDocumentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -87,7 +87,7 @@ namespace Secretary.Forms
             this.Controls.Add(this.panelGerenciamentoItens);
             this.Controls.Add(this.panelGerenciamentoForms);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "Gerenciamento";
+            this.Name = "GerenciamentoDocumentos";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Gerenciamento";
             this.Load += new System.EventHandler(this.Gerenciamento_Load);

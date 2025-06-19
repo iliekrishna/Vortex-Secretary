@@ -162,7 +162,7 @@
             this.lblTitulo.Location = new System.Drawing.Point(62, 24);
             this.lblTitulo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(450, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(451, 32);
             this.lblTitulo.TabIndex = 1;
             this.lblTitulo.Text = "👤 Cadastro de Novo Usuário";
             // 

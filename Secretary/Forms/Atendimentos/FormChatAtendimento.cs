@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace SeuProjeto
+namespace Secretary.Forms.Atendimentos
 {
     public partial class FormChatAtendimento : Form
     {
@@ -198,6 +198,11 @@ namespace SeuProjeto
         private void lblAssunto_Click(object sender, EventArgs e)
         {
             // NADA, msm do outro
+        }
+
+        private void FormChatAtendimento_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

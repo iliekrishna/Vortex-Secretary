@@ -13,6 +13,9 @@ using System.Windows.Forms;
 using System.Globalization;
 using Secretary.Forms;
 using System.Security.Cryptography.X509Certificates;
+using Secretary.Forms.Atendimentos;
+using Secretary.Models;
+using Secretary.DAO;
 
 
 namespace Secretary
@@ -23,36 +26,38 @@ namespace Secretary
         private Button currentButton;
         private Form activeForm;
 
-        // Construtor que recebe o nome do usuário para exibir na tela
-        public Inicial(string loginRecebido)
-        {
-            InitializeComponent();    
-            string loginUsuario = loginRecebido;
-            lblUsuario.Text = loginRecebido;
+        // Armazena o usuário logado
+        private Usuario usuarioLogado;
 
-            
+
+        // Construtor que recebe o nome do usuário para exibir na tela
+        public Inicial(Usuario usuario)
+        {
+            InitializeComponent();
+
+            usuarioLogado = usuario;
+
+            // Usar propriedades do objeto para preencher interface
+            lblUsuario.Text = usuarioLogado.Nome;
 
             // Formatar nome com capitalização correta
             var textoInfo = CultureInfo.CurrentCulture.TextInfo;
 
-            // Exibir nome formatado
-            btnPerfil.Text = "  " + loginUsuario;
+            btnPerfil.Text = "  " + usuarioLogado.Nome;
 
-            // Configurar cultura pt-BR para formatação de data
             CultureInfo cultura = new CultureInfo("pt-BR");
-
-            // Formatar data com a primeira letra maiúscula e horário
             string dataFormatada = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", cultura);
             dataFormatada = char.ToUpper(dataFormatada[0]) + dataFormatada.Substring(1);
             string horario = DateTime.Now.ToString("HH:mm");
             lblDataAtual.Text = $"{dataFormatada} | {horario}";
 
-            // Definir saudação com base na hora
             int hora = DateTime.Now.Hour;
             string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
-            lblSaudacao.Text = $"{saudacao}, {loginUsuario}!";
-            AtualizarContadores();// Só pra ter certeza que vai iniciar junto com o programa. 
+            lblSaudacao.Text = $"{saudacao}, {usuarioLogado.Nome}!";
+
+            AtualizarContadores();
         }
+
         private void Inicial_Load(object sender, EventArgs e)
         {
             AtualizarContadores(); //Vai atualizar os contadores quando iniciar ;)
@@ -63,7 +68,7 @@ namespace Secretary
 
             try
             {
-                using (MySqlConnection conn = ConexaoBD.ObterConexao()) //conexão com o bd
+                using (MySqlConnection conn = ConexaoBD.ObterConexao())
                 {
                     string sql = "SELECT status_doc, COUNT(*) AS total FROM t_requerimentos GROUP BY status_doc";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -91,14 +96,13 @@ namespace Secretary
                     }
                 }
 
-                // Atualiza os labels na interface e exibe a quantidade de solicitações
-                lblNovasSolicitacoes.Text ="Novas Solicitações: " + novas.ToString();
+                lblNovasSolicitacoes.Text = "Novas Solicitações: " + novas.ToString();
                 lblEmAndamento.Text = "Em Andamento: " + andamento.ToString();
                 lblCanceladas.Text = "Canceladas: " + canceladas.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar os contadores: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); //Mensagem caso não carregue os contadores
+                MessageBox.Show("Erro ao carregar os contadores: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -210,7 +214,7 @@ namespace Secretary
 
             //MessageBox.Show("ID do usuário na sessão: " + Sessao.UsuarioId);
             
-            OpenChildForm(new Forms.Atendimentos(Sessao.UsuarioId), sender);
+            OpenChildForm(new Forms.Atendimentos.Atendimentos(Sessao.UsuarioId), sender);
             ActivateButton(sender);
         }
 
@@ -223,49 +227,20 @@ namespace Secretary
 
         // Evento do botão Gerenciamento: abre formulário Gerenciamento e ativa botão visualmente
         private void btnGerenciamento_Click(object sender, EventArgs e)
-        {   
-            string server = "162.241.40.214";
-            string port = "3306";
-            string user = "miltonb_userVortex";
-            string password = "gWLQqb~dRO0M";
-            string database = "miltonb_fatec_solicitacoes";
-
-            // Conexão com banco só acontece se todos os campos estiverem preenchidos
-            string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
-
-            string email_usu_logago = lblUsuario.Text;
-
-            try
+        {
+            if (usuarioLogado.Tipo == "ADM")
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string sql = "SELECT tipo_perfil FROM t_usuarios WHERE email_usuario = @email_usu_logago LIMIT 1;";
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@email_usu_logago", email_usu_logago);
-                        object result = cmd.ExecuteScalar();
-
-                        if (result.ToString() == "ADM")
-                        {
-                            OpenChildForm(new Forms.GerenciamentoAdm(), sender);
-                            ActivateButton(sender);
-                        }
-                        else
-                        {
-                            OpenChildForm(new Forms.Gerenciamento(), sender);
-                            ActivateButton(sender);
-                        }
-                    }
-                }
+                OpenChildForm(new Forms.GerenciamentoAdm(), sender);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                OpenChildForm(new Forms.GerenciamentoDocumentos(), sender);
             }
+
+            ActivateButton(sender);
         }
-        
+
+
         // Evento do botão Recentes (segunda definição, pode ser duplicado no designer): abre formulário Recentes e ativa botão
         private void btnRecentes_Click_1(object sender, EventArgs e)
         {
@@ -372,11 +347,6 @@ namespace Secretary
         private void btnSair_Click_1(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void pboxNovasSolicitacoes_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

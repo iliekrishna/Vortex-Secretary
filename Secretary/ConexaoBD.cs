@@ -17,13 +17,13 @@ namespace Secretary
         public static MySqlConnection ObterConexao()
         {
             var conexao = new MySqlConnection(connectionString);
-            conexao.Open();
+            conexao.Open(); // Abre a conexão aqui
             return conexao;
         }
 
         public static DataTable ExecutarConsulta(string query)
         {
-            using (MySqlConnection conexao = ObterConexao())
+            using (MySqlConnection conexao = ObterConexao()) // já está aberta
             {
                 MySqlCommand cmd = new MySqlCommand(query, conexao);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);

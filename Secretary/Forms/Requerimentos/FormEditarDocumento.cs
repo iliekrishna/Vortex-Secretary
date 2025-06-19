@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using SeuProjeto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,6 +23,14 @@ namespace Secretary.Forms
             txtNomeRequerimento.Text = nome;
             txtPrazo.Text = descricao;
 
+            if (status == "Disponível" || status == "Ativo")
+            {
+                rbtnAtivo.Checked = true;
+            }
+            else
+            {
+                rbtnInativo.Checked = true;
+            }
 
         }
 
@@ -31,7 +38,7 @@ namespace Secretary.Forms
         {
             string novoNome = txtNomeRequerimento.Text.Trim();
             string novaDescricao = txtPrazo.Text.Trim();
-            string novoStatus = rbtnAtivo.Checked ? "Ativo" : "Inativo";
+            string novoStatus = rbtnAtivo.Checked ? "Disponível" : "Indisponível";
 
             using (var conexao = ConexaoBD.ObterConexao())
             {
@@ -41,6 +48,7 @@ namespace Secretary.Forms
                 cmd.Parameters.AddWithValue("@desc", novaDescricao);
                 cmd.Parameters.AddWithValue("@status", novoStatus);
                 cmd.Parameters.AddWithValue("@id", idDocumento);
+
                 cmd.ExecuteNonQuery();
             }
 

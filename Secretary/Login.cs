@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using BCrypt.Net;
+using Secretary.Models;
+using Secretary.DAO;
+
 
 
 namespace Secretary
@@ -38,9 +41,6 @@ namespace Secretary
         public FormLogin()
         {
             InitializeComponent();
-
-            string senha = txtSenha.Text;
-            string senhaHash = BCrypt.Net.BCrypt.HashPassword(senha);
 
             // Define o texto padrão e a cor cinza no campo de usuário
             txtUsuario.Text = "Inserir e-mail";
@@ -116,44 +116,26 @@ namespace Secretary
         // Evento de clique no botão "Entrar"
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-
-            string nome = txtUsuario.Text.Trim();
+            string emailDigitado = txtUsuario.Text.Trim();
             string senhaDigitada = txtSenha.Text;
 
-            bool usuarioVazio = string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "Inserir e-mail";
-            bool senhaVazia = string.IsNullOrWhiteSpace(txtSenha.Text) || txtSenha.Text == "Senha";
-
-            if (usuarioVazio && senhaVazia)
+            if (string.IsNullOrWhiteSpace(emailDigitado) || emailDigitado == "Inserir e-mail" ||
+                string.IsNullOrWhiteSpace(senhaDigitada) || senhaDigitada == "Senha")
             {
                 MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else if (usuarioVazio)
-            {
-                MessageBox.Show("Informe o e-mail.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else if (senhaVazia)
-            {
-                MessageBox.Show("Insira a senha.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-            // Conexão com banco só acontece se todos os campos estiverem preenchidos
-            string connectionString = $"server={server};port={port};user={user};password={password};database={database};";
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (MySqlConnection conn = ConexaoBD.ObterConexao())
                 {
-                    conn.Open();
-
-                    string sql = "SELECT id_usuario, senha FROM t_usuarios WHERE email_usuario = @nome LIMIT 1;";
-
+                    // aqui a conexão já estará aberta
+                    string sql = "SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil FROM t_usuarios WHERE email_usuario = @email LIMIT 1;";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", nome);
+                        cmd.Parameters.AddWithValue("@email", emailDigitado);
+
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
@@ -163,13 +145,20 @@ namespace Secretary
 
                                 if (senhaCorreta)
                                 {
-                                    // Corrigido: usa o nome correto da coluna no banco
-                                    int idUsuarioLogado = reader.GetInt32("id_usuario");
-                                    Sessao.UsuarioId = idUsuarioLogado;
+                                    Sessao.UsuarioId = reader.GetInt32("id_usuario");
+                                    Sessao.UsuarioLogado = new Usuario
+                                    {
+                                        Id = reader.GetInt32("id_usuario"),
+                                        Nome = reader.GetString("nome_usuario"),
+                                        Email = reader.GetString("email_usuario"),
+                                        SenhaHash = senhaHashBanco,
+                                        Tipo = reader.GetString("tipo_perfil")
+                                    };
 
-                                    Inicial telaInicial = new Inicial(nome);
-                                    telaInicial.Show();
                                     this.Hide();
+                                    Inicial telaInicial = new Inicial(Sessao.UsuarioLogado);
+                                    telaInicial.Show();
+
                                 }
                                 else
                                 {
@@ -180,14 +169,16 @@ namespace Secretary
                             {
                                 MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
+
                         }
                     }
                 }
-                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
 

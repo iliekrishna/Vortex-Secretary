@@ -1,5 +1,5 @@
 ﻿
-namespace Secretary.Forms
+namespace Secretary.Forms.Atendimentos
 {
     partial class Atendimentos
     {
@@ -303,7 +303,6 @@ namespace Secretary.Forms
             this.label4.Size = new System.Drawing.Size(87, 18);
             this.label4.TabIndex = 15;
             this.label4.Text = "Categoria:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -322,7 +321,6 @@ namespace Secretary.Forms
             this.label2.Size = new System.Drawing.Size(59, 18);
             this.label2.TabIndex = 13;
             this.label2.Text = "Curso:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -353,7 +351,6 @@ namespace Secretary.Forms
             this.cbVinculo.Name = "cbVinculo";
             this.cbVinculo.Size = new System.Drawing.Size(170, 26);
             this.cbVinculo.TabIndex = 10;
-            this.cbVinculo.SelectedIndexChanged += new System.EventHandler(this.cbVinculo_SelectedIndexChanged);
             // 
             // cbCurso
             // 
@@ -364,6 +361,7 @@ namespace Secretary.Forms
             this.cbCurso.Name = "cbCurso";
             this.cbCurso.Size = new System.Drawing.Size(214, 26);
             this.cbCurso.TabIndex = 9;
+            this.cbCurso.SelectedIndexChanged += new System.EventHandler(this.cbCurso_SelectedIndexChanged);
             // 
             // Atendimentos
             // 
@@ -413,7 +411,6 @@ namespace Secretary.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Label lblAtendimentos;
-        private System.Windows.Forms.Button btnSimular;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cbCategoria;
         private System.Windows.Forms.ComboBox cbVinculo;
@@ -422,5 +419,6 @@ namespace Secretary.Forms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnSimular;
     }
 }

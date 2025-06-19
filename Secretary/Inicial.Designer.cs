@@ -588,7 +588,6 @@ namespace Secretary
             this.pboxNovasSolicitacoes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pboxNovasSolicitacoes.TabIndex = 5;
             this.pboxNovasSolicitacoes.TabStop = false;
-            this.pboxNovasSolicitacoes.Click += new System.EventHandler(this.pboxNovasSolicitacoes_Click);
             this.pboxNovasSolicitacoes.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.pboxNovasSolicitacoes.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
