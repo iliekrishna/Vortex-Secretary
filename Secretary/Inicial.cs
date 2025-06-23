@@ -61,6 +61,10 @@ namespace Secretary
         private void Inicial_Load(object sender, EventArgs e)
         {
             AtualizarContadores(); //Vai atualizar os contadores quando iniciar ;)
+            Timer timer = new Timer();
+            timer.Interval = 1000; // 1 segundo
+            timer.Tick += (s, args) => AtualizarContadores();
+            timer.Start();
         }
         private void AtualizarContadores()
         {
@@ -347,6 +351,11 @@ namespace Secretary
         private void btnSair_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void panelPrincipal_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
