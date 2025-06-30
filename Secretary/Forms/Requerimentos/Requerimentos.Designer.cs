@@ -383,6 +383,7 @@ namespace Secretary.Forms
             this.Name = "Requerimentos";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Requerimentos";
+            this.Load += new System.EventHandler(this.Requerimentos_Load);
             this.panelPrincipal.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.materialExpansionPanel1.ResumeLayout(false);
