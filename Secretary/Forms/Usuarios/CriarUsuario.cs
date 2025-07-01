@@ -19,6 +19,7 @@ namespace Secretary.Forms
             AplicarPlaceholder(txtNome, PlaceholderNome);
             AplicarPlaceholder(txtEmail, PlaceholderEmail);
             AplicarPlaceholder(txtSenha, PlaceholderSenha);
+            txtNome.KeyPress += ValidarNomeUsuario;
         }
 
         private void AplicarPlaceholder(TextBox textBox, string placeholder)
@@ -105,6 +106,21 @@ namespace Secretary.Forms
                 MessageBox.Show("Falha ao cadastrar o usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void ValidarNomeUsuario(object sender, KeyPressEventArgs e)
+        {
+            // Permite letras, espaços, apóstrofos, hífens, caracteres acentuados e teclas de controle
+            if (!char.IsLetter(e.KeyChar) &&
+                !char.IsWhiteSpace(e.KeyChar) &&
+                e.KeyChar != '\'' &&
+                e.KeyChar != '-' &&
+                !"áéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕàèìòùÀÈÌÒÙäëïöüÄËÏÖÜçÇ".Contains(e.KeyChar.ToString()) &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true; // Impede a digitação
+            }
+        }
+
 
         private void txtNome_Enter(object sender, EventArgs e)
         {

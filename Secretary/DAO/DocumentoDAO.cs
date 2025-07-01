@@ -32,23 +32,35 @@ namespace Secretary.DAO
         {
             var lista = new List<DocumentoDisponivel>();
 
-            using (var conn = ConexaoBD.ObterConexao())
+            try
             {
-                string sql = "SELECT * FROM t_disponibilidade_doc ORDER BY status_atual DESC, nome_doc ASC";
-                using (var cmd = new MySqlCommand(sql, conn))
-                using (var reader = cmd.ExecuteReader())
+                using (var conn = ConexaoBD.ObterConexao())
                 {
-                    while (reader.Read())
+                    string sql = @"SELECT id_disponibilidade, nome_doc, descricao, status_atual 
+                          FROM t_disponibilidade_doc 
+                          ORDER BY status_atual DESC, nome_doc ASC";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        lista.Add(new DocumentoDisponivel
+                        while (reader.Read())
                         {
-                            Id = reader.GetInt32("id_disponibilidade"),
-                            Nome = reader.GetString("nome_doc"),
-                            Descricao = reader.GetString("descricao"),
-                            StatusAtual = reader.GetString("status_atual")
-                        });
+                            lista.Add(new DocumentoDisponivel
+                            {
+                                Id = reader.GetInt32("id_disponibilidade"),
+                                Nome = reader.GetString("nome_doc"),
+                                Descricao = reader.GetString("descricao"),
+                                StatusAtual = reader.GetString("status_atual")
+                            });
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Logar o erro ou lançar para ser tratado pelo chamador
+                Console.WriteLine($"Erro ao listar documentos: {ex.Message}");
+                throw;
             }
 
             return lista;

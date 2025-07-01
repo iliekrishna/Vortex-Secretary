@@ -108,7 +108,7 @@ namespace Secretary.Forms
             // 
             // txtEmail
             // 
-            this.txtEmail.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEmail.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Location = new System.Drawing.Point(216, 139);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
@@ -118,7 +118,7 @@ namespace Secretary.Forms
             // 
             // txtNome
             // 
-            this.txtNome.BackColor = System.Drawing.SystemColors.Control;
+            this.txtNome.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtNome.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNome.Location = new System.Drawing.Point(216, 86);
             this.txtNome.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
@@ -201,7 +201,7 @@ namespace Secretary.Forms
             // 
             // txtSenhaNova
             // 
-            this.txtSenhaNova.BackColor = System.Drawing.SystemColors.Control;
+            this.txtSenhaNova.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtSenhaNova.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSenhaNova.Location = new System.Drawing.Point(215, 51);
             this.txtSenhaNova.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
@@ -220,7 +220,7 @@ namespace Secretary.Forms
             // 
             // txtConfirmarSenha
             // 
-            this.txtConfirmarSenha.BackColor = System.Drawing.SystemColors.Control;
+            this.txtConfirmarSenha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtConfirmarSenha.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtConfirmarSenha.Location = new System.Drawing.Point(215, 94);
             this.txtConfirmarSenha.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
@@ -261,7 +261,7 @@ namespace Secretary.Forms
             // 
             // txtSenhaAtual
             // 
-            this.txtSenhaAtual.BackColor = System.Drawing.SystemColors.Control;
+            this.txtSenhaAtual.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtSenhaAtual.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSenhaAtual.Location = new System.Drawing.Point(215, 9);
             this.txtSenhaAtual.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);

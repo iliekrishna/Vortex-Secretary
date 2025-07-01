@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Secretary.DAO;
+using Secretary.Forms.Gerenciamento;
 using Secretary.Models;
-using Secretary.Forms.Gerenciamento;  
 
 namespace Secretary.Forms
 {
+
     public partial class GerenciamentoDocumentos : Form
     {
         public GerenciamentoDocumentos()
         {
             InitializeComponent();
             Load += Gerenciamento_Load;
+            Resize += (s, e) => AjustarLayout();
+            this.AutoScaleMode = AutoScaleMode.Dpi; // Melhor suporte a diferentes DPIs
         }
 
         private void Gerenciamento_Load(object sender, EventArgs e)
@@ -21,100 +24,162 @@ namespace Secretary.Forms
             CarregarDocumentosDisponiveis();
         }
 
+        private void AjustarLayout()
+        {
+            if (panelFormularios.Controls.Count == 0) return;
+
+            var scrollPanel = panelFormularios.Controls[0] as Panel;
+            if (scrollPanel?.Controls.Count > 0 && scrollPanel.Controls[0] is FlowLayoutPanel container)
+            {
+                container.SuspendLayout();
+
+                // Ajusta a largura do container principal
+                container.Width = Math.Max(panelFormularios.Width - 40, 100);
+
+                foreach (Control item in container.Controls)
+                {
+                    if (item is Panel itemPanel)
+                    {
+                        // Ajusta a largura do painel do item
+                        itemPanel.Width = container.Width - 5;
+
+                        // Encontra os controles internos
+                        RichTextBox rtb = null;
+                        Button btn = null;
+
+                        foreach (Control subControl in itemPanel.Controls)
+                        {
+                            if (subControl is RichTextBox) rtb = subControl as RichTextBox;
+                            else if (subControl is Button && subControl.Text == "Editar detalhes")
+                                btn = subControl as Button;
+                        }
+
+                        // Ajusta os controles
+                        if (rtb != null)
+                        {
+                            rtb.Width = itemPanel.Width - (btn?.Width ?? 140) - 30;
+                        }
+
+                        if (btn != null)
+                        {
+                            btn.Left = itemPanel.Width - btn.Width - 15;
+                            btn.Top = (itemPanel.Height - btn.Height) / 2; // Centraliza verticalmente
+                        }
+                    }
+                }
+
+                container.ResumeLayout();
+            }
+        }
+
         private void CarregarDocumentosDisponiveis()
         {
             try
             {
-                // Remove painel do botão "Novo Documento" para não duplicar
-                var painelBotaoExistente = panelFormularios.Controls.Find("panelBotaoNovoDoc", false);
-                if (painelBotaoExistente.Length > 0)
-                    panelFormularios.Controls.Remove(painelBotaoExistente[0]);
+                panelFormularios.SuspendLayout();
 
+                // Limpa controles antigos
+                foreach (Control ctrl in panelFormularios.Controls)
+                {
+                    ctrl.Dispose();
+                }
                 panelFormularios.Controls.Clear();
+
+                // Painel principal com scroll
+                Panel scrollPanel = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    AutoScroll = true,
+                    Padding = new Padding(20)
+                };
+
+                // Container dos itens
+                FlowLayoutPanel container = new FlowLayoutPanel
+                {
+                    FlowDirection = FlowDirection.TopDown,
+                    Dock = DockStyle.Top,
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    WrapContents = false,
+                    Width = panelFormularios.Width - 40
+                };
 
                 DocumentoDAO dao = new DocumentoDAO();
                 List<DocumentoDisponivel> documentos = dao.ListarTodos();
 
                 foreach (var doc in documentos)
                 {
-                    Panel panelDoc = new Panel
+                    // Painel para cada item
+                    Panel itemPanel = new Panel
                     {
-                        Name = $"panelDoc{doc.Id}",
-                        Size = new Size(1219, 50),
-                        Dock = DockStyle.Top,
-                        Padding = new Padding(5, 10, 300, 15),
-                        BackColor = Color.Transparent
+                        Width = container.Width - 5,
+                        Height = 60,
+                        Margin = new Padding(0, 0, 0, 10),
+                        BackColor = Color.White
                     };
 
-                    Label lblNome = new Label
+                    // RichTextBox (nome + status)
+                    RichTextBox rtbDocumento = new RichTextBox
                     {
-                        Text = doc.Nome,
-                        AutoSize = true,
-                        Dock = DockStyle.Left,
-                        Padding = new Padding(70, 5, 0, 0),
-                        Font = new Font("Verdana", 10F)
+                        Text = $"• {doc.Nome}",
+                        Font = new Font("Verdana", 10),
+                        Location = new Point(15, 15),
+                        Width = itemPanel.Width - 150,
+                        Height = 30,
+                        BorderStyle = BorderStyle.None,
+                        BackColor = Color.White,
+                        ReadOnly = true,
+                        ScrollBars = RichTextBoxScrollBars.None
                     };
 
-                    Label lblStatus = new Label
-                    {
-                        Text = doc.StatusAtual,
-                        ForeColor = doc.StatusAtual == "Disponível" ? Color.Green : Color.Red,
-                        AutoSize = true,
-                        Dock = DockStyle.Right,
-                        Padding = new Padding(15, 5, 120, 0),
-                        Font = new Font("Verdana", 9F, FontStyle.Regular)
-                    };
+                    // Adiciona o status com cor condicional
+                    string statusText = doc.StatusAtual == "Disponível" ? " (Disponível) " : " (Indisponível) ";
+                    rtbDocumento.AppendText($" {statusText}");
+                    rtbDocumento.Select(rtbDocumento.Text.Length - statusText.Length, statusText.Length);
+                    rtbDocumento.SelectionColor = doc.StatusAtual == "Disponível" ? Color.Green : Color.Red;
+                    rtbDocumento.Select(0, 0);
 
+                    // Botão Editar
                     Button btnEditar = new Button
                     {
                         Text = "Editar detalhes",
-                        Font = new Font("Verdana", 9.75F),
-                        Dock = DockStyle.Right,
-                        Size = new Size(123, 25),
-                        Tag = doc
+                        Font = new Font("Verdana", 9),
+                        Size = new Size(120, 30),
+                        Location = new Point(itemPanel.Width - 135, 15),
+                        Tag = doc,
+                        Anchor = AnchorStyles.Top | AnchorStyles.Right
                     };
                     btnEditar.Click += BtnEditar_Click;
 
-                    panelDoc.Controls.Add(lblNome);
-                    panelDoc.Controls.Add(lblStatus);
-                    panelDoc.Controls.Add(btnEditar);
-
-                    panelFormularios.Controls.Add(panelDoc);
-                    panelFormularios.Controls.SetChildIndex(panelDoc, 0); // Adiciona no topo
+                    itemPanel.Controls.Add(rtbDocumento);
+                    itemPanel.Controls.Add(btnEditar);
+                    container.Controls.Add(itemPanel);
                 }
 
-                AdicionarBotaoNovoDocumento();
+                // Botão Novo Documento
+                Button btnNovo = new Button
+                {
+                    Text = "Novo Documento",
+                    Font = new Font("Verdana", 10),
+                    Size = new Size(150, 40),
+                    Margin = new Padding(20, 20, 0, 0)
+                };
+                btnNovo.Click += BtnNovoDocumento_Click;
+
+                container.Controls.Add(btnNovo);
+                scrollPanel.Controls.Add(container);
+                panelFormularios.Controls.Add(scrollPanel);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar documentos: " + ex.Message);
+                MessageBox.Show("Erro ao carregar documentos: " + ex.Message, "Erro",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void AdicionarBotaoNovoDocumento()
-        {
-            Panel panelBotao = new Panel
+            finally
             {
-                Name = "panelBotaoNovoDoc",
-                Dock = DockStyle.Bottom,
-                Padding = new Padding(80, 15, 15, 15),
-                Size = new Size(1219, 62),
-                Margin = new Padding(3, 3, 3, 20),
-                BackColor = Color.Transparent
-            };
-
-            Button btnNovoDocumento = new Button
-            {
-                Text = "Novo Documento",
-                Font = new Font("Verdana", 9.75F, FontStyle.Regular),
-                Size = new Size(159, 32),
-                FlatStyle = FlatStyle.Standard,
-                Dock = DockStyle.Left
-            };
-            btnNovoDocumento.Click += BtnNovoDocumento_Click;
-
-            panelBotao.Controls.Add(btnNovoDocumento);
-            panelFormularios.Controls.Add(panelBotao);
+                panelFormularios.ResumeLayout();
+                AjustarLayout();
+            }
         }
 
         private void BtnNovoDocumento_Click(object sender, EventArgs e)
@@ -126,10 +191,7 @@ namespace Secretary.Forms
 
         private void BtnEditar_Click(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            DocumentoDisponivel doc = btn.Tag as DocumentoDisponivel;
-
-            if (doc != null)
+            if (sender is Button btn && btn.Tag is DocumentoDisponivel doc)
             {
                 var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.StatusAtual);
                 form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
