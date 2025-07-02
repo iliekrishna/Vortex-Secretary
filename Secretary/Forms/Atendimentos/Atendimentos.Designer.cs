@@ -51,22 +51,20 @@ namespace Secretary.Forms.Atendimentos
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblAtendimentos = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbCategoria = new System.Windows.Forms.ComboBox();
+            this.panelFiltros = new System.Windows.Forms.Panel();
             this.cbVinculo = new System.Windows.Forms.ComboBox();
+            this.labelTipoVinculo = new System.Windows.Forms.Label();
+            this.cbCategoria = new System.Windows.Forms.ComboBox();
+            this.labelCategoria = new System.Windows.Forms.Label();
             this.cbCurso = new System.Windows.Forms.ComboBox();
+            this.labelCurso = new System.Windows.Forms.Label();
             this.tabControlAtendimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).BeginInit();
             this.tpagRespondido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.panelFiltros.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAtendimentos
@@ -108,10 +106,11 @@ namespace Secretary.Forms.Atendimentos
             // datagvEmAberto
             // 
             this.datagvEmAberto.AllowDrop = true;
-            this.datagvEmAberto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.datagvEmAberto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.datagvEmAberto.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.datagvEmAberto.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.datagvEmAberto.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.datagvEmAberto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.datagvEmAberto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.datagvEmAberto.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.datagvEmAberto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagvEmAberto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -133,30 +132,35 @@ namespace Secretary.Forms.Atendimentos
             this.Column1.HeaderText = "Nome";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            this.Column1.Width = 78;
             // 
             // colunaAssunto
             // 
             this.colunaAssunto.HeaderText = "Assunto";
             this.colunaAssunto.Name = "colunaAssunto";
             this.colunaAssunto.ReadOnly = true;
+            this.colunaAssunto.Width = 93;
             // 
             // colunaData
             // 
             this.colunaData.HeaderText = "Data";
             this.colunaData.Name = "colunaData";
             this.colunaData.ReadOnly = true;
+            this.colunaData.Width = 68;
             // 
             // colunaID
             // 
             this.colunaID.HeaderText = "ID";
             this.colunaID.Name = "colunaID";
             this.colunaID.ReadOnly = true;
+            this.colunaID.Width = 49;
             // 
             // colunaDetalhes
             // 
             this.colunaDetalhes.HeaderText = "Ação";
             this.colunaDetalhes.Name = "colunaDetalhes";
             this.colunaDetalhes.ReadOnly = true;
+            this.colunaDetalhes.Width = 70;
             // 
             // tpagRespondido
             // 
@@ -266,102 +270,85 @@ namespace Secretary.Forms.Atendimentos
             this.dataGridViewTextBoxColumn1.HeaderText = "Nome";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
-            // lblAtendimentos
+            // panelFiltros
             // 
-            this.lblAtendimentos.AutoSize = true;
-            this.lblAtendimentos.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblAtendimentos.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAtendimentos.Location = new System.Drawing.Point(30, 30);
-            this.lblAtendimentos.Margin = new System.Windows.Forms.Padding(0);
-            this.lblAtendimentos.Name = "lblAtendimentos";
-            this.lblAtendimentos.Size = new System.Drawing.Size(157, 25);
-            this.lblAtendimentos.TabIndex = 8;
-            this.lblAtendimentos.Text = "Atendimentos";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.cbCategoria);
-            this.panel1.Controls.Add(this.cbVinculo);
-            this.panel1.Controls.Add(this.cbCurso);
-            this.panel1.Controls.Add(this.lblAtendimentos);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(20, 20);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(30);
-            this.panel1.Size = new System.Drawing.Size(1328, 100);
-            this.panel1.TabIndex = 1;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(936, 37);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 18);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Categoria:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(628, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(126, 18);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Tipo de Vinculo:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(343, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 18);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Curso:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 15.75F);
-            this.label1.Location = new System.Drawing.Point(250, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 25);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Filtros:";
-            // 
-            // cbCategoria
-            // 
-            this.cbCategoria.BackColor = System.Drawing.SystemColors.Menu;
-            this.cbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCategoria.FormattingEnabled = true;
-            this.cbCategoria.Location = new System.Drawing.Point(1029, 34);
-            this.cbCategoria.Name = "cbCategoria";
-            this.cbCategoria.Size = new System.Drawing.Size(212, 26);
-            this.cbCategoria.TabIndex = 11;
+            this.panelFiltros.Controls.Add(this.cbVinculo);
+            this.panelFiltros.Controls.Add(this.labelTipoVinculo);
+            this.panelFiltros.Controls.Add(this.cbCategoria);
+            this.panelFiltros.Controls.Add(this.labelCategoria);
+            this.panelFiltros.Controls.Add(this.cbCurso);
+            this.panelFiltros.Controls.Add(this.labelCurso);
+            this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFiltros.Location = new System.Drawing.Point(20, 20);
+            this.panelFiltros.Name = "panelFiltros";
+            this.panelFiltros.Padding = new System.Windows.Forms.Padding(30);
+            this.panelFiltros.Size = new System.Drawing.Size(1328, 100);
+            this.panelFiltros.TabIndex = 1;
             // 
             // cbVinculo
             // 
             this.cbVinculo.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbVinculo.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbVinculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVinculo.FormattingEnabled = true;
-            this.cbVinculo.Location = new System.Drawing.Point(760, 34);
+            this.cbVinculo.Location = new System.Drawing.Point(788, 30);
             this.cbVinculo.Name = "cbVinculo";
             this.cbVinculo.Size = new System.Drawing.Size(170, 26);
-            this.cbVinculo.TabIndex = 10;
+            this.cbVinculo.TabIndex = 26;
+            // 
+            // labelTipoVinculo
+            // 
+            this.labelTipoVinculo.AutoSize = true;
+            this.labelTipoVinculo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelTipoVinculo.Location = new System.Drawing.Point(632, 30);
+            this.labelTipoVinculo.Name = "labelTipoVinculo";
+            this.labelTipoVinculo.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.labelTipoVinculo.Size = new System.Drawing.Size(156, 18);
+            this.labelTipoVinculo.TabIndex = 25;
+            this.labelTipoVinculo.Text = "Tipo de Vinculo:";
+            // 
+            // cbCategoria
+            // 
+            this.cbCategoria.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbCategoria.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCategoria.FormattingEnabled = true;
+            this.cbCategoria.Location = new System.Drawing.Point(420, 30);
+            this.cbCategoria.Name = "cbCategoria";
+            this.cbCategoria.Size = new System.Drawing.Size(212, 26);
+            this.cbCategoria.TabIndex = 22;
+            // 
+            // labelCategoria
+            // 
+            this.labelCategoria.AutoSize = true;
+            this.labelCategoria.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelCategoria.Location = new System.Drawing.Point(303, 30);
+            this.labelCategoria.Name = "labelCategoria";
+            this.labelCategoria.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.labelCategoria.Size = new System.Drawing.Size(117, 18);
+            this.labelCategoria.TabIndex = 20;
+            this.labelCategoria.Text = "Categoria:";
             // 
             // cbCurso
             // 
             this.cbCurso.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbCurso.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurso.FormattingEnabled = true;
-            this.cbCurso.Location = new System.Drawing.Point(408, 34);
+            this.cbCurso.Location = new System.Drawing.Point(89, 30);
             this.cbCurso.Name = "cbCurso";
             this.cbCurso.Size = new System.Drawing.Size(214, 26);
-            this.cbCurso.TabIndex = 9;
-            this.cbCurso.SelectedIndexChanged += new System.EventHandler(this.cbCurso_SelectedIndexChanged);
+            this.cbCurso.TabIndex = 16;
+            // 
+            // labelCurso
+            // 
+            this.labelCurso.AutoSize = true;
+            this.labelCurso.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelCurso.Location = new System.Drawing.Point(30, 30);
+            this.labelCurso.Name = "labelCurso";
+            this.labelCurso.Size = new System.Drawing.Size(59, 18);
+            this.labelCurso.TabIndex = 13;
+            this.labelCurso.Text = "Curso:";
             // 
             // Atendimentos
             // 
@@ -370,7 +357,7 @@ namespace Secretary.Forms.Atendimentos
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1368, 749);
             this.Controls.Add(this.tabControlAtendimentos);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelFiltros);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Atendimentos";
@@ -382,8 +369,8 @@ namespace Secretary.Forms.Atendimentos
             this.tpagRespondido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelFiltros.ResumeLayout(false);
+            this.panelFiltros.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -411,15 +398,13 @@ namespace Secretary.Forms.Atendimentos
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.Label lblAtendimentos;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox cbCategoria;
-        private System.Windows.Forms.ComboBox cbVinculo;
-        private System.Windows.Forms.ComboBox cbCurso;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panelFiltros;
+        private System.Windows.Forms.Label labelCurso;
         private System.Windows.Forms.Button btnSimular;
+        private System.Windows.Forms.ComboBox cbVinculo;
+        private System.Windows.Forms.Label labelTipoVinculo;
+        private System.Windows.Forms.ComboBox cbCategoria;
+        private System.Windows.Forms.Label labelCategoria;
+        private System.Windows.Forms.ComboBox cbCurso;
     }
 }

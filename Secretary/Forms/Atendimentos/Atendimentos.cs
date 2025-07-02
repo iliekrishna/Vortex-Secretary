@@ -85,12 +85,12 @@ namespace Secretary.Forms.Atendimentos
 
             DataGridViewRow linha = datagvEmAberto.Rows[e.RowIndex];
 
-            int ticketId = Convert.ToInt32(linha.Cells["id_ticket"].Value);
-            string nome = linha.Cells["nome_aluno"].Value?.ToString();
-            string ra = linha.Cells["ra"].Value?.ToString();
-            string curso = linha.Cells["curso"].Value?.ToString();
-            string assunto = linha.Cells["assunto"].Value?.ToString();
+            string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
+            string ra = linha.Cells["RA"].Value?.ToString();
+            string curso = linha.Cells["Curso"].Value?.ToString();
+            string assunto = linha.Cells["Assunto"].Value?.ToString();
             string data = DateTime.Now.ToShortDateString();
+            int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
             string mensagem = assunto;
 
             var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, data, mensagem, AtualizarListas, usuarioId);
@@ -106,11 +106,11 @@ namespace Secretary.Forms.Atendimentos
 
             DataGridViewRow linha = datagvRespondidos.Rows[e.RowIndex];
 
-            int ticketId = Convert.ToInt32(linha.Cells["id_ticket"].Value);
-            string nome = linha.Cells["nome_aluno"].Value?.ToString();
-            string ra = linha.Cells["ra"].Value?.ToString();
-            string curso = linha.Cells["curso"].Value?.ToString();
-            string assunto = linha.Cells["assunto"].Value?.ToString();
+            string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
+            string ra = linha.Cells["RA"].Value?.ToString();
+            string curso = linha.Cells["Curso"].Value?.ToString();
+            string assunto = linha.Cells["Assunto"].Value?.ToString();
+            int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
             string data = DateTime.Now.ToShortDateString();
             string mensagem = assunto;
 
@@ -124,11 +124,6 @@ namespace Secretary.Forms.Atendimentos
         private void AtualizarListas()
         {
             AplicarFiltros();
-        }
-
-        private void cbCurso_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

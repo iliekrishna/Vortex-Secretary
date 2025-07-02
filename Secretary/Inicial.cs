@@ -173,33 +173,6 @@ namespace Secretary
             }
         }
 
-        // Evento do botão Recentes: atualiza a exibição da data, hora e saudação e fecha formulário filho aberto
-        private void btnRecentes_Click(object sender, EventArgs e)
-        {
-            // Configurar cultura pt-BR para formatação de data
-            CultureInfo cultura = new CultureInfo("pt-BR");
-
-            // Formatar data com a primeira letra maiúscula e horário
-            string dataFormatada = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", cultura);
-            dataFormatada = char.ToUpper(dataFormatada[0]) + dataFormatada.Substring(1);
-            string horario = DateTime.Now.ToString("HH:mm");
-            lblDataAtual.Text = $"{dataFormatada} | {horario}";
-
-            // Definir saudação com base na hora
-            int hora = DateTime.Now.Hour;
-            string saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
-            lblSaudacao.Text = $"{saudacao}, {lblUsuario.Text}!";
-            
-
-
-                        // Fecha o formulário ativo, se existir
-                        if (activeForm != null)
-                activeForm.Close();
-
-            // Reseta os estilos dos botões do menu
-            Reset();        
-        }
-
         // Método para resetar o estado visual dos botões do menu (chama DisableButton)
         private void Reset()
         {
@@ -241,14 +214,6 @@ namespace Secretary
                 OpenChildForm(new Forms.GerenciamentoDocumentos(), sender);
             }
 
-            ActivateButton(sender);
-        }
-
-
-        // Evento do botão Recentes (segunda definição, pode ser duplicado no designer): abre formulário Recentes e ativa botão
-        private void btnRecentes_Click_1(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.Recentes(), sender);
             ActivateButton(sender);
         }
         

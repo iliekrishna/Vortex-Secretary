@@ -32,7 +32,6 @@ namespace Secretary
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicial));
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnRecentes = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnGerenciamento = new System.Windows.Forms.Button();
             this.btnHistorico = new System.Windows.Forms.Button();
@@ -82,7 +81,6 @@ namespace Secretary
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.panelMenu.Controls.Add(this.btnRecentes);
             this.panelMenu.Controls.Add(this.btnSair);
             this.panelMenu.Controls.Add(this.btnGerenciamento);
             this.panelMenu.Controls.Add(this.btnHistorico);
@@ -97,27 +95,6 @@ namespace Secretary
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(257, 749);
             this.panelMenu.TabIndex = 0;
-            // 
-            // btnRecentes
-            // 
-            this.btnRecentes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnRecentes.FlatAppearance.BorderSize = 0;
-            this.btnRecentes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecentes.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRecentes.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnRecentes.Image = ((System.Drawing.Image)(resources.GetObject("btnRecentes.Image")));
-            this.btnRecentes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecentes.Location = new System.Drawing.Point(0, 380);
-            this.btnRecentes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnRecentes.Name = "btnRecentes";
-            this.btnRecentes.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnRecentes.Size = new System.Drawing.Size(257, 60);
-            this.btnRecentes.TabIndex = 10;
-            this.btnRecentes.Text = "    Recentes";
-            this.btnRecentes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecentes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnRecentes.UseVisualStyleBackColor = true;
-            this.btnRecentes.Click += new System.EventHandler(this.btnRecentes_Click_1);
             // 
             // btnSair
             // 
@@ -243,7 +220,6 @@ namespace Secretary
             this.btnInicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInicio.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInicio.UseVisualStyleBackColor = true;
-            this.btnInicio.Click += new System.EventHandler(this.btnRecentes_Click);
             // 
             // panelLogo
             // 
@@ -454,19 +430,19 @@ namespace Secretary
             this.trocarUsuárioToolStripMenuItem,
             this.trocarLoginToolStripMenuItem});
             this.menuOpcoes.Name = "menuOpcoes";
-            this.menuOpcoes.Size = new System.Drawing.Size(170, 48);
+            this.menuOpcoes.Size = new System.Drawing.Size(172, 48);
             // 
             // trocarUsuárioToolStripMenuItem
             // 
             this.trocarUsuárioToolStripMenuItem.Name = "trocarUsuárioToolStripMenuItem";
-            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.trocarUsuárioToolStripMenuItem.Text = "👤 Visualizar perfil ";
             this.trocarUsuárioToolStripMenuItem.Click += new System.EventHandler(this.trocarUsuárioToolStripMenuItem_Click);
             // 
             // trocarLoginToolStripMenuItem
             // 
             this.trocarLoginToolStripMenuItem.Name = "trocarLoginToolStripMenuItem";
-            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.trocarLoginToolStripMenuItem.Text = "🚪 Sair";
             this.trocarLoginToolStripMenuItem.Click += new System.EventHandler(this.trocarLoginToolStripMenuItem_Click);
             // 
@@ -673,7 +649,6 @@ namespace Secretary
         private System.Windows.Forms.Panel panelLocalizar;
         private System.Windows.Forms.Label lblLocalizarSolicitacao;
         private System.Windows.Forms.TextBox txtLocalizarSolicitacao;
-        private System.Windows.Forms.Button btnRecentes;
         private System.Windows.Forms.Panel panelPrincipal;
         private System.Windows.Forms.Label lblSaudacao;
         private System.Windows.Forms.ContextMenuStrip menuOpcoes;
