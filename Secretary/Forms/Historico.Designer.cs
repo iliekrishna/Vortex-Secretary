@@ -29,144 +29,46 @@ namespace Secretary.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.acoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.data = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvHistorico = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtFiltrarNomeRA = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cboxStatusFiltrar = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.btnFiltrar = new System.Windows.Forms.Button();
-            this.dateTimePickerFiltro = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistorico)).BeginInit();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnLimpar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbFiltroStatus = new System.Windows.Forms.ComboBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.dgvHistoricoR = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.acoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvHistoricoT = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.TabPage1.SuspendLayout();
+            this.TabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoT)).BeginInit();
             this.SuspendLayout();
-            // 
-            // acoes
-            // 
-            this.acoes.HeaderText = "Ações";
-            this.acoes.Name = "acoes";
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.Name = "status";
-            // 
-            // data
-            // 
-            this.data.HeaderText = "Data";
-            this.data.Name = "data";
-            // 
-            // tipo
-            // 
-            this.tipo.HeaderText = "Tipo de Documento";
-            this.tipo.Name = "tipo";
-            // 
-            // nome
-            // 
-            this.nome.HeaderText = "Nome do Solicitante";
-            this.nome.Name = "nome";
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            // 
-            // dgvHistorico
-            // 
-            this.dgvHistorico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvHistorico.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            this.dgvHistorico.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvHistorico.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvHistorico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHistorico.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.nome,
-            this.tipo,
-            this.data,
-            this.status,
-            this.acoes});
-            this.dgvHistorico.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvHistorico.GridColor = System.Drawing.Color.White;
-            this.dgvHistorico.Location = new System.Drawing.Point(20, 120);
-            this.dgvHistorico.Margin = new System.Windows.Forms.Padding(4);
-            this.dgvHistorico.Name = "dgvHistorico";
-            this.dgvHistorico.Size = new System.Drawing.Size(1283, 467);
-            this.dgvHistorico.TabIndex = 19;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 38);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 14);
-            this.label2.TabIndex = 26;
-            this.label2.Text = "Nome ou RA:";
-            // 
-            // txtFiltrarNomeRA
-            // 
-            this.txtFiltrarNomeRA.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtFiltrarNomeRA.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFiltrarNomeRA.Location = new System.Drawing.Point(126, 38);
-            this.txtFiltrarNomeRA.Margin = new System.Windows.Forms.Padding(4, 4, 10, 4);
-            this.txtFiltrarNomeRA.Name = "txtFiltrarNomeRA";
-            this.txtFiltrarNomeRA.Size = new System.Drawing.Size(227, 22);
-            this.txtFiltrarNomeRA.TabIndex = 27;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(353, 38);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.label1.Size = new System.Drawing.Size(73, 14);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "Status:";
-            // 
-            // cboxStatusFiltrar
-            // 
-            this.cboxStatusFiltrar.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cboxStatusFiltrar.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboxStatusFiltrar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cboxStatusFiltrar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxStatusFiltrar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxStatusFiltrar.FormattingEnabled = true;
-            this.cboxStatusFiltrar.Items.AddRange(new object[] {
-            "Todos",
-            "Em andamento",
-            "Concluído",
-            "Cancelado"});
-            this.cboxStatusFiltrar.Location = new System.Drawing.Point(426, 38);
-            this.cboxStatusFiltrar.Margin = new System.Windows.Forms.Padding(4);
-            this.cboxStatusFiltrar.Name = "cboxStatusFiltrar";
-            this.cboxStatusFiltrar.Size = new System.Drawing.Size(157, 22);
-            this.cboxStatusFiltrar.TabIndex = 30;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.btnFiltrar);
-            this.panel1.Controls.Add(this.dateTimePickerFiltro);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.cboxStatusFiltrar);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.txtFiltrarNomeRA);
+            this.panel1.Controls.Add(this.cmbFiltroStatus);
             this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.btnLimpar);
+            this.panel1.Controls.Add(this.btnBuscar);
+            this.panel1.Controls.Add(this.txtBuscar);
+            this.panel1.Controls.Add(this.label4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(20, 20);
             this.panel1.Name = "panel1";
@@ -177,71 +79,230 @@ namespace Secretary.Forms
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(872, 38);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(41, 38);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 14);
-            this.label4.TabIndex = 35;
-            this.label4.Text = "Ordenar por:";
+            this.label4.Size = new System.Drawing.Size(65, 18);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Buscar:";
             // 
-            // comboBox1
+            // txtBuscar
             // 
-            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Mais antigos",
-            "Mais recentes"});
-            this.comboBox1.Location = new System.Drawing.Point(961, 38);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(172, 22);
-            this.comboBox1.TabIndex = 34;
+            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
+            this.txtBuscar.Location = new System.Drawing.Point(112, 37);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(227, 23);
+            this.txtBuscar.TabIndex = 39;
+            this.txtBuscar.Text = "Nome ou RA";
+            this.txtBuscar.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtBuscar.Enter += new System.EventHandler(this.txtBuscar_Enter);
+            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             // 
-            // btnFiltrar
+            // btnBuscar
             // 
-            this.btnFiltrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnFiltrar.Location = new System.Drawing.Point(1133, 38);
-            this.btnFiltrar.Margin = new System.Windows.Forms.Padding(10);
-            this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(112, 24);
-            this.btnFiltrar.TabIndex = 33;
-            this.btnFiltrar.Text = "Filtrar";
-            this.btnFiltrar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Location = new System.Drawing.Point(345, 33);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(83, 30);
+            this.btnBuscar.TabIndex = 40;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // dateTimePickerFiltro
+            // btnLimpar
             // 
-            this.dateTimePickerFiltro.Cursor = System.Windows.Forms.Cursors.No;
-            this.dateTimePickerFiltro.CustomFormat = "";
-            this.dateTimePickerFiltro.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dateTimePickerFiltro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePickerFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerFiltro.Location = new System.Drawing.Point(663, 38);
-            this.dateTimePickerFiltro.Margin = new System.Windows.Forms.Padding(4);
-            this.dateTimePickerFiltro.Name = "dateTimePickerFiltro";
-            this.dateTimePickerFiltro.Size = new System.Drawing.Size(114, 22);
-            this.dateTimePickerFiltro.TabIndex = 32;
-            this.dateTimePickerFiltro.Value = new System.DateTime(2025, 5, 23, 0, 0, 0, 0);
+            this.btnLimpar.Location = new System.Drawing.Point(434, 33);
+            this.btnLimpar.Name = "btnLimpar";
+            this.btnLimpar.Size = new System.Drawing.Size(83, 30);
+            this.btnLimpar.TabIndex = 41;
+            this.btnLimpar.Text = "Limpar";
+            this.btnLimpar.UseVisualStyleBackColor = true;
+            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
             // 
-            // label3
+            // label2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(583, 38);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.label3.Size = new System.Drawing.Size(80, 14);
-            this.label3.TabIndex = 31;
-            this.label3.Text = "Período:";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(593, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 18);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Status:";
+            // 
+            // cmbFiltroStatus
+            // 
+            this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroStatus.FormattingEnabled = true;
+            this.cmbFiltroStatus.Location = new System.Drawing.Point(662, 36);
+            this.cmbFiltroStatus.Name = "cmbFiltroStatus";
+            this.cmbFiltroStatus.Size = new System.Drawing.Size(130, 24);
+            this.cmbFiltroStatus.TabIndex = 43;
+            this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.TabPage1);
+            this.tabControl1.Controls.Add(this.TabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(20, 120);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1283, 467);
+            this.tabControl1.TabIndex = 25;
+            // 
+            // TabPage1
+            // 
+            this.TabPage1.Controls.Add(this.dgvHistoricoR);
+            this.TabPage1.Location = new System.Drawing.Point(4, 25);
+            this.TabPage1.Name = "TabPage1";
+            this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage1.Size = new System.Drawing.Size(1275, 438);
+            this.TabPage1.TabIndex = 0;
+            this.TabPage1.Text = "Requerimentos";
+            this.TabPage1.UseVisualStyleBackColor = true;
+            // 
+            // TabPage2
+            // 
+            this.TabPage2.Controls.Add(this.dgvHistoricoT);
+            this.TabPage2.Location = new System.Drawing.Point(4, 25);
+            this.TabPage2.Name = "TabPage2";
+            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage2.Size = new System.Drawing.Size(1275, 438);
+            this.TabPage2.TabIndex = 1;
+            this.TabPage2.Text = "Tickets";
+            this.TabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dgvHistoricoR
+            // 
+            this.dgvHistoricoR.AllowDrop = true;
+            this.dgvHistoricoR.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvHistoricoR.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvHistoricoR.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvHistoricoR.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvHistoricoR.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvHistoricoR.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.dgvHistoricoR.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvHistoricoR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHistoricoR.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.nome,
+            this.tipo,
+            this.data,
+            this.status,
+            this.acoes});
+            this.dgvHistoricoR.GridColor = System.Drawing.Color.White;
+            this.dgvHistoricoR.Location = new System.Drawing.Point(0, 0);
+            this.dgvHistoricoR.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvHistoricoR.Name = "dgvHistoricoR";
+            this.dgvHistoricoR.ReadOnly = true;
+            this.dgvHistoricoR.Size = new System.Drawing.Size(1279, 438);
+            this.dgvHistoricoR.TabIndex = 27;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 46;
+            // 
+            // nome
+            // 
+            this.nome.HeaderText = "Nome do Solicitante";
+            this.nome.Name = "nome";
+            this.nome.ReadOnly = true;
+            this.nome.Width = 150;
+            // 
+            // tipo
+            // 
+            this.tipo.HeaderText = "Tipo de Documento";
+            this.tipo.Name = "tipo";
+            this.tipo.ReadOnly = true;
+            this.tipo.Width = 146;
+            // 
+            // data
+            // 
+            this.data.HeaderText = "Data";
+            this.data.Name = "data";
+            this.data.ReadOnly = true;
+            this.data.Width = 63;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 76;
+            // 
+            // acoes
+            // 
+            this.acoes.HeaderText = "Ações";
+            this.acoes.Name = "acoes";
+            this.acoes.ReadOnly = true;
+            this.acoes.Width = 72;
+            // 
+            // dgvHistoricoT
+            // 
+            this.dgvHistoricoT.AllowDrop = true;
+            this.dgvHistoricoT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvHistoricoT.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHistoricoT.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvHistoricoT.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvHistoricoT.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.dgvHistoricoT.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvHistoricoT.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHistoricoT.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.dgvHistoricoT.GridColor = System.Drawing.Color.White;
+            this.dgvHistoricoT.Location = new System.Drawing.Point(-4, 1);
+            this.dgvHistoricoT.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvHistoricoT.Name = "dgvHistoricoT";
+            this.dgvHistoricoT.ReadOnly = true;
+            this.dgvHistoricoT.Size = new System.Drawing.Size(1280, 437);
+            this.dgvHistoricoT.TabIndex = 27;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Nome do Solicitante";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Tipo de Documento";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Status";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Ações";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
             // Historico
             // 
@@ -249,7 +310,7 @@ namespace Secretary.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1323, 607);
-            this.Controls.Add(this.dgvHistorico);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -257,30 +318,41 @@ namespace Secretary.Forms
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Historico";
             this.Load += new System.EventHandler(this.Historico_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistorico)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.TabPage1.ResumeLayout(false);
+            this.TabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoT)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridViewTextBoxColumn acoes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn data;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nome;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridView dgvHistorico;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtFiltrarNomeRA;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cboxStatusFiltrar;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox cmbFiltroStatus;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnLimpar;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button btnFiltrar;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFiltro;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage TabPage1;
+        private System.Windows.Forms.DataGridView dgvHistoricoR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tipo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn acoes;
+        private System.Windows.Forms.TabPage TabPage2;
+        private System.Windows.Forms.DataGridView dgvHistoricoT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
     }
 }
