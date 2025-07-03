@@ -220,6 +220,7 @@ namespace Secretary
             this.btnInicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInicio.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInicio.UseVisualStyleBackColor = true;
+            this.btnInicio.Click += new System.EventHandler(this.btnInicio_Click);
             // 
             // panelLogo
             // 
@@ -323,7 +324,7 @@ namespace Secretary
             this.lblLocalizarSolicitacao.ForeColor = System.Drawing.Color.White;
             this.lblLocalizarSolicitacao.Location = new System.Drawing.Point(220, 36);
             this.lblLocalizarSolicitacao.Name = "lblLocalizarSolicitacao";
-            this.lblLocalizarSolicitacao.Size = new System.Drawing.Size(70, 16);
+            this.lblLocalizarSolicitacao.Size = new System.Drawing.Size(71, 16);
             this.lblLocalizarSolicitacao.TabIndex = 20;
             this.lblLocalizarSolicitacao.Text = "Localizar:";
             // 
@@ -388,7 +389,7 @@ namespace Secretary
             this.lblLocalizar.Location = new System.Drawing.Point(1745, 33);
             this.lblLocalizar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLocalizar.Name = "lblLocalizar";
-            this.lblLocalizar.Size = new System.Drawing.Size(70, 16);
+            this.lblLocalizar.Size = new System.Drawing.Size(71, 16);
             this.lblLocalizar.TabIndex = 1;
             this.lblLocalizar.Text = "Localizar:";
             // 
@@ -430,19 +431,19 @@ namespace Secretary
             this.trocarUsuárioToolStripMenuItem,
             this.trocarLoginToolStripMenuItem});
             this.menuOpcoes.Name = "menuOpcoes";
-            this.menuOpcoes.Size = new System.Drawing.Size(172, 48);
+            this.menuOpcoes.Size = new System.Drawing.Size(170, 48);
             // 
             // trocarUsuárioToolStripMenuItem
             // 
             this.trocarUsuárioToolStripMenuItem.Name = "trocarUsuárioToolStripMenuItem";
-            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.trocarUsuárioToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.trocarUsuárioToolStripMenuItem.Text = "👤 Visualizar perfil ";
             this.trocarUsuárioToolStripMenuItem.Click += new System.EventHandler(this.trocarUsuárioToolStripMenuItem_Click);
             // 
             // trocarLoginToolStripMenuItem
             // 
             this.trocarLoginToolStripMenuItem.Name = "trocarLoginToolStripMenuItem";
-            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.trocarLoginToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.trocarLoginToolStripMenuItem.Text = "🚪 Sair";
             this.trocarLoginToolStripMenuItem.Click += new System.EventHandler(this.trocarLoginToolStripMenuItem_Click);
             // 
@@ -487,7 +488,6 @@ namespace Secretary
             this.panelPrincipal.Name = "panelPrincipal";
             this.panelPrincipal.Size = new System.Drawing.Size(1113, 669);
             this.panelPrincipal.TabIndex = 16;
-            this.panelPrincipal.Paint += new System.Windows.Forms.PaintEventHandler(this.panelPrincipal_Paint);
             // 
             // panelDivisor2
             // 

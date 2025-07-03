@@ -45,6 +45,11 @@ namespace Secretary
 
             btnPerfil.Text = "  " + usuarioLogado.Nome;
 
+            MensagemBoasVindas();
+        }
+
+        private void MensagemBoasVindas()
+        {
             CultureInfo cultura = new CultureInfo("pt-BR");
             string dataFormatada = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", cultura);
             dataFormatada = char.ToUpper(dataFormatada[0]) + dataFormatada.Substring(1);
@@ -57,7 +62,6 @@ namespace Secretary
 
             AtualizarContadores();
         }
-
         private void Inicial_Load(object sender, EventArgs e)
         {
             AtualizarContadores(); //Vai atualizar os contadores quando iniciar ;)
@@ -178,7 +182,21 @@ namespace Secretary
         {
             DisableButton();
         }
+        private void btnInicio_Click(object sender, EventArgs e)
+        {
+                // Se houver um formulário filho aberto, fecha
+                if (activeForm != null)
+                {
+                    activeForm.Close();
+                    activeForm = null; // Limpa a referência
+                }
 
+                // Atualiza a saudação e hora mesmo sem formulário filho
+                MensagemBoasVindas();
+
+                // Desativa os efeitos dos botões
+                DisableButton();
+        }
         private void btnRequerimentos_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Forms.Requerimentos(), sender);
@@ -316,11 +334,6 @@ namespace Secretary
         private void btnSair_Click_1(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void panelPrincipal_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
