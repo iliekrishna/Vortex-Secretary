@@ -269,16 +269,6 @@ namespace Secretary.Forms
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panelFiltros_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             if (comboBox2.Items.Count > 0)
@@ -294,6 +284,72 @@ namespace Secretary.Forms
 
             // Resetar Data para hoje
             dateTimePicker1.Value = DateTime.Today;
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            // Obter os filtros selecionados
+            string status = comboBox2.SelectedItem?.ToString() ?? "Todos";
+            string documento = comboBox3.SelectedItem?.ToString() ?? "Todos";
+            string ordenarPor = comboBox1.SelectedItem?.ToString() ?? "Mais recente";
+            DateTime dataSelecionada = dateTimePicker1.Value.Date;
+
+            // Limpar os cards existentes
+            flowLayoutPanel1.Controls.Clear();
+
+            using (MySqlConnection conn = ConexaoBD.ObterConexao())
+            {
+                string query = "SELECT * FROM t_requerimentos WHERE 1=1";
+
+                // Aplicar filtros
+                if (status != "Todos")
+                    query += " AND status_doc = @status";
+
+                if (documento != "Todos")
+                    query += " AND tipo_doc = @documento";
+
+                query += " AND DATE(data_pedido) = @data"; // Corrigido para usar o campo correto
+
+                // Ordenação
+                if (ordenarPor == "Mais recente")
+                    query += " ORDER BY data_pedido DESC";
+                else
+                    query += " ORDER BY data_pedido ASC";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    if (status != "Todos")
+                        cmd.Parameters.AddWithValue("@status", status);
+
+                    if (documento != "Todos")
+                        cmd.Parameters.AddWithValue("@documento", documento);
+
+                    cmd.Parameters.AddWithValue("@data", dataSelecionada);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var req = new RequerimentoInfo
+                            {
+                                Id = Convert.ToInt32(reader["id_requerimento"]),
+                                TipoDocumento = reader["tipo_doc"].ToString(),
+                                StatusAtual = reader["status_doc"].ToString(),
+                                DataSolic = Convert.ToDateTime(reader["data_pedido"]),
+                                Nome = reader["nome"].ToString(),
+                                RA = reader["ra"].ToString(),
+                                RG = reader["rg"].ToString(),
+                                Telefone = reader["telefone"].ToString(),
+                                Curso = reader["curso"].ToString(),
+                                Email = reader["email"].ToString()
+                            };
+
+                            var painel = CriarPainel(req);
+                            flowLayoutPanel1.Controls.Add(painel);
+                        }
+                    }
+                }
+            }
         }
     }
 }
