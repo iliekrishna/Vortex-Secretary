@@ -147,13 +147,13 @@ namespace Secretary
         // Método para ativar visualmente o botão do menu que foi clicado
         private void ActivateButton(object btnSender)
         {
-            if(btnSender != null)
+            if (btnSender != null)
             {
                 // Só muda se for um botão diferente do que já está ativo
                 if (currentButton != (Button)btnSender)
                 {
                     DisableButton(); // Desativa os estilos dos botões anteriores
-                    
+
                     // Define o botão atual e altera seu estilo para indicar que está ativo
                     currentButton = (Button)btnSender;
                     currentButton.BackColor = Color.FromArgb(57, 57, 57);
@@ -165,7 +165,7 @@ namespace Secretary
         // Método para resetar o estilo de todos os botões do menu para o padrão (desativado)
         private void DisableButton()
         {
-            foreach(Control previousBtn in panelMenu.Controls)
+            foreach (Control previousBtn in panelMenu.Controls)
             {
                 // Aplica apenas para controles do tipo botão
                 if (previousBtn.GetType() == typeof(Button))
@@ -184,18 +184,18 @@ namespace Secretary
         }
         private void btnInicio_Click(object sender, EventArgs e)
         {
-                // Se houver um formulário filho aberto, fecha
-                if (activeForm != null)
-                {
-                    activeForm.Close();
-                    activeForm = null; // Limpa a referência
-                }
+            // Se houver um formulário filho aberto, fecha
+            if (activeForm != null)
+            {
+                activeForm.Close();
+                activeForm = null; // Limpa a referência
+            }
 
-                // Atualiza a saudação e hora mesmo sem formulário filho
-                MensagemBoasVindas();
+            // Atualiza a saudação e hora mesmo sem formulário filho
+            MensagemBoasVindas();
 
-                // Desativa os efeitos dos botões
-                DisableButton();
+            // Desativa os efeitos dos botões
+            DisableButton();
         }
         private void btnRequerimentos_Click(object sender, EventArgs e)
         {
@@ -208,7 +208,7 @@ namespace Secretary
         {
 
             //MessageBox.Show("ID do usuário na sessão: " + Sessao.UsuarioId);
-            
+
             OpenChildForm(new Forms.Atendimentos.Atendimentos(Sessao.UsuarioId), sender);
             ActivateButton(sender);
         }
@@ -234,7 +234,7 @@ namespace Secretary
 
             ActivateButton(sender);
         }
-        
+
         private void btnPerfil_Click(object sender, EventArgs e)
         {
             menuOpcoes.Show(btnPerfil, new Point(0, btnPerfil.Height));
