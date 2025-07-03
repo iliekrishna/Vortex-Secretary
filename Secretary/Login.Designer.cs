@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.panelDireita = new System.Windows.Forms.Panel();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnFechar = new System.Windows.Forms.Button();
             this.btnMinimizar = new System.Windows.Forms.Button();
             this.txtUsuario = new System.Windows.Forms.TextBox();
@@ -73,7 +71,6 @@
             this.btnFechar.Size = new System.Drawing.Size(34, 30);
             this.btnFechar.TabIndex = 21;
             this.btnFechar.Text = "X";
-            this.toolTip.SetToolTip(this.btnFechar, "Fechar");
             this.btnFechar.UseVisualStyleBackColor = true;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
@@ -90,7 +87,6 @@
             this.btnMinimizar.Size = new System.Drawing.Size(32, 30);
             this.btnMinimizar.TabIndex = 20;
             this.btnMinimizar.Text = "—";
-            this.toolTip.SetToolTip(this.btnMinimizar, "Minimizar");
             this.btnMinimizar.UseVisualStyleBackColor = true;
             this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
             // 
@@ -203,6 +199,7 @@
             this.linkLabelEsqueciSenha.TabStop = true;
             this.linkLabelEsqueciSenha.Text = "Esqueci a senha";
             this.linkLabelEsqueciSenha.VisitedLinkColor = System.Drawing.Color.Black;
+            this.linkLabelEsqueciSenha.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelEsqueciSenha_LinkClicked);
             // 
             // cboxMostrarSenha
             // 
@@ -263,7 +260,6 @@
 
         #endregion
         private System.Windows.Forms.Panel panelDireita;
-        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Label lblFazerLogin;

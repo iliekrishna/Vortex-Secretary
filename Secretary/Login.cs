@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using BCrypt.Net;
 using Secretary.Models;
-using Secretary.DAO;
-
 
 
 namespace Secretary
@@ -21,12 +13,6 @@ namespace Secretary
     
     public partial class FormLogin : Form
     {
-        string server = "162.241.40.214";
-        string port = "3306";
-        string user = "miltonb_userVortex";
-        string password = "gWLQqb~dRO0M";
-        string database = "miltonb_fatec_solicitacoes";
-
         // Importa função nativa para criar uma região com cantos arredondados
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
@@ -47,14 +33,15 @@ namespace Secretary
             txtUsuario.ForeColor = Color.Gray;
 
             // Define o texto padrão e a cor cinza no campo de senha
-            txtSenha.Text = "Senha";
+            txtSenha.Text = "Inserir senha";
             txtSenha.ForeColor = Color.Gray;
-
-            
+            txtSenha.UseSystemPasswordChar = false;
 
             // Remove bordas do formulário e aplica cantos arredondados
             this.FormBorderStyle = FormBorderStyle.None;
             this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 10, 10));
+            this.KeyPreview = true;
+            this.KeyDown += FormLogin_KeyDown;
         }
 
         // Evento ao focar (entrar) no campo txtUsuario
@@ -83,10 +70,11 @@ namespace Secretary
         private void txtSenha_Enter(object sender, EventArgs e)
         {
             // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtSenha.Text == "Senha")
+            if (txtSenha.Text == "Inserir senha")
             {
                 txtSenha.Text = "";
                 txtSenha.ForeColor = Color.Black;
+                txtSenha.UseSystemPasswordChar = true;                
             }
         }
 
@@ -96,7 +84,7 @@ namespace Secretary
             // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
             if (string.IsNullOrWhiteSpace(txtSenha.Text))
             {
-                txtSenha.Text = "Senha";
+                txtSenha.Text = "Inserir senha";
                 txtSenha.ForeColor = Color.Gray;
             }
         }
@@ -120,7 +108,7 @@ namespace Secretary
             string senhaDigitada = txtSenha.Text;
 
             if (string.IsNullOrWhiteSpace(emailDigitado) || emailDigitado == "Inserir e-mail" ||
-                string.IsNullOrWhiteSpace(senhaDigitada) || senhaDigitada == "Senha")
+                string.IsNullOrWhiteSpace(senhaDigitada) || senhaDigitada == "Inserir senha")
             {
                 MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -178,10 +166,7 @@ namespace Secretary
             {
                 MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
-
-
         // Evento de clique na checkbox para mostrar ou ocultar senha
         private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
         {
@@ -203,6 +188,17 @@ namespace Secretary
             {
                 txtSenha.Focus(); // Foco no campo da senha após apertar "Enter"
             }
+        }
+        private void FormLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnEntrar.PerformClick();
+        }
+
+        private void linkLabelEsqueciSenha_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+                FormEsqueciSenha formEsqueciSenha = new FormEsqueciSenha();
+                formEsqueciSenha.ShowDialog();
         }
     }
 }
