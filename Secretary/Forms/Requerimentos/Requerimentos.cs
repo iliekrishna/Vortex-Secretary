@@ -216,7 +216,7 @@ namespace Secretary.Forms
             string status = comboBox2.SelectedItem?.ToString() ?? "Todos";
             string documento = comboBox3.SelectedItem?.ToString() ?? "Todos";
             string ordenarPor = comboBox1.SelectedItem?.ToString() ?? "Mais recente";
-            DateTime dataSelecionada = dateTimePicker1.Value.Date;
+           
 
             // Limpar os cards existentes
             flowLayoutPanel1.Controls.Clear();
@@ -232,7 +232,7 @@ namespace Secretary.Forms
                 if (documento != "Todos")
                     query += " AND tipo_doc = @documento";
 
-                query += " AND DATE(data_pedido) = @data"; // Corrigido para usar o campo correto
+              
 
                 // Ordenação
                 if (ordenarPor == "Mais recente")
@@ -248,7 +248,7 @@ namespace Secretary.Forms
                     if (documento != "Todos")
                         cmd.Parameters.AddWithValue("@documento", documento);
 
-                    cmd.Parameters.AddWithValue("@data", dataSelecionada);
+                    
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -290,7 +290,7 @@ namespace Secretary.Forms
                 comboBox1.SelectedIndex = 0;
 
             // Resetar Data para hoje
-            dateTimePicker1.Value = DateTime.Today;
+          
         }
 
 
