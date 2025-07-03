@@ -1,21 +1,15 @@
 ﻿using Secretary;
+using Secretary.DAO;
+using Secretary.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-
 
 namespace Secretary.Forms.Atendimentos
 {
     public partial class FormChatAtendimento : Form
     {
-
-
         private int ticketId;
         private Action AtualizarListas;
 
@@ -24,30 +18,46 @@ namespace Secretary.Forms.Atendimentos
             InitializeComponent();
 
             this.ticketId = ticketId;
-
-            // Setar Sessao.UsuarioId aqui
             Sessao.UsuarioId = usuarioId;
-
-            //MessageBox.Show("ID do usuário logado: " + Sessao.UsuarioId);
-
             this.AtualizarListas = AtualizarListas;
 
-            lblNome.Text = "Nome: " + nome;
-            lblRA.Text = "RA: " + ra;
-            lblCurso.Text = "Curso: " + curso;
-            lblAssunto.Text = "Assunto: " + assunto;
-            lblData.Text = "Data: " + data;
-            txtHistorico.Text = "[Visitante]: " + conteudo;
+            Ticket ticket = AtendimentoDAO.BuscarPorId(ticketId);
 
+            if (ticket == null)
+            {
+                MessageBox.Show("Ticket não encontrado.");
+                this.Close();
+                return;
+            }
 
+            // Preenche os dados
+            lblNome.Text = "Nome: " + ticket.NomeAluno;
+            lblCPF.Text = "CPF: " + ticket.CPF;
+            lblVinculo.Text = "Vínculo: " + ticket.TipoVinculo;
+            lblEmail.Text = "E-mail: " + ticket.Email;
+            lblAssunto.Text = "Categoria: " + ticket.Categoria;
+            lblData.Text = "Data: " + ticket.DataPedido.ToString("dd/MM/yyyy HH:mm");
 
-            CarregarResposta(); // Carrega respostas salvas se tiver
+            if (ticket.TipoVinculo == "Comunidade externa")
+            {
+                lblRA.Visible = false;
+                lblCurso.Visible = false;
+            }
+            else
+            {
+                lblRA.Visible = true;
+                lblCurso.Visible = true;
+                lblRA.Text = "RA: " + ticket.RA;
+                lblCurso.Text = "Curso: " + ticket.Curso;
+            }
 
+            txtHistorico.Text = "[Visitante]: " + (ticket.Assunto ?? "");
 
+            if (!string.IsNullOrWhiteSpace(ticket.Resposta))
+                txtHistorico.AppendText(Environment.NewLine + ticket.Resposta);
 
             this.Shown += FormChatAtendimento_Shown;
         }
-
         private void CarregarResposta()
         {
             try
@@ -77,62 +87,72 @@ namespace Secretary.Forms.Atendimentos
         {
             txtHistorico.SelectionStart = txtHistorico.Text.Length;
             txtHistorico.SelectionLength = 0;
+            txtHistorico.ScrollToCaret();
             txtResposta.Focus();
         }
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-
-
             if (!string.IsNullOrWhiteSpace(txtResposta.Text))
             {
-                string resposta = txtResposta.Text.Trim();
+                string novaMensagem = txtResposta.Text.Trim();
 
-                // Adiciona no histórico da tela
-                txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + "[Secretaria - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "]: " + resposta);
+                if (novaMensagem.Length < 5)
+                {
+                    MessageBox.Show("A resposta está muito curta.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string mensagemFormatada = FormatMensagemSecretaria(novaMensagem);
+
+                // Exibe no histórico
+                txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + mensagemFormatada);
+                txtHistorico.SelectionStart = txtHistorico.Text.Length;
+                txtHistorico.ScrollToCaret();
 
                 try
                 {
                     using (var conn = ConexaoBD.ObterConexao())
                     {
-                        // Busca a resposta anterior se existir
-                        string sqlSelect = "SELECT resposta FROM t_tickets WHERE id_ticket = @id";
+                        // Obtém resposta anterior
                         string respostaAnterior = "";
+                        string sqlSelect = "SELECT resposta FROM t_tickets WHERE id_ticket = @id";
 
                         using (var cmdSelect = new MySql.Data.MySqlClient.MySqlCommand(sqlSelect, conn))
                         {
                             cmdSelect.Parameters.AddWithValue("@id", ticketId);
                             var resultado = cmdSelect.ExecuteScalar();
-                            respostaAnterior = resultado != null ? resultado.ToString() : "";
+                            respostaAnterior = resultado?.ToString() ?? "";
                         }
 
-                        // Junta com a nova resposta
-                        string novaResposta = respostaAnterior;
-                        if (!string.IsNullOrWhiteSpace(respostaAnterior))
-                            novaResposta += Environment.NewLine + Environment.NewLine + "[Secretaria]: " + resposta;
-                        else
-                            novaResposta = "[Secretaria]: " + resposta;
+                        // Concatena nova resposta
+                        string novaResposta = string.IsNullOrWhiteSpace(respostaAnterior)
+                            ? mensagemFormatada
+                            : respostaAnterior + Environment.NewLine + Environment.NewLine + mensagemFormatada;
 
-                        // Atualiza a hora da resposta
-                        DateTime dataHoraResposta = DateTime.Now;
+                        // Atualiza no banco
+                        string sqlUpdate = @"UPDATE t_tickets 
+                                             SET resposta = @resposta, 
+                                                 data_resposta = @dataResposta, 
+                                                 status = @status, 
+                                                 id_usuario = @idUsuario 
+                                             WHERE id_ticket = @id";
 
-                        // Atualiza o status
-                        string status = "Respondido";
-
-                        // Atualiza no banco com as duas respostas
-                        string sqlUpdate = "UPDATE t_tickets SET resposta = @resposta, data_resposta = @dataResposta, status = @status, id_usuario = @idUsuario WHERE id_ticket = @id ";
                         using (var cmdUpdate = new MySql.Data.MySqlClient.MySqlCommand(sqlUpdate, conn))
                         {
                             cmdUpdate.Parameters.AddWithValue("@resposta", novaResposta);
-                            cmdUpdate.Parameters.AddWithValue("@dataResposta", dataHoraResposta);
-                            cmdUpdate.Parameters.AddWithValue("@status", status);
+                            cmdUpdate.Parameters.AddWithValue("@dataResposta", DateTime.Now);
+                            cmdUpdate.Parameters.AddWithValue("@status", "Respondido");
                             cmdUpdate.Parameters.AddWithValue("@idUsuario", Sessao.UsuarioId);
                             cmdUpdate.Parameters.AddWithValue("@id", ticketId);
-                            //MessageBox.Show("ID do usuário na sessão: " + Sessao.UsuarioId); teste de id do usuario
                             cmdUpdate.ExecuteNonQuery();
-                            txtResposta.Clear();
-                            this.Close();
                         }
+
+                        // Limpa e fecha
+                        txtResposta.Clear();
+                        AtualizarListas?.Invoke();
+                        RegistrarLog($"Ticket {ticketId} respondido por usuário {Sessao.UsuarioId}.");
+                        this.Close();
                     }
                 }
                 catch (Exception ex)
@@ -157,19 +177,19 @@ namespace Secretary.Forms.Atendimentos
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string sqlUpdate = @"
-                UPDATE t_tickets
-                SET resposta = @justificativa,
-                    status = @status,
-                    data_resposta = @data,
-                    id_usuario = @usuarioId
-                WHERE id_ticket = @id";
+                    UPDATE t_tickets
+                    SET resposta = @justificativa,
+                        status = @status,
+                        data_resposta = @data,
+                        id_usuario = @usuarioId
+                    WHERE id_ticket = @id";
 
                     using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(sqlUpdate, conn))
                     {
                         cmd.Parameters.AddWithValue("@justificativa", "[Encerrado]: " + justificativa);
                         cmd.Parameters.AddWithValue("@status", "Encerrado");
                         cmd.Parameters.AddWithValue("@data", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@usuarioId", Sessao.UsuarioId); 
+                        cmd.Parameters.AddWithValue("@usuarioId", Sessao.UsuarioId);
                         cmd.Parameters.AddWithValue("@id", ticketId);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -177,9 +197,8 @@ namespace Secretary.Forms.Atendimentos
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Dúvida excluída com justificativa.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             AtualizarListas?.Invoke();
-
+                            RegistrarLog($"Ticket {ticketId} encerrado por usuário {Sessao.UsuarioId}.");
                             this.Close();
                         }
                         else
@@ -195,14 +214,21 @@ namespace Secretary.Forms.Atendimentos
             }
         }
 
-        private void lblAssunto_Click(object sender, EventArgs e)
+        private string FormatMensagemSecretaria(string mensagem)
         {
-            // NADA, msm do outro
+            return $"[Secretaria - {DateTime.Now:dd/MM/yyyy HH:mm}]: {mensagem}";
         }
 
-        private void FormChatAtendimento_Load(object sender, EventArgs e)
+        private void RegistrarLog(string mensagem)
         {
-
+            try
+            {
+                File.AppendAllText("logs_respostas.txt", $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {mensagem}{Environment.NewLine}");
+            }
+            catch
+            {
+                // Falha ao registrar log não deve quebrar o sistema
+            }
         }
     }
 }

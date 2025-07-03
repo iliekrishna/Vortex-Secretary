@@ -17,11 +17,11 @@ namespace Secretary.Models
         public string Curso { get; set; }
         public string Categoria { get; set; }
         public string Assunto { get; set; }
-        public string Mensagem { get; set; }
         public DateTime DataPedido { get; set; }
         public string Resposta { get; set; }
         public string Status { get; set; }
         public DateTime? DataResposta { get; set; }
         public int? IdUsuario { get; set; }
+        public string UsuarioResposta { get; set; }
     }
 }

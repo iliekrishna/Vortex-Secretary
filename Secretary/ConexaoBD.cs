@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 
@@ -12,7 +13,7 @@ namespace Secretary
         private static string senha = "gWLQqb~dRO0M";
         private static string bancoDados = "miltonb_fatec_solicitacoes";
 
-        private static string connectionString = $"server={servidor};port={porta};user={usuario};password={senha};database={bancoDados};";
+        private static string connectionString = $"server={servidor};port={porta};user={usuario};password={senha};database={bancoDados};CharSet=utf8mb4";
 
         public static MySqlConnection ObterConexao()
         {
@@ -32,5 +33,28 @@ namespace Secretary
                 return tabela;
             }
         }
+
+        public static DataTable ExecutarConsultaComParametros(string query, List<MySqlParameter> parametros)
+        {
+            using (MySqlConnection conexao = ObterConexao())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conexao))
+                {
+                    if (parametros != null)
+                    {
+                        foreach (var parametro in parametros)
+                        {
+                            cmd.Parameters.Add(parametro);
+                        }
+                    }
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    DataTable tabela = new DataTable();
+                    adapter.Fill(tabela);
+                    return tabela;
+                }
+            }
+        }
+
     }
 }

@@ -2,8 +2,6 @@
 using System.Data;
 using System.Windows.Forms;
 using Secretary.DAO;
-using Secretary.Forms;
-
 
 namespace Secretary.Forms.Atendimentos
 {
@@ -17,7 +15,6 @@ namespace Secretary.Forms.Atendimentos
             this.usuarioId = usuarioId;
             this.Load += Atendimentos_Load;
         }
-
         private void Atendimentos_Load(object sender, EventArgs e)
         {
             try
@@ -33,8 +30,8 @@ namespace Secretary.Forms.Atendimentos
                 });
 
                 cbCategoria.Items.AddRange(new string[] {
-                    "Todos", "matricula_trancamento", "documentos_emissao", "passe_escolar",
-                    "estagio", "gerenciamento_curso", "outros"
+                    "Todos", "Matrícula e Trancamento", "Documentos e Emissão", "Passe Escolar",
+                    "Estágio", "Gerenciamento do Curso", "Outros"
                 });
 
                 cbCurso.SelectedIndex = 0;
@@ -64,14 +61,17 @@ namespace Secretary.Forms.Atendimentos
 
             try
             {
-                DataTable dtAberto = AtendimentoDAO.ListarTicketsEmAberto(curso, tipoVinculo, categoria);
-                DataTable dtRespondido = AtendimentoDAO.ListarTicketsRespondidos(curso, tipoVinculo, categoria);
+                DataTable dtAberto = AtendimentoDAO.ListarTickets("aberto", curso, tipoVinculo, categoria);
+                DataTable dtRespondido = AtendimentoDAO.ListarTickets("respondido", curso, tipoVinculo, categoria);
 
                 datagvEmAberto.Columns.Clear();
                 datagvRespondidos.Columns.Clear();
 
                 datagvEmAberto.DataSource = dtAberto;
                 datagvRespondidos.DataSource = dtRespondido;
+
+                RenomearColunas(datagvRespondidos);
+                RenomearColunas(datagvEmAberto);
             }
             catch (Exception ex)
             {
@@ -79,19 +79,43 @@ namespace Secretary.Forms.Atendimentos
             }
         }
 
-        private void datagvEmAberto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void RenomearColunas(DataGridView dgv)
+        {
+            string[] colunas = { "Código", "Nome do Aluno", "RA", "Curso", "Assunto", "Data do Ticket" };
+            foreach (DataGridViewColumn col in datagvRespondidos.Columns)
+            {
+                Console.WriteLine(col.HeaderText);
+            }
+        }
+
+        private void AtualizarListas()
+        {
+            AplicarFiltros();
+        }
+
+        private void datagvRespondidos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                int idTicket = Convert.ToInt32(datagvRespondidos.Rows[e.RowIndex].Cells["Código"].Value);
+
+                FormDetalhesAtendimento detalhesForm = new FormDetalhesAtendimento(idTicket);
+                detalhesForm.ShowDialog();
+            }
+        }
+
+        private void datagvEmAberto_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            DataGridViewRow linha = datagvEmAberto.Rows[e.RowIndex];
-
+            var linha = datagvEmAberto.Rows[e.RowIndex];
             string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
             string ra = linha.Cells["RA"].Value?.ToString();
             string curso = linha.Cells["Curso"].Value?.ToString();
             string assunto = linha.Cells["Assunto"].Value?.ToString();
-            string data = DateTime.Now.ToShortDateString();
+            string data = Convert.ToDateTime(linha.Cells["Data do Ticket"].Value).ToString("dd/MM/yyyy HH:mm");
             int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
-            string mensagem = assunto;
+            string mensagem = assunto; // Ou buscar campo "mensagem" se estiver disponível na grid
 
             var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, data, mensagem, AtualizarListas, usuarioId);
             chat.StartPosition = FormStartPosition.CenterScreen;
@@ -102,28 +126,17 @@ namespace Secretary.Forms.Atendimentos
 
         private void datagvRespondidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-
-            DataGridViewRow linha = datagvRespondidos.Rows[e.RowIndex];
-
-            string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
-            string ra = linha.Cells["RA"].Value?.ToString();
-            string curso = linha.Cells["Curso"].Value?.ToString();
-            string assunto = linha.Cells["Assunto"].Value?.ToString();
-            int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
-            string data = DateTime.Now.ToShortDateString();
-            string mensagem = assunto;
-
-            var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, data, mensagem, AtualizarListas, usuarioId);
-            chat.StartPosition = FormStartPosition.CenterScreen;
-            chat.ShowDialog();
-
-            AtualizarListas();
+            datagvRespondidos_CellContentClick(sender, e);
         }
 
-        private void AtualizarListas()
+        private void datagvEmAberto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            AplicarFiltros();
+            datagvEmAberto_CellContentClick(sender, e);
+        }
+
+        private void Atendimentos_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

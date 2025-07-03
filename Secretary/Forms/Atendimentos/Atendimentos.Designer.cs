@@ -125,6 +125,7 @@ namespace Secretary.Forms.Atendimentos
             this.datagvEmAberto.ReadOnly = true;
             this.datagvEmAberto.Size = new System.Drawing.Size(1312, 570);
             this.datagvEmAberto.TabIndex = 2;
+            this.datagvEmAberto.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvEmAberto_CellContentClick);
             this.datagvEmAberto.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvEmAberto_CellDoubleClick);
             // 
             // Column1
@@ -179,10 +180,11 @@ namespace Secretary.Forms.Atendimentos
             // datagvRespondidos
             // 
             this.datagvRespondidos.AllowDrop = true;
-            this.datagvRespondidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.datagvRespondidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.datagvRespondidos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.datagvRespondidos.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.datagvRespondidos.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.datagvRespondidos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.datagvRespondidos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.datagvRespondidos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.datagvRespondidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagvRespondidos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -197,6 +199,7 @@ namespace Secretary.Forms.Atendimentos
             this.datagvRespondidos.ReadOnly = true;
             this.datagvRespondidos.Size = new System.Drawing.Size(1312, 570);
             this.datagvRespondidos.TabIndex = 5;
+            this.datagvRespondidos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvRespondidos_CellContentClick);
             this.datagvRespondidos.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvRespondidos_CellDoubleClick);
             // 
             // dataGridViewTextBoxColumn6
@@ -204,30 +207,35 @@ namespace Secretary.Forms.Atendimentos
             this.dataGridViewTextBoxColumn6.HeaderText = "Nome";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 78;
             // 
             // dataGridViewTextBoxColumn7
             // 
             this.dataGridViewTextBoxColumn7.HeaderText = "Assunto";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 93;
             // 
             // dataGridViewTextBoxColumn8
             // 
             this.dataGridViewTextBoxColumn8.HeaderText = "Respondido em";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Width = 135;
             // 
             // dataGridViewTextBoxColumn9
             // 
             this.dataGridViewTextBoxColumn9.HeaderText = "ID";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 49;
             // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "Status";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 81;
             // 
             // dataGridView1
             // 
@@ -363,6 +371,7 @@ namespace Secretary.Forms.Atendimentos
             this.Name = "Atendimentos";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Atendimentos";
+            this.Load += new System.EventHandler(this.Atendimentos_Load_1);
             this.tabControlAtendimentos.ResumeLayout(false);
             this.tpagAberto.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).EndInit();
