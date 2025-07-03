@@ -212,82 +212,6 @@ namespace Secretary.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Requerimentos_Load(sender, e);
-            // 1. Obter os filtros selecionados
-            string status = comboBox2.SelectedItem?.ToString() ?? "Todos";
-            string documento = comboBox3.SelectedItem?.ToString() ?? "Todos";
-            string ordenarPor = comboBox1.SelectedItem?.ToString() ?? "Mais recente";
-            DateTime dataSelecionada = dateTimePicker1.Value.Date;
-
-            // 2. Limpar os cards antigos
-            flowLayoutPanel1.Controls.Clear();
-
-            // 3. Buscar os dados filtrados do banco (exemplo com MySQL)
-            using (MySqlConnection conn = ConexaoBD.ObterConexao())
-            {
-                string query = "SELECT * FROM t_requerimentos WHERE 1=1";
-
-                // Aplicar filtros dinâmicos
-                if (status != "Todos")
-                    query += " AND status_doc = @status";
-
-                if (documento != "Todos")
-                    query += " AND tipo_doc = @documento";
-
-                query += " AND data_doc = @data";
-
-                if (ordenarPor == "Mais recente")
-                    query += " ORDER BY data_doc DESC";
-                else
-                    query += " ORDER BY data_doc ASC";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    // Passar os parâmetros
-                    if (status != "Todos")
-                        cmd.Parameters.AddWithValue("@status", status);
-
-                    if (documento != "Todos")
-                        cmd.Parameters.AddWithValue("@documento", documento);
-
-                    cmd.Parameters.AddWithValue("@data", dataSelecionada);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-
-                            MaterialExpansionPanel novoCard = new MaterialExpansionPanel();
-                            novoCard.Title = reader["tipo_doc"].ToString();
-                            novoCard.Description = reader["status_doc"].ToString();
-
-
-                            flowLayoutPanel1.Controls.Add(novoCard);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (comboBox2.Items.Count > 0)
-                comboBox2.SelectedIndex = 0; // Ex: "Todos"
-
-            // Resetar ComboBox de Documento (comboBox3)
-            if (comboBox3.Items.Count > 0)
-                comboBox3.SelectedIndex = 0;
-
-            // Resetar ComboBox de Ordenar por (comboBox1)
-            if (comboBox1.Items.Count > 0)
-                comboBox1.SelectedIndex = 0;
-
-            // Resetar Data para hoje
-            dateTimePicker1.Value = DateTime.Today;
-        }
-
-        private void button3_Click_1(object sender, EventArgs e)
-        {
             // Obter os filtros selecionados
             string status = comboBox2.SelectedItem?.ToString() ?? "Todos";
             string documento = comboBox3.SelectedItem?.ToString() ?? "Todos";
@@ -352,9 +276,25 @@ namespace Secretary.Forms
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
+            if (comboBox2.Items.Count > 0)
+                comboBox2.SelectedIndex = 0; // Ex: "Todos"
 
+            // Resetar ComboBox de Documento (comboBox3)
+            if (comboBox3.Items.Count > 0)
+                comboBox3.SelectedIndex = 0;
+
+            // Resetar ComboBox de Ordenar por (comboBox1)
+            if (comboBox1.Items.Count > 0)
+                comboBox1.SelectedIndex = 0;
+
+            // Resetar Data para hoje
+            dateTimePicker1.Value = DateTime.Today;
         }
+
+
+
+
     }
 }
