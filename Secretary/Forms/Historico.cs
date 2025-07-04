@@ -53,7 +53,7 @@ namespace Secretary.Forms
                     if (filtro == "Pendente")
                         query += " WHERE status = 'Pendente'";
                     else if (filtro == "Encerrado/Cancelado")
-                        query += " WHERE status = 'Encerrado'";
+                        query += " WHERE status = 'Encerrado' OR status = 'Cancelado'";
                     else if (filtro == "Respondido/Concluído")
                         query += " WHERE status = 'Respondido'";
 

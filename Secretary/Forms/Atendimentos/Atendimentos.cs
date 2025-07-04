@@ -32,7 +32,7 @@ namespace Secretary.Forms.Atendimentos
 
                 cbCategoria.Items.AddRange(new string[] {
                     "Todos", "Matrícula e Trancamento", "Documentos e Emissão", "Passe Escolar",
-                    "Estágio", "Gerenciamento do Curso", "Outros"
+                    "Estágio", "Gerenciamento de Curso", "Outros"
                 });
 
                 cbCurso.SelectedIndex = 0;
