@@ -54,16 +54,11 @@ namespace Secretary.Forms
                                 btn = subControl as Button;
                         }
 
-                        // Ajusta os controles
-                        if (rtb != null)
+                        if (rtb != null && btn != null)
                         {
-                            rtb.Width = itemPanel.Width - (btn?.Width ?? 140) - 30;
-                        }
-
-                        if (btn != null)
-                        {
-                            btn.Left = itemPanel.Width - btn.Width - 15;
-                            btn.Top = (itemPanel.Height - btn.Height) / 2; // Centraliza verticalmente
+                            rtb.Width = itemPanel.Width - btn.Width - 30;
+                            btn.Left = rtb.Right + 2; 
+                            btn.Top = (itemPanel.Height - btn.Height) / 2;
                         }
                     }
                 }
@@ -114,8 +109,8 @@ namespace Secretary.Forms
                     {
                         Width = container.Width - 5,
                         Height = 60,
-                        Margin = new Padding(0, 0, 0, 10),
-                        BackColor = Color.White
+                        Margin = new Padding(10, 0, 0, 0),
+                        BackColor = Color.WhiteSmoke
                     };
 
                     // RichTextBox (nome + status)
@@ -124,10 +119,10 @@ namespace Secretary.Forms
                         Text = $"• {doc.Nome}",
                         Font = new Font("Verdana", 10),
                         Location = new Point(15, 15),
-                        Width = itemPanel.Width - 150,
+                        Width = itemPanel.Width - 140, 
                         Height = 30,
                         BorderStyle = BorderStyle.None,
-                        BackColor = Color.White,
+                        BackColor = Color.WhiteSmoke,
                         ReadOnly = true,
                         ScrollBars = RichTextBoxScrollBars.None
                     };
@@ -145,9 +140,9 @@ namespace Secretary.Forms
                         Text = "Editar detalhes",
                         Font = new Font("Verdana", 9),
                         Size = new Size(120, 30),
-                        Location = new Point(itemPanel.Width - 135, 15),
+                        Location = new Point(0, 15),
                         Tag = doc,
-                        Anchor = AnchorStyles.Top | AnchorStyles.Right
+                        Anchor = AnchorStyles.Top 
                     };
                     btnEditar.Click += BtnEditar_Click;
 
@@ -181,7 +176,6 @@ namespace Secretary.Forms
                 AjustarLayout();
             }
         }
-
         private void BtnNovoDocumento_Click(object sender, EventArgs e)
         {
             FormNovoDocumento form = new FormNovoDocumento();
@@ -197,6 +191,11 @@ namespace Secretary.Forms
                 form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
                 form.ShowDialog();
             }
+        }
+
+        private void labelTitulo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

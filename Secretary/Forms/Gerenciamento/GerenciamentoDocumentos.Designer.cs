@@ -20,17 +20,21 @@
             this.panelFormularios = new System.Windows.Forms.Panel();
             this.labelTitulo = new System.Windows.Forms.Label();
             this.SuspendLayout();
-
+            // 
             // panelFormularios
+            // 
+            this.panelFormularios.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelFormularios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFormularios.Location = new System.Drawing.Point(0, 60);
             this.panelFormularios.Name = "panelFormularios";
             this.panelFormularios.Size = new System.Drawing.Size(800, 540);
             this.panelFormularios.TabIndex = 0;
-
+            // 
             // labelTitulo
+            // 
+            this.labelTitulo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.labelTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelTitulo.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold);
+            this.labelTitulo.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.Location = new System.Drawing.Point(0, 0);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Padding = new System.Windows.Forms.Padding(20, 15, 0, 15);
@@ -38,8 +42,10 @@
             this.labelTitulo.TabIndex = 1;
             this.labelTitulo.Text = "Gerenciamento de Formulários";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
+            this.labelTitulo.Click += new System.EventHandler(this.labelTitulo_Click);
+            // 
             // GerenciamentoDocumentos
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
@@ -51,6 +57,7 @@
             this.Name = "GerenciamentoDocumentos";
             this.Text = "Gerenciamento de Formulários";
             this.ResumeLayout(false);
+
         }
 
         #endregion

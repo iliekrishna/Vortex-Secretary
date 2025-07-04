@@ -66,9 +66,9 @@ namespace Secretary.Forms
             Panel panelDoc = new Panel
             {
                 Name = $"panelDoc{doc.Id}",
-                Size = new Size(flowLayoutPanelDocumentos.ClientSize.Width - 25, 50),
+                Size = new Size(flowLayoutPanelDocumentos.ClientSize.Width - 5, 50),
                 Margin = new Padding(0, 0, 0, 10),
-                BackColor = Color.White,
+                BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
             };
 
@@ -77,8 +77,9 @@ namespace Secretary.Forms
                 Text = doc.Nome,
                 AutoSize = true,
                 Location = new Point(20, 15),
-                Font = new Font("Verdana", 10F, FontStyle.Bold),
-                Tag = doc.Id
+                Font = new Font("Verdana", 10F),
+                Tag = doc.Id,
+                ForeColor = Color.Black
             };
 
             Label lblStatus = new Label
@@ -98,7 +99,8 @@ namespace Secretary.Forms
                 Size = new Size(80, 25),
                 Location = new Point(panelDoc.Width - 100, 12),
                 Tag = doc,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                BackColor = Color.White
             };
             btnEditar.Click += BtnEditar_Click;
 
@@ -197,9 +199,9 @@ namespace Secretary.Forms
             Panel panel = new Panel
             {
                 Name = $"panelUsu{id}",
-                Size = new Size(flowLayoutPanelUsuarios.Width - 40, 50),
+                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
                 Margin = new Padding(0, 0, 0, 10),
-                BackColor = Color.White,
+                BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
             };
 
@@ -208,7 +210,7 @@ namespace Secretary.Forms
                 Text = nome,
                 AutoSize = true,
                 Location = new Point(20, 15),
-                Font = new Font("Verdana", 10F, FontStyle.Bold),
+                Font = new Font("Verdana", 10F),
                 Tag = id
             };
 
@@ -228,7 +230,8 @@ namespace Secretary.Forms
                 Size = new Size(80, 25),
                 Location = new Point(panel.Width - 100, 12),
                 Tag = id,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                BackColor = Color.White
             };
             btnEditar.Click += BtnEditarUsuario_Click;
 
@@ -238,7 +241,6 @@ namespace Secretary.Forms
 
             return panel;
         }
-
         private Label CriarLabelMensagem(string mensagem)
         {
             return new Label
@@ -247,10 +249,10 @@ namespace Secretary.Forms
                 ForeColor = Color.Gray,
                 Dock = DockStyle.Top,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Height = 50
+                Height = 50,
+                Font = new Font("Verdana", 10F, FontStyle.Regular)
             };
         }
-
         private void BtnEditarUsuario_Click(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.Tag is int idUsuario)
@@ -298,7 +300,7 @@ namespace Secretary.Forms
             Panel panelBotao = new Panel
             {
                 Size = new Size(flowLayoutPanelUsuarios.Width - 40, 60),
-                BackColor = Color.Transparent
+                BackColor = Color.WhiteSmoke
             };
 
             Button btnNovoUsuario = new Button

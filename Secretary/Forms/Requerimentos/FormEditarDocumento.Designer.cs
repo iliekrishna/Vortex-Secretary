@@ -38,23 +38,24 @@
             this.rbtnAtivo = new System.Windows.Forms.RadioButton();
             this.rbtnInativo = new System.Windows.Forms.RadioButton();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.panelDivisor = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // txtNomeRequerimento
             // 
-            this.txtNomeRequerimento.Location = new System.Drawing.Point(175, 81);
-            this.txtNomeRequerimento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtNomeRequerimento.Location = new System.Drawing.Point(207, 88);
+            this.txtNomeRequerimento.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtNomeRequerimento.Name = "txtNomeRequerimento";
-            this.txtNomeRequerimento.Size = new System.Drawing.Size(301, 21);
+            this.txtNomeRequerimento.Size = new System.Drawing.Size(343, 23);
             this.txtNomeRequerimento.TabIndex = 0;
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Location = new System.Drawing.Point(304, 190);
-            this.btnSalvar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSalvar.Font = new System.Drawing.Font("Verdana", 9.75F);
+            this.btnSalvar.Location = new System.Drawing.Point(349, 222);
+            this.btnSalvar.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(88, 23);
+            this.btnSalvar.Size = new System.Drawing.Size(101, 28);
             this.btnSalvar.TabIndex = 2;
             this.btnSalvar.Text = "SALVAR";
             this.btnSalvar.UseVisualStyleBackColor = true;
@@ -62,11 +63,12 @@
             // 
             // btnExcluirRequerimento
             // 
+            this.btnExcluirRequerimento.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.btnExcluirRequerimento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnExcluirRequerimento.Location = new System.Drawing.Point(396, 190);
-            this.btnExcluirRequerimento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnExcluirRequerimento.Location = new System.Drawing.Point(457, 222);
+            this.btnExcluirRequerimento.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnExcluirRequerimento.Name = "btnExcluirRequerimento";
-            this.btnExcluirRequerimento.Size = new System.Drawing.Size(84, 23);
+            this.btnExcluirRequerimento.Size = new System.Drawing.Size(96, 28);
             this.btnExcluirRequerimento.TabIndex = 3;
             this.btnExcluirRequerimento.Text = "Deletar";
             this.btnExcluirRequerimento.UseVisualStyleBackColor = true;
@@ -74,39 +76,42 @@
             // 
             // txtPrazo
             // 
-            this.txtPrazo.Location = new System.Drawing.Point(175, 114);
-            this.txtPrazo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtPrazo.Location = new System.Drawing.Point(207, 128);
+            this.txtPrazo.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtPrazo.Name = "txtPrazo";
-            this.txtPrazo.Size = new System.Drawing.Size(131, 21);
+            this.txtPrazo.Size = new System.Drawing.Size(149, 23);
             this.txtPrazo.TabIndex = 5;
             // 
             // lblNomeRequerimento
             // 
             this.lblNomeRequerimento.AutoSize = true;
-            this.lblNomeRequerimento.Location = new System.Drawing.Point(37, 84);
-            this.lblNomeRequerimento.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNomeRequerimento.Font = new System.Drawing.Font("Verdana", 11.25F);
+            this.lblNomeRequerimento.Location = new System.Drawing.Point(26, 88);
+            this.lblNomeRequerimento.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblNomeRequerimento.Name = "lblNomeRequerimento";
-            this.lblNomeRequerimento.Size = new System.Drawing.Size(130, 13);
+            this.lblNomeRequerimento.Size = new System.Drawing.Size(174, 18);
             this.lblNomeRequerimento.TabIndex = 6;
             this.lblNomeRequerimento.Text = "Nome do documento:";
             // 
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
-            this.lblPrazo.Location = new System.Drawing.Point(123, 117);
-            this.lblPrazo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrazo.Font = new System.Drawing.Font("Verdana", 11.25F);
+            this.lblPrazo.Location = new System.Drawing.Point(143, 129);
+            this.lblPrazo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblPrazo.Name = "lblPrazo";
-            this.lblPrazo.Size = new System.Drawing.Size(44, 13);
+            this.lblPrazo.Size = new System.Drawing.Size(58, 18);
             this.lblPrazo.TabIndex = 7;
             this.lblPrazo.Text = "Prazo:";
             // 
             // lblNumID
             // 
             this.lblNumID.AutoSize = true;
-            this.lblNumID.Location = new System.Drawing.Point(119, 152);
-            this.lblNumID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNumID.Font = new System.Drawing.Font("Verdana", 11.25F);
+            this.lblNumID.Location = new System.Drawing.Point(138, 174);
+            this.lblNumID.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblNumID.Name = "lblNumID";
-            this.lblNumID.Size = new System.Drawing.Size(48, 13);
+            this.lblNumID.Size = new System.Drawing.Size(63, 18);
             this.lblNumID.TabIndex = 8;
             this.lblNumID.Text = "Status:";
             // 
@@ -114,9 +119,10 @@
             // 
             this.rbtnAtivo.AutoSize = true;
             this.rbtnAtivo.Checked = true;
-            this.rbtnAtivo.Location = new System.Drawing.Point(179, 152);
+            this.rbtnAtivo.Location = new System.Drawing.Point(212, 175);
+            this.rbtnAtivo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbtnAtivo.Name = "rbtnAtivo";
-            this.rbtnAtivo.Size = new System.Drawing.Size(54, 17);
+            this.rbtnAtivo.Size = new System.Drawing.Size(59, 20);
             this.rbtnAtivo.TabIndex = 9;
             this.rbtnAtivo.TabStop = true;
             this.rbtnAtivo.Text = "Ativo";
@@ -125,9 +131,10 @@
             // rbtnInativo
             // 
             this.rbtnInativo.AutoSize = true;
-            this.rbtnInativo.Location = new System.Drawing.Point(241, 152);
+            this.rbtnInativo.Location = new System.Drawing.Point(282, 175);
+            this.rbtnInativo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbtnInativo.Name = "rbtnInativo";
-            this.rbtnInativo.Size = new System.Drawing.Size(65, 17);
+            this.rbtnInativo.Size = new System.Drawing.Size(71, 20);
             this.rbtnInativo.TabIndex = 10;
             this.rbtnInativo.Text = "Inativo";
             this.rbtnInativo.UseVisualStyleBackColor = true;
@@ -136,19 +143,29 @@
             // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(31, 28);
-            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitulo.Location = new System.Drawing.Point(26, 32);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(204, 23);
             this.lblTitulo.TabIndex = 11;
             this.lblTitulo.Text = "Editar Documento";
             // 
+            // panelDivisor
+            // 
+            this.panelDivisor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDivisor.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelDivisor.Location = new System.Drawing.Point(30, 58);
+            this.panelDivisor.Name = "panelDivisor";
+            this.panelDivisor.Size = new System.Drawing.Size(200, 1);
+            this.panelDivisor.TabIndex = 32;
+            // 
             // FormEditarDocumento
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(534, 249);
+            this.ClientSize = new System.Drawing.Size(610, 279);
+            this.Controls.Add(this.panelDivisor);
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.rbtnInativo);
             this.Controls.Add(this.rbtnAtivo);
@@ -159,9 +176,10 @@
             this.Controls.Add(this.btnExcluirRequerimento);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.txtNomeRequerimento);
-            this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.MaximizeBox = false;
             this.Name = "FormEditarDocumento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edição";
@@ -182,5 +200,6 @@
         private System.Windows.Forms.RadioButton rbtnAtivo;
         private System.Windows.Forms.RadioButton rbtnInativo;
         private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Panel panelDivisor;
     }
 }
