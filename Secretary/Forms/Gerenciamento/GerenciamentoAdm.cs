@@ -16,14 +16,14 @@ namespace Secretary.Forms
         {
             InitializeComponent();
             Load += GerenciamentoAdm_Load;
+            Resize += (s, e) => AjustarLarguraDosPanels(); // Ajusta ao redimensionar
         }
-
-
 
         private void GerenciamentoAdm_Load(object sender, EventArgs e)
         {
             CarregarUsuarios();
             CarregarDocumentosDisponiveis();
+            AjustarLarguraDosPanels(); // Ajusta largura ao carregar
         }
 
         private void CarregarDocumentosDisponiveis()
@@ -58,6 +58,7 @@ namespace Secretary.Forms
             finally
             {
                 flowLayoutPanelDocumentos.ResumeLayout();
+                AjustarLarguraDosPanels(); // Garante ajuste após carregar
             }
         }
 
@@ -66,7 +67,7 @@ namespace Secretary.Forms
             Panel panelDoc = new Panel
             {
                 Name = $"panelDoc{doc.Id}",
-                Size = new Size(flowLayoutPanelDocumentos.ClientSize.Width - 5, 50),
+                Size = new Size(flowLayoutPanelDocumentos.Width - 5, 50),
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
@@ -85,12 +86,12 @@ namespace Secretary.Forms
             Label lblStatus = new Label
             {
                 Text = doc.StatusAtual,
-                ForeColor = doc.StatusAtual.Equals("Disponível", StringComparison.OrdinalIgnoreCase) ?
-                    Color.Green : Color.Red,
+                ForeColor = doc.StatusAtual.Equals("Disponível", StringComparison.OrdinalIgnoreCase)
+                            ? Color.Green : Color.Red,
                 AutoSize = true,
-                Location = new Point(panelDoc.Width - 200, 15),
                 Font = new Font("Verdana", 9F, FontStyle.Regular)
             };
+            lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
 
             Button btnEditar = new Button
             {
@@ -109,6 +110,86 @@ namespace Secretary.Forms
             panelDoc.Controls.Add(btnEditar);
 
             return panelDoc;
+        }
+
+        private void AjustarLarguraDosPanels()
+        {
+            // Ajusta painéis dos documentos
+
+            foreach (Control ctrl in flowLayoutPanelDocumentos.Controls)
+            {
+                if (ctrl is Panel panel && panel.Name.StartsWith("panelDoc"))
+                {
+                    panel.Width = flowLayoutPanelDocumentos.Width - 5;
+                    Label lblNome = null;
+                    Label lblStatus = null;
+
+                    foreach (Control innerCtrl in panel.Controls)
+                    {
+                        if (innerCtrl is Label lbl)
+                        {
+                            if (lbl.Tag != null && lbl.Tag is int)
+                                lblNome = lbl;
+                            else
+                                lblStatus = lbl;
+                        }
+                        else if (innerCtrl is Button btn)
+                        {
+                            btn.Location = new Point(panel.Width - 100, 12);
+                        }
+                    }
+
+                    if (lblNome != null)
+                        lblNome.Location = new Point(20, 15);
+
+                    if (lblStatus != null && lblNome != null)
+                        lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
+                }
+            }        
+            // Ajusta painéis dos usuários
+            foreach (Control ctrl in flowLayoutPanelUsuarios.Controls)
+            {
+                if (ctrl is Panel panel)
+                {
+                    if (panel.Name.StartsWith("panelUsu"))
+                    {
+                        panel.Width = flowLayoutPanelUsuarios.Width - 5;
+
+                        Label lblNome = null;
+                        Label lblInfo = null;
+                        Button btnEditar = null;
+
+                        foreach (Control innerCtrl in panel.Controls)
+                        {
+                            if (innerCtrl is Label lbl)
+                            {
+                                if (lbl.Tag != null && lbl.Tag is int)
+                                    lblNome = lbl;
+                                else
+                                    lblInfo = lbl;
+                            }
+                            else if (innerCtrl is Button btn)
+                            {
+                                btnEditar = btn;
+                            }
+                        }
+
+                        if (lblNome != null)
+                            lblNome.Location = new Point(20, 15);
+
+                        if (lblInfo != null && lblNome != null)
+                            lblInfo.Location = new Point(lblNome.Right + 10, 15);
+
+                        if (btnEditar != null)
+                            btnEditar.Location = new Point(panel.Width - 100, 12);
+                    }
+                    else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
+                    {
+                        panel.Width = flowLayoutPanelUsuarios.Width - 40;
+                        btn.Location = new Point(20, 10);
+                    }
+                }
+            }
         }
 
         private void AdicionarBotaoNovoDocumento()
@@ -137,7 +218,11 @@ namespace Secretary.Forms
         {
             using (var form = new FormNovoDocumento())
             {
-                form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
+                form.FormClosed += (s, args) =>
+                {
+                    CarregarDocumentosDisponiveis();
+                    AjustarLarguraDosPanels();
+                };
                 form.ShowDialog();
             }
         }
@@ -148,7 +233,11 @@ namespace Secretary.Forms
             {
                 using (var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.StatusAtual))
                 {
-                    form.FormClosed += (s, args) => CarregarDocumentosDisponiveis();
+                    form.FormClosed += (s, args) =>
+                    {
+                        CarregarDocumentosDisponiveis();
+                        AjustarLarguraDosPanels();
+                    };
                     form.ShowDialog();
                 }
             }
@@ -186,6 +275,7 @@ namespace Secretary.Forms
             finally
             {
                 flowLayoutPanelUsuarios.ResumeLayout();
+                AjustarLarguraDosPanels();  // Garante ajuste após carregar usuários
             }
         }
 
@@ -241,6 +331,7 @@ namespace Secretary.Forms
 
             return panel;
         }
+
         private Label CriarLabelMensagem(string mensagem)
         {
             return new Label
@@ -253,6 +344,7 @@ namespace Secretary.Forms
                 Font = new Font("Verdana", 10F, FontStyle.Regular)
             };
         }
+
         private void BtnEditarUsuario_Click(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.Tag is int idUsuario)
@@ -300,7 +392,7 @@ namespace Secretary.Forms
             Panel panelBotao = new Panel
             {
                 Size = new Size(flowLayoutPanelUsuarios.Width - 40, 60),
-                BackColor = Color.WhiteSmoke
+                BackColor = Color.Transparent
             };
 
             Button btnNovoUsuario = new Button

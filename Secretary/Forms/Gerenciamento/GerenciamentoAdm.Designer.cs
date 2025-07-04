@@ -35,7 +35,7 @@ namespace Secretary.Forms
             // 
             this.labelTitulo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.labelTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelTitulo.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitulo.Font = new System.Drawing.Font("Verdana", 18F);
             this.labelTitulo.Location = new System.Drawing.Point(0, 0);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Padding = new System.Windows.Forms.Padding(20, 20, 0, 20);
@@ -50,7 +50,7 @@ namespace Secretary.Forms
             this.tabControlGerenciamento.Controls.Add(this.tabPageUsuarios);
             this.tabControlGerenciamento.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlGerenciamento.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControlGerenciamento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlGerenciamento.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.tabControlGerenciamento.ItemSize = new System.Drawing.Size(150, 35);
             this.tabControlGerenciamento.Location = new System.Drawing.Point(0, 80);
             this.tabControlGerenciamento.Name = "tabControlGerenciamento";
@@ -60,6 +60,7 @@ namespace Secretary.Forms
             this.tabControlGerenciamento.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlGerenciamento.TabIndex = 1;
             this.tabControlGerenciamento.DrawItem += new DrawItemEventHandler(this.TabControl_DrawItem);
+            this.tabControlGerenciamento.SelectedIndexChanged += new System.EventHandler(this.tabControlGerenciamento_SelectedIndexChanged); // <-- Adicionado
             // 
             // tabPageDocumentos
             // 
@@ -75,6 +76,7 @@ namespace Secretary.Forms
             // flowLayoutPanelDocumentos
             // 
             this.flowLayoutPanelDocumentos.AutoScroll = true;
+            this.flowLayoutPanelDocumentos.AutoSize = false;
             this.flowLayoutPanelDocumentos.BackColor = System.Drawing.Color.WhiteSmoke;
             this.flowLayoutPanelDocumentos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelDocumentos.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -99,6 +101,7 @@ namespace Secretary.Forms
             // flowLayoutPanelUsuarios
             // 
             this.flowLayoutPanelUsuarios.AutoScroll = true;
+            this.flowLayoutPanelUsuarios.AutoSize = false;
             this.flowLayoutPanelUsuarios.BackColor = System.Drawing.Color.WhiteSmoke;
             this.flowLayoutPanelUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelUsuarios.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -126,7 +129,6 @@ namespace Secretary.Forms
             this.tabPageDocumentos.ResumeLayout(false);
             this.tabPageUsuarios.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
@@ -157,6 +159,11 @@ namespace Secretary.Forms
                     e.Graphics.DrawLine(pen, rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
                 }
             }
+        }
+
+        private void tabControlGerenciamento_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            AjustarLarguraDosPanels(); // Redimensiona corretamente ao trocar de aba
         }
 
         #endregion

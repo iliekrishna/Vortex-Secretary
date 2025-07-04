@@ -44,6 +44,9 @@ namespace Secretary.Forms
             this.Size = new Size(900, 350);
             btnAtualizar.Location = new Point(671, 233);
             btnExcluirUsuario.Location = new Point(671, 267);
+            txtSenhaAtual.UseSystemPasswordChar = true;
+            txtSenhaNova.UseSystemPasswordChar = true;
+            txtConfirmarSenha.UseSystemPasswordChar = true;
         }
 
         private void linklblAlterarSenha_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -164,7 +167,7 @@ namespace Secretary.Forms
             {
                 using (var conexao = ConexaoBD.ObterConexao())
                 {
-                    string queryVerifica = "SELECT senha_hash FROM t_usuarios WHERE id_usuario = @id";
+                    string queryVerifica = "SELECT senha FROM t_usuarios WHERE id_usuario = @id";
                     MySqlCommand cmdVerifica = new MySqlCommand(queryVerifica, conexao);
                     cmdVerifica.Parameters.AddWithValue("@id", idUsuario);
                     object result = cmdVerifica.ExecuteScalar();
@@ -185,7 +188,7 @@ namespace Secretary.Forms
 
                     string novaSenhaHash = BCrypt.Net.BCrypt.HashPassword(novaSenha);
 
-                    string queryAtualizaSenha = "UPDATE t_usuarios SET senha_hash = @senha WHERE id_usuario = @id";
+                    string queryAtualizaSenha = "UPDATE t_usuarios SET senha = @senha WHERE id_usuario = @id";
                     MySqlCommand cmdAtualiza = new MySqlCommand(queryAtualizaSenha, conexao);
                     cmdAtualiza.Parameters.AddWithValue("@senha", novaSenhaHash);
                     cmdAtualiza.Parameters.AddWithValue("@id", idUsuario);
@@ -200,6 +203,14 @@ namespace Secretary.Forms
                 MessageBox.Show("Senha incorreta", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+        }
+        private void cboxExibirSenha_CheckedChanged(object sender, EventArgs e)
+        {
+            bool exibir = cboxExibirSenha.Checked;
+
+            txtSenhaAtual.UseSystemPasswordChar = !exibir;
+            txtSenhaNova.UseSystemPasswordChar = !exibir;
+            txtConfirmarSenha.UseSystemPasswordChar = !exibir;
         }
     }
 }
