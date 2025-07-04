@@ -37,7 +37,7 @@ namespace Secretary.Forms.Atendimentos
             this.txtHistorico = new System.Windows.Forms.TextBox();
             this.txtResposta = new System.Windows.Forms.TextBox();
             this.btnEnviar = new System.Windows.Forms.Button();
-            this.btnExcluir = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.lblCPF = new System.Windows.Forms.Label();
             this.lblVinculo = new System.Windows.Forms.Label();
             this.lblRA = new System.Windows.Forms.Label();
@@ -115,7 +115,7 @@ namespace Secretary.Forms.Atendimentos
             this.txtHistorico.Name = "txtHistorico";
             this.txtHistorico.ReadOnly = true;
             this.txtHistorico.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtHistorico.Size = new System.Drawing.Size(460, 150);
+            this.txtHistorico.Size = new System.Drawing.Size(486, 150);
             this.txtHistorico.TabIndex = 5;
             // 
             // txtResposta
@@ -126,13 +126,13 @@ namespace Secretary.Forms.Atendimentos
             this.txtResposta.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtResposta.Multiline = true;
             this.txtResposta.Name = "txtResposta";
-            this.txtResposta.Size = new System.Drawing.Size(460, 60);
+            this.txtResposta.Size = new System.Drawing.Size(486, 60);
             this.txtResposta.TabIndex = 6;
             // 
             // btnEnviar
             // 
             this.btnEnviar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEnviar.Location = new System.Drawing.Point(199, 366);
+            this.btnEnviar.Location = new System.Drawing.Point(210, 366);
             this.btnEnviar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(108, 28);
@@ -141,18 +141,18 @@ namespace Secretary.Forms.Atendimentos
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
             // 
-            // btnExcluir
+            // btnCancelar
             // 
-            this.btnExcluir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExcluir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnExcluir.Location = new System.Drawing.Point(315, 366);
-            this.btnExcluir.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(163, 28);
-            this.btnExcluir.TabIndex = 8;
-            this.btnExcluir.Text = "Excluir dúvida e justificar";
-            this.btnExcluir.UseVisualStyleBackColor = true;
-            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCancelar.Location = new System.Drawing.Point(326, 366);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(177, 28);
+            this.btnCancelar.TabIndex = 8;
+            this.btnCancelar.Text = "Cancelar dúvida e justificar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lblCPF
             // 
@@ -196,11 +196,11 @@ namespace Secretary.Forms.Atendimentos
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(505, 407);
+            this.ClientSize = new System.Drawing.Size(531, 419);
             this.Controls.Add(this.lblRA);
             this.Controls.Add(this.lblVinculo);
             this.Controls.Add(this.lblCPF);
-            this.Controls.Add(this.btnExcluir);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnEnviar);
             this.Controls.Add(this.txtResposta);
             this.Controls.Add(this.txtHistorico);
@@ -231,7 +231,7 @@ namespace Secretary.Forms.Atendimentos
         private System.Windows.Forms.TextBox txtHistorico;
         private System.Windows.Forms.TextBox txtResposta;
         private System.Windows.Forms.Button btnEnviar;
-        private System.Windows.Forms.Button btnExcluir;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblCPF;
         private System.Windows.Forms.Label lblVinculo;
         private System.Windows.Forms.Label lblRA;

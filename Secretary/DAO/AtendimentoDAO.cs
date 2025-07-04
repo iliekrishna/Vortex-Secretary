@@ -10,30 +10,64 @@ namespace Secretary.DAO
     {
         public static DataTable ListarTickets(string status, string curso, string vinculo, string categoria)
         {
-            string sql = @" 
-                           SELECT 
-                              data_pedido AS 'Data do Ticket',
-                              nome_aluno AS 'Nome do Aluno',
-                              categoria AS 'Categoria',
-                              curso AS 'Curso',
-                              ra AS 'RA',
-                              id_ticket AS 'Código',
-                              assunto AS 'Assunto'
-                            FROM t_tickets
-
-
-                          WHERE 1=1";
-
+            string sql = "";
             List<MySqlParameter> parametros = new List<MySqlParameter>();
 
             if (status == "aberto")
-                sql += " AND (resposta IS NULL OR resposta = '')";
+            {
+                sql = @"
+                SELECT 
+                    data_pedido AS 'Data da Solicitação',
+                    nome_aluno AS 'Nome do Aluno',
+                    categoria AS 'Categoria',
+                    cpf AS 'CPF',
+                    tipo_vinculo AS 'Vínculo',
+                    curso AS 'Curso',
+                    ra AS 'RA',
+                    id_ticket AS 'Código'
+                FROM t_tickets
+                WHERE (resposta IS NULL OR resposta = '')";
+            }
             else if (status == "respondido")
-                sql += " AND status = 'respondido' AND resposta IS NOT NULL AND resposta <> ''";
+            {
+                        sql = @"
+                SELECT 
+                    data_resposta AS 'Data da Resposta',
+                    nome_aluno AS 'Nome',
+                    categoria AS 'Categoria',
+                    assunto AS 'Assunto',
+                    resposta AS 'Resposta',
+                    tipo_vinculo AS 'Vínculo',
+                    cpf AS 'CPF',
+                    ra AS 'RA',
+                    curso AS 'Curso',
+                    status AS 'Situação',
+                    (SELECT nome_usuario FROM t_usuarios WHERE id_usuario = t_tickets.id_usuario) AS 'Respondido Por',
+                    id_ticket AS 'Código'
+                FROM t_tickets
+                WHERE (LOWER(status) = 'respondido' OR LOWER(status) = 'cancelado')
+                  AND resposta IS NOT NULL 
+                  AND resposta <> ''";
+            }
 
-            if (curso != "Todos") { sql += " AND curso = @curso"; parametros.Add(new MySqlParameter("@curso", curso)); }
-            if (vinculo != "Todos") { sql += " AND tipo_vinculo = @vinculo"; parametros.Add(new MySqlParameter("@vinculo", vinculo)); }
-            if (categoria != "Todos") { sql += " AND categoria = @categoria"; parametros.Add(new MySqlParameter("@categoria", categoria)); }
+
+            if (curso != "Todos")
+            {
+                sql += " AND curso = @curso";
+                parametros.Add(new MySqlParameter("@curso", curso));
+            }
+
+            if (vinculo != "Todos")
+            {
+                sql += " AND tipo_vinculo = @vinculo";
+                parametros.Add(new MySqlParameter("@vinculo", vinculo));
+            }
+
+            if (categoria != "Todos")
+            {
+                sql += " AND categoria = @categoria";
+                parametros.Add(new MySqlParameter("@categoria", categoria));
+            }
 
             return ConexaoBD.ExecutarConsultaComParametros(sql, parametros);
         }
@@ -41,13 +75,12 @@ namespace Secretary.DAO
         public static Ticket BuscarPorId(int id)
         {
             string sql = @"
-        SELECT t.*, u.nome_usuario AS nome_usuario_resposta
-        FROM t_tickets t
-        LEFT JOIN t_usuarios u ON t.id_usuario = u.id_usuario
-        WHERE t.id_ticket = @id";
+            SELECT t.*, u.nome_usuario AS nome_usuario_resposta
+            FROM t_tickets t
+            LEFT JOIN t_usuarios u ON t.id_usuario = u.id_usuario
+            WHERE t.id_ticket = @id";
 
             List<MySqlParameter> parametros = new List<MySqlParameter> { new MySqlParameter("@id", id) };
-
             DataTable dt = ConexaoBD.ExecutarConsultaComParametros(sql, parametros);
 
             if (dt.Rows.Count > 0)
@@ -64,8 +97,8 @@ namespace Secretary.DAO
                     Status = row["status"]?.ToString() ?? "",
                     TipoVinculo = row["tipo_vinculo"]?.ToString() ?? "",
                     Categoria = row["categoria"]?.ToString() ?? "",
-                    Email = row["email"]?.ToString() ?? "",  
-                    CPF = row["cpf"]?.ToString() ?? "",      
+                    Email = row["email"]?.ToString() ?? "",
+                    CPF = row["cpf"]?.ToString() ?? "",
                     DataPedido = Convert.ToDateTime(row["data_pedido"]),
                     DataResposta = row["data_resposta"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["data_resposta"]),
                     UsuarioResposta = row["nome_usuario_resposta"]?.ToString() ?? ""
@@ -75,11 +108,11 @@ namespace Secretary.DAO
             return null;
         }
 
-
         public static void Inserir(Ticket ticket)
         {
-            string sql = @"INSERT INTO t_tickets (nome_aluno, ra, curso, assunto, resposta, status, tipo_vinculo, categoria, data_pedido) 
-                           VALUES (@nome_aluno, @ra, @curso, @assunto, @resposta, @status, @tipo_vinculo, @categoria, @data_pedido)";
+            string sql = @"INSERT INTO t_tickets 
+                (nome_aluno, ra, curso, assunto, resposta, status, tipo_vinculo, categoria, data_pedido) 
+                VALUES (@nome_aluno, @ra, @curso, @assunto, @resposta, @status, @tipo_vinculo, @categoria, @data_pedido)";
 
             using (var cmd = new MySqlCommand(sql, ConexaoBD.ObterConexao()))
             {
@@ -96,10 +129,13 @@ namespace Secretary.DAO
             }
         }
 
-        public static void AtualizarResposta(int ticketId, string resposta, string status, DateTime? dataResposta = null)
+        public static void AtualizarResposta(int ticketId, string resposta, string status, DateTime? dataResposta = null, int? idRespondidoPor = null)
         {
             string sql = @"UPDATE t_tickets 
-                           SET resposta = @resposta, status = @status, data_resposta = @data_resposta 
+                           SET resposta = @resposta, 
+                               status = @status, 
+                               data_resposta = @data_resposta, 
+                               id_respondido_por = @id_respondido_por 
                            WHERE id_ticket = @id";
 
             using (var cmd = new MySqlCommand(sql, ConexaoBD.ObterConexao()))
@@ -107,6 +143,7 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@resposta", resposta);
                 cmd.Parameters.AddWithValue("@status", status);
                 cmd.Parameters.AddWithValue("@data_resposta", dataResposta ?? DateTime.Now);
+                cmd.Parameters.AddWithValue("@id_respondido_por", idRespondidoPor ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@id", ticketId);
                 cmd.ExecuteNonQuery();
             }

@@ -15,6 +15,7 @@ namespace Secretary.Forms.Atendimentos
             this.usuarioId = usuarioId;
             this.Load += Atendimentos_Load;
         }
+
         private void Atendimentos_Load(object sender, EventArgs e)
         {
             try
@@ -70,8 +71,10 @@ namespace Secretary.Forms.Atendimentos
                 datagvEmAberto.DataSource = dtAberto;
                 datagvRespondidos.DataSource = dtRespondido;
 
-                RenomearColunas(datagvRespondidos);
-                RenomearColunas(datagvEmAberto);
+                MarcarSituacaoRespondido(datagvRespondidos);
+
+                AjustarColunasAberto(datagvEmAberto);
+                AjustarColunasRespondido(datagvRespondidos);
             }
             catch (Exception ex)
             {
@@ -79,15 +82,51 @@ namespace Secretary.Forms.Atendimentos
             }
         }
 
-        private void RenomearColunas(DataGridView dgv)
+        private void AjustarColunasAberto(DataGridView dgv)
         {
-            string[] colunas = { "Código", "Nome do Aluno", "RA", "Curso", "Assunto", "Data do Ticket" };
-            foreach (DataGridViewColumn col in datagvRespondidos.Columns)
+            foreach (DataGridViewColumn col in dgv.Columns)
             {
-                Console.WriteLine(col.HeaderText);
+                if (col.HeaderText == "Código")
+                {
+                    col.Visible = false;
+                }
             }
         }
+        private void AjustarColunasRespondido(DataGridView dgv)
+        {
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                if (col.HeaderText == "Código")
+                {
+                    col.Visible = false;
+                }
+            }
+        }
+        private void MarcarSituacaoRespondido(DataGridView dgv)
+        {
+            if (!dgv.Columns.Contains("Situação"))
+            {
+                dgv.Columns.Add("Situação", "Situação");
+            }
 
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                // Verifica a coluna já vinda do banco
+                var status = row.Cells["Situação"].Value?.ToString()?.ToLower();
+
+                if (status == "cancelado")
+                    row.Cells["Situação"].Value = "Cancelado";
+                else if (status == "respondido")
+                    row.Cells["Situação"].Value = "Respondido";
+            }
+
+            // Reposiciona a coluna "Situação" depois de "Data da Resposta"
+            if (dgv.Columns.Contains("Data da Resposta") && dgv.Columns.Contains("Situação"))
+            {
+                int indexData = dgv.Columns["Data da Resposta"].DisplayIndex;
+                dgv.Columns["Situação"].DisplayIndex = indexData + 1;
+            }
+        }
         private void AtualizarListas()
         {
             AplicarFiltros();
@@ -112,10 +151,12 @@ namespace Secretary.Forms.Atendimentos
             string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
             string ra = linha.Cells["RA"].Value?.ToString();
             string curso = linha.Cells["Curso"].Value?.ToString();
-            string assunto = linha.Cells["Assunto"].Value?.ToString();
-            string data = Convert.ToDateTime(linha.Cells["Data do Ticket"].Value).ToString("dd/MM/yyyy HH:mm");
+            string categoria = linha.Cells["Categoria"].Value?.ToString();
+            string data = Convert.ToDateTime(linha.Cells["Data da Solicitação"].Value).ToString("dd/MM/yyyy HH:mm");
             int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
-            string mensagem = assunto; // Ou buscar campo "mensagem" se estiver disponível na grid
+
+            string assunto = "";
+            string mensagem = "";
 
             var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, data, mensagem, AtualizarListas, usuarioId);
             chat.StartPosition = FormStartPosition.CenterScreen;

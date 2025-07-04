@@ -4,6 +4,7 @@ using Secretary.Models;
 using System;
 using System.Data;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Secretary.Forms.Atendimentos
@@ -30,7 +31,14 @@ namespace Secretary.Forms.Atendimentos
                 return;
             }
 
-            // Preenche os dados
+            PreencherDadosTicket(ticket);
+            CarregarHistorico(ticket);
+
+            this.Shown += FormChatAtendimento_Shown;
+        }
+
+        private void PreencherDadosTicket(Ticket ticket)
+        {
             lblNome.Text = "Nome: " + ticket.NomeAluno;
             lblCPF.Text = "CPF: " + ticket.CPF;
             lblVinculo.Text = "Vínculo: " + ticket.TipoVinculo;
@@ -50,37 +58,27 @@ namespace Secretary.Forms.Atendimentos
                 lblRA.Text = "RA: " + ticket.RA;
                 lblCurso.Text = "Curso: " + ticket.Curso;
             }
-
-            txtHistorico.Text = "[Visitante]: " + (ticket.Assunto ?? "");
-
-            if (!string.IsNullOrWhiteSpace(ticket.Resposta))
-                txtHistorico.AppendText(Environment.NewLine + ticket.Resposta);
-
-            this.Shown += FormChatAtendimento_Shown;
         }
-        private void CarregarResposta()
-        {
-            try
-            {
-                using (var conn = ConexaoBD.ObterConexao())
-                {
-                    string sql = "SELECT resposta FROM t_tickets WHERE id_ticket = @id";
-                    using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", ticketId);
-                        var resposta = cmd.ExecuteScalar()?.ToString();
 
-                        if (!string.IsNullOrEmpty(resposta))
-                        {
-                            txtHistorico.AppendText(Environment.NewLine + resposta);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
+        private void CarregarHistorico(Ticket ticket)
+        {
+            // Limpa histórico antes de carregar
+            txtHistorico.Clear();
+
+            // Mensagem inicial do visitante (aluno), sem data/hora, mas com prefixo simples
+            txtHistorico.AppendText($"[Visitante]: {ticket.Assunto ?? ""}");
+
+            // Se houver resposta salva, carrega com prefixos e quebras de linha
+            if (!string.IsNullOrWhiteSpace(ticket.Resposta))
             {
-                MessageBox.Show("Erro ao carregar resposta: " + ex.Message);
+                txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + FormatHistoricoExibicao(ticket.Resposta));
             }
+        }
+
+        private string FormatHistoricoExibicao(string textoSalvo)
+        {
+            // O texto salvo no banco é só mensagens puras separadas por quebras
+            return textoSalvo;
         }
 
         private void FormChatAtendimento_Shown(object sender, EventArgs e)
@@ -93,101 +91,110 @@ namespace Secretary.Forms.Atendimentos
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtResposta.Text))
+            if (string.IsNullOrWhiteSpace(txtResposta.Text))
             {
-                string novaMensagem = txtResposta.Text.Trim();
+                MessageBox.Show("Digite uma resposta antes de enviar.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (novaMensagem.Length < 5)
+            string novaMensagem = txtResposta.Text.Trim();
+
+            if (novaMensagem.Length < 5)
+            {
+                MessageBox.Show("A resposta está muito curta.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Adiciona no histórico a mensagem formatada
+            AdicionarMensagemNoHistorico("Secretaria", novaMensagem);
+
+            try
+            {
+                using (var conn = ConexaoBD.ObterConexao())
                 {
-                    MessageBox.Show("A resposta está muito curta.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                    // Busca a resposta atual
+                    string sqlSelect = "SELECT resposta FROM t_tickets WHERE id_ticket = @id";
+                    string respostaAnterior = "";
 
-                string mensagemFormatada = FormatMensagemSecretaria(novaMensagem);
-
-                // Exibe no histórico
-                txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + mensagemFormatada);
-                txtHistorico.SelectionStart = txtHistorico.Text.Length;
-                txtHistorico.ScrollToCaret();
-
-                try
-                {
-                    using (var conn = ConexaoBD.ObterConexao())
+                    using (var cmdSelect = new MySql.Data.MySqlClient.MySqlCommand(sqlSelect, conn))
                     {
-                        // Obtém resposta anterior
-                        string respostaAnterior = "";
-                        string sqlSelect = "SELECT resposta FROM t_tickets WHERE id_ticket = @id";
-
-                        using (var cmdSelect = new MySql.Data.MySqlClient.MySqlCommand(sqlSelect, conn))
-                        {
-                            cmdSelect.Parameters.AddWithValue("@id", ticketId);
-                            var resultado = cmdSelect.ExecuteScalar();
-                            respostaAnterior = resultado?.ToString() ?? "";
-                        }
-
-                        // Concatena nova resposta
-                        string novaResposta = string.IsNullOrWhiteSpace(respostaAnterior)
-                            ? mensagemFormatada
-                            : respostaAnterior + Environment.NewLine + Environment.NewLine + mensagemFormatada;
-
-                        // Atualiza no banco
-                        string sqlUpdate = @"UPDATE t_tickets 
-                                             SET resposta = @resposta, 
-                                                 data_resposta = @dataResposta, 
-                                                 status = @status, 
-                                                 id_usuario = @idUsuario 
-                                             WHERE id_ticket = @id";
-
-                        using (var cmdUpdate = new MySql.Data.MySqlClient.MySqlCommand(sqlUpdate, conn))
-                        {
-                            cmdUpdate.Parameters.AddWithValue("@resposta", novaResposta);
-                            cmdUpdate.Parameters.AddWithValue("@dataResposta", DateTime.Now);
-                            cmdUpdate.Parameters.AddWithValue("@status", "Respondido");
-                            cmdUpdate.Parameters.AddWithValue("@idUsuario", Sessao.UsuarioId);
-                            cmdUpdate.Parameters.AddWithValue("@id", ticketId);
-                            cmdUpdate.ExecuteNonQuery();
-                        }
-
-                        // Limpa e fecha
-                        txtResposta.Clear();
-                        AtualizarListas?.Invoke();
-                        RegistrarLog($"Ticket {ticketId} respondido por usuário {Sessao.UsuarioId}.");
-                        this.Close();
+                        cmdSelect.Parameters.AddWithValue("@id", ticketId);
+                        var resultado = cmdSelect.ExecuteScalar();
+                        respostaAnterior = resultado?.ToString() ?? "";
                     }
+
+                    // Concatena a nova mensagem pura (sem prefixo)
+                    var sb = new StringBuilder();
+                    if (!string.IsNullOrWhiteSpace(respostaAnterior))
+                        sb.Append(respostaAnterior.TrimEnd() + Environment.NewLine + Environment.NewLine);
+                    sb.Append(novaMensagem);
+
+                    string novaResposta = sb.ToString();
+
+                    // Atualiza o banco
+                    string sqlUpdate = @"
+                        UPDATE t_tickets
+                        SET resposta = @resposta, 
+                            data_resposta = @dataResposta, 
+                            status = @status, 
+                            id_usuario = @idUsuario 
+                        WHERE id_ticket = @id";
+
+                    using (var cmdUpdate = new MySql.Data.MySqlClient.MySqlCommand(sqlUpdate, conn))
+                    {
+                        cmdUpdate.Parameters.AddWithValue("@resposta", novaResposta);
+                        cmdUpdate.Parameters.AddWithValue("@dataResposta", DateTime.Now);
+                        cmdUpdate.Parameters.AddWithValue("@status", "Respondido");
+                        cmdUpdate.Parameters.AddWithValue("@idUsuario", Sessao.UsuarioId);
+                        cmdUpdate.Parameters.AddWithValue("@id", ticketId);
+                        cmdUpdate.ExecuteNonQuery();
+                    }
+
+                    // Limpa campo resposta e atualiza listas
+                    txtResposta.Clear();
+                    AtualizarListas?.Invoke();
+                    RegistrarLog($"Ticket {ticketId} respondido por usuário {Sessao.UsuarioId}.");
+                    MessageBox.Show("Resposta enviada com sucesso.","Respondido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao salvar resposta: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao salvar resposta: " + ex.Message);
             }
         }
 
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             string justificativa = txtResposta.Text.Trim();
 
             if (string.IsNullOrEmpty(justificativa))
             {
-                MessageBox.Show("Por favor, informe a justificativa para exclusão.", "Justificativa necessária", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, informe a justificativa para cancelamento.", "Justificativa necessária", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            var resultado = MessageBox.Show("Deseja realmente cancelar este ticket?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (resultado != DialogResult.Yes)
+                return;
 
             try
             {
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string sqlUpdate = @"
-                    UPDATE t_tickets
-                    SET resposta = @justificativa,
-                        status = @status,
-                        data_resposta = @data,
-                        id_usuario = @usuarioId
-                    WHERE id_ticket = @id";
+                        UPDATE t_tickets
+                        SET resposta = @justificativa,
+                            status = @status,
+                            data_resposta = @data,
+                            id_usuario = @usuarioId
+                        WHERE id_ticket = @id";
 
                     using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(sqlUpdate, conn))
                     {
-                        cmd.Parameters.AddWithValue("@justificativa", "[Encerrado]: " + justificativa);
-                        cmd.Parameters.AddWithValue("@status", "Encerrado");
+                        // Salva só a justificativa pura no banco
+                        cmd.Parameters.AddWithValue("@justificativa", justificativa);
+                        cmd.Parameters.AddWithValue("@status", "Cancelado");
                         cmd.Parameters.AddWithValue("@data", DateTime.Now);
                         cmd.Parameters.AddWithValue("@usuarioId", Sessao.UsuarioId);
                         cmd.Parameters.AddWithValue("@id", ticketId);
@@ -196,27 +203,36 @@ namespace Secretary.Forms.Atendimentos
 
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Dúvida excluída com justificativa.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // Adiciona no histórico com prefixo e data
+                            AdicionarMensagemNoHistorico("Cancelado", justificativa);
+
+                            MessageBox.Show("Dúvida cancelada com justificativa.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             AtualizarListas?.Invoke();
-                            RegistrarLog($"Ticket {ticketId} encerrado por usuário {Sessao.UsuarioId}.");
+                            RegistrarLog($"Ticket {ticketId} cancelado por usuário {Sessao.UsuarioId}.");
                             this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("Não foi possível excluir a dúvida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Não foi possível cancelar a dúvida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao excluir a dúvida: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao cancelar a dúvida: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private string FormatMensagemSecretaria(string mensagem)
+        /// <summary>
+        /// Adiciona mensagem ao histórico txtHistorico com prefixo e data/hora.
+        /// </summary>
+        private void AdicionarMensagemNoHistorico(string remetente, string mensagem)
         {
-            return $"[Secretaria - {DateTime.Now:dd/MM/yyyy HH:mm}]: {mensagem}";
+            string prefixo = $"[{remetente} - {DateTime.Now:dd/MM/yyyy HH:mm}]: ";
+            txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + prefixo + mensagem);
+            txtHistorico.SelectionStart = txtHistorico.Text.Length;
+            txtHistorico.ScrollToCaret();
         }
 
         private void RegistrarLog(string mensagem)

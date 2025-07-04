@@ -223,7 +223,7 @@ namespace Secretary
         // Evento do botão Gerenciamento: abre formulário Gerenciamento e ativa botão visualmente
         private void btnGerenciamento_Click(object sender, EventArgs e)
         {
-            if (usuarioLogado.Tipo == "ADM")
+            if (usuarioLogado.TipoPerfil == "ADM")
             {
                 OpenChildForm(new Forms.GerenciamentoAdm(), sender);
             }

@@ -30,15 +30,14 @@ namespace Secretary.Forms
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.btnLimpar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.cmbFiltroStatus = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnLimpar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.TabPage2 = new System.Windows.Forms.TabPage();
             this.dgvHistoricoR = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,6 +45,7 @@ namespace Secretary.Forms
             this.data = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.acoes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TabPage2 = new System.Windows.Forms.TabPage();
             this.dgvHistoricoT = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,8 +56,8 @@ namespace Secretary.Forms
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
-            this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).BeginInit();
+            this.TabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoT)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,15 +76,45 @@ namespace Secretary.Forms
             this.panel1.Size = new System.Drawing.Size(1283, 100);
             this.panel1.TabIndex = 24;
             // 
-            // label4
+            // cmbFiltroStatus
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(41, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 18);
-            this.label4.TabIndex = 38;
-            this.label4.Text = "Buscar:";
+            this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroStatus.FormattingEnabled = true;
+            this.cmbFiltroStatus.Location = new System.Drawing.Point(662, 36);
+            this.cmbFiltroStatus.Name = "cmbFiltroStatus";
+            this.cmbFiltroStatus.Size = new System.Drawing.Size(130, 24);
+            this.cmbFiltroStatus.TabIndex = 43;
+            this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(593, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 18);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Status:";
+            // 
+            // btnLimpar
+            // 
+            this.btnLimpar.Location = new System.Drawing.Point(434, 33);
+            this.btnLimpar.Name = "btnLimpar";
+            this.btnLimpar.Size = new System.Drawing.Size(83, 30);
+            this.btnLimpar.TabIndex = 41;
+            this.btnLimpar.Text = "Limpar";
+            this.btnLimpar.UseVisualStyleBackColor = true;
+            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(345, 33);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(83, 30);
+            this.btnBuscar.TabIndex = 40;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -98,45 +128,15 @@ namespace Secretary.Forms
             this.txtBuscar.Enter += new System.EventHandler(this.txtBuscar_Enter);
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             // 
-            // btnBuscar
+            // label4
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(345, 33);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(83, 30);
-            this.btnBuscar.TabIndex = 40;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
-            // 
-            // btnLimpar
-            // 
-            this.btnLimpar.Location = new System.Drawing.Point(434, 33);
-            this.btnLimpar.Name = "btnLimpar";
-            this.btnLimpar.Size = new System.Drawing.Size(83, 30);
-            this.btnLimpar.TabIndex = 41;
-            this.btnLimpar.Text = "Limpar";
-            this.btnLimpar.UseVisualStyleBackColor = true;
-            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(593, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 18);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Status:";
-            // 
-            // cmbFiltroStatus
-            // 
-            this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFiltroStatus.FormattingEnabled = true;
-            this.cmbFiltroStatus.Location = new System.Drawing.Point(662, 36);
-            this.cmbFiltroStatus.Name = "cmbFiltroStatus";
-            this.cmbFiltroStatus.Size = new System.Drawing.Size(130, 24);
-            this.cmbFiltroStatus.TabIndex = 43;
-            this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(41, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 18);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Buscar:";
             // 
             // tabControl1
             // 
@@ -159,17 +159,6 @@ namespace Secretary.Forms
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Requerimentos";
             this.TabPage1.UseVisualStyleBackColor = true;
-            // 
-            // TabPage2
-            // 
-            this.TabPage2.Controls.Add(this.dgvHistoricoT);
-            this.TabPage2.Location = new System.Drawing.Point(4, 25);
-            this.TabPage2.Name = "TabPage2";
-            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(1275, 438);
-            this.TabPage2.TabIndex = 1;
-            this.TabPage2.Text = "Tickets";
-            this.TabPage2.UseVisualStyleBackColor = true;
             // 
             // dgvHistoricoR
             // 
@@ -241,13 +230,24 @@ namespace Secretary.Forms
             this.acoes.ReadOnly = true;
             this.acoes.Width = 72;
             // 
+            // TabPage2
+            // 
+            this.TabPage2.Controls.Add(this.dgvHistoricoT);
+            this.TabPage2.Location = new System.Drawing.Point(4, 25);
+            this.TabPage2.Name = "TabPage2";
+            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage2.Size = new System.Drawing.Size(1275, 438);
+            this.TabPage2.TabIndex = 1;
+            this.TabPage2.Text = "Tickets";
+            this.TabPage2.UseVisualStyleBackColor = true;
+            // 
             // dgvHistoricoT
             // 
             this.dgvHistoricoT.AllowDrop = true;
             this.dgvHistoricoT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvHistoricoT.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHistoricoT.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvHistoricoT.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgvHistoricoT.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHistoricoT.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
@@ -273,36 +273,42 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn1.HeaderText = "ID";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 46;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Nome do Solicitante";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 164;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.HeaderText = "Tipo de Documento";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 160;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.HeaderText = "Data";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 63;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "Status";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 76;
             // 
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.HeaderText = "Ações";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 72;
             // 
             // Historico
             // 
@@ -322,8 +328,8 @@ namespace Secretary.Forms
             this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
-            this.TabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).EndInit();
+            this.TabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoT)).EndInit();
             this.ResumeLayout(false);
 

@@ -113,7 +113,7 @@
             this.txtSenha.TabIndex = 16;
             this.txtSenha.UseSystemPasswordChar = true;
             this.txtSenha.Enter += new System.EventHandler(this.txtSenha_Enter);
-            this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
+            this.txtSenha.Leave += new System.EventHandler(this.txtSenha_Leave_1);
             // 
             // lblFazerLogin
             // 

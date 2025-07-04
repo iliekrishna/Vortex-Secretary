@@ -65,5 +65,40 @@ namespace Secretary.DAO
                 }
             }
         }
+        public Usuario Autenticar(string email, string senha)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                string sql = "SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil FROM t_usuarios WHERE email_usuario = @Email LIMIT 1;";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string hash = reader.GetString("senha");
+
+                            // Verifica se a senha digitada confere com a senha criptografada do banco
+                            if (BCrypt.Net.BCrypt.Verify(senha, hash))
+                            {
+                                return new Usuario
+                                {
+                                    Id = reader.GetInt32("id_usuario"),
+                                    Nome = reader.GetString("nome_usuario"),
+                                    Email = reader.GetString("email_usuario"),
+                                    SenhaHash = hash,
+                                    TipoPerfil = reader.GetString("tipo_perfil")
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Retorna null se o e-mail não existir ou a senha estiver incorreta
+            return null;
+        }
     }
 }

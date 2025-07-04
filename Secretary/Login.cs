@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using Secretary.DAO;
 using Secretary.Models;
-
 
 namespace Secretary
 {
-    
     public partial class FormLogin : Form
     {
+        // Constantes para os placeholders
+        private const string PlaceholderEmail = "Inserir e-mail";
+        private const string PlaceholderSenha = "Inserir senha";
+
         // Importa função nativa para criar uma região com cantos arredondados
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
@@ -28,177 +28,158 @@ namespace Secretary
         {
             InitializeComponent();
 
-            // Define o texto padrão e a cor cinza no campo de usuário
-            txtUsuario.Text = "Inserir e-mail";
+            // Aplicar placeholders
+            txtUsuario.Text = PlaceholderEmail;
             txtUsuario.ForeColor = Color.Gray;
 
-            // Define o texto padrão e a cor cinza no campo de senha
-            txtSenha.Text = "Inserir senha";
+            txtSenha.Text = PlaceholderSenha;
             txtSenha.ForeColor = Color.Gray;
             txtSenha.UseSystemPasswordChar = false;
 
-            // Remove bordas do formulário e aplica cantos arredondados
+            // Layout visual
             this.FormBorderStyle = FormBorderStyle.None;
             this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 10, 10));
-            this.KeyPreview = true;
-            this.KeyDown += FormLogin_KeyDown;
+
+            // Acessibilidade
+            this.AcceptButton = btnEntrar;
         }
 
-        // Evento ao focar (entrar) no campo txtUsuario
         private void txtUsuario_Enter(object sender, EventArgs e)
         {
-            // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtUsuario.Text == "Inserir e-mail")
+            if (txtUsuario.Text == PlaceholderEmail)
             {
                 txtUsuario.Text = "";
                 txtUsuario.ForeColor = Color.Black;
             }
         }
 
-        // Evento ao perder o foco (sair) do campo txtUsuario
         private void txtUsuario_Leave(object sender, EventArgs e)
         {
-            // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
             if (string.IsNullOrWhiteSpace(txtUsuario.Text))
             {
-                txtUsuario.Text = "Inserir e-mail";
+                txtUsuario.Text = PlaceholderEmail;
                 txtUsuario.ForeColor = Color.Gray;
             }
         }
 
-        // Evento ao focar (entrar) no campo txtSenha
         private void txtSenha_Enter(object sender, EventArgs e)
         {
-            // Se estiver com o texto padrão, limpa o campo e muda a cor para preta
-            if (txtSenha.Text == "Inserir senha")
+            if (txtSenha.Text == PlaceholderSenha)
             {
                 txtSenha.Text = "";
                 txtSenha.ForeColor = Color.Black;
-                txtSenha.UseSystemPasswordChar = true;                
+                txtSenha.UseSystemPasswordChar = true;
             }
         }
-
-        // Evento ao perder o foco (sair) do campo txtSenha
-        private void txtSenha_Leave(object sender, EventArgs e)
+        private void txtSenha_Leave_1(object sender, EventArgs e)
         {
-            // Se o campo estiver vazio, restaura o texto padrão e a cor cinza
             if (string.IsNullOrWhiteSpace(txtSenha.Text))
             {
-                txtSenha.Text = "Inserir senha";
+                txtSenha.Text = PlaceholderSenha;
                 txtSenha.ForeColor = Color.Gray;
+                txtSenha.UseSystemPasswordChar = false; // Isso aqui é o essencial!
             }
         }
 
-        // Evento de clique no botão de fechar
-        private void btnFechar_Click(object sender, EventArgs e)
+        private bool CamposValidos(out string mensagemErro)
         {
-            this.Close(); // Fecha o formulário atual
+            mensagemErro = "";
+
+            string email = txtUsuario.Text.Trim();
+            string senha = txtSenha.Text;
+
+            bool emailVazio = string.IsNullOrWhiteSpace(email) || email == PlaceholderEmail;
+            bool senhaVazia = string.IsNullOrWhiteSpace(senha) || senha == PlaceholderSenha;
+
+            if (emailVazio && senhaVazia)
+            {
+                mensagemErro = "Informe o e-mail e a senha.";
+                return false;
+            }
+            if (emailVazio)
+            {
+                mensagemErro = "Informe o e-mail.";
+                return false;
+            }
+            if (senhaVazia)
+            {
+                mensagemErro = "Informe a senha.";
+                return false;
+            }
+
+            return true;
         }
 
-        // Evento de clique no botão de minimizar
-        private void btnMinimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized; // Minimiza o formulário
-        }
-
-        // Evento de clique no botão "Entrar"
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            string emailDigitado = txtUsuario.Text.Trim();
-            string senhaDigitada = txtSenha.Text;
-
-            if (string.IsNullOrWhiteSpace(emailDigitado) || emailDigitado == "Inserir e-mail" ||
-                string.IsNullOrWhiteSpace(senhaDigitada) || senhaDigitada == "Inserir senha")
+            if (!CamposValidos(out string mensagemErro))
             {
-                MessageBox.Show("Preencha todos os campos.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(mensagemErro, "Campos obrigatórios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            string email = txtUsuario.Text.Trim();
+            string senha = txtSenha.Text;
+
             try
             {
-                using (MySqlConnection conn = ConexaoBD.ObterConexao())
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+                if (!usuarioDAO.EmailExiste(email))
                 {
-                    // aqui a conexão já estará aberta
-                    string sql = "SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil FROM t_usuarios WHERE email_usuario = @email LIMIT 1;";
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@email", emailDigitado);
+                    MessageBox.Show("E-mail não cadastrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                string senhaHashBanco = reader.GetString("senha");
-                                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(senhaDigitada, senhaHashBanco);
+                Usuario usuarioAutenticado = usuarioDAO.Autenticar(email, senha);
 
-                                if (senhaCorreta)
-                                {
-                                    Sessao.UsuarioId = reader.GetInt32("id_usuario");
-                                    Sessao.UsuarioLogado = new Usuario
-                                    {
-                                        Id = reader.GetInt32("id_usuario"),
-                                        Nome = reader.GetString("nome_usuario"),
-                                        Email = reader.GetString("email_usuario"),
-                                        SenhaHash = senhaHashBanco,
-                                        Tipo = reader.GetString("tipo_perfil")
-                                    };
+                if (usuarioAutenticado != null)
+                {
+                    Sessao.UsuarioId = usuarioAutenticado.Id;
+                    Sessao.UsuarioLogado = usuarioAutenticado;
 
-                                    this.Hide();
-                                    Inicial telaInicial = new Inicial(Sessao.UsuarioLogado);
-                                    telaInicial.Show();
-
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Usuário não encontrado.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-
-                        }
-                    }
+                    this.Hide();
+                    new Inicial(usuarioAutenticado).Show();
+                }
+                else
+                {
+                    MessageBox.Show("Senha incorreta.", "Erro de login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao conectar com o banco de dados:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao tentar login:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-        // Evento de clique na checkbox para mostrar ou ocultar senha
-        private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
-        {
-            // Alterna a visibilidade da senha com base no checkbox
-            txtSenha.UseSystemPasswordChar = !cboxMostrarSenha.Checked;
         }
 
-        private void txtSenha_KeyDown(object sender, KeyEventArgs e)
+        private void btnFechar_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btnEntrar.PerformClick(); // Simula o clique no botão de login
-            }
+            this.Close();
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void cboxMostrarSenha_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSenha.UseSystemPasswordChar = !cboxMostrarSenha.Checked;
         }
 
         private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                txtSenha.Focus(); // Foco no campo da senha após apertar "Enter"
+                txtSenha.Focus();
             }
-        }
-        private void FormLogin_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                btnEntrar.PerformClick();
         }
 
         private void linkLabelEsqueciSenha_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-                FormEsqueciSenha formEsqueciSenha = new FormEsqueciSenha();
-                formEsqueciSenha.ShowDialog();
+            FormEsqueciSenha formEsqueciSenha = new FormEsqueciSenha();
+            formEsqueciSenha.ShowDialog();
         }
+
     }
 }

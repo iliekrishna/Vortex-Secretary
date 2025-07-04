@@ -33,6 +33,7 @@ namespace Secretary.Forms.Atendimentos
                 lblVinculo.Text = $"Vínculo: {ticket.TipoVinculo}";
                 lblCategoria.Text = $"Categoria: {ticket.Categoria}";
                 lblEmail.Text = $"Email: {ticket.Email}";
+                lblStatus.Text = $"Status: {ticket.Status}";
                 lblDataResposta.Text = $"Data da resposta: {(ticket.DataResposta.HasValue ? ticket.DataResposta.Value.ToString("dd/MM/yyyy HH:mm") : "Não respondido")}";
                 lblUsuarioResposta.Text = $"Respondido por: {(string.IsNullOrWhiteSpace(ticket.UsuarioResposta) ? "Ainda não respondido" : ticket.UsuarioResposta)}";
                 lblDataTicket.Text = $"Data do envio: {ticket.DataPedido.ToString("dd/MM/yyyy HH:mm")}";

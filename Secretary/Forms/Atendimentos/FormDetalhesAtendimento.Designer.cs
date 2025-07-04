@@ -40,6 +40,7 @@
             this.lblUsuarioResposta = new System.Windows.Forms.Label();
             this.lblDataResposta = new System.Windows.Forms.Label();
             this.lblRA = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblNome
@@ -105,7 +106,7 @@
             // 
             // txtMensagem
             // 
-            this.txtMensagem.Location = new System.Drawing.Point(13, 150);
+            this.txtMensagem.Location = new System.Drawing.Point(13, 175);
             this.txtMensagem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtMensagem.Multiline = true;
             this.txtMensagem.Name = "txtMensagem";
@@ -115,7 +116,7 @@
             // 
             // txtResposta
             // 
-            this.txtResposta.Location = new System.Drawing.Point(11, 263);
+            this.txtResposta.Location = new System.Drawing.Point(11, 288);
             this.txtResposta.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtResposta.Multiline = true;
             this.txtResposta.Name = "txtResposta";
@@ -127,7 +128,7 @@
             // 
             this.lblDataTicket.AutoSize = true;
             this.lblDataTicket.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblDataTicket.Location = new System.Drawing.Point(15, 113);
+            this.lblDataTicket.Location = new System.Drawing.Point(15, 140);
             this.lblDataTicket.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataTicket.Name = "lblDataTicket";
             this.lblDataTicket.Size = new System.Drawing.Size(41, 13);
@@ -138,7 +139,7 @@
             // 
             this.lblUsuarioResposta.AutoSize = true;
             this.lblUsuarioResposta.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuarioResposta.Location = new System.Drawing.Point(12, 363);
+            this.lblUsuarioResposta.Location = new System.Drawing.Point(12, 388);
             this.lblUsuarioResposta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUsuarioResposta.Name = "lblUsuarioResposta";
             this.lblUsuarioResposta.Size = new System.Drawing.Size(48, 13);
@@ -149,7 +150,7 @@
             // 
             this.lblDataResposta.AutoSize = true;
             this.lblDataResposta.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblDataResposta.Location = new System.Drawing.Point(15, 126);
+            this.lblDataResposta.Location = new System.Drawing.Point(15, 153);
             this.lblDataResposta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataResposta.Name = "lblDataResposta";
             this.lblDataResposta.Size = new System.Drawing.Size(41, 13);
@@ -166,12 +167,24 @@
             this.lblRA.TabIndex = 12;
             this.lblRA.Text = "label6";
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(15, 98);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(47, 13);
+            this.lblStatus.TabIndex = 13;
+            this.lblStatus.Text = "label7";
+            // 
             // FormDetalhesAtendimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(527, 391);
+            this.ClientSize = new System.Drawing.Size(527, 411);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblRA);
             this.Controls.Add(this.lblDataResposta);
             this.Controls.Add(this.lblUsuarioResposta);
@@ -211,5 +224,6 @@
         private System.Windows.Forms.Label lblUsuarioResposta;
         private System.Windows.Forms.Label lblDataResposta;
         private System.Windows.Forms.Label lblRA;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
