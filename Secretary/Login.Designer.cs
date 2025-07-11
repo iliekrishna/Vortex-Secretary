@@ -113,6 +113,7 @@
             this.txtSenha.TabIndex = 16;
             this.txtSenha.UseSystemPasswordChar = true;
             this.txtSenha.Enter += new System.EventHandler(this.txtSenha_Enter);
+            this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
             this.txtSenha.Leave += new System.EventHandler(this.txtSenha_Leave_1);
             // 
             // lblFazerLogin
@@ -248,6 +249,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

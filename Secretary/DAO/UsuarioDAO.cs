@@ -28,7 +28,6 @@ namespace Secretary.DAO
                     }
                 }
             }
-
             return null;
         }
 
@@ -36,6 +35,9 @@ namespace Secretary.DAO
         {
             using (var conn = ConexaoBD.ObterConexao())
             {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 string sql = "SELECT COUNT(*) FROM t_usuarios WHERE email_usuario = @Email;";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
@@ -50,6 +52,9 @@ namespace Secretary.DAO
         {
             using (var conn = ConexaoBD.ObterConexao())
             {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 string sql = @"INSERT INTO t_usuarios 
                     (nome_usuario, email_usuario, senha, tipo_perfil, criado_em) 
                     VALUES (@Nome, @Email, @Senha, @TipoPerfil, NOW());";
@@ -65,10 +70,14 @@ namespace Secretary.DAO
                 }
             }
         }
+
         public Usuario Autenticar(string email, string senha)
         {
             using (var conn = ConexaoBD.ObterConexao())
             {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 string sql = "SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil FROM t_usuarios WHERE email_usuario = @Email LIMIT 1;";
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -79,8 +88,6 @@ namespace Secretary.DAO
                         if (reader.Read())
                         {
                             string hash = reader.GetString("senha");
-
-                            // Verifica se a senha digitada confere com a senha criptografada do banco
                             if (BCrypt.Net.BCrypt.Verify(senha, hash))
                             {
                                 return new Usuario
@@ -96,9 +103,67 @@ namespace Secretary.DAO
                     }
                 }
             }
-
-            // Retorna null se o e-mail não existir ou a senha estiver incorreta
             return null;
+        }
+
+        public int BuscarIdPorEmail(string email)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                string sql = "SELECT id_usuario FROM t_usuarios WHERE email_usuario = @Email LIMIT 1;";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                        return Convert.ToInt32(result);
+                    else
+                        throw new Exception("Usuário não encontrado.");
+                }
+            }
+        }
+
+        public void SalvarCodigoRedefinicao(string email, string codigo)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                // Busca ID do usuário
+                int idUsuario = -1;
+                string buscarIdSql = "SELECT id_usuario FROM t_usuarios WHERE email_usuario = @Email LIMIT 1";
+
+                using (MySqlCommand buscarCmd = new MySqlCommand(buscarIdSql, conn))
+                {
+                    buscarCmd.Parameters.AddWithValue("@Email", email);
+                    var result = buscarCmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        idUsuario = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        throw new Exception("Usuário não encontrado.");
+                    }
+                }
+
+                // Insere código com expiração
+                string inserirSql = @"INSERT INTO t_recuperacao_senha (id_usuario, codigo, expira_em, usado, criado_em) 
+                                      VALUES (@IdUsuario, @Codigo, @ExpiraEm, 0, NOW());";
+
+                using (MySqlCommand cmd = new MySqlCommand(inserirSql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    cmd.Parameters.AddWithValue("@Codigo", codigo);
+                    cmd.Parameters.AddWithValue("@ExpiraEm", DateTime.Now.AddMinutes(10));
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

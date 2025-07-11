@@ -77,7 +77,7 @@ namespace Secretary
             {
                 txtSenha.Text = PlaceholderSenha;
                 txtSenha.ForeColor = Color.Gray;
-                txtSenha.UseSystemPasswordChar = false; // Isso aqui é o essencial!
+                txtSenha.UseSystemPasswordChar = false;
             }
         }
 
@@ -138,7 +138,8 @@ namespace Secretary
                     Sessao.UsuarioId = usuarioAutenticado.Id;
                     Sessao.UsuarioLogado = usuarioAutenticado;
 
-                    this.Hide();
+
+                    this.Close();
                     new Inicial(usuarioAutenticado).Show();
                 }
                 else
@@ -174,12 +175,19 @@ namespace Secretary
                 txtSenha.Focus();
             }
         }
-
         private void linkLabelEsqueciSenha_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormEsqueciSenha formEsqueciSenha = new FormEsqueciSenha();
+            FormEsqueciSenha formEsqueciSenha = new FormEsqueciSenha(this); // Passa o próprio login
             formEsqueciSenha.ShowDialog();
         }
 
+        private void txtSenha_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                btnEntrar.PerformClick();
+            }
+        }
     }
 }

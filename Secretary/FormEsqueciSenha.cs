@@ -9,10 +9,12 @@ namespace Secretary
     public partial class FormEsqueciSenha : Form
     {
         private UsuarioDAO usuarioDAO = new UsuarioDAO();
+        private FormLogin formLogin;
 
-        public FormEsqueciSenha()
+        public FormEsqueciSenha(FormLogin login)
         {
             InitializeComponent();
+            this.formLogin = login;
         }
 
         private void btnEnviar_Click(object sender, EventArgs e)
@@ -27,27 +29,31 @@ namespace Secretary
 
             try
             {
-                bool existe = usuarioDAO.EmailExiste(email);
-
-                if (existe)
-                {
-                    string mensagemEmail = "Olá, \n\nVocê solicitou a recuperação de senha. " +
-                        "Por favor, acesse o sistema e utilize a opção de redefinir senha. " +
-                        "Caso não tenha solicitado, ignore esta mensagem.\n\nAtenciosamente,\nSecretaria";
-
-                    EnviarEmailRecuperacao(email, mensagemEmail);
-
-                    MessageBox.Show("Se este e-mail estiver cadastrado, enviaremos instruções para redefinir sua senha.", "Verifique seu e-mail", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                }
-                else
+                if (!usuarioDAO.EmailExiste(email))
                 {
                     MessageBox.Show("E-mail não encontrado no sistema.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                // Gera código e salva via método DAO
+                string codigo = new Random().Next(100000, 999999).ToString();
+                usuarioDAO.SalvarCodigoRedefinicao(email, codigo);
+
+                string mensagemEmail = $"Olá,\n\nSeu código de recuperação de senha é: {codigo}.\nEle é válido por 10 minutos.\n\nAtenciosamente,\nEquipe Vortex";
+                EnviarEmailRecuperacao(email, mensagemEmail);
+
+                MessageBox.Show("Código enviado! Verifique seu e-mail.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Fecha os formulários e abre o de redefinir senha
+                this.Hide();
+                formLogin.Hide();
+                FormRedefinirSenha redefinirSenha = new FormRedefinirSenha(email);
+                redefinirSenha.Show();
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao verificar o e-mail:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao processar solicitação: " + ex.Message);
             }
         }
 
@@ -57,8 +63,8 @@ namespace Secretary
             {
                 var fromAddress = new MailAddress("vortex.esqueci.senha@gmail.com", "Sistema Vortex");
                 var toAddress = new MailAddress(emailDestino);
-                const string fromPassword = "bdxr oeei vfkj rgoq"; // <-- aqui vai a senha gerada no Gmail
-                const string subject = "Recuperação de Senha - Secretaria";
+                const string fromPassword = "bdxr oeei vfkj rgoq";
+                const string subject = "Código de Redefinição de Senha";
 
                 var smtp = new SmtpClient
                 {
@@ -81,7 +87,16 @@ namespace Secretary
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao enviar e-mail: " + ex.Message);
+                MessageBox.Show("Erro ao enviar e-mail:\n" + ex.Message);
+            }
+        }
+
+        private void txtEmail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                btnEnviar.PerformClick();
             }
         }
     }
