@@ -138,9 +138,10 @@ namespace Secretary
                     Sessao.UsuarioId = usuarioAutenticado.Id;
                     Sessao.UsuarioLogado = usuarioAutenticado;
 
-
-                    this.Close();
-                    new Inicial(usuarioAutenticado).Show();
+                    this.Hide();
+                    Inicial inicial = new Inicial(usuarioAutenticado);
+                    inicial.ShowDialog();  
+                    this.Close(); 
                 }
                 else
                 {
