@@ -3,33 +3,27 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using Secretary.DAO;
 using Secretary.Models;
 using Secretary.Forms.Gerenciamento;
 
 namespace Secretary.Forms
 {
-    public partial class GerenciamentoAdm : Form
+    public partial class GerenciamentoUser : Form
     {
-        public GerenciamentoAdm()
+        public GerenciamentoUser()
         {
             InitializeComponent();
-
-            // Eventos do Form
-            Load += GerenciamentoAdm_Load;
-            Resize += (s, e) => AjustarLarguraDosPanels(); // Ajusta largura ao redimensionar
+            Load += GerenciamentoUser_Load;
+            Resize += (s, e) => AjustarLarguraDosPanels();
         }
 
-        #region ====== EVENTO DE CARREGAMENTO ======
-        private void GerenciamentoAdm_Load(object sender, EventArgs e)
+        private void GerenciamentoUser_Load(object sender, EventArgs e)
         {
-            CarregarUsuarios();
             CarregarDocumentosDisponiveis();
             CarregarFaq();
-            AjustarLarguraDosPanels(); // Ajusta largura ao carregar
+            AjustarLarguraDosPanels();
         }
-        #endregion
 
         #region ====== DOCUMENTOS ======
         private void CarregarDocumentosDisponiveis()
@@ -170,168 +164,6 @@ namespace Secretary.Forms
 
             panelBotao.Controls.Add(btnNovoDocumento);
             flowLayoutPanelDocumentos.Controls.Add(panelBotao);
-        }
-        #endregion
-
-        #region ====== USUÁRIOS ======
-        private void CarregarUsuarios()
-        {
-            try
-            {
-                flowLayoutPanelUsuarios.SuspendLayout();
-                flowLayoutPanelUsuarios.Controls.Clear();
-
-                string query = "SELECT id_usuario, email_usuario, nome_usuario, tipo_perfil FROM t_usuarios ORDER BY id_usuario";
-                DataTable usuarios = ConexaoBD.ExecutarConsulta(query);
-
-                if (usuarios.Rows.Count == 0)
-                {
-                    flowLayoutPanelUsuarios.Controls.Add(CriarLabelMensagem("Nenhum usuário cadastrado"));
-                    AdicionarBotaoNovoUsuario();
-                    return;
-                }
-
-                foreach (DataRow row in usuarios.Rows)
-                {
-                    flowLayoutPanelUsuarios.Controls.Add(CriarPanelUsuario(row));
-                }
-
-                AdicionarBotaoNovoUsuario();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar usuários: " + ex.Message, "Erro",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                flowLayoutPanelUsuarios.ResumeLayout();
-                AjustarLarguraDosPanels();
-            }
-        }
-
-        private Panel CriarPanelUsuario(DataRow row)
-        {
-            string nome = row["nome_usuario"].ToString();
-            string tipoPerfil = row["tipo_perfil"].ToString();
-            int id = Convert.ToInt32(row["id_usuario"]);
-            string email = row["email_usuario"].ToString();
-
-            Panel panel = new Panel
-            {
-                Name = $"panelUsu{id}",
-                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
-                Margin = new Padding(0, 0, 0, 10),
-                BackColor = Color.WhiteSmoke,
-                BorderStyle = BorderStyle.FixedSingle
-            };
-
-            Label lblNome = new Label
-            {
-                Text = nome,
-                AutoSize = true,
-                Location = new Point(20, 15),
-                Font = new Font("Verdana", 10F),
-                Tag = id
-            };
-
-            Label lblInfo = new Label
-            {
-                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
-                AutoSize = true,
-                Location = new Point(250, 15),
-                ForeColor = Color.Gray,
-                Font = new Font("Verdana", 9F, FontStyle.Regular)
-            };
-
-            Button btnEditar = new Button
-            {
-                Text = "Editar",
-                Font = new Font("Verdana", 9F),
-                Size = new Size(80, 25),
-                Location = new Point(panel.Width - 100, 12),
-                Tag = id,
-                Cursor = Cursors.Hand,
-                BackColor = Color.White
-            };
-            btnEditar.Click += BtnEditarUsuario_Click;
-
-            panel.Controls.Add(lblNome);
-            panel.Controls.Add(lblInfo);
-            panel.Controls.Add(btnEditar);
-
-            return panel;
-        }
-
-        private void BtnEditarUsuario_Click(object sender, EventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is int idUsuario)
-            {
-                try
-                {
-                    using (var conexao = ConexaoBD.ObterConexao())
-                    {
-                        string query = "SELECT nome_usuario, email_usuario, tipo_perfil FROM t_usuarios WHERE id_usuario = @id";
-                        MySqlCommand cmd = new MySqlCommand(query, conexao);
-                        cmd.Parameters.AddWithValue("@id", idUsuario);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                string nome = reader.GetString("nome_usuario");
-                                string email = reader.GetString("email_usuario");
-                                string tipo = reader.GetString("tipo_perfil");
-
-                                using (var form = new FormEditarUsuario(idUsuario, nome, email, tipo))
-                                {
-                                    form.FormClosed += (s, args) => CarregarUsuarios();
-                                    form.ShowDialog();
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Usuário não encontrado.", "Aviso",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao carregar dados do usuário: " + ex.Message, "Erro",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void AdicionarBotaoNovoUsuario()
-        {
-            Panel panelBotao = new Panel
-            {
-                Size = new Size(flowLayoutPanelUsuarios.Width - 40, 60),
-                BackColor = Color.Transparent
-            };
-
-            Button btnNovoUsuario = new Button
-            {
-                Text = "Novo Usuário",
-                Font = new Font("Verdana", 10F),
-                Size = new Size(150, 40),
-                Location = new Point(20, 10),
-                Cursor = Cursors.Hand
-            };
-            btnNovoUsuario.Click += (s, e) =>
-            {
-                using (var form = new CriarUsuario())
-                {
-                    form.FormClosed += (x, y) => CarregarUsuarios();
-                    form.ShowDialog();
-                }
-            };
-
-            panelBotao.Controls.Add(btnNovoUsuario);
-            flowLayoutPanelUsuarios.Controls.Add(panelBotao);
         }
         #endregion
 
@@ -479,47 +311,7 @@ namespace Secretary.Forms
                     if (lblNome != null) lblNome.Location = new Point(20, 15);
                     if (lblStatus != null && lblNome != null) lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
                 }
-            }
-
-            // Ajusta painéis de usuários
-            foreach (Control ctrl in flowLayoutPanelUsuarios.Controls)
-            {
-                if (ctrl is Panel panel)
-                {
-                    if (panel.Name.StartsWith("panelUsu"))
-                    {
-                        panel.Width = flowLayoutPanelUsuarios.Width - 5;
-
-                        Label lblNome = null;
-                        Label lblInfo = null;
-                        Button btnEditar = null;
-
-                        foreach (Control innerCtrl in panel.Controls)
-                        {
-                            if (innerCtrl is Label lbl)
-                            {
-                                if (lbl.Tag != null && lbl.Tag is int)
-                                    lblNome = lbl;
-                                else
-                                    lblInfo = lbl;
-                            }
-                            else if (innerCtrl is Button btn)
-                            {
-                                btnEditar = btn;
-                            }
-                        }
-
-                        if (lblNome != null) lblNome.Location = new Point(20, 15);
-                        if (lblInfo != null && lblNome != null) lblInfo.Location = new Point(lblNome.Right + 10, 15);
-                        if (btnEditar != null) btnEditar.Location = new Point(panel.Width - 100, 12);
-                    }
-                    else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
-                    {
-                        panel.Width = flowLayoutPanelUsuarios.Width - 40;
-                        btn.Location = new Point(20, 10);
-                    }
-                }
-            }
+            }            
         }
 
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)

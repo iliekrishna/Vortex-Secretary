@@ -229,7 +229,7 @@ namespace Secretary
             }
             else
             {
-                OpenChildForm(new Forms.GerenciamentoDocumentos(), sender);
+                OpenChildForm(new Forms.GerenciamentoUser(), sender);
             }
 
             ActivateButton(sender);

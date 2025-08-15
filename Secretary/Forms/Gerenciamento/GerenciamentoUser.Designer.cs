@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
-    partial class GerenciamentoAdm
+    partial class GerenciamentoUser
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -25,13 +25,10 @@ namespace Secretary.Forms
             this.tabControlGerenciamento = new System.Windows.Forms.TabControl();
             this.tabPageDocumentos = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelDocumentos = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPageUsuarios = new System.Windows.Forms.TabPage();
-            this.flowLayoutPanelUsuarios = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPageFaq = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelFaq = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControlGerenciamento.SuspendLayout();
             this.tabPageDocumentos.SuspendLayout();
-            this.tabPageUsuarios.SuspendLayout();
             this.tabPageFaq.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,13 +42,12 @@ namespace Secretary.Forms
             this.labelTitulo.Padding = new System.Windows.Forms.Padding(20, 20, 0, 20);
             this.labelTitulo.Size = new System.Drawing.Size(800, 80);
             this.labelTitulo.TabIndex = 0;
-            this.labelTitulo.Text = "Gerenciamento Administrativo";
+            this.labelTitulo.Text = "Gerenciamento de Usuário";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabControlGerenciamento
             // 
             this.tabControlGerenciamento.Controls.Add(this.tabPageDocumentos);
-            this.tabControlGerenciamento.Controls.Add(this.tabPageUsuarios);
             this.tabControlGerenciamento.Controls.Add(this.tabPageFaq);
             this.tabControlGerenciamento.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlGerenciamento.Font = new System.Drawing.Font("Verdana", 9.75F);
@@ -63,7 +59,6 @@ namespace Secretary.Forms
             this.tabControlGerenciamento.Size = new System.Drawing.Size(800, 420);
             this.tabControlGerenciamento.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlGerenciamento.TabIndex = 1;
-            this.tabControlGerenciamento.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl_DrawItem);
             this.tabControlGerenciamento.SelectedIndexChanged += new System.EventHandler(this.tabControlGerenciamento_SelectedIndexChanged);
             // 
             // tabPageDocumentos
@@ -90,30 +85,6 @@ namespace Secretary.Forms
             this.flowLayoutPanelDocumentos.TabIndex = 0;
             this.flowLayoutPanelDocumentos.WrapContents = false;
             // 
-            // tabPageUsuarios
-            // 
-            this.tabPageUsuarios.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPageUsuarios.Controls.Add(this.flowLayoutPanelUsuarios);
-            this.tabPageUsuarios.Location = new System.Drawing.Point(4, 39);
-            this.tabPageUsuarios.Name = "tabPageUsuarios";
-            this.tabPageUsuarios.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageUsuarios.Size = new System.Drawing.Size(792, 377);
-            this.tabPageUsuarios.TabIndex = 1;
-            this.tabPageUsuarios.Text = "Usuários";
-            // 
-            // flowLayoutPanelUsuarios
-            // 
-            this.flowLayoutPanelUsuarios.AutoScroll = true;
-            this.flowLayoutPanelUsuarios.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.flowLayoutPanelUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelUsuarios.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelUsuarios.Location = new System.Drawing.Point(10, 10);
-            this.flowLayoutPanelUsuarios.Name = "flowLayoutPanelUsuarios";
-            this.flowLayoutPanelUsuarios.Padding = new System.Windows.Forms.Padding(5);
-            this.flowLayoutPanelUsuarios.Size = new System.Drawing.Size(772, 357);
-            this.flowLayoutPanelUsuarios.TabIndex = 0;
-            this.flowLayoutPanelUsuarios.WrapContents = false;
-            // 
             // tabPageFaq
             // 
             this.tabPageFaq.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -138,7 +109,7 @@ namespace Secretary.Forms
             this.flowLayoutPanelFaq.TabIndex = 0;
             this.flowLayoutPanelFaq.WrapContents = false;
             // 
-            // GerenciamentoAdm
+            // GerenciamentoUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -148,27 +119,21 @@ namespace Secretary.Forms
             this.Controls.Add(this.labelTitulo);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.MinimumSize = new System.Drawing.Size(600, 400);
-            this.Name = "GerenciamentoAdm";
+            this.Name = "GerenciamentoUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gerenciamento Administrativo";
+            this.Text = "Gerenciamento de Usuário";
             this.tabControlGerenciamento.ResumeLayout(false);
             this.tabPageDocumentos.ResumeLayout(false);
-            this.tabPageUsuarios.ResumeLayout(false);
             this.tabPageFaq.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
-
         private void tabControlGerenciamento_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabControlGerenciamento.SelectedTab.Name)
             {
                 case "tabPageDocumentos":
                     CarregarDocumentosDisponiveis();
-                    break;
-
-                case "tabPageUsuarios":
-                    CarregarUsuarios();
                     break;
 
                 case "tabPageFaq":
@@ -179,12 +144,10 @@ namespace Secretary.Forms
         #endregion
 
         private Label labelTitulo;
-        private TabControl tabControlGerenciamento;
-        private TabPage tabPageDocumentos;
-        private FlowLayoutPanel flowLayoutPanelDocumentos;
-        private TabPage tabPageUsuarios;
-        private FlowLayoutPanel flowLayoutPanelUsuarios;
         private TabPage tabPageFaq;
         private FlowLayoutPanel flowLayoutPanelFaq;
+        private TabPage tabPageDocumentos;
+        private FlowLayoutPanel flowLayoutPanelDocumentos;
+        private TabControl tabControlGerenciamento;
     }
 }

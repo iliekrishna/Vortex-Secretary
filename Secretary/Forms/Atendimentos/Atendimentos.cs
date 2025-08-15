@@ -8,14 +8,12 @@ namespace Secretary.Forms.Atendimentos
     public partial class Atendimentos : Form
     {
         private int usuarioId;
-
         public Atendimentos(int usuarioId)
         {
             InitializeComponent();
             this.usuarioId = usuarioId;
             this.Load += Atendimentos_Load;
         }
-
         private void Atendimentos_Load(object sender, EventArgs e)
         {
             try
@@ -53,7 +51,6 @@ namespace Secretary.Forms.Atendimentos
                 MessageBox.Show("Erro ao carregar tickets: " + ex.Message);
             }
         }
-
         private void AplicarFiltros()
         {
             string curso = cbCurso.SelectedItem?.ToString() ?? "Todos";
@@ -81,7 +78,6 @@ namespace Secretary.Forms.Atendimentos
                 MessageBox.Show("Erro ao aplicar filtros: " + ex.Message);
             }
         }
-
         private void AjustarColunasAberto(DataGridView dgv)
         {
             foreach (DataGridViewColumn col in dgv.Columns)
@@ -119,7 +115,6 @@ namespace Secretary.Forms.Atendimentos
                 else if (status == "respondido")
                     row.Cells["Situação"].Value = "Respondido";
             }
-
             // Reposiciona a coluna "Situação" depois de "Data da Resposta"
             if (dgv.Columns.Contains("Data da Resposta") && dgv.Columns.Contains("Situação"))
             {
@@ -131,7 +126,6 @@ namespace Secretary.Forms.Atendimentos
         {
             AplicarFiltros();
         }
-
         private void datagvRespondidos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -142,7 +136,6 @@ namespace Secretary.Forms.Atendimentos
                 detalhesForm.ShowDialog();
             }
         }
-
         private void datagvEmAberto_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -164,20 +157,13 @@ namespace Secretary.Forms.Atendimentos
 
             AtualizarListas();
         }
-
         private void datagvRespondidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             datagvRespondidos_CellContentClick(sender, e);
         }
-
         private void datagvEmAberto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             datagvEmAberto_CellContentClick(sender, e);
-        }
-
-        private void Atendimentos_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }

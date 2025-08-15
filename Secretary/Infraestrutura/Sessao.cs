@@ -13,5 +13,5 @@ namespace Secretary
             public static int UsuarioId { get; set; }
             public static Usuario UsuarioLogado { get; set; }
         }
-    }
+}
 

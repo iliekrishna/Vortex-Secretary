@@ -70,6 +70,8 @@ namespace Secretary
 
         private void btnFechar_Click(object sender, EventArgs e)
         {
+            FormLogin Login = new FormLogin();
+            Login.ShowDialog();
             this.Close();
         }
 

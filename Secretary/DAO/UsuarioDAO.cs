@@ -125,7 +125,6 @@ namespace Secretary.DAO
                 }
             }
         }
-
         public void SalvarCodigoRedefinicao(string email, string codigo)
         {
             using (var conn = ConexaoBD.ObterConexao())

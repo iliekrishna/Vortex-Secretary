@@ -371,7 +371,6 @@ namespace Secretary.Forms.Atendimentos
             this.Name = "Atendimentos";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Atendimentos";
-            this.Load += new System.EventHandler(this.Atendimentos_Load_1);
             this.tabControlAtendimentos.ResumeLayout(false);
             this.tpagAberto.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).EndInit();
