@@ -26,7 +26,6 @@ public class CategoriaDAO
         }
         return lista;
     }
-
     public void Inserir(string nome)
     {
         using (var conn = ConexaoBD.ObterConexao())
@@ -35,6 +34,35 @@ public class CategoriaDAO
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@nome", nome);
             cmd.ExecuteNonQuery();
+        }
+    }
+
+    public void AtualizarNome(int id, string novoNome)
+    {
+        using (var conn = ConexaoBD.ObterConexao())
+        {
+            string sql = "UPDATE t_faq_categoria SET nome = @nome WHERE id = @id";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@nome", novoNome);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+        }
+    }
+    public void Excluir(int id)
+    {
+        using (var conn = ConexaoBD.ObterConexao())
+        {
+            // Excluir todas as perguntas da categoria
+            string sqlExcluirFaqs = "DELETE FROM t_faq WHERE categoria_id = @id";
+            MySqlCommand cmdExcluirFaqs = new MySqlCommand(sqlExcluirFaqs, conn);
+            cmdExcluirFaqs.Parameters.AddWithValue("@id", id);
+            cmdExcluirFaqs.ExecuteNonQuery();
+
+            // Excluir a categoria
+            string sqlExcluirCategoria = "DELETE FROM t_faq_categoria WHERE id = @id";
+            MySqlCommand cmdExcluirCategoria = new MySqlCommand(sqlExcluirCategoria, conn);
+            cmdExcluirCategoria.Parameters.AddWithValue("@id", id);
+            cmdExcluirCategoria.ExecuteNonQuery();
         }
     }
 }

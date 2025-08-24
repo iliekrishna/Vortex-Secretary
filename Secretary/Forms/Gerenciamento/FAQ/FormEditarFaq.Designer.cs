@@ -28,7 +28,7 @@
             this.lblDataEUsuario = new System.Windows.Forms.Label();
             this.lblCriadoPor = new System.Windows.Forms.Label();
             this.lblCategoria = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cboxCategoria = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblPergunta
@@ -77,6 +77,7 @@
             this.btnExcluir.TabIndex = 10;
             this.btnExcluir.Text = "Excluir FAQ";
             this.btnExcluir.UseVisualStyleBackColor = true;
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click_1);
             // 
             // btnSalvar
             // 
@@ -94,7 +95,7 @@
             // 
             this.lblDataEUsuario.AutoSize = true;
             this.lblDataEUsuario.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDataEUsuario.Location = new System.Drawing.Point(21, 510);
+            this.lblDataEUsuario.Location = new System.Drawing.Point(20, 510);
             this.lblDataEUsuario.Name = "lblDataEUsuario";
             this.lblDataEUsuario.Size = new System.Drawing.Size(0, 14);
             this.lblDataEUsuario.TabIndex = 12;
@@ -112,27 +113,28 @@
             // 
             this.lblCategoria.AutoSize = true;
             this.lblCategoria.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCategoria.Location = new System.Drawing.Point(12, 16);
+            this.lblCategoria.Location = new System.Drawing.Point(12, 15);
             this.lblCategoria.Name = "lblCategoria";
             this.lblCategoria.Size = new System.Drawing.Size(76, 14);
             this.lblCategoria.TabIndex = 14;
             this.lblCategoria.Text = "Categoria:";
             // 
-            // textBox1
+            // cboxCategoria
             // 
-            this.textBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(12, 36);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(586, 27);
-            this.textBox1.TabIndex = 15;
+            this.cboxCategoria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.cboxCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxCategoria.FormattingEnabled = true;
+            this.cboxCategoria.Location = new System.Drawing.Point(14, 36);
+            this.cboxCategoria.Name = "cboxCategoria";
+            this.cboxCategoria.Size = new System.Drawing.Size(583, 22);
+            this.cboxCategoria.TabIndex = 42;
             // 
             // FormEditarFaq
             // 
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(610, 545);
+            this.Controls.Add(this.cboxCategoria);
             this.Controls.Add(this.lblCategoria);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblCriadoPor);
             this.Controls.Add(this.lblDataEUsuario);
             this.Controls.Add(this.btnExcluir);
@@ -146,7 +148,7 @@
             this.MaximizeBox = false;
             this.Name = "FormEditarFaq";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Editar FAQ";
+            this.Text = "Editar Perguntar";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,6 +159,6 @@
         private System.Windows.Forms.Label lblDataEUsuario;
         private System.Windows.Forms.Label lblCriadoPor;
         private System.Windows.Forms.Label lblCategoria;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cboxCategoria;
     }
 }

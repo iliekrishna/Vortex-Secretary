@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Secretary.DAO;
+using Secretary.Forms.Gerenciamento;
+using Secretary.Forms.Gerenciamento.FAQ;
+using Secretary.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using Secretary.DAO;
-using Secretary.Models;
-using Secretary.Forms.Gerenciamento;
 
 namespace Secretary.Forms
 {
@@ -67,7 +68,6 @@ namespace Secretary.Forms
                 AjustarLarguraDosPanels();
             }
         }
-
         private Panel CriarPanelDocumento(DocumentoDisponivel doc)
         {
             Panel panelDoc = new Panel
@@ -120,7 +120,6 @@ namespace Secretary.Forms
 
             return panelDoc;
         }
-
         private void BtnNovoDocumento_Click(object sender, EventArgs e)
         {
             using (var form = new FormNovoDocumento())
@@ -133,7 +132,6 @@ namespace Secretary.Forms
                 form.ShowDialog();
             }
         }
-
         private void BtnEditar_Click(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.Tag is DocumentoDisponivel doc)
@@ -149,7 +147,6 @@ namespace Secretary.Forms
                 }
             }
         }
-
         private void AdicionarBotaoNovoDocumento()
         {
             Panel panelBotao = new Panel
@@ -343,83 +340,69 @@ namespace Secretary.Forms
                 flowLayoutPanelFaq.SuspendLayout();
                 flowLayoutPanelFaq.Controls.Clear();
 
-                FaqDAO dao = new FaqDAO();
-                List<Faq> listaFaq = dao.ListarTodos();
+                CategoriaDAO categoriaDao = new CategoriaDAO();
+                List<Categoria> categorias = categoriaDao.ListarCategorias();
 
-                if (listaFaq.Count == 0)
+                if (categorias.Count == 0)
                 {
-                    flowLayoutPanelFaq.Controls.Add(CriarLabelMensagem("Nenhum FAQ cadastrado"));
-                    AdicionarBotaoNovoFaq();
+                    flowLayoutPanelFaq.Controls.Add(CriarLabelMensagem("Nenhuma categoria cadastrada"));
+                    AdicionarBotaoNovaCategoria();
                     return;
                 }
 
-                foreach (var faq in listaFaq)
+                foreach (var categoria in categorias)
                 {
-                    flowLayoutPanelFaq.Controls.Add(CriarPanelFaq(faq));
+                    flowLayoutPanelFaq.Controls.Add(CriarPanelCategoria(categoria));
                 }
 
-                AdicionarBotaoNovoFaq();
+                AdicionarBotaoNovaCategoria();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar FAQ: " + ex.Message);
+                MessageBox.Show("Erro ao carregar categorias: " + ex.Message);
             }
             finally
             {
                 flowLayoutPanelFaq.ResumeLayout();
             }
         }
-
-        private Panel CriarPanelFaq(Faq faq)
+        private Panel CriarPanelCategoria(Categoria categoria)
         {
-            Panel panel = new Panel
+            Panel panelCategoria = new Panel
             {
-                Name = $"panelFaq{faq.Id}",
+                Name = $"panelCategoria{categoria.Id}",
                 Size = new Size(flowLayoutPanelFaq.Width - 5, 50),
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
             };
 
-            Label lblPergunta = new Label
+            Label lblCategoria = new Label
             {
-                Text = faq.Pergunta,
+                Text = categoria.Nome,
                 AutoSize = true,
                 Location = new Point(20, 15),
                 Font = new Font("Verdana", 10F)
             };
 
-            Button btnEditar = new Button
+            Button btnMostrarPerguntas = new Button
             {
-                Text = "Editar",
+                Text = "Mostrar Perguntas",
                 Font = new Font("Verdana", 9F),
-                Size = new Size(80, 25),
-                Location = new Point(panel.Width - 100, 12),
-                Tag = faq,
+                Size = new Size(150, 30),
+                Location = new Point(panelCategoria.Width - 170, 9),
+                Tag = categoria,
                 Cursor = Cursors.Hand,
                 BackColor = Color.White
             };
-            btnEditar.Click += BtnEditarFaq_Click;
+            btnMostrarPerguntas.Click += (s, e) => AbrirFormFaqs(categoria);
 
-            panel.Controls.Add(lblPergunta);
-            panel.Controls.Add(btnEditar);
+            panelCategoria.Controls.Add(lblCategoria);
+            panelCategoria.Controls.Add(btnMostrarPerguntas);
 
-            return panel;
+            return panelCategoria;
         }
-
-        private void BtnEditarFaq_Click(object sender, EventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is Faq faq)
-            {
-                using (var form = new FormEditarFaq(faq))
-                {
-                    form.FormClosed += (s, args) => CarregarFaq();
-                    form.ShowDialog();
-                }
-            }
-        }
-
-        private void AdicionarBotaoNovoFaq()
+        private void AdicionarBotaoNovaCategoria()
         {
             Panel panelBotao = new Panel
             {
@@ -429,24 +412,39 @@ namespace Secretary.Forms
 
             Button btnNovoFaq = new Button
             {
-                Text = "Novo FAQ",
+                Text = "Nova Categoria",
                 Font = new Font("Verdana", 10F),
                 Size = new Size(150, 40),
                 Location = new Point(20, 10),
                 Cursor = Cursors.Hand
             };
-            btnNovoFaq.Click += (s, e) =>
-            {
-                using (var form = new FormNovaFaq(Sessao.UsuarioLogado))
-                {
-                    form.FormClosed += (x, y) => CarregarFaq();
-                    form.ShowDialog();
-                }
-            };
 
+            btnNovoFaq.Click += BtnNovoFaq_Click;
             panelBotao.Controls.Add(btnNovoFaq);
             flowLayoutPanelFaq.Controls.Add(panelBotao);
         }
+        private void BtnNovoFaq_Click(object sender, EventArgs e)
+        {
+            if (Sessao.UsuarioLogado == null)
+            {
+                MessageBox.Show("Usuário não está logado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            using (var formNovaCategoria = new FormNovaCategoria(Sessao.UsuarioLogado))
+            {
+                formNovaCategoria.FormClosed += (s, args) => CarregarFaq();
+                formNovaCategoria.ShowDialog();
+            }
+        }
+        private void AbrirFormFaqs(Categoria categoria)
+        {
+            using (var formFaqs = new FormFaqs(categoria))
+            {
+                formFaqs.FormClosed += (s, args) => CarregarFaq();
+                formFaqs.ShowDialog();
+            }
+        }
+
         #endregion
 
         #region ====== LAYOUT E DESENHO ======
@@ -477,7 +475,8 @@ namespace Secretary.Forms
                     }
 
                     if (lblNome != null) lblNome.Location = new Point(20, 15);
-                    if (lblStatus != null && lblNome != null) lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
+                    if (lblStatus != null && lblNome != null)
+                        lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
                 }
             }
 
@@ -488,7 +487,7 @@ namespace Secretary.Forms
                 {
                     if (panel.Name.StartsWith("panelUsu"))
                     {
-                        panel.Width = flowLayoutPanelUsuarios.Width - 5;
+                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
 
                         Label lblNome = null;
                         Label lblInfo = null;
@@ -510,18 +509,19 @@ namespace Secretary.Forms
                         }
 
                         if (lblNome != null) lblNome.Location = new Point(20, 15);
-                        if (lblInfo != null && lblNome != null) lblInfo.Location = new Point(lblNome.Right + 10, 15);
-                        if (btnEditar != null) btnEditar.Location = new Point(panel.Width - 100, 12);
+                        if (lblInfo != null && lblNome != null)
+                            lblInfo.Location = new Point(lblNome.Right + 10, 15);
+                        if (btnEditar != null)
+                            btnEditar.Location = new Point(panel.Width - 100, 12);
                     }
                     else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
                     {
-                        panel.Width = flowLayoutPanelUsuarios.Width - 40;
+                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
                         btn.Location = new Point(20, 10);
                     }
                 }
             }
-        }
-
+        }        
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tabControl = (TabControl)sender;

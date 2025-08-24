@@ -15,7 +15,8 @@ namespace Secretary.Forms.Gerenciamento
             InitializeComponent();
             _faq = faq ?? throw new ArgumentNullException(nameof(faq));
             InicializarEventos();
-            CarregarDados();
+            CarregarCategorias(); // Primeiro carrega as categorias
+            CarregarDados();      // Depois carrega os dados (incluindo seleção da categoria)
         }
 
         public FormEditarFaq(int id, string pergunta, string resposta, int usuarioLogado)
@@ -34,19 +35,30 @@ namespace Secretary.Forms.Gerenciamento
                 };
 
             InicializarEventos();
-            CarregarDados();
+            CarregarCategorias(); // Primeiro carrega as categorias
+            CarregarDados();      // Depois carrega os dados
         }
+
         private void InicializarEventos()
         {
+            // Remover eventos existentes antes de adicionar novos
+            btnSalvar.Click -= btnSalvar_Click_1;
             btnSalvar.Click += btnSalvar_Click_1;
-            btnExcluir.Click += btnExcluir_Click;
+
+            btnExcluir.Click -= btnExcluir_Click_1;
+            btnExcluir.Click += btnExcluir_Click_1;
         }
 
         private void CarregarDados()
         {
             txtPergunta.Text = _faq.Pergunta ?? "";
             txtResposta.Text = _faq.Resposta ?? "";
-            textBox1.Text = _faq.NomeCategoria ?? "";
+
+            // Selecionar a categoria correta no ComboBox
+            if (_faq.IdCategoria > 0)
+            {
+                cboxCategoria.SelectedValue = _faq.IdCategoria;
+            }
 
             string nomeCriador = "Desconhecido";
             if (_faq.CriadoPor != 0)
@@ -86,6 +98,7 @@ namespace Secretary.Forms.Gerenciamento
                 return "Desconhecido";
             }
         }
+
         private void btnSalvar_Click_1(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPergunta.Text) || string.IsNullOrWhiteSpace(txtResposta.Text))
@@ -96,6 +109,12 @@ namespace Secretary.Forms.Gerenciamento
 
             _faq.Pergunta = txtPergunta.Text.Trim();
             _faq.Resposta = txtResposta.Text.Trim();
+
+            // Atualizar a categoria selecionada
+            if (cboxCategoria.SelectedValue != null)
+            {
+                _faq.IdCategoria = (int)cboxCategoria.SelectedValue;
+            }
 
             Usuario usuarioLogado = Sessao.UsuarioLogado;
             _faq.AtualizadoPor = usuarioLogado.Id;
@@ -113,7 +132,17 @@ namespace Secretary.Forms.Gerenciamento
             }
         }
 
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private void CarregarCategorias()
+        {
+            var categoriaDAO = new CategoriaDAO();
+            var categorias = categoriaDAO.ListarCategorias();
+
+            cboxCategoria.DataSource = categorias;
+            cboxCategoria.DisplayMember = "Nome";
+            cboxCategoria.ValueMember = "Id";
+        }
+
+        private void btnExcluir_Click_1(object sender, EventArgs e)
         {
             var confirm = MessageBox.Show("Tem certeza que deseja excluir esta FAQ?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)

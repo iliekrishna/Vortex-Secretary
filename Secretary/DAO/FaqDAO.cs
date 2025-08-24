@@ -53,11 +53,7 @@ public class FaqDAO
             }
         }
         return lista;
-
-
     }
-
-
     public void Inserir(Faq faq)
     {
         using (var conn = ConexaoBD.ObterConexao())
@@ -72,7 +68,6 @@ public class FaqDAO
             cmd.ExecuteNonQuery();
         }
     }
-
     public bool AtualizarFaq(Faq faq)
     {
         try
@@ -122,7 +117,6 @@ public class FaqDAO
     {
         throw new NotImplementedException();
     }
-
     internal Faq ObterPorId(int id)
     {
         throw new NotImplementedException();

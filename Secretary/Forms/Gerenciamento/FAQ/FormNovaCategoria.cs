@@ -6,9 +6,12 @@ namespace Secretary.Forms.Gerenciamento
 {
     public partial class FormNovaCategoria : Form
     {
-        public FormNovaCategoria()
+        private Models.Usuario _usuarioLogado;
+
+        public FormNovaCategoria(Models.Usuario usuarioLogado)
         {
             InitializeComponent();
+            _usuarioLogado = usuarioLogado;
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -31,7 +34,7 @@ namespace Secretary.Forms.Gerenciamento
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 txtCategoria.Clear();
-                txtCategoria.Focus(); // foca para inserir rápido nova categoria
+                txtCategoria.Focus();
             }
             catch (Exception ex)
             {

@@ -36,9 +36,6 @@
             this.lblResposta = new System.Windows.Forms.Label();
             this.lblPergunta = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
-            this.lblCategoria = new System.Windows.Forms.Label();
-            this.cboxCategoria = new System.Windows.Forms.ComboBox();
-            this.btnNovaCategoria = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel3
@@ -47,12 +44,12 @@
             this.panel3.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel3.Location = new System.Drawing.Point(32, 50);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(300, 1);
+            this.panel3.Size = new System.Drawing.Size(280, 1);
             this.panel3.TabIndex = 38;
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(392, 382);
+            this.btnAdicionar.Location = new System.Drawing.Point(432, 364);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(144, 29);
             this.btnAdicionar.TabIndex = 39;
@@ -64,28 +61,28 @@
             // 
             this.txtResposta.BackColor = System.Drawing.Color.White;
             this.txtResposta.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.txtResposta.Location = new System.Drawing.Point(120, 177);
+            this.txtResposta.Location = new System.Drawing.Point(103, 146);
             this.txtResposta.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtResposta.Multiline = true;
             this.txtResposta.Name = "txtResposta";
-            this.txtResposta.Size = new System.Drawing.Size(416, 188);
+            this.txtResposta.Size = new System.Drawing.Size(473, 188);
             this.txtResposta.TabIndex = 37;
             // 
             // txtPergunta
             // 
             this.txtPergunta.BackColor = System.Drawing.Color.White;
             this.txtPergunta.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.txtPergunta.Location = new System.Drawing.Point(120, 133);
+            this.txtPergunta.Location = new System.Drawing.Point(103, 102);
             this.txtPergunta.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtPergunta.Name = "txtPergunta";
-            this.txtPergunta.Size = new System.Drawing.Size(416, 23);
+            this.txtPergunta.Size = new System.Drawing.Size(473, 23);
             this.txtPergunta.TabIndex = 36;
             // 
             // lblResposta
             // 
             this.lblResposta.AutoSize = true;
             this.lblResposta.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResposta.Location = new System.Drawing.Point(34, 177);
+            this.lblResposta.Location = new System.Drawing.Point(17, 146);
             this.lblResposta.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblResposta.Name = "lblResposta";
             this.lblResposta.Size = new System.Drawing.Size(84, 18);
@@ -96,7 +93,7 @@
             // 
             this.lblPergunta.AutoSize = true;
             this.lblPergunta.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPergunta.Location = new System.Drawing.Point(36, 133);
+            this.lblPergunta.Location = new System.Drawing.Point(19, 102);
             this.lblPergunta.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblPergunta.Name = "lblPergunta";
             this.lblPergunta.Size = new System.Drawing.Size(81, 18);
@@ -114,47 +111,12 @@
             this.lblTitulo.TabIndex = 33;
             this.lblTitulo.Text = "Adicionar Nova Pergunta";
             // 
-            // lblCategoria
-            // 
-            this.lblCategoria.AutoSize = true;
-            this.lblCategoria.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCategoria.Location = new System.Drawing.Point(30, 92);
-            this.lblCategoria.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lblCategoria.Name = "lblCategoria";
-            this.lblCategoria.Size = new System.Drawing.Size(87, 18);
-            this.lblCategoria.TabIndex = 40;
-            this.lblCategoria.Text = "Categoria:";
-            // 
-            // cboxCategoria
-            // 
-            this.cboxCategoria.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cboxCategoria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.cboxCategoria.FormattingEnabled = true;
-            this.cboxCategoria.Location = new System.Drawing.Point(120, 88);
-            this.cboxCategoria.Name = "cboxCategoria";
-            this.cboxCategoria.Size = new System.Drawing.Size(287, 24);
-            this.cboxCategoria.TabIndex = 41;
-            // 
-            // btnNovaCategoria
-            // 
-            this.btnNovaCategoria.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNovaCategoria.Location = new System.Drawing.Point(422, 88);
-            this.btnNovaCategoria.Name = "btnNovaCategoria";
-            this.btnNovaCategoria.Size = new System.Drawing.Size(114, 29);
-            this.btnNovaCategoria.TabIndex = 42;
-            this.btnNovaCategoria.Text = "Nova Categoria";
-            this.btnNovaCategoria.UseVisualStyleBackColor = true;
-            this.btnNovaCategoria.Click += new System.EventHandler(this.btnNovaCategoria_Click);
-            // 
             // FormNovaFaq
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(610, 423);
-            this.Controls.Add(this.btnNovaCategoria);
-            this.Controls.Add(this.cboxCategoria);
-            this.Controls.Add(this.lblCategoria);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.txtResposta);
@@ -168,8 +130,7 @@
             this.MaximizeBox = false;
             this.Name = "FormNovaFaq";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormNovaFaq";
-            this.Load += new System.EventHandler(this.FormNovaFaq_Load);
+            this.Text = "Nova FAQ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,8 +145,5 @@
         private System.Windows.Forms.Label lblResposta;
         private System.Windows.Forms.Label lblPergunta;
         private System.Windows.Forms.Label lblTitulo;
-        private System.Windows.Forms.Label lblCategoria;
-        private System.Windows.Forms.ComboBox cboxCategoria;
-        private System.Windows.Forms.Button btnNovaCategoria;
     }
 }
