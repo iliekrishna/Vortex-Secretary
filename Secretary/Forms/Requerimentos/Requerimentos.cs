@@ -36,7 +36,7 @@ namespace Secretary.Forms
 
         private void CarregarTotaisStatus()
         {
-            int novas = 0, andamento = 0, canceladas = 0;
+            int novo = 0, pendente = 0, canceladas = 0;
 
             using (MySqlConnection conn = ConexaoBD.ObterConexao())
             {
@@ -48,8 +48,8 @@ namespace Secretary.Forms
                     {
                         switch (rdr["status_doc"].ToString())
                         {
-                            case "Novo": novas = rdr.GetInt32("total"); break;
-                            case "Pendente": andamento = rdr.GetInt32("total"); break;
+                            case "Novo": novo = rdr.GetInt32("total"); break;
+                            case "Pendente": pendente = rdr.GetInt32("total"); break;
                             case "Cancelado": canceladas = rdr.GetInt32("total"); break;
                         }
                     }

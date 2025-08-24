@@ -329,7 +329,8 @@ namespace Secretary.Forms
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Todos",
-            "Em andamento",
+            "Novo",
+            "Pendente",
             "Finalizado",
             "Cancelado"});
             this.comboBox2.Location = new System.Drawing.Point(81, 15);
