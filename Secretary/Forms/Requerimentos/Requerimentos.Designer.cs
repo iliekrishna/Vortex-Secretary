@@ -75,10 +75,10 @@ namespace Secretary.Forms
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.materialExpansionPanel1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 60);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 82);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(50, 20, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1171, 649);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1171, 627);
             this.flowLayoutPanel1.TabIndex = 19;
             // 
             // materialExpansionPanel1
@@ -228,18 +228,17 @@ namespace Secretary.Forms
             this.panelFiltros.Location = new System.Drawing.Point(0, 0);
             this.panelFiltros.Name = "panelFiltros";
             this.panelFiltros.Padding = new System.Windows.Forms.Padding(15);
-            this.panelFiltros.Size = new System.Drawing.Size(1171, 60);
+            this.panelFiltros.Size = new System.Drawing.Size(1171, 82);
             this.panelFiltros.TabIndex = 12;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button3);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(802, 15);
+            this.panel1.Location = new System.Drawing.Point(18, 43);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(30, 0, 3, 3);
-            this.panel1.Size = new System.Drawing.Size(350, 26);
+            this.panel1.Size = new System.Drawing.Size(233, 26);
             this.panel1.TabIndex = 19;
             // 
             // button2
