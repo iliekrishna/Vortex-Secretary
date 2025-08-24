@@ -72,7 +72,7 @@ namespace Secretary
         }
         private void AtualizarContadores()
         {
-            int novas = 0, andamento = 0, canceladas = 0;
+            int novas = 0, pendente = 0, canceladas = 0;
 
             try
             {
@@ -93,8 +93,8 @@ namespace Secretary
                                 case "Novo":
                                     novas = total;
                                     break;
-                                case "Andamento":
-                                    andamento = total;
+                                case "Pendente":
+                                    pendente = total;
                                     break;
                                 case "Cancelado":
                                     canceladas = total;
@@ -105,7 +105,7 @@ namespace Secretary
                 }
 
                 lblNovasSolicitacoes.Text = "Novas Solicitações: " + novas.ToString();
-                lblEmAndamento.Text = "Em Andamento: " + andamento.ToString();
+                lblEmAndamento.Text = " Pendentes: " + pendente.ToString();
                 lblCanceladas.Text = "Canceladas: " + canceladas.ToString();
             }
             catch (Exception ex)
