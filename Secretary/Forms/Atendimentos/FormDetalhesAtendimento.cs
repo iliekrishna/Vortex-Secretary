@@ -54,12 +54,15 @@ namespace Secretary.Forms.Atendimentos
                     lblRA.Text = $"RA: {ticket.RA}";
                     lblCurso.Text = $"Curso: {ticket.Curso}";
                 }
+                this.Select();  // seleciona o form
+                this.ActiveControl = null; // remove foco do controle interno
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao carregar os detalhes do atendimento:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
+            
         }
     }
 }

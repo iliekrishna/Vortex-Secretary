@@ -187,6 +187,7 @@ namespace Secretary.Forms
             this.dgvHistoricoR.ReadOnly = true;
             this.dgvHistoricoR.Size = new System.Drawing.Size(1279, 438);
             this.dgvHistoricoR.TabIndex = 27;
+            this.dgvHistoricoR.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHistoricoR_CellContentClick_1);
             // 
             // ID
             // 
@@ -267,6 +268,7 @@ namespace Secretary.Forms
             this.dgvHistoricoT.ReadOnly = true;
             this.dgvHistoricoT.Size = new System.Drawing.Size(1280, 437);
             this.dgvHistoricoT.TabIndex = 27;
+            this.dgvHistoricoT.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHistoricoT_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -280,14 +282,14 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn2.HeaderText = "Nome do Solicitante";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 164;
+            this.dataGridViewTextBoxColumn2.Width = 150;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.HeaderText = "Tipo de Documento";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 160;
+            this.dataGridViewTextBoxColumn3.Width = 146;
             // 
             // dataGridViewTextBoxColumn4
             // 

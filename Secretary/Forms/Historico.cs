@@ -32,13 +32,9 @@ namespace Secretary.Forms
             CarregarTickets();
             CarregarRequerimentos();
 
-            dgvHistoricoT.CellDoubleClick += dgvHistoricoT_CellDoubleClick;
+            //dgvHistoricoT.CellContentClick += dgvHistoricoT_CellContentClick;
 
-            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
-            {
-                txtBuscar.Text = textoBuscar;
-                txtBuscar.ForeColor = Color.Gray;
-            }
+            TxtCinza();
         }
 
         private void CarregarTickets()
@@ -48,21 +44,31 @@ namespace Secretary.Forms
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                    string query = "SELECT * FROM t_tickets";
+                    string query = @"
+               SELECT t_tickets.*, t_usuarios.nome_usuario AS nome_usuario
+    FROM t_tickets
+    LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario"; // Puxa dados de t_tickets e nome_usuario de t_usuario.
 
                     if (filtro == "Pendente")
                         query += " WHERE status = 'Pendente'";
                     else if (filtro == "Encerrado/Cancelado")
                         query += " WHERE status = 'Encerrado' OR status = 'Cancelado'";
                     else if (filtro == "Respondido/Concluído")
-                        query += " WHERE status = 'Respondido'";
+                        query += " WHERE status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoT.Columns.Clear();
+                        dgvHistoricoT.Columns.Clear(); //Remove colunas erradas
                         dgvHistoricoT.DataSource = dt;
+                        dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13; // Poe a coluna respondido por no local correto
+
+                        // Oculta a coluna id_usuario
+                            dgvHistoricoT.Columns["id_usuario"].Visible = false; 
+
+                        
+                        RenomearColunasT();
                     }
                 }
             }
@@ -79,21 +85,30 @@ namespace Secretary.Forms
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                    string query = "SELECT * FROM t_requerimentos";
+                    string query = @"
+               SELECT t_requerimentos.*, t_usuarios.nome_usuario AS nome_usuario
+    FROM t_requerimentos
+    LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario"; //Puxa dados de t_requerimentos e nome_usuario de t_usuario.
 
                     if (filtro == "Pendente")
                         query += " WHERE status_doc = 'Pendente'";
                     else if (filtro == "Encerrado/Cancelado")
                         query += " WHERE status_doc = 'Cancelado'";
                     else if (filtro == "Respondido/Concluído")
-                        query += " WHERE status_doc = 'Concluído'";
+                        query += " WHERE status_doc = 'Concluído'";   // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoR.Columns.Clear();
+                        dgvHistoricoR.Columns.Clear(); //Remove colunas erradas
                         dgvHistoricoR.DataSource = dt;
+                        dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Poe a coluna respondido por no local correto
+
+                        // Oculta a coluna id_usuario
+                            dgvHistoricoR.Columns["id_usuario"].Visible = false;
+
+                        RenomearColunasR();
                     }
                 }
             }
@@ -102,7 +117,7 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao carregar requerimentos: " + ex.Message);
             }
         }
-        private void cmbFiltroStatus_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbFiltroStatus_SelectedIndexChanged(object sender, EventArgs e) // Método ativado mudando a cbbox filtro
         {
             CarregarTickets();
             CarregarRequerimentos();
@@ -110,29 +125,18 @@ namespace Secretary.Forms
 
         private void dgvHistoricoR_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // ND
+            // Em construção
         }
 
-        private void dgvHistoricoT_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvHistoricoT_CellContentClick(object sender, DataGridViewCellEventArgs e) // abre FormDetalhesAtendimento
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex >= 0)
+            {
+                int idTicket = Convert.ToInt32(dgvHistoricoT.Rows[e.RowIndex].Cells["id_ticket"].Value);
 
-            DataGridViewRow linha = dgvHistoricoT.Rows[e.RowIndex];
-
-            int ticketId = Convert.ToInt32(linha.Cells["id_ticket"].Value);
-            string nome = linha.Cells["nome_aluno"].Value?.ToString();
-            string ra = linha.Cells["ra"].Value?.ToString();
-            string curso = linha.Cells["curso"].Value?.ToString();
-            string categoria = linha.Cells["Categoria"].Value?.ToString();
-            string assunto = linha.Cells["assunto"].Value?.ToString();
-            string data = DateTime.Now.ToShortDateString();
-            string mensagem = assunto;
-
-            int usuarioId = Sessao.UsuarioId; // ou ajuste conforme onde você guarda o ID
-
-            //var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, categoria, data, mensagem, null, usuarioId);
-            //chat.StartPosition = FormStartPosition.CenterScreen;
-            //chat.ShowDialog();
+                FormDetalhesAtendimento detalhesForm = new FormDetalhesAtendimento(idTicket);
+                detalhesForm.ShowDialog();
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -156,14 +160,21 @@ namespace Secretary.Forms
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                    string query = "SELECT * FROM t_tickets WHERE (nome_aluno LIKE @busca OR ra LIKE @busca)";
 
+                    // Puxa a tabela t_tickets e o nome de t_usuarios
+                    string query = @"
+                SELECT t_tickets.*, t_usuarios.nome_usuario
+                FROM t_tickets
+                LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
+                WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca)";
+
+                  
                     if (filtro == "Pendente")
-                        query += " AND status = 'Pendente'";
+                        query += " AND t_tickets.status = 'Pendente'";
                     else if (filtro == "Encerrado/Cancelado")
-                        query += " AND status = 'Encerrado'";
+                        query += " AND (t_tickets.status = 'Encerrado' OR t_tickets.status = 'Cancelado')";
                     else if (filtro == "Respondido/Concluído")
-                        query += " AND status = 'Respondido'";
+                        query += " AND t_tickets.status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
@@ -171,8 +182,16 @@ namespace Secretary.Forms
 
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoT.Columns.Clear();
+
+                        dgvHistoricoT.Columns.Clear(); // Remove colunas erradas
                         dgvHistoricoT.DataSource = dt;
+                        if (dgvHistoricoT.Columns.Contains("id_usuario"))
+                            dgvHistoricoT.Columns["id_usuario"].Visible = false; //oculta coluna id_usuario
+
+                            dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13; // Coloca na posição correta
+                        
+
+                        RenomearColunasT();
                     }
                 }
             }
@@ -189,14 +208,19 @@ namespace Secretary.Forms
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                    string query = "SELECT * FROM t_requerimentos WHERE (nome LIKE @busca OR ra LIKE @busca)";
+                    string query = @"
+                SELECT t_requerimentos.*, t_usuarios.nome_usuario
+                FROM t_requerimentos
+                LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario
+                WHERE (t_requerimentos.nome LIKE @busca OR t_requerimentos.ra LIKE @busca)";
 
+                    // Adiciona filtro de status
                     if (filtro == "Pendente")
-                        query += " AND status_doc = 'Pendente'";
+                        query += " AND t_requerimentos.status_doc = 'Pendente'";
                     else if (filtro == "Encerrado/Cancelado")
-                        query += " AND status_doc = 'Cancelado'";
+                        query += " AND (t_requerimentos.status_doc = 'Encerrado' OR t_requerimentos.status_doc = 'Cancelado')";
                     else if (filtro == "Respondido/Concluído")
-                        query += " AND status_doc = 'Concluído'";
+                        query += " AND t_requerimentos.status_doc = 'Concluído'";  // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
@@ -204,8 +228,19 @@ namespace Secretary.Forms
 
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoR.Columns.Clear();
+
+                        dgvHistoricoR.Columns.Clear();  // Remove colunas erradas
                         dgvHistoricoR.DataSource = dt;
+                        if (dgvHistoricoR.Columns.Contains("id_usuario"))
+                            dgvHistoricoR.Columns["id_usuario"].Visible = false; //oculta coluna id_usuario
+
+
+                        if (dgvHistoricoR.Columns.Contains("nome_usuario")) 
+                        {
+                            dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Coloca na posição correta
+                        }
+
+                        RenomearColunasR();
                     }
                 }
             }
@@ -232,6 +267,7 @@ namespace Secretary.Forms
             txtBuscar.Clear(); // Limpa a txtbuscar
             CarregarTickets();         // Recarrega todos os tickets
             CarregarRequerimentos();  // Recarrega todos os requerimentos
+            TxtCinza(); // Volta para texto padrâo e cor cinza
 
         }
 
@@ -241,27 +277,90 @@ namespace Secretary.Forms
             //nd
         }
 
-        private string textoBuscar = "Nome ou RA";
+        private string textoBuscar = "Nome ou RA"; // texto padrâo da txtBuscar
 
         private void txtBuscar_Enter(object sender, EventArgs e)
         {
-            if (txtBuscar.Text == textoBuscar)
+            if (txtBuscar.ForeColor == Color.Gray) 
             {
                 txtBuscar.Text = "";
-                txtBuscar.ForeColor = Color.Black;
+                txtBuscar.ForeColor = Color.Black; // Muda a fonte para cor preta qnd digitar
             }
         }
 
         private void txtBuscar_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text)) // Volta para texto padrâo e cor cinza
             {
                 txtBuscar.Text = textoBuscar;
                 txtBuscar.ForeColor = Color.Gray;
             }
         }
-       
+
+        private void RenomearColunasT()
+        {
+            // Renomear colunas de ticket
+            dgvHistoricoT.Columns["id_ticket"].HeaderText = "ID";
+            dgvHistoricoT.Columns["nome_aluno"].HeaderText = "Nome";
+            dgvHistoricoT.Columns["cpf"].HeaderText = "CPF";
+            dgvHistoricoT.Columns["ra"].HeaderText = "RA";
+            dgvHistoricoT.Columns["tipo_vinculo"].HeaderText = "Vínculo";
+            dgvHistoricoT.Columns["email"].HeaderText = "Email";
+            dgvHistoricoT.Columns["curso"].HeaderText = "Curso";
+            dgvHistoricoT.Columns["categoria"].HeaderText = "Assunto";
+            dgvHistoricoT.Columns["assunto"].HeaderText = "Dúvida"; // No bd a coluna categoria usa o campo assunto do site, e a coluna assunto usa o campo dúvida
+            dgvHistoricoT.Columns["data_pedido"].HeaderText = "Data do Ticket";
+            dgvHistoricoT.Columns["resposta"].HeaderText = "Resposta";
+            dgvHistoricoT.Columns["status"].HeaderText = "Status";
+            dgvHistoricoT.Columns["data_resposta"].HeaderText = "Data da Resposta";
+            dgvHistoricoT.Columns["id_usuario"].HeaderText = "Código";
+            dgvHistoricoT.Columns["nome_usuario"].HeaderText = "Respondido Por";
+
+
+        }
+
+        private void RenomearColunasR()
+        {
+            //Renomear colunas de requerimento
+            dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
+            dgvHistoricoR.Columns["id_usuario"].HeaderText = "Código";
+            dgvHistoricoR.Columns["ra"].HeaderText = "RA";
+            dgvHistoricoR.Columns["telefone"].HeaderText = "Telefone";
+            dgvHistoricoR.Columns["nome"].HeaderText = "Nome";
+            dgvHistoricoR.Columns["curso"].HeaderText = "Curso";
+            dgvHistoricoR.Columns["cpf"].HeaderText = "CPF";
+            dgvHistoricoR.Columns["rg"].HeaderText = "RG";
+            dgvHistoricoR.Columns["email"].HeaderText = "Email";
+            dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
+            dgvHistoricoR.Columns["nome_doc"].HeaderText = "Documento";
+            dgvHistoricoR.Columns["status_doc"].HeaderText = "Status";
+            dgvHistoricoR.Columns["tipo_doc"].HeaderText = "Tipo";
+            dgvHistoricoR.Columns["data_pedido"].HeaderText = "Data do Pedido";
+            dgvHistoricoR.Columns["data_resposta"].HeaderText = "Data da Resposta";
+            dgvHistoricoR.Columns["resposta"].HeaderText = "Resposta";
+            dgvHistoricoR.Columns["comprovante"].HeaderText = "Comprovante";
+            dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
+
+        }
+
+
+        private void dgvHistoricoR_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            //nd
+        }
+
+        //Deixa o texto cinza
+        private void TxtCinza() {
+
+            txtBuscar.Text = textoBuscar;
+            txtBuscar.ForeColor = Color.Gray;
+        }
     }
+    
 }
+
+
+        
+    
 
 
