@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditarDocumento));
             this.txtNomeRequerimento = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnExcluirRequerimento = new System.Windows.Forms.Button();
             this.txtPrazo = new System.Windows.Forms.TextBox();
             this.lblNomeRequerimento = new System.Windows.Forms.Label();
             this.lblPrazo = new System.Windows.Forms.Label();
@@ -53,7 +52,7 @@
             // btnSalvar
             // 
             this.btnSalvar.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.btnSalvar.Location = new System.Drawing.Point(349, 222);
+            this.btnSalvar.Location = new System.Drawing.Point(449, 222);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(101, 28);
@@ -61,19 +60,6 @@
             this.btnSalvar.Text = "SALVAR";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
-            // btnExcluirRequerimento
-            // 
-            this.btnExcluirRequerimento.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.btnExcluirRequerimento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnExcluirRequerimento.Location = new System.Drawing.Point(457, 222);
-            this.btnExcluirRequerimento.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnExcluirRequerimento.Name = "btnExcluirRequerimento";
-            this.btnExcluirRequerimento.Size = new System.Drawing.Size(96, 28);
-            this.btnExcluirRequerimento.TabIndex = 3;
-            this.btnExcluirRequerimento.Text = "Deletar";
-            this.btnExcluirRequerimento.UseVisualStyleBackColor = true;
-            this.btnExcluirRequerimento.Click += new System.EventHandler(this.btnExcluirRequerimento_Click);
             // 
             // txtPrazo
             // 
@@ -174,7 +160,6 @@
             this.Controls.Add(this.lblPrazo);
             this.Controls.Add(this.lblNomeRequerimento);
             this.Controls.Add(this.txtPrazo);
-            this.Controls.Add(this.btnExcluirRequerimento);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.txtNomeRequerimento);
             this.Font = new System.Drawing.Font("Verdana", 9.75F);
@@ -194,7 +179,6 @@
 
         private System.Windows.Forms.TextBox txtNomeRequerimento;
         private System.Windows.Forms.Button btnSalvar;
-        private System.Windows.Forms.Button btnExcluirRequerimento;
         private System.Windows.Forms.TextBox txtPrazo;
         private System.Windows.Forms.Label lblNomeRequerimento;
         private System.Windows.Forms.Label lblPrazo;

@@ -55,22 +55,5 @@ namespace Secretary.Forms
             MessageBox.Show("Documento atualizado com sucesso!");
             this.Close();
         }
-
-        private void btnExcluirRequerimento_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Tem certeza que deseja excluir este documento?", "Confirmação", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                using (var conexao = ConexaoBD.ObterConexao())
-                {
-                    string query = "DELETE FROM t_disponibilidade_doc WHERE id_disponibilidade = @id";
-                    MySqlCommand cmd = new MySqlCommand(query, conexao);
-                    cmd.Parameters.AddWithValue("@id", idDocumento);
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Documento excluído com sucesso!");
-                this.Close();
-            }
-        }
     }
 }
