@@ -42,9 +42,6 @@ namespace Secretary.Forms.Atendimentos
                 cbCategoria.SelectedIndexChanged += (s, ev) => AplicarFiltros();
 
                 AplicarFiltros();
-
-                btnSimular.Enabled = false;
-                btnSimular.Visible = false;
             }
             catch (Exception ex)
             {

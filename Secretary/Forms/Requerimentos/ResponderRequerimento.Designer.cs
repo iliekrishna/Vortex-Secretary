@@ -1,6 +1,6 @@
 ﻿namespace Secretary.Forms
 {
-    partial class ResponderSolicitacao
+    partial class ResponderRequerimento
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResponderSolicitacao));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResponderRequerimento));
             this.label1 = new System.Windows.Forms.Label();
             this.txtResposta = new System.Windows.Forms.TextBox();
             this.btnEnviar = new System.Windows.Forms.Button();

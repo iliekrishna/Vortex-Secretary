@@ -31,7 +31,6 @@ namespace Secretary.Forms.Atendimentos
         {
             this.tabControlAtendimentos = new System.Windows.Forms.TabControl();
             this.tpagAberto = new System.Windows.Forms.TabPage();
-            this.btnSimular = new System.Windows.Forms.Button();
             this.datagvEmAberto = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colunaAssunto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,7 +81,6 @@ namespace Secretary.Forms.Atendimentos
             // tpagAberto
             // 
             this.tpagAberto.AutoScroll = true;
-            this.tpagAberto.Controls.Add(this.btnSimular);
             this.tpagAberto.Controls.Add(this.datagvEmAberto);
             this.tpagAberto.Location = new System.Drawing.Point(4, 27);
             this.tpagAberto.Margin = new System.Windows.Forms.Padding(4);
@@ -92,16 +90,6 @@ namespace Secretary.Forms.Atendimentos
             this.tpagAberto.TabIndex = 0;
             this.tpagAberto.Text = "Em aberto";
             this.tpagAberto.UseVisualStyleBackColor = true;
-            // 
-            // btnSimular
-            // 
-            this.btnSimular.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSimular.Location = new System.Drawing.Point(4, 524);
-            this.btnSimular.Name = "btnSimular";
-            this.btnSimular.Size = new System.Drawing.Size(1312, 50);
-            this.btnSimular.TabIndex = 9;
-            this.btnSimular.Text = "Simular Atendimento";
-            this.btnSimular.UseVisualStyleBackColor = true;
             // 
             // datagvEmAberto
             // 
@@ -408,7 +396,6 @@ namespace Secretary.Forms.Atendimentos
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Panel panelFiltros;
         private System.Windows.Forms.Label labelCurso;
-        private System.Windows.Forms.Button btnSimular;
         private System.Windows.Forms.ComboBox cbVinculo;
         private System.Windows.Forms.Label labelTipoVinculo;
         private System.Windows.Forms.ComboBox cbCategoria;

@@ -10,11 +10,20 @@ using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
-    public partial class ResponderSolicitacao : Form
+    public partial class ResponderRequerimento : Form
     {
+
+        private int idRequerimento;
+        private int usuarioId;
+        public ResponderRequerimento(int idRequerimento, int usuarioId)
+        {
+            InitializeComponent();
+            this.idRequerimento = idRequerimento;
+            this.usuarioId = usuarioId;
+        }
         public string Resposta { get; private set; }
 
-        public ResponderSolicitacao()
+        public ResponderRequerimento()
         {
             InitializeComponent();
         }
