@@ -132,18 +132,18 @@ namespace Secretary.DAO
         public static void AtualizarResposta(int ticketId, string resposta, string status, DateTime? dataResposta = null, int? idRespondidoPor = null)
         {
             string sql = @"UPDATE t_tickets 
-                           SET resposta = @resposta, 
-                               status = @status, 
-                               data_resposta = @data_resposta, 
-                               id_respondido_por = @id_respondido_por 
-                           WHERE id_ticket = @id";
+                   SET resposta = @resposta, 
+                       status = @status, 
+                       data_resposta = @data_resposta, 
+                       id_usuario = @id_usuario
+                   WHERE id_ticket = @id";
 
             using (var cmd = new MySqlCommand(sql, ConexaoBD.ObterConexao()))
             {
                 cmd.Parameters.AddWithValue("@resposta", resposta);
                 cmd.Parameters.AddWithValue("@status", status);
                 cmd.Parameters.AddWithValue("@data_resposta", dataResposta ?? DateTime.Now);
-                cmd.Parameters.AddWithValue("@id_respondido_por", idRespondidoPor ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@id_usuario", idRespondidoPor ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@id", ticketId);
                 cmd.ExecuteNonQuery();
             }

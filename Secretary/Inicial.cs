@@ -328,7 +328,7 @@ namespace Secretary
         private void trocarUsuárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Envia os dados do usuário para o FormPerfilUsuario.cs
-            OpenChildForm(new Forms.FormPerfilUsuario(lblUsuario.Text, lblUsuario.Text), sender);
+            OpenChildForm(new Forms.FormPerfilUsuario(), sender);
         }
 
         private void btnSair_Click_1(object sender, EventArgs e)

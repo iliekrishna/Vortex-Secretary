@@ -8,7 +8,11 @@ namespace Secretary.DAO
     {
         public Usuario BuscarPorEmail(string email, MySqlConnection conn)
         {
-            string sql = "SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil FROM t_usuarios WHERE email_usuario = @Email LIMIT 1;";
+            string sql = @"SELECT id_usuario, nome_usuario, email_usuario, senha, tipo_perfil, criado_em
+                   FROM t_usuarios 
+                   WHERE email_usuario = @Email 
+                   LIMIT 1;";
+
             using (MySqlCommand cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@Email", email);
@@ -17,7 +21,7 @@ namespace Secretary.DAO
                 {
                     if (reader.Read())
                     {
-                        return new Usuario
+                        var usuario = new Usuario
                         {
                             Id = reader.GetInt32("id_usuario"),
                             Nome = reader.GetString("nome_usuario"),
@@ -25,6 +29,12 @@ namespace Secretary.DAO
                             SenhaHash = reader.GetString("senha"),
                             TipoPerfil = reader.GetString("tipo_perfil")
                         };
+
+                        int ordCriado = reader.GetOrdinal("criado_em");
+                        if (!reader.IsDBNull(ordCriado))
+                            usuario.CriadoEm = reader.GetDateTime(ordCriado);
+
+                        return usuario;
                     }
                 }
             }

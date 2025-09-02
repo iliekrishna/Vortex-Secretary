@@ -10,7 +10,6 @@ namespace Secretary
     {
         private int _usuarioLogadoId;
         private int _categoriaId;
-        private Usuario usuarioLogado;
 
         public FormNovaFaq(Usuario usuarioLogado, int categoriaId)
         {

@@ -29,27 +29,33 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPerfilUsuario));
-            this.lbl = new System.Windows.Forms.Label();
+            this.lblDetalhesUsuario = new System.Windows.Forms.Label();
             this.lblNome = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblLogin = new System.Windows.Forms.Label();
             this.txtLoginUsuario = new System.Windows.Forms.TextBox();
             this.txtNomeUsuario = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txtSoliAtendidas = new System.Windows.Forms.TextBox();
-            this.lblSoliAtendidas = new System.Windows.Forms.Label();
+            this.txtReqAtendidos = new System.Windows.Forms.TextBox();
+            this.lblReqAtendidos = new System.Windows.Forms.Label();
+            this.txtTicketsAtendidos = new System.Windows.Forms.TextBox();
+            this.lblTicketsAtendidos = new System.Windows.Forms.Label();
+            this.txtTipoUsuario = new System.Windows.Forms.TextBox();
+            this.lblConta = new System.Windows.Forms.Label();
+            this.txtCriadoEm = new System.Windows.Forms.TextBox();
+            this.lblCriadoEm = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // lbl
+            // lblDetalhesUsuario
             // 
-            this.lbl.AutoSize = true;
-            this.lbl.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl.Location = new System.Drawing.Point(256, 69);
-            this.lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl.Name = "lbl";
-            this.lbl.Size = new System.Drawing.Size(182, 18);
-            this.lbl.TabIndex = 2;
-            this.lbl.Text = "Detalhes do usuário";
+            this.lblDetalhesUsuario.AutoSize = true;
+            this.lblDetalhesUsuario.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDetalhesUsuario.Location = new System.Drawing.Point(256, 69);
+            this.lblDetalhesUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDetalhesUsuario.Name = "lblDetalhesUsuario";
+            this.lblDetalhesUsuario.Size = new System.Drawing.Size(182, 18);
+            this.lblDetalhesUsuario.TabIndex = 2;
+            this.lblDetalhesUsuario.Text = "Detalhes do usuário";
             // 
             // lblNome
             // 
@@ -61,15 +67,15 @@
             this.lblNome.TabIndex = 4;
             this.lblNome.Text = "Nome:";
             // 
-            // label1
+            // lblLogin
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(267, 136);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 16);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Login:";
+            this.lblLogin.AutoSize = true;
+            this.lblLogin.Location = new System.Drawing.Point(267, 136);
+            this.lblLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLogin.Name = "lblLogin";
+            this.lblLogin.Size = new System.Drawing.Size(47, 16);
+            this.lblLogin.TabIndex = 5;
+            this.lblLogin.Text = "Login:";
             // 
             // txtLoginUsuario
             // 
@@ -99,44 +105,105 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
-            // txtSoliAtendidas
+            // txtReqAtendidos
             // 
-            this.txtSoliAtendidas.Location = new System.Drawing.Point(436, 175);
-            this.txtSoliAtendidas.Name = "txtSoliAtendidas";
-            this.txtSoliAtendidas.ReadOnly = true;
-            this.txtSoliAtendidas.Size = new System.Drawing.Size(113, 23);
-            this.txtSoliAtendidas.TabIndex = 22;
+            this.txtReqAtendidos.Location = new System.Drawing.Point(446, 259);
+            this.txtReqAtendidos.Name = "txtReqAtendidos";
+            this.txtReqAtendidos.ReadOnly = true;
+            this.txtReqAtendidos.Size = new System.Drawing.Size(113, 23);
+            this.txtReqAtendidos.TabIndex = 22;
             // 
-            // lblSoliAtendidas
+            // lblReqAtendidos
             // 
-            this.lblSoliAtendidas.AutoSize = true;
-            this.lblSoliAtendidas.Location = new System.Drawing.Point(267, 177);
-            this.lblSoliAtendidas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSoliAtendidas.Name = "lblSoliAtendidas";
-            this.lblSoliAtendidas.Size = new System.Drawing.Size(161, 16);
-            this.lblSoliAtendidas.TabIndex = 21;
-            this.lblSoliAtendidas.Text = "Solicitações atendidas:";
+            this.lblReqAtendidos.AutoSize = true;
+            this.lblReqAtendidos.Location = new System.Drawing.Point(261, 261);
+            this.lblReqAtendidos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReqAtendidos.Name = "lblReqAtendidos";
+            this.lblReqAtendidos.Size = new System.Drawing.Size(178, 16);
+            this.lblReqAtendidos.TabIndex = 21;
+            this.lblReqAtendidos.Text = "Requerimentos atendidos:";
+            // 
+            // txtTicketsAtendidos
+            // 
+            this.txtTicketsAtendidos.Location = new System.Drawing.Point(446, 287);
+            this.txtTicketsAtendidos.Name = "txtTicketsAtendidos";
+            this.txtTicketsAtendidos.ReadOnly = true;
+            this.txtTicketsAtendidos.Size = new System.Drawing.Size(113, 23);
+            this.txtTicketsAtendidos.TabIndex = 24;
+            // 
+            // lblTicketsAtendidos
+            // 
+            this.lblTicketsAtendidos.AutoSize = true;
+            this.lblTicketsAtendidos.Location = new System.Drawing.Point(309, 290);
+            this.lblTicketsAtendidos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTicketsAtendidos.Name = "lblTicketsAtendidos";
+            this.lblTicketsAtendidos.Size = new System.Drawing.Size(130, 16);
+            this.lblTicketsAtendidos.TabIndex = 23;
+            this.lblTicketsAtendidos.Text = "Tickets atendidos:";
+            // 
+            // txtTipoUsuario
+            // 
+            this.txtTipoUsuario.Location = new System.Drawing.Point(323, 173);
+            this.txtTipoUsuario.Name = "txtTipoUsuario";
+            this.txtTipoUsuario.ReadOnly = true;
+            this.txtTipoUsuario.Size = new System.Drawing.Size(201, 23);
+            this.txtTipoUsuario.TabIndex = 26;
+            // 
+            // lblConta
+            // 
+            this.lblConta.AutoSize = true;
+            this.lblConta.Location = new System.Drawing.Point(267, 173);
+            this.lblConta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConta.Name = "lblConta";
+            this.lblConta.Size = new System.Drawing.Size(52, 16);
+            this.lblConta.TabIndex = 25;
+            this.lblConta.Text = "Conta:";
+            // 
+            // txtCriadoEm
+            // 
+            this.txtCriadoEm.Location = new System.Drawing.Point(323, 208);
+            this.txtCriadoEm.Name = "txtCriadoEm";
+            this.txtCriadoEm.ReadOnly = true;
+            this.txtCriadoEm.Size = new System.Drawing.Size(201, 23);
+            this.txtCriadoEm.TabIndex = 28;
+            // 
+            // lblCriadoEm
+            // 
+            this.lblCriadoEm.AutoSize = true;
+            this.lblCriadoEm.Location = new System.Drawing.Point(241, 211);
+            this.lblCriadoEm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCriadoEm.Name = "lblCriadoEm";
+            this.lblCriadoEm.Size = new System.Drawing.Size(78, 16);
+            this.lblCriadoEm.TabIndex = 27;
+            this.lblCriadoEm.Text = "Criado em:";
             // 
             // FormPerfilUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(784, 261);
-            this.Controls.Add(this.txtSoliAtendidas);
-            this.Controls.Add(this.lblSoliAtendidas);
+            this.ClientSize = new System.Drawing.Size(784, 338);
+            this.Controls.Add(this.txtCriadoEm);
+            this.Controls.Add(this.lblCriadoEm);
+            this.Controls.Add(this.txtTipoUsuario);
+            this.Controls.Add(this.lblConta);
+            this.Controls.Add(this.txtTicketsAtendidos);
+            this.Controls.Add(this.lblTicketsAtendidos);
+            this.Controls.Add(this.txtReqAtendidos);
+            this.Controls.Add(this.lblReqAtendidos);
             this.Controls.Add(this.txtLoginUsuario);
             this.Controls.Add(this.txtNomeUsuario);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lbl);
+            this.Controls.Add(this.lblDetalhesUsuario);
             this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormPerfilUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Perfil do Usuário";
+            this.Load += new System.EventHandler(this.FormPerfilUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -144,13 +211,19 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lbl;
+        private System.Windows.Forms.Label lblDetalhesUsuario;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblNome;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblLogin;
         private System.Windows.Forms.TextBox txtLoginUsuario;
         private System.Windows.Forms.TextBox txtNomeUsuario;
-        private System.Windows.Forms.TextBox txtSoliAtendidas;
-        private System.Windows.Forms.Label lblSoliAtendidas;
+        private System.Windows.Forms.TextBox txtReqAtendidos;
+        private System.Windows.Forms.Label lblReqAtendidos;
+        private System.Windows.Forms.TextBox txtTicketsAtendidos;
+        private System.Windows.Forms.Label lblTicketsAtendidos;
+        private System.Windows.Forms.TextBox txtTipoUsuario;
+        private System.Windows.Forms.Label lblConta;
+        private System.Windows.Forms.TextBox txtCriadoEm;
+        private System.Windows.Forms.Label lblCriadoEm;
     }
 }
