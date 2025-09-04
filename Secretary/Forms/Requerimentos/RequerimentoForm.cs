@@ -8,15 +8,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using Secretary.Forms.Requerimentos;
 
 namespace Secretary.Forms
 {
-    public partial class Requerimento : Form
+    public partial class RequerimentoForm : Form
     {
         private int usuarioId;
 
-        public Requerimento(int usuarioId)
+        public RequerimentoForm(int usuarioId)
         {
             InitializeComponent();
             this.usuarioId = usuarioId;
@@ -46,10 +45,19 @@ namespace Secretary.Forms
                 // Popula combo Documento
                 cbDocumento.Items.Clear();
                 cbDocumento.Items.Add("Todos");
-                cbDocumento.Items.AddRange(new string[] {
-                    "Histórico Escolar", "Declaração de Matrícula", "Atestado de Frequência",
-                    "Diploma", "Outros"
-                });
+
+                try
+                {
+                    var documentosDisponiveis = RequerimentoDAO.ListarDocumentosDisponiveis();
+                    foreach (var doc in documentosDisponiveis)
+                    {
+                        cbDocumento.Items.Add(doc);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao carregar documentos disponíveis: " + ex.Message);
+                }
                 cbDocumento.SelectedIndex = 0;
 
                 AplicarFiltros();

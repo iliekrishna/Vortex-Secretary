@@ -141,7 +141,7 @@ namespace Secretary
         // Evento do botão Requerimentos: abre o formulário Requerimentos dentro do painel principal
         private void Requerimentos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Forms.Requerimento(usuarioLogado.Id), sender);
+            OpenChildForm(new Forms.RequerimentoForm(usuarioLogado.Id), sender);
         }
 
         // Método para ativar visualmente o botão do menu que foi clicado
@@ -199,7 +199,7 @@ namespace Secretary
         }
         private void btnRequerimentos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Forms.Requerimento(usuarioLogado.Id), sender);
+            OpenChildForm(new Forms.RequerimentoForm(usuarioLogado.Id), sender);
             ActivateButton(sender);
         }
 

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
-    partial class Requerimento
+    partial class RequerimentoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -75,16 +75,16 @@ namespace Secretary.Forms
             this.cbDocumento.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDocumento.FormattingEnabled = true;
-            this.cbDocumento.Location = new System.Drawing.Point(435, 30);
+            this.cbDocumento.Location = new System.Drawing.Point(661, 30);
             this.cbDocumento.Name = "cbDocumento";
-            this.cbDocumento.Size = new System.Drawing.Size(212, 26);
+            this.cbDocumento.Size = new System.Drawing.Size(397, 26);
             this.cbDocumento.TabIndex = 22;
             // 
             // lblDocumento
             // 
             this.lblDocumento.AutoSize = true;
             this.lblDocumento.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDocumento.Location = new System.Drawing.Point(303, 30);
+            this.lblDocumento.Location = new System.Drawing.Point(529, 30);
             this.lblDocumento.Name = "lblDocumento";
             this.lblDocumento.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.lblDocumento.Size = new System.Drawing.Size(132, 18);
@@ -99,7 +99,7 @@ namespace Secretary.Forms
             this.cbCurso.FormattingEnabled = true;
             this.cbCurso.Location = new System.Drawing.Point(89, 30);
             this.cbCurso.Name = "cbCurso";
-            this.cbCurso.Size = new System.Drawing.Size(214, 26);
+            this.cbCurso.Size = new System.Drawing.Size(440, 26);
             this.cbCurso.TabIndex = 16;
             // 
             // lblCurso
@@ -219,7 +219,7 @@ namespace Secretary.Forms
             // 
             this.Column1.Name = "Column1";
             // 
-            // Requerimentos
+            // RequerimentoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,7 +229,7 @@ namespace Secretary.Forms
             this.Controls.Add(this.panelFiltros);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Requerimentos";
+            this.Name = "RequerimentoForm";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Atendimentos";
             this.panelFiltros.ResumeLayout(false);
@@ -263,7 +263,6 @@ namespace Secretary.Forms
         private DataGridViewTextBoxColumn colunaAssunto;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;

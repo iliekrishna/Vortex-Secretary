@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Secretary.Models;
 
 namespace Secretary.Models
 {
     public class Requerimento
     {
-        public int Id { get; set; } // id_requerimento
-        public int? IdUsuario { get; set; } // id_usuario (pode ser null)
+        public int Id { get; set; }
+        public int? IdUsuario { get; set; }
         public string RA { get; set; }
         public string Telefone { get; set; }
         public string Curso { get; set; }
@@ -18,11 +13,14 @@ namespace Secretary.Models
         public string CPF { get; set; }
         public string RG { get; set; }
         public string Email { get; set; }
-        public string NomeDocumento { get; set; } // nome_doc
-        public string TipoDocumento { get; set; } // tipo_doc
-        public string StatusDocumento { get; set; } // status_doc
-        public DateTime? DataPedido { get; set; } // data_pedido
-        public DateTime? DataResposta { get; set; } // data_resposta
-        public string Resposta { get; set; } // resposta
+        public string NomeDocumento { get; set; }
+        public string StatusDocumento { get; set; }
+        public DateTime? DataPedido { get; set; }
+        public DateTime? DataResposta { get; set; }
+        public string Resposta { get; set; }
+        public int? IdImagem { get; set; }
+        public string TipoDocumento { get; set; }
+        // Propriedade adicionada para o nome do usuário que respondeu
+        public string NomeUsuarioResposta { get; set; }
     }
 }

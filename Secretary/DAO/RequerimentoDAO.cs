@@ -1,8 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Secretary.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using MySql.Data.MySqlClient;
-using Secretary.Models;
+using System.Data.SqlClient;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Secretary.DAO
 {
@@ -14,64 +19,75 @@ namespace Secretary.DAO
             string sql = "";
             List<MySqlParameter> parametros = new List<MySqlParameter>();
 
-            if (status.ToLower() == "aberto")
+            try
             {
-                sql = @"
-                SELECT 
-                    id_requerimento AS 'ID',
-                    data_pedido AS 'Data',
-                    nome AS 'Nome',
-                    ra AS 'RA',
-                    curso AS 'Curso',
-                    nome_doc AS 'Documento Solicitado'
-                FROM t_requerimentos
-                WHERE (status_doc = 'Pendente' OR status_doc = 'Aberto' OR status_doc = 'Em Aberto')";
-            }
-            else if (status.ToLower() == "respondido")
-            {
-                sql = @"
-                SELECT 
-                    id_requerimento AS 'ID',
-                    data_resposta AS 'Data de Resposta',
-                    nome AS 'Nome',
-                    ra AS 'RA',
-                    curso AS 'Curso',
-                    nome_doc AS 'Documento Solicitado',
-                    (SELECT nome FROM t_usuarios WHERE id = r.id_usuario) AS 'Respondido Por'
-                FROM t_requerimentos r
-                WHERE (status_doc = 'Respondido' OR status_doc = 'Concluído' OR status_doc = 'Atendido')";
-            }
-            else
-            {
-                throw new ArgumentException("Status inválido. Use 'aberto' ou 'respondido'.");
-            }
-
-            if (!string.IsNullOrEmpty(curso) && curso != "Todos")
-            {
-                sql += " AND curso = @curso";
-                parametros.Add(new MySqlParameter("@curso", curso));
-            }
-
-            if (!string.IsNullOrEmpty(documento) && documento != "Todos")
-            {
-                sql += " AND nome_doc = @documento";
-                parametros.Add(new MySqlParameter("@documento", documento));
-            }
-
-            sql += " ORDER BY data_pedido DESC";
-
-            using (var conn = ConexaoBD.ObterConexao())
-            using (var cmd = new MySqlCommand(sql, conn))
-            {
-                if (parametros.Count > 0)
-                    cmd.Parameters.AddRange(parametros.ToArray());
-
-                using (var adapter = new MySqlDataAdapter(cmd))
+                if (status.ToLower() == "aberto")
                 {
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-                    return dt;
+                    sql = @"
+            SELECT 
+                id_requerimento AS 'ID',
+                data_pedido AS 'Data',
+                nome AS 'Nome',
+                ra AS 'RA',
+                curso AS 'Curso',
+                nome_doc AS 'Documento Solicitado'
+            FROM t_requerimentos
+            WHERE (status_doc = 'Pendente' OR status_doc = 'Aberto' OR status_doc = 'Em Aberto')";
                 }
+                else if (status.ToLower() == "respondido")
+                {
+                    sql = @"
+                    SELECT 
+                        r.id_requerimento AS 'ID',
+                        r.data_resposta AS 'Data de Resposta',
+                        r.nome AS 'Nome',
+                        r.ra AS 'RA',
+                        r.curso AS 'Curso',
+                        r.nome_doc AS 'Documento Solicitado',
+                        u.nome_usuario AS 'Respondido Por'
+                    FROM t_requerimentos r
+                    LEFT JOIN t_usuarios u ON r.id_usuario = u.id_usuario
+                    WHERE (r.status_doc = 'Respondido' OR r.status_doc = 'Cancelado' OR r.status_doc = 'Atendido')";
+                }
+                else
+                {
+                    throw new ArgumentException("Status inválido. Use 'aberto' ou 'respondido'.");
+                }
+
+                if (!string.IsNullOrEmpty(curso) && curso != "Todos")
+                {
+                    sql += " AND curso = @curso";
+                    parametros.Add(new MySqlParameter("@curso", curso));
+                }
+
+                if (!string.IsNullOrEmpty(documento) && documento != "Todos")
+                {
+                    sql += " AND nome_doc = @documento";
+                    parametros.Add(new MySqlParameter("@documento", documento));
+                }
+
+                if (status.ToLower() == "aberto")
+                    sql += " ORDER BY data_pedido DESC";
+                else if (status.ToLower() == "respondido")
+                    sql += " ORDER BY data_resposta DESC";
+
+                using (var conn = ConexaoBD.ObterConexao())
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    if (parametros.Count > 0)
+                        cmd.Parameters.AddRange(parametros.ToArray());
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar requerimentos: " + ex.Message, ex);
             }
         }
 
@@ -79,10 +95,10 @@ namespace Secretary.DAO
         public static Requerimento BuscarPorId(int id)
         {
             string sql = @"
-                SELECT r.*, u.nome AS nome_usuario_resposta
-                FROM t_requerimentos r
-                LEFT JOIN t_usuarios u ON r.id_usuario = u.id
-                WHERE r.id_requerimento = @id";
+        SELECT r.*, u.nome_usuario AS nome_usuario_resposta
+        FROM t_requerimentos r
+        LEFT JOIN t_usuarios u ON r.id_usuario = u.id_usuario
+        WHERE r.id_requerimento = @id";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -105,11 +121,12 @@ namespace Secretary.DAO
                             RG = reader["rg"]?.ToString(),
                             Email = reader["email"]?.ToString(),
                             NomeDocumento = reader["nome_doc"]?.ToString(),
-                            TipoDocumento = reader["tipo_doc"]?.ToString(),
                             StatusDocumento = reader["status_doc"]?.ToString(),
                             DataPedido = reader.IsDBNull(reader.GetOrdinal("data_pedido")) ? (DateTime?)null : reader.GetDateTime("data_pedido"),
                             DataResposta = reader.IsDBNull(reader.GetOrdinal("data_resposta")) ? (DateTime?)null : reader.GetDateTime("data_resposta"),
-                            Resposta = reader["resposta"]?.ToString()
+                            Resposta = reader["resposta"]?.ToString(),
+                            IdImagem = reader.IsDBNull(reader.GetOrdinal("id_imagem")) ? (int?)null : reader.GetInt32("id_imagem"),
+                            NomeUsuarioResposta = reader["nome_usuario_resposta"]?.ToString()
                         };
                     }
                 }
@@ -148,12 +165,12 @@ namespace Secretary.DAO
         public static void AtualizarResposta(int idRequerimento, string resposta, string novoStatus, int idUsuario)
         {
             string sql = @"
-                UPDATE t_requerimentos 
-                SET resposta = @resposta, 
-                    status_doc = @status_doc, 
-                    data_resposta = NOW(), 
-                    id_usuario = @id_usuario
-                WHERE id_requerimento = @id";
+        UPDATE t_requerimentos 
+        SET resposta = @resposta, 
+            status_doc = @status_doc, 
+            data_resposta = NOW(), 
+            id_usuario = @id_usuario
+        WHERE id_requerimento = @id";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -164,6 +181,70 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@id", idRequerimento);
 
                 cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Lista os documentos para o filtro de documentos
+
+        public static List<string> ListarDocumentosDisponiveis()
+        {
+            List<string> documentos = new List<string>();
+
+            string sql = @"
+        SELECT nome_doc 
+        FROM t_disponibilidade_doc 
+        WHERE status_atual = 'Disponível'"; 
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    documentos.Add(reader.GetString("nome_doc"));
+                }
+            }
+
+            return documentos;
+        }
+
+        public static ImagemRequerimento BuscarImagemPorId(int idImagem)
+        {
+            string sql = @"
+        SELECT motivo_segunda_via, endereco_bo, endereco_comprovante
+        FROM t_img_requerimento
+        WHERE id_imagem = @id";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", idImagem);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new ImagemRequerimento
+                        {
+                            MotivoSegundaVia = reader["motivo_segunda_via"]?.ToString(),
+                            EnderecoBO = reader["endereco_bo"]?.ToString(),
+                            EnderecoComprovante = reader["endereco_comprovante"]?.ToString()
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+        public static bool DocumentoDisponivel(int idDisponibilidade)
+        {
+            string sql = "SELECT COUNT(*) FROM t_disponibilidade_doc WHERE id_disponibilidade = @id AND status_atual = 'Disponível'";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", idDisponibilidade);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
             }
         }
     }
