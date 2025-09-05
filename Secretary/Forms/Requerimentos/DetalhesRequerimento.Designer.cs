@@ -69,6 +69,7 @@
             this.btnBaixarMidia.TabIndex = 68;
             this.btnBaixarMidia.Text = "Baixar Mídia";
             this.btnBaixarMidia.UseVisualStyleBackColor = true;
+            this.btnBaixarMidia.Click += new System.EventHandler(this.btnBaixarMidia_Click_1);
             // 
             // panelDivisor1
             // 

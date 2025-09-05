@@ -129,32 +129,6 @@ namespace Secretary.Forms
             }
         }
 
-        private async void btnBaixarMidia_Click(object sender, EventArgs e)
-        {
-            if (btnBaixarMidia.Tag is ImagemRequerimento img)
-            {
-                string urlBase = "https://www.secretaria.aprenderensinando.com.br/Vortex/"; // URL do servidor
-
-                if (!string.IsNullOrEmpty(img.EnderecoComprovante))
-                {
-                    string urlComprovante = new Uri(new Uri(urlBase), img.EnderecoComprovante.Replace("\\", "/")).ToString();
-                    string nomeArquivo = Path.GetFileName(img.EnderecoComprovante);
-                    await BaixarArquivoAsync(urlComprovante, nomeArquivo);
-                }
-
-                if (img.MotivoSegundaVia == "Roubo/Furto" && !string.IsNullOrEmpty(img.EnderecoBO))
-                {
-                    string urlBO = new Uri(new Uri(urlBase), img.EnderecoBO.Replace("\\", "/")).ToString();
-                    string nomeArquivoBO = Path.GetFileName(img.EnderecoBO);
-                    await BaixarArquivoAsync(urlBO, nomeArquivoBO);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Tag do botão não está configurada corretamente.");
-            }
-        }
-
         private void btnEnviar_Click(object sender, EventArgs e)
         {
             try
@@ -183,7 +157,9 @@ namespace Secretary.Forms
         {
             if (btnBaixarMidia.Tag is ImagemRequerimento img)
             {
-                string urlBase = "https://www.secretaria.aprenderensinando.com.br/Vortex/"; // URL do servidor
+                string urlBase = "http://localhost/Vortex-Web-Forms/main.html"; // URL do localhost para testes
+
+                //string urlBase = "https://www.secretaria.aprenderensinando.com.br/Vortex/"; // URL do servidor (indisponível no momento, usar o localhost acima)
 
                 if (!string.IsNullOrEmpty(img.EnderecoComprovante))
                 {

@@ -19,7 +19,6 @@ namespace Secretary.Forms
             this.idRequerimento = idRequerimento;
 
             this.Load += DetalhesRequerimento_Load;
-            btnBaixarMidia.Click += BtnBaixarMidia_Click;
         }
 
         private void DetalhesRequerimento_Load(object sender, EventArgs e)
@@ -80,11 +79,35 @@ namespace Secretary.Forms
             }
         }
 
-        private async void BtnBaixarMidia_Click(object sender, EventArgs e)
+        private async Task BaixarArquivoAsync(string url, string nomeArquivo)
+        {
+            try
+            {
+                string pastaDownloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                string caminhoDestino = Path.Combine(pastaDownloads, nomeArquivo);
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var bytes = await client.GetByteArrayAsync(url);
+                    // Como WriteAllBytesAsync pode não existir, usamos Task.Run com WriteAllBytes síncrono
+                    await Task.Run(() => File.WriteAllBytes(caminhoDestino, bytes));
+                }
+
+                MessageBox.Show($"Arquivo baixado em: {caminhoDestino}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao baixar arquivo: " + ex.Message);
+            }
+        }
+
+        private async void btnBaixarMidia_Click_1(object sender, EventArgs e)
         {
             if (btnBaixarMidia.Tag is ImagemRequerimento img)
             {
-                string urlBase = "http://meuservidor.com/"; // Substitua pela URL do seu servidor
+                string urlBase = "http://localhost/Vortex-Web-Forms/main.html"; // URL do localhost para testes
+
+                //string urlBase = "https://www.secretaria.aprenderensinando.com.br/Vortex/"; // URL do servidor (indisponível no momento, usar o localhost acima)
 
                 try
                 {
@@ -111,28 +134,7 @@ namespace Secretary.Forms
             {
                 MessageBox.Show("Nenhuma mídia disponível para download.");
             }
-        }
 
-        private async Task BaixarArquivoAsync(string url, string nomeArquivo)
-        {
-            try
-            {
-                string pastaDownloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                string caminhoDestino = Path.Combine(pastaDownloads, nomeArquivo);
-
-                using (HttpClient client = new HttpClient())
-                {
-                    var bytes = await client.GetByteArrayAsync(url);
-                    // Como WriteAllBytesAsync pode não existir, usamos Task.Run com WriteAllBytes síncrono
-                    await Task.Run(() => File.WriteAllBytes(caminhoDestino, bytes));
-                }
-
-                MessageBox.Show($"Arquivo baixado em: {caminhoDestino}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao baixar arquivo: " + ex.Message);
-            }
         }
     }
 }
