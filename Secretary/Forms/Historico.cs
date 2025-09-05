@@ -24,8 +24,8 @@ namespace Secretary.Forms
             // Adiciona os filtros à ComboBox
             cmbFiltroStatus.Items.Add("Todos");
             cmbFiltroStatus.Items.Add("Pendente");
-            cmbFiltroStatus.Items.Add("Respondido/Concluído");
-            cmbFiltroStatus.Items.Add("Encerrado/Cancelado");
+            cmbFiltroStatus.Items.Add("Respondido");
+            cmbFiltroStatus.Items.Add("Cancelado");
 
             cmbFiltroStatus.SelectedIndex = 0; // Define "Todos" como padrão
 
@@ -33,6 +33,7 @@ namespace Secretary.Forms
             CarregarRequerimentos();
 
             //dgvHistoricoT.CellContentClick += dgvHistoricoT_CellContentClick;
+            dgvHistoricoR.CellContentClick += dgvHistoricoR_CellContentClick;
 
             TxtCinza();
         }
@@ -51,9 +52,9 @@ namespace Secretary.Forms
 
                     if (filtro == "Pendente")
                         query += " WHERE status = 'Pendente'";
-                    else if (filtro == "Encerrado/Cancelado")
-                        query += " WHERE status = 'Encerrado' OR status = 'Cancelado'";
-                    else if (filtro == "Respondido/Concluído")
+                    else if (filtro == "Cancelado")
+                        query += " WHERE status = 'Cancelado'";
+                    else if (filtro == "Respondido")
                         query += " WHERE status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
@@ -92,10 +93,10 @@ namespace Secretary.Forms
 
                     if (filtro == "Pendente")
                         query += " WHERE status_doc = 'Pendente'";
-                    else if (filtro == "Encerrado/Cancelado")
+                    else if (filtro == "Cancelado")
                         query += " WHERE status_doc = 'Cancelado'";
-                    else if (filtro == "Respondido/Concluído")
-                        query += " WHERE status_doc = 'Concluído'";   // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                    else if (filtro == "Respondido")
+                        query += " WHERE status_doc = 'Respondido'";   // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
@@ -105,8 +106,10 @@ namespace Secretary.Forms
                         dgvHistoricoR.DataSource = dt;
                         dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Poe a coluna respondido por no local correto
 
-                        // Oculta a coluna id_usuario
+                        // Oculta a coluna id_usuario, id imagem e tipo_doc
                             dgvHistoricoR.Columns["id_usuario"].Visible = false;
+                            dgvHistoricoR.Columns["id_imagem"].Visible = false;
+                            dgvHistoricoR.Columns["tipo_doc"].Visible = false;
 
                         RenomearColunasR();
                     }
@@ -125,7 +128,20 @@ namespace Secretary.Forms
 
         private void dgvHistoricoR_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Em construção
+            if (e.RowIndex < 0) return;
+
+            try
+            {
+                int idRequerimento = Convert.ToInt32(dgvHistoricoR.Rows[e.RowIndex].Cells["id_requerimento"].Value);
+
+                var formDetalhes = new DetalhesRequerimento(idRequerimento);
+                formDetalhes.StartPosition = FormStartPosition.CenterParent;
+                formDetalhes.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao abrir formulário de detalhes: " + ex.Message);
+            }
         }
 
         private void dgvHistoricoT_CellContentClick(object sender, DataGridViewCellEventArgs e) // abre FormDetalhesAtendimento
@@ -171,9 +187,9 @@ namespace Secretary.Forms
                   
                     if (filtro == "Pendente")
                         query += " AND t_tickets.status = 'Pendente'";
-                    else if (filtro == "Encerrado/Cancelado")
-                        query += " AND (t_tickets.status = 'Encerrado' OR t_tickets.status = 'Cancelado')";
-                    else if (filtro == "Respondido/Concluído")
+                    else if (filtro == "Cancelado")
+                        query += " AND (t_tickets.status = 'Cancelado')";
+                    else if (filtro == "Respondido")
                         query += " AND t_tickets.status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
@@ -185,7 +201,7 @@ namespace Secretary.Forms
 
                         dgvHistoricoT.Columns.Clear(); // Remove colunas erradas
                         dgvHistoricoT.DataSource = dt;
-                        if (dgvHistoricoT.Columns.Contains("id_usuario"))
+                        
                             dgvHistoricoT.Columns["id_usuario"].Visible = false; //oculta coluna id_usuario
 
                             dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13; // Coloca na posição correta
@@ -217,10 +233,10 @@ namespace Secretary.Forms
                     // Adiciona filtro de status
                     if (filtro == "Pendente")
                         query += " AND t_requerimentos.status_doc = 'Pendente'";
-                    else if (filtro == "Encerrado/Cancelado")
-                        query += " AND (t_requerimentos.status_doc = 'Encerrado' OR t_requerimentos.status_doc = 'Cancelado')";
-                    else if (filtro == "Respondido/Concluído")
-                        query += " AND t_requerimentos.status_doc = 'Concluído'";  // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                    else if (filtro == "Cancelado")
+                        query += " AND (t_requerimentos.status_doc = 'Cancelado')";
+                    else if (filtro == "Respondido")
+                        query += " AND t_requerimentos.status_doc = 'Respondido'";  // Aplicam os filtros de acordo com oque é selecionado no cbbox
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
@@ -231,14 +247,14 @@ namespace Secretary.Forms
 
                         dgvHistoricoR.Columns.Clear();  // Remove colunas erradas
                         dgvHistoricoR.DataSource = dt;
-                        if (dgvHistoricoR.Columns.Contains("id_usuario"))
-                            dgvHistoricoR.Columns["id_usuario"].Visible = false; //oculta coluna id_usuario
 
+                        // Oculta a coluna id_usuario, id imagem e tipo_doc
+                        dgvHistoricoR.Columns["id_usuario"].Visible = false;
+                        dgvHistoricoR.Columns["id_imagem"].Visible = false;
+                        dgvHistoricoR.Columns["tipo_doc"].Visible = false;
 
-                        if (dgvHistoricoR.Columns.Contains("nome_usuario")) 
-                        {
-                            dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Coloca na posição correta
-                        }
+                        dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Coloca na posição correta
+                        
 
                         RenomearColunasR();
                     }
@@ -313,7 +329,7 @@ namespace Secretary.Forms
             dgvHistoricoT.Columns["resposta"].HeaderText = "Resposta";
             dgvHistoricoT.Columns["status"].HeaderText = "Status";
             dgvHistoricoT.Columns["data_resposta"].HeaderText = "Data da Resposta";
-            dgvHistoricoT.Columns["id_usuario"].HeaderText = "Código";
+            //dgvHistoricoT.Columns["id_usuario"].HeaderText = "Código";
             dgvHistoricoT.Columns["nome_usuario"].HeaderText = "Respondido Por";
 
 
@@ -323,7 +339,7 @@ namespace Secretary.Forms
         {
             //Renomear colunas de requerimento
             dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
-            dgvHistoricoR.Columns["id_usuario"].HeaderText = "Código";
+            //dgvHistoricoR.Columns["id_usuario"].HeaderText = "Código";
             dgvHistoricoR.Columns["ra"].HeaderText = "RA";
             dgvHistoricoR.Columns["telefone"].HeaderText = "Telefone";
             dgvHistoricoR.Columns["nome"].HeaderText = "Nome";
@@ -334,11 +350,11 @@ namespace Secretary.Forms
             dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
             dgvHistoricoR.Columns["nome_doc"].HeaderText = "Documento";
             dgvHistoricoR.Columns["status_doc"].HeaderText = "Status";
-            dgvHistoricoR.Columns["tipo_doc"].HeaderText = "Tipo";
+            //dgvHistoricoR.Columns["tipo_doc"].HeaderText = "Tipo";
             dgvHistoricoR.Columns["data_pedido"].HeaderText = "Data do Pedido";
             dgvHistoricoR.Columns["data_resposta"].HeaderText = "Data da Resposta";
             dgvHistoricoR.Columns["resposta"].HeaderText = "Resposta";
-            dgvHistoricoR.Columns["comprovante"].HeaderText = "Comprovante";
+            //dgvHistoricoR.Columns["comprovante"].HeaderText = "Comprovante";
             dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
 
         }
