@@ -92,8 +92,30 @@ namespace Secretary.Forms.Atendimentos
             txtHistorico.ScrollToCaret();
             txtResposta.Focus();
         }
+        /// <summary>
+        /// Adiciona mensagem ao histórico txtHistorico com prefixo e data/hora.
+        /// </summary>
+        private void AdicionarMensagemNoHistorico(string remetente, string mensagem)
+        {
+            string prefixo = $"[{remetente} - {DateTime.Now:dd/MM/yyyy}]: ";
+            txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + prefixo + mensagem);
+            txtHistorico.SelectionStart = txtHistorico.Text.Length;
+            txtHistorico.ScrollToCaret();
+        }
 
-        private void btnEnviar_Click(object sender, EventArgs e)
+        private void RegistrarLog(string mensagem)
+        {
+            try
+            {
+                File.AppendAllText("logs_respostas.txt", $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {mensagem}{Environment.NewLine}");
+            }
+            catch
+            {
+                // Falha ao registrar log não deve quebrar o sistema
+            }
+        }
+
+        private void btnEnviar_Click_1(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtResposta.Text))
             {
@@ -168,7 +190,7 @@ namespace Secretary.Forms.Atendimentos
             }
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void btnCancelar_Click_1(object sender, EventArgs e)
         {
             string justificativa = txtResposta.Text.Trim();
 
@@ -225,29 +247,6 @@ namespace Secretary.Forms.Atendimentos
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao cancelar a dúvida: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Adiciona mensagem ao histórico txtHistorico com prefixo e data/hora.
-        /// </summary>
-        private void AdicionarMensagemNoHistorico(string remetente, string mensagem)
-        {
-            string prefixo = $"[{remetente} - {DateTime.Now:dd/MM/yyyy}]: ";
-            txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + prefixo + mensagem);
-            txtHistorico.SelectionStart = txtHistorico.Text.Length;
-            txtHistorico.ScrollToCaret();
-        }
-
-        private void RegistrarLog(string mensagem)
-        {
-            try
-            {
-                File.AppendAllText("logs_respostas.txt", $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {mensagem}{Environment.NewLine}");
-            }
-            catch
-            {
-                // Falha ao registrar log não deve quebrar o sistema
             }
         }
     }

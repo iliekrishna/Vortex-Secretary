@@ -301,6 +301,7 @@ namespace Secretary.Forms.Atendimentos
             this.btnEnviar.TabIndex = 42;
             this.btnEnviar.Text = "Responder";
             this.btnEnviar.UseVisualStyleBackColor = true;
+            this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click_1);
             // 
             // txtResposta
             // 
@@ -322,6 +323,7 @@ namespace Secretary.Forms.Atendimentos
             this.btnCancelar.TabIndex = 65;
             this.btnCancelar.Text = "Cancelar e Justificar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
             // 
             // lblMensagemResposta
             // 
