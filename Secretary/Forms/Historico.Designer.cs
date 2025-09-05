@@ -74,18 +74,15 @@ namespace Secretary.Forms
             // 
             // cmbFiltroStatus
             // 
-
-            this.cmbFiltroStatus.Location = new System.Drawing.Point(647, 30);
-            this.cmbFiltroStatus.Name = "cmbFiltroStatus";
-            this.cmbFiltroStatus.TabIndex = 43;
-            this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
-
             this.cmbFiltroStatus.BackColor = System.Drawing.SystemColors.Menu;
             this.cmbFiltroStatus.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiltroStatus.FormattingEnabled = true;
-            this.cmbFiltroStatus.Size = new System.Drawing.Size(319, 26);
+            this.cmbFiltroStatus.Location = new System.Drawing.Point(647, 30);
+            this.cmbFiltroStatus.Name = "cmbFiltroStatus";
+            this.cmbFiltroStatus.Size = new System.Drawing.Size(319, 24);
             this.cmbFiltroStatus.TabIndex = 45;
+            this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
             // 
             // lblStatus
             // 

@@ -1,22 +1,25 @@
 ﻿using MySql.Data.MySqlClient;
+using Secretary.DAO;
 using Secretary.Forms.Atendimentos;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
     public partial class Historico : Form
     {
+        private string textoBuscar = "Nome ou RA"; // texto padrão da txtBuscar
+
         public Historico()
         {
             InitializeComponent();
+
+            // Associa eventos para placeholder e busca
+            txtBuscar.Enter += txtBuscar_Enter;
+            txtBuscar.Leave += txtBuscar_Leave;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
         }
 
         private void Historico_Load(object sender, EventArgs e)
@@ -46,29 +49,30 @@ namespace Secretary.Forms
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
                     string query = @"
-               SELECT t_tickets.*, t_usuarios.nome_usuario AS nome_usuario
-    FROM t_tickets
-    LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario"; // Puxa dados de t_tickets e nome_usuario de t_usuario.
+                        SELECT t_tickets.*, t_usuarios.nome_usuario AS nome_usuario
+                        FROM t_tickets
+                        LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario";
 
                     if (filtro == "Pendente")
                         query += " WHERE status = 'Pendente'";
                     else if (filtro == "Cancelado")
                         query += " WHERE status = 'Cancelado'";
                     else if (filtro == "Respondido")
-                        query += " WHERE status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                        query += " WHERE status = 'Respondido'";
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoT.Columns.Clear(); //Remove colunas erradas
+                        dgvHistoricoT.Columns.Clear();
                         dgvHistoricoT.DataSource = dt;
-                        dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13; // Poe a coluna respondido por no local correto
 
-                        // Oculta a coluna id_usuario
-                            dgvHistoricoT.Columns["id_usuario"].Visible = false; 
+                        if (dgvHistoricoT.Columns.Contains("id_usuario"))
+                            dgvHistoricoT.Columns["id_usuario"].Visible = false;
 
-                        
+                        if (dgvHistoricoT.Columns.Contains("nome_usuario"))
+                            dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13;
+
                         RenomearColunasT();
                     }
                 }
@@ -87,29 +91,32 @@ namespace Secretary.Forms
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
                     string query = @"
-               SELECT t_requerimentos.*, t_usuarios.nome_usuario AS nome_usuario
-    FROM t_requerimentos
-    LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario"; //Puxa dados de t_requerimentos e nome_usuario de t_usuario.
+                        SELECT t_requerimentos.*, t_usuarios.nome_usuario AS nome_usuario
+                        FROM t_requerimentos
+                        LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario";
 
                     if (filtro == "Pendente")
                         query += " WHERE status_doc = 'Pendente'";
                     else if (filtro == "Cancelado")
                         query += " WHERE status_doc = 'Cancelado'";
                     else if (filtro == "Respondido")
-                        query += " WHERE status_doc = 'Respondido'";   // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                        query += " WHERE status_doc = 'Respondido'";
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        dgvHistoricoR.Columns.Clear(); //Remove colunas erradas
+                        dgvHistoricoR.Columns.Clear();
                         dgvHistoricoR.DataSource = dt;
-                        dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Poe a coluna respondido por no local correto
 
-                        // Oculta a coluna id_usuario, id imagem e tipo_doc
+                        if (dgvHistoricoR.Columns.Contains("id_usuario"))
                             dgvHistoricoR.Columns["id_usuario"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("id_imagem"))
                             dgvHistoricoR.Columns["id_imagem"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("tipo_doc"))
                             dgvHistoricoR.Columns["tipo_doc"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("nome_usuario"))
+                            dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15;
 
                         RenomearColunasR();
                     }
@@ -120,7 +127,8 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao carregar requerimentos: " + ex.Message);
             }
         }
-        private void cmbFiltroStatus_SelectedIndexChanged(object sender, EventArgs e) // Método ativado mudando a cbbox filtro
+
+        private void cmbFiltroStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             CarregarTickets();
             CarregarRequerimentos();
@@ -144,7 +152,7 @@ namespace Secretary.Forms
             }
         }
 
-        private void dgvHistoricoT_CellContentClick(object sender, DataGridViewCellEventArgs e) // abre FormDetalhesAtendimento
+        private void dgvHistoricoT_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -154,6 +162,7 @@ namespace Secretary.Forms
                 detalhesForm.ShowDialog();
             }
         }
+
         private void BuscarTickets(string termo)
         {
             try
@@ -162,20 +171,18 @@ namespace Secretary.Forms
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
 
-                    // Puxa a tabela t_tickets e o nome de t_usuarios
                     string query = @"
-                SELECT t_tickets.*, t_usuarios.nome_usuario
-                FROM t_tickets
-                LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
-                WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca)";
+                        SELECT t_tickets.*, t_usuarios.nome_usuario
+                        FROM t_tickets
+                        LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
+                        WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca)";
 
-                  
                     if (filtro == "Pendente")
                         query += " AND t_tickets.status = 'Pendente'";
                     else if (filtro == "Cancelado")
-                        query += " AND (t_tickets.status = 'Cancelado')";
+                        query += " AND t_tickets.status = 'Cancelado'";
                     else if (filtro == "Respondido")
-                        query += " AND t_tickets.status = 'Respondido'"; // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                        query += " AND t_tickets.status = 'Respondido'";
 
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
@@ -184,13 +191,14 @@ namespace Secretary.Forms
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        dgvHistoricoT.Columns.Clear(); // Remove colunas erradas
+                        dgvHistoricoT.Columns.Clear();
                         dgvHistoricoT.DataSource = dt;
-                        
-                            dgvHistoricoT.Columns["id_usuario"].Visible = false; //oculta coluna id_usuario
 
-                            dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13; // Coloca na posição correta
-                        
+                        if (dgvHistoricoT.Columns.Contains("id_usuario"))
+                            dgvHistoricoT.Columns["id_usuario"].Visible = false;
+
+                        if (dgvHistoricoT.Columns.Contains("nome_usuario"))
+                            dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13;
 
                         RenomearColunasT();
                     }
@@ -206,132 +214,140 @@ namespace Secretary.Forms
         {
             try
             {
-                using (var conn = ConexaoBD.ObterConexao())
-                {
-                    string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                    string query = @"
-                SELECT t_requerimentos.*, t_usuarios.nome_usuario
-                FROM t_requerimentos
-                LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario
-                WHERE (t_requerimentos.nome LIKE @busca OR t_requerimentos.ra LIKE @busca)";
+                string filtro = cmbFiltroStatus.SelectedItem?.ToString();
+                string statusFiltro = filtro == "Todos" ? "" : filtro;
 
-                    // Adiciona filtro de status
-                    if (filtro == "Pendente")
-                        query += " AND t_requerimentos.status_doc = 'Pendente'";
-                    else if (filtro == "Cancelado")
-                        query += " AND (t_requerimentos.status_doc = 'Cancelado')";
-                    else if (filtro == "Respondido")
-                        query += " AND t_requerimentos.status_doc = 'Respondido'";  // Aplicam os filtros de acordo com oque é selecionado no cbbox
+                DataTable dt = RequerimentoDAO.BuscarRequerimentos(
+                    string.IsNullOrEmpty(statusFiltro) ? "aberto" : statusFiltro,
+                    "Todos",
+                    "Todos",
+                    termo
+                );
 
-                    using (var da = new MySqlDataAdapter(query, conn))
-                    {
-                        da.SelectCommand.Parameters.AddWithValue("@busca", $"%{termo}%");
+                dgvHistoricoR.Columns.Clear();
+                dgvHistoricoR.DataSource = dt;
 
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
+                if (dgvHistoricoR.Columns.Contains("id_usuario"))
+                    dgvHistoricoR.Columns["id_usuario"].Visible = false;
+                if (dgvHistoricoR.Columns.Contains("id_imagem"))
+                    dgvHistoricoR.Columns["id_imagem"].Visible = false;
+                if (dgvHistoricoR.Columns.Contains("tipo_doc"))
+                    dgvHistoricoR.Columns["tipo_doc"].Visible = false;
+                if (dgvHistoricoR.Columns.Contains("nome_usuario"))
+                    dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15;
 
-                        dgvHistoricoR.Columns.Clear();  // Remove colunas erradas
-                        dgvHistoricoR.DataSource = dt;
-
-                        // Oculta a coluna id_usuario, id imagem e tipo_doc
-                        dgvHistoricoR.Columns["id_usuario"].Visible = false;
-                        dgvHistoricoR.Columns["id_imagem"].Visible = false;
-                        dgvHistoricoR.Columns["tipo_doc"].Visible = false;
-
-                        dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15; // Coloca na posição correta
-                        
-
-                        RenomearColunasR();
-                    }
-                }
+                RenomearColunasR();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao buscar em requerimentos: " + ex.Message);
             }
         }
-        private void textBox1_TextChanged(object sender, EventArgs e)
+
+        private void txtBuscar_Enter(object sender, EventArgs e)
         {
-            // Ignora se estiver com o texto padrão
             if (txtBuscar.Text == textoBuscar)
-                return;
-
-            string termoBusca = txtBuscar.Text.Trim();
-
-            if (string.IsNullOrEmpty(termoBusca))
             {
-                // Se limpar a caixa, recarrega todos os dados
-                CarregarTickets();
-                CarregarRequerimentos();
-            }
-            else
-            {
-                // Se tiver algo digitado, busca automaticamente
-                BuscarTickets(termoBusca);
-                BuscarRequerimentos(termoBusca);
+                txtBuscar.Text = "";
+                txtBuscar.ForeColor = Color.Black;
             }
         }
-        private string textoBuscar = "Nome ou RA"; // texto padrâo da txtBuscar
+
         private void txtBuscar_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtBuscar.Text)) // Volta para texto padrâo e cor cinza
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
             {
                 txtBuscar.Text = textoBuscar;
                 txtBuscar.ForeColor = Color.Gray;
             }
         }
 
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (txtBuscar.Text == textoBuscar) return;
+
+            string termoBusca = txtBuscar.Text.Trim();
+
+            if (string.IsNullOrEmpty(termoBusca))
+            {
+                CarregarTickets();
+                CarregarRequerimentos();
+            }
+            else
+            {
+                BuscarTickets(termoBusca);
+                BuscarRequerimentos(termoBusca);
+            }
+        }
+
         private void RenomearColunasT()
         {
-            // Renomear colunas de ticket
-            dgvHistoricoT.Columns["id_ticket"].HeaderText = "ID";
-            dgvHistoricoT.Columns["nome_aluno"].HeaderText = "Nome";
-            dgvHistoricoT.Columns["cpf"].HeaderText = "CPF";
-            dgvHistoricoT.Columns["ra"].HeaderText = "RA";
-            dgvHistoricoT.Columns["tipo_vinculo"].HeaderText = "Vínculo";
-            dgvHistoricoT.Columns["email"].HeaderText = "Email";
-            dgvHistoricoT.Columns["curso"].HeaderText = "Curso";
-            dgvHistoricoT.Columns["categoria"].HeaderText = "Assunto";
-            dgvHistoricoT.Columns["assunto"].HeaderText = "Dúvida"; // No bd a coluna categoria usa o campo assunto do site, e a coluna assunto usa o campo dúvida
-            dgvHistoricoT.Columns["data_pedido"].HeaderText = "Data do Ticket";
-            dgvHistoricoT.Columns["resposta"].HeaderText = "Resposta";
-            dgvHistoricoT.Columns["status"].HeaderText = "Status";
-            dgvHistoricoT.Columns["data_resposta"].HeaderText = "Data da Resposta";
-            //dgvHistoricoT.Columns["id_usuario"].HeaderText = "Código";
-            dgvHistoricoT.Columns["nome_usuario"].HeaderText = "Respondido Por";
-
-
+            if (dgvHistoricoT.Columns.Contains("id_ticket"))
+                dgvHistoricoT.Columns["id_ticket"].HeaderText = "ID";
+            if (dgvHistoricoT.Columns.Contains("nome_aluno"))
+                dgvHistoricoT.Columns["nome_aluno"].HeaderText = "Nome";
+            if (dgvHistoricoT.Columns.Contains("cpf"))
+                dgvHistoricoT.Columns["cpf"].HeaderText = "CPF";
+            if (dgvHistoricoT.Columns.Contains("ra"))
+                dgvHistoricoT.Columns["ra"].HeaderText = "RA";
+            if (dgvHistoricoT.Columns.Contains("tipo_vinculo"))
+                dgvHistoricoT.Columns["tipo_vinculo"].HeaderText = "Vínculo";
+            if (dgvHistoricoT.Columns.Contains("email"))
+                dgvHistoricoT.Columns["email"].HeaderText = "Email";
+            if (dgvHistoricoT.Columns.Contains("curso"))
+                dgvHistoricoT.Columns["curso"].HeaderText = "Curso";
+            if (dgvHistoricoT.Columns.Contains("categoria"))
+                dgvHistoricoT.Columns["categoria"].HeaderText = "Assunto";
+            if (dgvHistoricoT.Columns.Contains("assunto"))
+                dgvHistoricoT.Columns["assunto"].HeaderText = "Dúvida";
+            if (dgvHistoricoT.Columns.Contains("data_pedido"))
+                dgvHistoricoT.Columns["data_pedido"].HeaderText = "Data do Ticket";
+            if (dgvHistoricoT.Columns.Contains("resposta"))
+                dgvHistoricoT.Columns["resposta"].HeaderText = "Resposta";
+            if (dgvHistoricoT.Columns.Contains("status"))
+                dgvHistoricoT.Columns["status"].HeaderText = "Status";
+            if (dgvHistoricoT.Columns.Contains("data_resposta"))
+                dgvHistoricoT.Columns["data_resposta"].HeaderText = "Data da Resposta";
+            if (dgvHistoricoT.Columns.Contains("nome_usuario"))
+                dgvHistoricoT.Columns["nome_usuario"].HeaderText = "Respondido Por";
         }
 
         private void RenomearColunasR()
         {
-            //Renomear colunas de requerimento
-            dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
-            //dgvHistoricoR.Columns["id_usuario"].HeaderText = "Código";
-            dgvHistoricoR.Columns["ra"].HeaderText = "RA";
-            dgvHistoricoR.Columns["telefone"].HeaderText = "Telefone";
-            dgvHistoricoR.Columns["nome"].HeaderText = "Nome";
-            dgvHistoricoR.Columns["curso"].HeaderText = "Curso";
-            dgvHistoricoR.Columns["cpf"].HeaderText = "CPF";
-            dgvHistoricoR.Columns["rg"].HeaderText = "RG";
-            dgvHistoricoR.Columns["email"].HeaderText = "Email";
-            dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
-            dgvHistoricoR.Columns["nome_doc"].HeaderText = "Documento";
-            dgvHistoricoR.Columns["status_doc"].HeaderText = "Status";
-            //dgvHistoricoR.Columns["tipo_doc"].HeaderText = "Tipo";
-            dgvHistoricoR.Columns["data_pedido"].HeaderText = "Data do Pedido";
-            dgvHistoricoR.Columns["data_resposta"].HeaderText = "Data da Resposta";
-            dgvHistoricoR.Columns["resposta"].HeaderText = "Resposta";
-            //dgvHistoricoR.Columns["comprovante"].HeaderText = "Comprovante";
-            dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
-
+            if (dgvHistoricoR.Columns.Contains("id_requerimento"))
+                dgvHistoricoR.Columns["id_requerimento"].HeaderText = "ID";
+            if (dgvHistoricoR.Columns.Contains("ra"))
+                dgvHistoricoR.Columns["ra"].HeaderText = "RA";
+            if (dgvHistoricoR.Columns.Contains("telefone"))
+                dgvHistoricoR.Columns["telefone"].HeaderText = "Telefone";
+            if (dgvHistoricoR.Columns.Contains("nome"))
+                dgvHistoricoR.Columns["nome"].HeaderText = "Nome";
+            if (dgvHistoricoR.Columns.Contains("curso"))
+                dgvHistoricoR.Columns["curso"].HeaderText = "Curso";
+            if (dgvHistoricoR.Columns.Contains("cpf"))
+                dgvHistoricoR.Columns["cpf"].HeaderText = "CPF";
+            if (dgvHistoricoR.Columns.Contains("rg"))
+                dgvHistoricoR.Columns["rg"].HeaderText = "RG";
+            if (dgvHistoricoR.Columns.Contains("email"))
+                dgvHistoricoR.Columns["email"].HeaderText = "Email";
+            if (dgvHistoricoR.Columns.Contains("nome_doc"))
+                dgvHistoricoR.Columns["nome_doc"].HeaderText = "Documento";
+            if (dgvHistoricoR.Columns.Contains("status_doc"))
+                dgvHistoricoR.Columns["status_doc"].HeaderText = "Status";
+            if (dgvHistoricoR.Columns.Contains("data_pedido"))
+                dgvHistoricoR.Columns["data_pedido"].HeaderText = "Data do Pedido";
+            if (dgvHistoricoR.Columns.Contains("data_resposta"))
+                dgvHistoricoR.Columns["data_resposta"].HeaderText = "Data da Resposta";
+            if (dgvHistoricoR.Columns.Contains("resposta"))
+                dgvHistoricoR.Columns["resposta"].HeaderText = "Resposta";
+            if (dgvHistoricoR.Columns.Contains("nome_usuario"))
+                dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
         }
-        //Deixa o texto cinza
-        private void TxtCinza() {
 
+        private void TxtCinza()
+        {
             txtBuscar.Text = textoBuscar;
             txtBuscar.ForeColor = Color.Gray;
         }
     }
-    
 }

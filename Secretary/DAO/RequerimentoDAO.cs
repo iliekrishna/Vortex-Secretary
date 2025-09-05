@@ -308,5 +308,6 @@ namespace Secretary.DAO
                 return count > 0;
             }
         }
+
     }
 }
