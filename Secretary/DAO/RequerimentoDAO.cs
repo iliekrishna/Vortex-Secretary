@@ -13,81 +13,142 @@ namespace Secretary.DAO
 {
     public class RequerimentoDAO
     {
-        // Listar requerimentos com filtros e status (aberto ou respondido)
-        public static DataTable ListarRequerimentos(string status, string curso, string documento)
+        // Método privado que monta a query base e parâmetros comuns
+        private static (string sqlBase, List<MySqlParameter> parametros) MontarQueryBase(string status, string curso, string documento)
         {
-            string sql = "";
+            string sqlBase;
             List<MySqlParameter> parametros = new List<MySqlParameter>();
 
+            if (status.ToLower() == "aberto")
+            {
+                sqlBase = @"
+                FROM t_requerimentos
+                WHERE (status_doc = 'Pendente' OR status_doc = 'Aberto' OR status_doc = 'Em Aberto')";
+            }
+            else if (status.ToLower() == "respondido")
+            {
+                sqlBase = @"
+                FROM t_requerimentos r
+                LEFT JOIN t_usuarios u ON r.id_usuario = u.id_usuario
+                WHERE (r.status_doc = 'Respondido' OR r.status_doc = 'Cancelado' OR r.status_doc = 'Atendido')";
+            }
+            else
+            {
+                throw new ArgumentException("Status inválido. Use 'aberto' ou 'respondido'.");
+            }
+
+            if (!string.IsNullOrEmpty(curso) && curso != "Todos")
+            {
+                sqlBase += " AND curso = @curso";
+                parametros.Add(new MySqlParameter("@curso", curso));
+            }
+
+            if (!string.IsNullOrEmpty(documento) && documento != "Todos")
+            {
+                sqlBase += " AND nome_doc = @documento";
+                parametros.Add(new MySqlParameter("@documento", documento));
+            }
+
+            return (sqlBase, parametros);
+        }
+
+        // Método privado para executar a consulta e retornar DataTable
+        private static DataTable ExecutarConsulta(string sql, List<MySqlParameter> parametros)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                if (parametros != null && parametros.Count > 0)
+                    cmd.Parameters.AddRange(parametros.ToArray());
+
+                using (var adapter = new MySqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
+        // Listar requerimentos sem filtro de termo
+        public static DataTable ListarRequerimentos(string status, string curso, string documento)
+        {
             try
             {
-                if (status.ToLower() == "aberto")
-                {
-                    sql = @"
-            SELECT 
-                id_requerimento AS 'ID',
-                data_pedido AS 'Data',
-                nome AS 'Nome',
-                ra AS 'RA',
-                curso AS 'Curso',
-                nome_doc AS 'Documento Solicitado'
-            FROM t_requerimentos
-            WHERE (status_doc = 'Pendente' OR status_doc = 'Aberto' OR status_doc = 'Em Aberto')";
-                }
-                else if (status.ToLower() == "respondido")
-                {
-                    sql = @"
-                    SELECT 
+                var (sqlBase, parametros) = MontarQueryBase(status, curso, documento);
+
+                string selectClause = status.ToLower() == "aberto"
+                    ? @"SELECT 
+                        id_requerimento AS 'ID',
+                        data_pedido AS 'Data',
+                        nome AS 'Nome',
+                        ra AS 'RA',
+                        curso AS 'Curso',
+                        nome_doc AS 'Documento Solicitado' "
+                    : @"SELECT 
                         r.id_requerimento AS 'ID',
                         r.data_resposta AS 'Data de Resposta',
                         r.nome AS 'Nome',
                         r.ra AS 'RA',
                         r.curso AS 'Curso',
                         r.nome_doc AS 'Documento Solicitado',
-                        u.nome_usuario AS 'Respondido Por'
-                    FROM t_requerimentos r
-                    LEFT JOIN t_usuarios u ON r.id_usuario = u.id_usuario
-                    WHERE (r.status_doc = 'Respondido' OR r.status_doc = 'Cancelado' OR r.status_doc = 'Atendido')";
-                }
-                else
-                {
-                    throw new ArgumentException("Status inválido. Use 'aberto' ou 'respondido'.");
-                }
+                        u.nome_usuario AS 'Respondido Por' ";
 
-                if (!string.IsNullOrEmpty(curso) && curso != "Todos")
-                {
-                    sql += " AND curso = @curso";
-                    parametros.Add(new MySqlParameter("@curso", curso));
-                }
+                string orderBy = status.ToLower() == "aberto"
+                    ? " ORDER BY data_pedido DESC"
+                    : " ORDER BY data_resposta DESC";
 
-                if (!string.IsNullOrEmpty(documento) && documento != "Todos")
-                {
-                    sql += " AND nome_doc = @documento";
-                    parametros.Add(new MySqlParameter("@documento", documento));
-                }
+                string sql = selectClause + sqlBase + orderBy;
 
-                if (status.ToLower() == "aberto")
-                    sql += " ORDER BY data_pedido DESC";
-                else if (status.ToLower() == "respondido")
-                    sql += " ORDER BY data_resposta DESC";
-
-                using (var conn = ConexaoBD.ObterConexao())
-                using (var cmd = new MySqlCommand(sql, conn))
-                {
-                    if (parametros.Count > 0)
-                        cmd.Parameters.AddRange(parametros.ToArray());
-
-                    using (var adapter = new MySqlDataAdapter(cmd))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        return dt;
-                    }
-                }
+                return ExecutarConsulta(sql, parametros);
             }
             catch (Exception ex)
             {
                 throw new Exception("Erro ao listar requerimentos: " + ex.Message, ex);
+            }
+        }
+
+        // Buscar requerimentos com filtro de termo (nome ou RA)
+        public static DataTable BuscarRequerimentos(string status, string curso, string documento, string termo)
+        {
+            try
+            {
+                var (sqlBase, parametros) = MontarQueryBase(status, curso, documento);
+
+                if (!string.IsNullOrEmpty(termo))
+                {
+                    sqlBase += " AND (nome LIKE @termo OR ra LIKE @termo)";
+                    parametros.Add(new MySqlParameter("@termo", "%" + termo + "%"));
+                }
+
+                string selectClause = status.ToLower() == "aberto"
+                    ? @"SELECT 
+                        id_requerimento AS 'ID',
+                        data_pedido AS 'Data',
+                        nome AS 'Nome',
+                        ra AS 'RA',
+                        curso AS 'Curso',
+                        nome_doc AS 'Documento Solicitado' "
+                    : @"SELECT 
+                        r.id_requerimento AS 'ID',
+                        r.data_resposta AS 'Data de Resposta',
+                        r.nome AS 'Nome',
+                        r.ra AS 'RA',
+                        r.curso AS 'Curso',
+                        r.nome_doc AS 'Documento Solicitado',
+                        u.nome_usuario AS 'Respondido Por' ";
+
+                string orderBy = status.ToLower() == "aberto"
+                    ? " ORDER BY data_pedido DESC"
+                    : " ORDER BY data_resposta DESC";
+
+                string sql = selectClause + sqlBase + orderBy;
+
+                return ExecutarConsulta(sql, parametros);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao buscar requerimentos: " + ex.Message, ex);
             }
         }
 
@@ -193,7 +254,7 @@ namespace Secretary.DAO
             string sql = @"
         SELECT nome_doc 
         FROM t_disponibilidade_doc 
-        WHERE status_atual = 'Disponível'"; 
+        WHERE status_atual = 'Disponível'";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))

@@ -36,6 +36,8 @@ namespace Secretary.Forms
             this.lblDocumento = new System.Windows.Forms.Label();
             this.cbCurso = new System.Windows.Forms.ComboBox();
             this.lblCurso = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblBuscar = new System.Windows.Forms.Label();
             this.tabControlRequerimentos = new System.Windows.Forms.TabControl();
             this.tpagAberto = new System.Windows.Forms.TabPage();
             this.datagvEmAberto = new System.Windows.Forms.DataGridView();
@@ -62,6 +64,8 @@ namespace Secretary.Forms
             this.panelFiltros.Controls.Add(this.lblDocumento);
             this.panelFiltros.Controls.Add(this.cbCurso);
             this.panelFiltros.Controls.Add(this.lblCurso);
+            this.panelFiltros.Controls.Add(this.txtBuscar);
+            this.panelFiltros.Controls.Add(this.lblBuscar);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Location = new System.Drawing.Point(20, 20);
             this.panelFiltros.Name = "panelFiltros";
@@ -75,20 +79,20 @@ namespace Secretary.Forms
             this.cbDocumento.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDocumento.FormattingEnabled = true;
-            this.cbDocumento.Location = new System.Drawing.Point(661, 30);
+            this.cbDocumento.Location = new System.Drawing.Point(986, 30);
             this.cbDocumento.Name = "cbDocumento";
-            this.cbDocumento.Size = new System.Drawing.Size(397, 26);
-            this.cbDocumento.TabIndex = 22;
+            this.cbDocumento.Size = new System.Drawing.Size(319, 26);
+            this.cbDocumento.TabIndex = 45;
             // 
             // lblDocumento
             // 
             this.lblDocumento.AutoSize = true;
             this.lblDocumento.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDocumento.Location = new System.Drawing.Point(529, 30);
+            this.lblDocumento.Location = new System.Drawing.Point(854, 30);
             this.lblDocumento.Name = "lblDocumento";
             this.lblDocumento.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.lblDocumento.Size = new System.Drawing.Size(132, 18);
-            this.lblDocumento.TabIndex = 20;
+            this.lblDocumento.TabIndex = 44;
             this.lblDocumento.Text = "Documento:";
             // 
             // cbCurso
@@ -97,20 +101,42 @@ namespace Secretary.Forms
             this.cbCurso.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurso.FormattingEnabled = true;
-            this.cbCurso.Location = new System.Drawing.Point(89, 30);
+            this.cbCurso.Location = new System.Drawing.Point(523, 30);
             this.cbCurso.Name = "cbCurso";
-            this.cbCurso.Size = new System.Drawing.Size(440, 26);
-            this.cbCurso.TabIndex = 16;
+            this.cbCurso.Size = new System.Drawing.Size(331, 26);
+            this.cbCurso.TabIndex = 43;
             // 
             // lblCurso
             // 
             this.lblCurso.AutoSize = true;
             this.lblCurso.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblCurso.Location = new System.Drawing.Point(30, 30);
+            this.lblCurso.Location = new System.Drawing.Point(434, 30);
             this.lblCurso.Name = "lblCurso";
-            this.lblCurso.Size = new System.Drawing.Size(59, 18);
-            this.lblCurso.TabIndex = 13;
+            this.lblCurso.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.lblCurso.Size = new System.Drawing.Size(89, 18);
+            this.lblCurso.TabIndex = 42;
             this.lblCurso.Text = "Curso:";
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
+            this.txtBuscar.Location = new System.Drawing.Point(95, 30);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(339, 26);
+            this.txtBuscar.TabIndex = 41;
+            this.txtBuscar.Text = "Nome ou RA";
+            // 
+            // lblBuscar
+            // 
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBuscar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscar.Location = new System.Drawing.Point(30, 30);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(65, 18);
+            this.lblBuscar.TabIndex = 40;
+            this.lblBuscar.Text = "Buscar:";
             // 
             // tabControlRequerimentos
             // 
@@ -247,10 +273,6 @@ namespace Secretary.Forms
         #endregion
 
         private Panel panelFiltros;
-        private ComboBox cbDocumento;
-        private Label lblDocumento;
-        private ComboBox cbCurso;
-        private Label lblCurso;
         private TabControl tabControlRequerimentos;
         private TabPage tpagAberto;
         private DataGridView datagvEmAberto;
@@ -263,8 +285,13 @@ namespace Secretary.Forms
         private DataGridViewTextBoxColumn colunaAssunto;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private ComboBox cbDocumento;
+        private Label lblDocumento;
+        private ComboBox cbCurso;
+        private Label lblCurso;
+        private TextBox txtBuscar;
+        private Label lblBuscar;
     }
 }

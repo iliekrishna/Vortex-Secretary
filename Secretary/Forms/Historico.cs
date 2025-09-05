@@ -154,21 +154,6 @@ namespace Secretary.Forms
                 detalhesForm.ShowDialog();
             }
         }
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            string termoBusca = txtBuscar.Text.Trim();
-
-            if (string.IsNullOrEmpty(termoBusca) || termoBusca == textoBuscar)
-            {
-                MessageBox.Show("Digite um RA ou nome para buscar.");
-                return;
-            }
-
-            BuscarTickets(termoBusca);
-            BuscarRequerimentos(termoBusca);
-        }
-
         private void BuscarTickets(string termo)
         {
             try
@@ -265,45 +250,28 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao buscar em requerimentos: " + ex.Message);
             }
         }
-
-
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-            //nd
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            // nd 
-        }
+            // Ignora se estiver com o texto padrão
+            if (txtBuscar.Text == textoBuscar)
+                return;
 
-        private void btnLimpar_Click(object sender, EventArgs e)
-        {
-            txtBuscar.Clear(); // Limpa a txtbuscar
-            CarregarTickets();         // Recarrega todos os tickets
-            CarregarRequerimentos();  // Recarrega todos os requerimentos
-            TxtCinza(); // Volta para texto padrâo e cor cinza
+            string termoBusca = txtBuscar.Text.Trim();
 
-        }
-
-
-        private void btnFiltrar_Click(object sender, EventArgs e)
-        {
-            //nd
-        }
-
-        private string textoBuscar = "Nome ou RA"; // texto padrâo da txtBuscar
-
-        private void txtBuscar_Enter(object sender, EventArgs e)
-        {
-            if (txtBuscar.ForeColor == Color.Gray) 
+            if (string.IsNullOrEmpty(termoBusca))
             {
-                txtBuscar.Text = "";
-                txtBuscar.ForeColor = Color.Black; // Muda a fonte para cor preta qnd digitar
+                // Se limpar a caixa, recarrega todos os dados
+                CarregarTickets();
+                CarregarRequerimentos();
+            }
+            else
+            {
+                // Se tiver algo digitado, busca automaticamente
+                BuscarTickets(termoBusca);
+                BuscarRequerimentos(termoBusca);
             }
         }
-
+        private string textoBuscar = "Nome ou RA"; // texto padrâo da txtBuscar
         private void txtBuscar_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtBuscar.Text)) // Volta para texto padrâo e cor cinza
@@ -358,13 +326,6 @@ namespace Secretary.Forms
             dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
 
         }
-
-
-        private void dgvHistoricoR_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            //nd
-        }
-
         //Deixa o texto cinza
         private void TxtCinza() {
 
@@ -374,9 +335,3 @@ namespace Secretary.Forms
     }
     
 }
-
-
-        
-    
-
-

@@ -39,24 +39,28 @@ namespace Secretary.Forms.Atendimentos
 
         private void PreencherDadosTicket(Ticket ticket)
         {
-            lblNome.Text = "Nome: " + ticket.NomeAluno;
-            lblCPF.Text = "CPF: " + ticket.CPF;
-            lblVinculo.Text = "Vínculo: " + ticket.TipoVinculo;
-            lblEmail.Text = "E-mail: " + ticket.Email;
-            lblAssunto.Text = "Categoria: " + ticket.Categoria;
-            lblData.Text = "Data: " + ticket.DataPedido.ToString("dd/MM/yyyy HH:mm");
+            txtNome.Text = ticket.NomeAluno;
+            txtCPF.Text = ticket.CPF;
+            txtVinculo.Text = ticket.TipoVinculo;
+            txtEmail.Text = ticket.Email;
+            txtAssunto.Text = ticket.Categoria;
+            txtData.Text = ticket.DataPedido.ToString("dd/MM/yyyy");
 
             if (ticket.TipoVinculo == "Comunidade externa")
             {
                 lblRA.Visible = false;
+                txtRA.Visible = false;
                 lblCurso.Visible = false;
+                txtCurso.Visible = false;
             }
             else
             {
                 lblRA.Visible = true;
+                txtRA.Visible = true;
                 lblCurso.Visible = true;
-                lblRA.Text = "RA: " + ticket.RA;
-                lblCurso.Text = "Curso: " + ticket.Curso;
+                txtCurso.Visible = true;
+                txtRA.Text = ticket.RA;
+                txtCurso.Text = ticket.Curso;
             }
         }
 
@@ -154,7 +158,7 @@ namespace Secretary.Forms.Atendimentos
                     txtResposta.Clear();
                     AtualizarListas?.Invoke();
                     RegistrarLog($"Ticket {ticketId} respondido por usuário {Sessao.UsuarioId}.");
-                    MessageBox.Show("Resposta enviada com sucesso.","Respondido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Resposta enviada com sucesso.", "Respondido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
             }
@@ -229,7 +233,7 @@ namespace Secretary.Forms.Atendimentos
         /// </summary>
         private void AdicionarMensagemNoHistorico(string remetente, string mensagem)
         {
-            string prefixo = $"[{remetente} - {DateTime.Now:dd/MM/yyyy HH:mm}]: ";
+            string prefixo = $"[{remetente} - {DateTime.Now:dd/MM/yyyy}]: ";
             txtHistorico.AppendText(Environment.NewLine + Environment.NewLine + prefixo + mensagem);
             txtHistorico.SelectionStart = txtHistorico.Text.Length;
             txtHistorico.ScrollToCaret();

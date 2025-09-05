@@ -28,31 +28,35 @@ namespace Secretary.Forms.Atendimentos
                     return;
                 }
 
-                lblNome.Text = $"Nome: {ticket.NomeAluno}";
-                lblCPF.Text = $"CPF: {ticket.CPF}";
-                lblVinculo.Text = $"Vínculo: {ticket.TipoVinculo}";
-                lblCategoria.Text = $"Categoria: {ticket.Categoria}";
-                lblEmail.Text = $"Email: {ticket.Email}";
-                lblStatus.Text = $"Status: {ticket.Status}";
-                lblDataResposta.Text = $"Data da resposta: {(ticket.DataResposta.HasValue ? ticket.DataResposta.Value.ToString("dd/MM/yyyy HH:mm") : "Não respondido")}";
-                lblUsuarioResposta.Text = $"Respondido por: {(string.IsNullOrWhiteSpace(ticket.UsuarioResposta) ? "Ainda não respondido" : ticket.UsuarioResposta)}";
-                lblDataTicket.Text = $"Data do envio: {ticket.DataPedido.ToString("dd/MM/yyyy HH:mm")}";
+                txtNome.Text = $"{ticket.NomeAluno}";
+                txtCPF.Text = $"{ticket.CPF}";
+                txtVinculo.Text = $"{ticket.TipoVinculo}";
+                txtCategoria.Text = $"{ticket.Categoria}";
+                txtEmail.Text = $"{ticket.Email}";
+                txtStatus.Text = $"{ticket.Status}";
+                txtDataResposta.Text = $"{(ticket.DataResposta.HasValue ? ticket.DataResposta.Value.ToString("dd/MM/yyyy") : "Não respondido")}";
+                lblRespondidoPor.Text = $"Respondido por: {(string.IsNullOrWhiteSpace(ticket.UsuarioResposta) ? "Ainda não respondido" : ticket.UsuarioResposta)}";
+                txtDataEnvio.Text = $"{ticket.DataPedido.ToString("dd/MM/yyyy")}";
 
-                txtMensagem.Text = ticket.Assunto;
-                txtResposta.Text = string.IsNullOrWhiteSpace(ticket.Resposta) ? "Ainda não houve resposta." : ticket.Resposta;
+                txtHistorico.Text = ticket.Assunto;
+                txtRespostaEnviada.Text = string.IsNullOrWhiteSpace(ticket.Resposta) ? "Ainda não houve resposta." : ticket.Resposta;
 
                 // Mostra RA e Curso, exceto para Comunidade Externa
                 if (ticket.TipoVinculo == "Comunidade externa")
                 {
                     lblRA.Visible = false;
+                    txtRA.Visible = false;
                     lblCurso.Visible = false;
+                    txtCurso.Visible = false;
                 }
                 else
                 {
                     lblRA.Visible = true;
-                    lblEmail.Visible = true;
-                    lblRA.Text = $"RA: {ticket.RA}";
-                    lblCurso.Text = $"Curso: {ticket.Curso}";
+                    lblCurso.Visible = true;
+                    txtRA.Visible = true;
+                    txtCurso.Visible = true;
+                    txtRA.Text = $"{ticket.RA}";
+                    txtCurso.Text = $"{ticket.Curso}";
                 }
                 this.Select();  // seleciona o form
                 this.ActiveControl = null; // remove foco do controle interno
@@ -62,7 +66,7 @@ namespace Secretary.Forms.Atendimentos
                 MessageBox.Show("Erro ao carregar os detalhes do atendimento:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
-            
+
         }
     }
 }

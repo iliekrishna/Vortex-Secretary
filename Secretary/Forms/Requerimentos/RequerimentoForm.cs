@@ -13,13 +13,30 @@ namespace Secretary.Forms
 {
     public partial class RequerimentoForm : Form
     {
+        private readonly string _placeholder = "Nome ou RA";
+        private Timer _debounceTimer;
+
+
         private int usuarioId;
 
         public RequerimentoForm(int usuarioId)
         {
             InitializeComponent();
+
+            // placeholder + eventos
+            txtBuscar.Enter += txtBuscar_Enter;
+            txtBuscar.Leave += txtBuscar_Leave;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
+
+            // debounce (300ms)
+            _debounceTimer = new Timer { Interval = 300 };
+            _debounceTimer.Tick += (s, e) => { _debounceTimer.Stop(); DispararBusca(); };
+
+
             this.usuarioId = usuarioId;
             this.Load += Requerimentos_Load;
+
+
 
             datagvEmAberto.CellDoubleClick += DatagvEmAberto_CellDoubleClick;
             datagvRespondidos.CellDoubleClick += DatagvRespondidos_CellDoubleClick;
@@ -59,29 +76,75 @@ namespace Secretary.Forms
                     MessageBox.Show("Erro ao carregar documentos disponíveis: " + ex.Message);
                 }
                 cbDocumento.SelectedIndex = 0;
-
+                SetPlaceholder();
                 AplicarFiltros();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao carregar filtros: " + ex.Message);
             }
+
+        }
+
+        private void SetPlaceholder()
+        {
+            txtBuscar.Text = _placeholder;
+            txtBuscar.ForeColor = Color.Gray;
+        }
+
+        private void txtBuscar_Enter(object sender, EventArgs e)
+        {
+            if (txtBuscar.ForeColor == Color.Gray)
+            {
+                txtBuscar.Clear();
+                txtBuscar.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+                SetPlaceholder();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (txtBuscar.ForeColor == Color.Gray) return; // ignora enquanto placeholder
+            _debounceTimer.Stop();
+            _debounceTimer.Start();
+        }
+
+        private void DispararBusca()
+        {
+            string termo = (txtBuscar.ForeColor == Color.Gray) ? "" : txtBuscar.Text.Trim();
+
+            if (string.IsNullOrEmpty(termo))
+                AplicarFiltros();           // volta à listagem normal
+            else
+                BuscarRequerimentos(termo); // busca por Nome/RA
         }
 
         private void AplicarFiltros()
         {
+            // Se há texto de busca, reaplica a busca com os novos filtros
+            var termo = (txtBuscar.ForeColor == Color.Gray) ? "" : txtBuscar.Text.Trim();
+            if (!string.IsNullOrEmpty(termo))
+            {
+                BuscarRequerimentos(termo);
+                return;
+            }
+
+            // ... seu código atual que carrega em aberto e respondidos sem termo
             string curso = cbCurso.SelectedItem?.ToString() ?? "Todos";
             string documento = cbDocumento.SelectedItem?.ToString() ?? "Todos";
 
             try
             {
-                // Listar requerimentos em aberto
                 DataTable dtAberto = RequerimentoDAO.ListarRequerimentos("aberto", curso, documento);
                 datagvEmAberto.Columns.Clear();
                 datagvEmAberto.DataSource = dtAberto;
                 AjustarColunasEmAberto(datagvEmAberto);
 
-                // Listar requerimentos respondidos
                 DataTable dtRespondido = RequerimentoDAO.ListarRequerimentos("respondido", curso, documento);
                 datagvRespondidos.Columns.Clear();
                 datagvRespondidos.DataSource = dtRespondido;
@@ -92,6 +155,7 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao aplicar filtros: " + ex.Message);
             }
         }
+
 
         private void AjustarColunasEmAberto(DataGridView dgv)
         {
@@ -155,5 +219,29 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao abrir formulário de detalhes: " + ex.Message);
             }
         }
+        private void BuscarRequerimentos(string termo)
+        {
+            try
+            {
+                string curso = cbCurso.SelectedItem?.ToString() ?? "Todos";
+                string documento = cbDocumento.SelectedItem?.ToString() ?? "Todos";
+
+                var dtAberto = RequerimentoDAO.BuscarRequerimentos("aberto", curso, documento, termo);
+                datagvEmAberto.Columns.Clear();
+                datagvEmAberto.DataSource = dtAberto;
+                AjustarColunasEmAberto(datagvEmAberto);
+
+                var dtRespondido = RequerimentoDAO.BuscarRequerimentos("respondido", curso, documento, termo);
+                datagvRespondidos.Columns.Clear();
+                datagvRespondidos.DataSource = dtRespondido;
+                AjustarColunasRespondidos(datagvRespondidos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao buscar requerimentos: " + ex.Message);
+            }
+        }
+
     }
+
 }

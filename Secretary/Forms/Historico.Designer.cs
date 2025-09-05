@@ -29,13 +29,11 @@ namespace Secretary.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelFiltros = new System.Windows.Forms.Panel();
             this.cmbFiltroStatus = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnLimpar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblBuscar = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.dgvHistoricoR = new System.Windows.Forms.DataGridView();
@@ -53,7 +51,7 @@ namespace Secretary.Forms
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1.SuspendLayout();
+            this.panelFiltros.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).BeginInit();
@@ -61,82 +59,66 @@ namespace Secretary.Forms
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoT)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // panelFiltros
             // 
-            this.panel1.Controls.Add(this.cmbFiltroStatus);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.btnLimpar);
-            this.panel1.Controls.Add(this.btnBuscar);
-            this.panel1.Controls.Add(this.txtBuscar);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(20, 20);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(38);
-            this.panel1.Size = new System.Drawing.Size(1283, 100);
-            this.panel1.TabIndex = 24;
+            this.panelFiltros.Controls.Add(this.cmbFiltroStatus);
+            this.panelFiltros.Controls.Add(this.lblStatus);
+            this.panelFiltros.Controls.Add(this.txtBuscar);
+            this.panelFiltros.Controls.Add(this.lblBuscar);
+            this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFiltros.Location = new System.Drawing.Point(20, 20);
+            this.panelFiltros.Name = "panelFiltros";
+            this.panelFiltros.Padding = new System.Windows.Forms.Padding(30);
+            this.panelFiltros.Size = new System.Drawing.Size(1283, 100);
+            this.panelFiltros.TabIndex = 2;
             // 
             // cmbFiltroStatus
             // 
-            this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFiltroStatus.FormattingEnabled = true;
-            this.cmbFiltroStatus.Location = new System.Drawing.Point(662, 36);
+
+            this.cmbFiltroStatus.Location = new System.Drawing.Point(647, 30);
             this.cmbFiltroStatus.Name = "cmbFiltroStatus";
-            this.cmbFiltroStatus.Size = new System.Drawing.Size(130, 24);
             this.cmbFiltroStatus.TabIndex = 43;
             this.cmbFiltroStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroStatus_SelectedIndexChanged);
+
+            this.cmbFiltroStatus.BackColor = System.Drawing.SystemColors.Menu;
+            this.cmbFiltroStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbFiltroStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroStatus.FormattingEnabled = true;
+            this.cmbFiltroStatus.Size = new System.Drawing.Size(319, 26);
+            this.cmbFiltroStatus.TabIndex = 45;
             // 
-            // label2
+            // lblStatus
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(593, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 18);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Status:";
-            // 
-            // btnLimpar
-            // 
-            this.btnLimpar.Location = new System.Drawing.Point(434, 33);
-            this.btnLimpar.Name = "btnLimpar";
-            this.btnLimpar.Size = new System.Drawing.Size(83, 30);
-            this.btnLimpar.TabIndex = 41;
-            this.btnLimpar.Text = "Limpar";
-            this.btnLimpar.UseVisualStyleBackColor = true;
-            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(345, 33);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(83, 30);
-            this.btnBuscar.TabIndex = 40;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblStatus.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(434, 30);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Padding = new System.Windows.Forms.Padding(150, 0, 0, 0);
+            this.lblStatus.Size = new System.Drawing.Size(213, 18);
+            this.lblStatus.TabIndex = 42;
+            this.lblStatus.Text = "Status:";
             // 
             // txtBuscar
             // 
+            this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtBuscar.ForeColor = System.Drawing.Color.Black;
-            this.txtBuscar.Location = new System.Drawing.Point(112, 37);
+            this.txtBuscar.Location = new System.Drawing.Point(95, 30);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(227, 23);
-            this.txtBuscar.TabIndex = 39;
+            this.txtBuscar.Size = new System.Drawing.Size(339, 23);
+            this.txtBuscar.TabIndex = 41;
             this.txtBuscar.Text = "Nome ou RA";
-            this.txtBuscar.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.txtBuscar.Enter += new System.EventHandler(this.txtBuscar_Enter);
-            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             // 
-            // label4
+            // lblBuscar
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(41, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 18);
-            this.label4.TabIndex = 38;
-            this.label4.Text = "Buscar:";
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBuscar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscar.Location = new System.Drawing.Point(30, 30);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(65, 18);
+            this.lblBuscar.TabIndex = 40;
+            this.lblBuscar.Text = "Buscar:";
             // 
             // tabControl1
             // 
@@ -187,7 +169,6 @@ namespace Secretary.Forms
             this.dgvHistoricoR.ReadOnly = true;
             this.dgvHistoricoR.Size = new System.Drawing.Size(1279, 438);
             this.dgvHistoricoR.TabIndex = 27;
-            this.dgvHistoricoR.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHistoricoR_CellContentClick_1);
             // 
             // ID
             // 
@@ -319,15 +300,15 @@ namespace Secretary.Forms
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1323, 607);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelFiltros);
             this.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Historico";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.Text = "Historico";
             this.Load += new System.EventHandler(this.Historico_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelFiltros.ResumeLayout(false);
+            this.panelFiltros.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricoR)).EndInit();
@@ -338,13 +319,11 @@ namespace Secretary.Forms
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelFiltros;
         private System.Windows.Forms.ComboBox cmbFiltroStatus;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnLimpar;
-        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.TextBox txtBuscar;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblBuscar;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage TabPage1;
         private System.Windows.Forms.DataGridView dgvHistoricoR;
