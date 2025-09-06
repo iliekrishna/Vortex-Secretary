@@ -316,6 +316,9 @@ namespace Secretary
 
         private void trocarLoginToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            FormLogin Login = new FormLogin();
+            Login.ShowDialog();
             this.Close();
         }
 
@@ -333,6 +336,9 @@ namespace Secretary
 
         private void btnSair_Click_1(object sender, EventArgs e)
         {
+            this.Hide();
+            FormLogin Login = new FormLogin();
+            Login.ShowDialog();
             this.Close();
         }
     }

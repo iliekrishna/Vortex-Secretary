@@ -3,7 +3,6 @@ using Secretary.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -78,25 +77,27 @@ namespace Secretary.DAO
                 var (sqlBase, parametros) = MontarQueryBase(status, curso, documento);
 
                 string selectClause = status.ToLower() == "aberto"
-                    ? @"SELECT 
-                        id_requerimento AS 'ID',
-                        data_pedido AS 'Data',
-                        nome AS 'Nome',
-                        ra AS 'RA',
-                        curso AS 'Curso',
-                        nome_doc AS 'Documento Solicitado' "
-                    : @"SELECT 
-                        r.id_requerimento AS 'ID',
-                        r.data_resposta AS 'Data de Resposta',
-                        r.nome AS 'Nome',
-                        r.ra AS 'RA',
-                        r.curso AS 'Curso',
-                        r.nome_doc AS 'Documento Solicitado',
-                        u.nome_usuario AS 'Respondido Por' ";
+                ? @"SELECT 
+                    id_requerimento AS 'ID',
+                    data_pedido AS 'Data',
+                    nome AS 'Nome',
+                    ra AS 'RA',
+                    curso AS 'Curso',
+                    tipo_vinculo AS 'Tipo de Vínculo',
+                    nome_doc AS 'Documento Solicitado' "
+                : @"SELECT 
+                    r.id_requerimento AS 'ID',
+                    r.data_resposta AS 'Data de Resposta',
+                    r.nome AS 'Nome',
+                    r.ra AS 'RA',
+                    r.curso AS 'Curso',
+                    r.tipo_vinculo AS 'Tipo de Vínculo',
+                    r.nome_doc AS 'Documento Solicitado',
+                    u.nome_usuario AS 'Respondido Por' ";
 
                 string orderBy = status.ToLower() == "aberto"
                     ? " ORDER BY data_pedido DESC"
-                    : " ORDER BY data_resposta DESC";
+                    : " ORDER BY data_resposta DESC, r.id_requerimento DESC";
 
                 string sql = selectClause + sqlBase + orderBy;
 
@@ -122,25 +123,27 @@ namespace Secretary.DAO
                 }
 
                 string selectClause = status.ToLower() == "aberto"
-                    ? @"SELECT 
-                        id_requerimento AS 'ID',
-                        data_pedido AS 'Data',
-                        nome AS 'Nome',
-                        ra AS 'RA',
-                        curso AS 'Curso',
-                        nome_doc AS 'Documento Solicitado' "
-                    : @"SELECT 
-                        r.id_requerimento AS 'ID',
-                        r.data_resposta AS 'Data de Resposta',
-                        r.nome AS 'Nome',
-                        r.ra AS 'RA',
-                        r.curso AS 'Curso',
-                        r.nome_doc AS 'Documento Solicitado',
-                        u.nome_usuario AS 'Respondido Por' ";
+                ? @"SELECT 
+                    id_requerimento AS 'ID',
+                    data_pedido AS 'Data',
+                    nome AS 'Nome',
+                    ra AS 'RA',
+                    curso AS 'Curso',
+                    tipo_vinculo AS 'Tipo de Vínculo',
+                    nome_doc AS 'Documento Solicitado' "
+                : @"SELECT 
+                    r.id_requerimento AS 'ID',
+                    r.data_resposta AS 'Data de Resposta',
+                    r.nome AS 'Nome',
+                    r.ra AS 'RA',
+                    r.curso AS 'Curso',
+                    r.tipo_vinculo AS 'Tipo de Vínculo',
+                    r.nome_doc AS 'Documento Solicitado',
+                    u.nome_usuario AS 'Respondido Por' ";
 
                 string orderBy = status.ToLower() == "aberto"
                     ? " ORDER BY data_pedido DESC"
-                    : " ORDER BY data_resposta DESC";
+                    : " ORDER BY data_resposta DESC, r.id_requerimento DESC";
 
                 string sql = selectClause + sqlBase + orderBy;
 
@@ -156,9 +159,10 @@ namespace Secretary.DAO
         public static Requerimento BuscarPorId(int id)
         {
             string sql = @"
-        SELECT r.*, u.nome_usuario AS nome_usuario_resposta
+        SELECT r.*, u.nome_usuario AS nome_usuario_resposta, d.id_disponibilidade
         FROM t_requerimentos r
         LEFT JOIN t_usuarios u ON r.id_usuario = u.id_usuario
+        LEFT JOIN t_disponibilidade_doc d ON r.nome_doc = d.nome_doc
         WHERE r.id_requerimento = @id";
 
             using (var conn = ConexaoBD.ObterConexao())
@@ -187,7 +191,9 @@ namespace Secretary.DAO
                             DataResposta = reader.IsDBNull(reader.GetOrdinal("data_resposta")) ? (DateTime?)null : reader.GetDateTime("data_resposta"),
                             Resposta = reader["resposta"]?.ToString(),
                             IdImagem = reader.IsDBNull(reader.GetOrdinal("id_imagem")) ? (int?)null : reader.GetInt32("id_imagem"),
-                            NomeUsuarioResposta = reader["nome_usuario_resposta"]?.ToString()
+                            NomeUsuarioResposta = reader["nome_usuario_resposta"]?.ToString(),
+                            IdDisponibilidade = reader.IsDBNull(reader.GetOrdinal("id_disponibilidade")) ? (int?)null : reader.GetInt32("id_disponibilidade"),
+                            TipoVinculo = reader["tipo_vinculo"]?.ToString()  // <-- novo campo
                         };
                     }
                 }
@@ -196,13 +202,31 @@ namespace Secretary.DAO
             return null;
         }
 
+        public static int? ObterIdDisponibilidadePorNomeDoc(string nomeDoc)
+        {
+            string sql = "SELECT id_disponibilidade FROM t_disponibilidade_doc WHERE nome_doc = @nomeDoc LIMIT 1";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nomeDoc", nomeDoc);
+
+                var result = cmd.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int id))
+                {
+                    return id;
+                }
+            }
+            return null;
+        }
+
         // Inserir novo requerimento
         public static void Inserir(Requerimento r)
         {
             string sql = @"
-                INSERT INTO t_requerimentos 
-                (ra, telefone, curso, nome, cpf, rg, email, nome_doc, tipo_doc, status_doc, data_pedido)
-                VALUES (@ra, @telefone, @curso, @nome, @cpf, @rg, @email, @nome_doc, @tipo_doc, @status_doc, NOW())";
+            INSERT INTO t_requerimentos 
+            (ra, telefone, curso, nome, cpf, rg, email, nome_doc, tipo_doc, status_doc, data_pedido, tipo_vinculo)
+            VALUES (@ra, @telefone, @curso, @nome, @cpf, @rg, @email, @nome_doc, @tipo_doc, @status_doc, NOW(), @tipo_vinculo)";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -217,9 +241,10 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@nome_doc", r.NomeDocumento);
                 cmd.Parameters.AddWithValue("@tipo_doc", r.TipoDocumento);
                 cmd.Parameters.AddWithValue("@status_doc", "Pendente");
+                cmd.Parameters.AddWithValue("@tipo_vinculo", r.TipoVinculo ?? (object)DBNull.Value);
 
                 cmd.ExecuteNonQuery();
-            }
+            }        
         }
 
         // Atualizar resposta e status do requerimento
@@ -246,7 +271,6 @@ namespace Secretary.DAO
         }
 
         // Lista os documentos para o filtro de documentos
-
         public static List<string> ListarDocumentosDisponiveis()
         {
             List<string> documentos = new List<string>();
@@ -269,6 +293,7 @@ namespace Secretary.DAO
             return documentos;
         }
 
+        // Buscar uma imagem pelo id_imagem
         public static ImagemRequerimento BuscarImagemPorId(int idImagem)
         {
             string sql = @"
@@ -297,6 +322,41 @@ namespace Secretary.DAO
 
             return null;
         }
+
+        // Buscar todas as imagens/documentos relacionados a um requerimento
+        public static List<ImagemRequerimento> BuscarImagensPorRequerimento(int idRequerimento)
+        {
+            List<ImagemRequerimento> imagens = new List<ImagemRequerimento>();
+
+            string sql = @"
+                SELECT id_imagem, motivo_segunda_via, endereco_bo, endereco_comprovante
+                FROM t_img_requerimento
+                WHERE id_requerimento = @idRequerimento";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idRequerimento", idRequerimento);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        imagens.Add(new ImagemRequerimento
+                        {
+                            IdImagem = reader.GetInt32("id_imagem"),
+                            MotivoSegundaVia = reader["motivo_segunda_via"]?.ToString(),
+                            EnderecoBO = reader["endereco_bo"]?.ToString(),
+                            EnderecoComprovante = reader["endereco_comprovante"]?.ToString()
+                        });
+                    }
+                }
+            }
+
+            return imagens;
+        }
+
+        // Verifica se o documento está disponível (exemplo para id_disponibilidade)
         public static bool DocumentoDisponivel(int idDisponibilidade)
         {
             string sql = "SELECT COUNT(*) FROM t_disponibilidade_doc WHERE id_disponibilidade = @id AND status_atual = 'Disponível'";
@@ -306,6 +366,97 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@id", idDisponibilidade);
                 int count = Convert.ToInt32(cmd.ExecuteScalar());
                 return count > 0;
+            }
+        }
+
+        // Insere imagens enviadas pelo aluno e retorna o id_imagem gerado
+        public static int InserirImagensAluno(string motivo, string enderecoBo, string enderecoComprovante)
+        {
+            string sqlInsert = @"
+            INSERT INTO t_img_requerimento (motivo_segunda_via, endereco_bo, endereco_comprovante)
+            VALUES (@motivo, @bo, @comprovante);
+            SELECT LAST_INSERT_ID();";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sqlInsert, conn))
+            {
+                cmd.Parameters.AddWithValue("@motivo", motivo);
+                cmd.Parameters.AddWithValue("@bo", (object)enderecoBo ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@comprovante", (object)enderecoComprovante ?? DBNull.Value);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        // Atualiza o campo id_imagem na tabela t_requerimentos
+        public static void AtualizarIdImagemRequerimento(int idRequerimento, int idImagem)
+        {
+            string sql = "UPDATE t_requerimentos SET id_imagem = @idImagem WHERE id_requerimento = @idRequerimento";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idImagem", idImagem);
+                cmd.Parameters.AddWithValue("@idRequerimento", idRequerimento);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Atualiza o arquivo enviado pela secretaria (campo blob arquivo_resposta)
+        public static void AtualizarArquivoRespostaSecretaria(int idImagem, byte[] arquivoBlob, string nomeArquivo)
+        {
+            string sql = "UPDATE t_img_requerimento SET arquivo_resposta = @arquivoResposta, nome_arquivo_resposta = @nomeArquivo WHERE id_imagem = @idImagem";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@arquivoResposta", arquivoBlob);
+                cmd.Parameters.AddWithValue("@nomeArquivo", nomeArquivo);
+                cmd.Parameters.AddWithValue("@idImagem", idImagem);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Insere um novo registro na tabela t_img_requerimento com arquivo_resposta (para documentos que não são carteira de identidade)
+        public static int InserirImagemRespostaSecretaria(byte[] arquivoBlob, string nomeArquivo)
+        {
+            string sqlInsert = @"
+        INSERT INTO t_img_requerimento (arquivo_resposta, nome_arquivo_resposta)
+        VALUES (@arquivoResposta, @nomeArquivo);
+        SELECT LAST_INSERT_ID();";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sqlInsert, conn))
+            {
+                cmd.Parameters.AddWithValue("@arquivoResposta", arquivoBlob);
+                cmd.Parameters.AddWithValue("@nomeArquivo", nomeArquivo);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        // Busca os arquivos relacionados a um requerimento (via id_imagem), incluindo arquivo_resposta
+        public static (string motivo, string enderecoBo, string enderecoComprovante, byte[] arquivoResposta, string nomeArquivoResposta) BuscarArquivosPorRequerimento(int idRequerimento)
+        {
+            string sql = @"
+        SELECT i.motivo_segunda_via, i.endereco_bo, i.endereco_comprovante, i.arquivo_resposta, i.nome_arquivo_resposta
+        FROM t_img_requerimento i
+        INNER JOIN t_requerimentos r ON r.id_imagem = i.id_imagem
+        WHERE r.id_requerimento = @idRequerimento";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@idRequerimento", idRequerimento);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string motivo = reader["motivo_segunda_via"] as string;
+                        string enderecoBo = reader["endereco_bo"] as string;
+                        string enderecoComprovante = reader["endereco_comprovante"] as string;
+                        byte[] arquivoResposta = reader["arquivo_resposta"] as byte[];
+                        string nomeArquivoResposta = reader["nome_arquivo_resposta"] as string;
+                        return (motivo, enderecoBo, enderecoComprovante, arquivoResposta, nomeArquivoResposta);
+                    }
+                    else
+                    {
+                        return (null, null, null, null, null);
+                    }
+                }
             }
         }
 

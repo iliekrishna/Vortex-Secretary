@@ -234,9 +234,9 @@ namespace Secretary
                     }
 
                     MessageBox.Show("Senha redefinida com sucesso! Agora você pode fazer login.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Hide();
                     FormLogin Login = new FormLogin();
                     Login.ShowDialog();
-
                     this.Close();
                 }
             }

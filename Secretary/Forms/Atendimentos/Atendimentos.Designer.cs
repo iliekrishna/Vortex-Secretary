@@ -57,6 +57,8 @@ namespace Secretary.Forms.Atendimentos
             this.labelCategoria = new System.Windows.Forms.Label();
             this.cbCurso = new System.Windows.Forms.ComboBox();
             this.labelCurso = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblBuscar = new System.Windows.Forms.Label();
             this.tabControlAtendimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvEmAberto)).BeginInit();
@@ -274,6 +276,8 @@ namespace Secretary.Forms.Atendimentos
             this.panelFiltros.Controls.Add(this.labelCategoria);
             this.panelFiltros.Controls.Add(this.cbCurso);
             this.panelFiltros.Controls.Add(this.labelCurso);
+            this.panelFiltros.Controls.Add(this.txtBuscar);
+            this.panelFiltros.Controls.Add(this.lblBuscar);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Location = new System.Drawing.Point(20, 20);
             this.panelFiltros.Name = "panelFiltros";
@@ -284,24 +288,23 @@ namespace Secretary.Forms.Atendimentos
             // cbVinculo
             // 
             this.cbVinculo.BackColor = System.Drawing.SystemColors.Menu;
-            this.cbVinculo.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbVinculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVinculo.FormattingEnabled = true;
-            this.cbVinculo.Location = new System.Drawing.Point(788, 30);
+            this.cbVinculo.Location = new System.Drawing.Point(1138, 30);
             this.cbVinculo.Name = "cbVinculo";
-            this.cbVinculo.Size = new System.Drawing.Size(170, 26);
-            this.cbVinculo.TabIndex = 26;
+            this.cbVinculo.Size = new System.Drawing.Size(190, 26);
+            this.cbVinculo.TabIndex = 49;
             // 
             // labelTipoVinculo
             // 
             this.labelTipoVinculo.AutoSize = true;
             this.labelTipoVinculo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelTipoVinculo.Location = new System.Drawing.Point(632, 30);
+            this.labelTipoVinculo.Location = new System.Drawing.Point(1063, 30);
             this.labelTipoVinculo.Name = "labelTipoVinculo";
             this.labelTipoVinculo.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.labelTipoVinculo.Size = new System.Drawing.Size(156, 18);
-            this.labelTipoVinculo.TabIndex = 25;
-            this.labelTipoVinculo.Text = "Tipo de Vinculo:";
+            this.labelTipoVinculo.Size = new System.Drawing.Size(97, 18);
+            this.labelTipoVinculo.TabIndex = 48;
+            this.labelTipoVinculo.Text = "Vinculo:";
             // 
             // cbCategoria
             // 
@@ -309,20 +312,20 @@ namespace Secretary.Forms.Atendimentos
             this.cbCategoria.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategoria.FormattingEnabled = true;
-            this.cbCategoria.Location = new System.Drawing.Point(420, 30);
+            this.cbCategoria.Location = new System.Drawing.Point(851, 30);
             this.cbCategoria.Name = "cbCategoria";
             this.cbCategoria.Size = new System.Drawing.Size(212, 26);
-            this.cbCategoria.TabIndex = 22;
+            this.cbCategoria.TabIndex = 47;
             // 
             // labelCategoria
             // 
             this.labelCategoria.AutoSize = true;
             this.labelCategoria.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelCategoria.Location = new System.Drawing.Point(303, 30);
+            this.labelCategoria.Location = new System.Drawing.Point(734, 30);
             this.labelCategoria.Name = "labelCategoria";
             this.labelCategoria.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.labelCategoria.Size = new System.Drawing.Size(117, 18);
-            this.labelCategoria.TabIndex = 20;
+            this.labelCategoria.TabIndex = 46;
             this.labelCategoria.Text = "Categoria:";
             // 
             // cbCurso
@@ -331,20 +334,41 @@ namespace Secretary.Forms.Atendimentos
             this.cbCurso.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurso.FormattingEnabled = true;
-            this.cbCurso.Location = new System.Drawing.Point(89, 30);
+            this.cbCurso.Location = new System.Drawing.Point(498, 30);
             this.cbCurso.Name = "cbCurso";
-            this.cbCurso.Size = new System.Drawing.Size(214, 26);
-            this.cbCurso.TabIndex = 16;
+            this.cbCurso.Size = new System.Drawing.Size(236, 26);
+            this.cbCurso.TabIndex = 45;
             // 
             // labelCurso
             // 
             this.labelCurso.AutoSize = true;
             this.labelCurso.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelCurso.Location = new System.Drawing.Point(30, 30);
+            this.labelCurso.Location = new System.Drawing.Point(409, 30);
             this.labelCurso.Name = "labelCurso";
-            this.labelCurso.Size = new System.Drawing.Size(59, 18);
-            this.labelCurso.TabIndex = 13;
+            this.labelCurso.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.labelCurso.Size = new System.Drawing.Size(89, 18);
+            this.labelCurso.TabIndex = 44;
             this.labelCurso.Text = "Curso:";
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
+            this.txtBuscar.Location = new System.Drawing.Point(95, 30);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(314, 26);
+            this.txtBuscar.TabIndex = 43;
+            // 
+            // lblBuscar
+            // 
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBuscar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscar.Location = new System.Drawing.Point(30, 30);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(65, 18);
+            this.lblBuscar.TabIndex = 42;
+            this.lblBuscar.Text = "Buscar:";
             // 
             // Atendimentos
             // 
@@ -395,11 +419,13 @@ namespace Secretary.Forms.Atendimentos
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Panel panelFiltros;
-        private System.Windows.Forms.Label labelCurso;
         private System.Windows.Forms.ComboBox cbVinculo;
         private System.Windows.Forms.Label labelTipoVinculo;
         private System.Windows.Forms.ComboBox cbCategoria;
         private System.Windows.Forms.Label labelCategoria;
         private System.Windows.Forms.ComboBox cbCurso;
+        private System.Windows.Forms.Label labelCurso;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Label lblBuscar;
     }
 }

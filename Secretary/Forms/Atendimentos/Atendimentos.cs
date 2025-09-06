@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Secretary.DAO;
+using System;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
-using Secretary.DAO;
 
 namespace Secretary.Forms.Atendimentos
 {
@@ -13,6 +14,12 @@ namespace Secretary.Forms.Atendimentos
             InitializeComponent();
             this.usuarioId = usuarioId;
             this.Load += Atendimentos_Load;
+            txtBuscar.TextChanged += (s, e) =>
+            {
+                // Opcional: debounce para evitar buscas a cada tecla
+                AplicarFiltros();
+            };
+            ConfigurarHintTxtBuscar();
         }
         private void Atendimentos_Load(object sender, EventArgs e)
         {
@@ -53,11 +60,18 @@ namespace Secretary.Forms.Atendimentos
             string curso = cbCurso.SelectedItem?.ToString() ?? "Todos";
             string tipoVinculo = cbVinculo.SelectedItem?.ToString() ?? "Todos";
             string categoria = cbCategoria.SelectedItem?.ToString() ?? "Todos";
+            string termoBusca = txtBuscar.Text.Trim();
+
+            // Se txtBuscar estiver vazio ou com texto padrão, envie null para não filtrar por termo
+            if (string.IsNullOrWhiteSpace(termoBusca) || termoBusca == "Digite nome, RA ou CPF")
+            {
+                termoBusca = null;
+            }
 
             try
             {
-                DataTable dtAberto = AtendimentoDAO.ListarTickets("aberto", curso, tipoVinculo, categoria);
-                DataTable dtRespondido = AtendimentoDAO.ListarTickets("respondido", curso, tipoVinculo, categoria);
+                DataTable dtAberto = AtendimentoDAO.ListarTickets("aberto", curso, tipoVinculo, categoria, termoBusca);
+                DataTable dtRespondido = AtendimentoDAO.ListarTickets("respondido", curso, tipoVinculo, categoria, termoBusca);
 
                 datagvEmAberto.Columns.Clear();
                 datagvRespondidos.Columns.Clear();
@@ -73,7 +87,7 @@ namespace Secretary.Forms.Atendimentos
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao aplicar filtros: " + ex.Message);
-            }
+            }        
         }
         private void AjustarColunasAberto(DataGridView dgv)
         {
@@ -138,7 +152,7 @@ namespace Secretary.Forms.Atendimentos
             if (e.RowIndex < 0) return;
 
             var linha = datagvEmAberto.Rows[e.RowIndex];
-            string nome = linha.Cells["Nome do Aluno"].Value?.ToString();
+            string nome = linha.Cells["Nome Completo"].Value?.ToString();
             string ra = linha.Cells["RA"].Value?.ToString();
             string curso = linha.Cells["Curso"].Value?.ToString();
             string categoria = linha.Cells["Categoria"].Value?.ToString();
@@ -156,11 +170,59 @@ namespace Secretary.Forms.Atendimentos
         }
         private void datagvRespondidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            datagvRespondidos_CellContentClick(sender, e);
+            if (e.RowIndex < 0) return;
+
+            int idTicket = Convert.ToInt32(datagvRespondidos.Rows[e.RowIndex].Cells["Código"].Value);
+
+            FormDetalhesAtendimento detalhesForm = new FormDetalhesAtendimento(idTicket);
+            detalhesForm.ShowDialog();
         }
         private void datagvEmAberto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            datagvEmAberto_CellContentClick(sender, e);
+            if (e.RowIndex < 0) return;
+
+            var linha = datagvEmAberto.Rows[e.RowIndex];
+            string nome = linha.Cells["Nome Completo"].Value?.ToString();
+            string ra = linha.Cells["RA"].Value?.ToString();
+            string curso = linha.Cells["Curso"].Value?.ToString();
+            string categoria = linha.Cells["Categoria"].Value?.ToString();
+            string data = Convert.ToDateTime(linha.Cells["Data da Solicitação"].Value).ToString("dd/MM/yyyy HH:mm");
+            int ticketId = Convert.ToInt32(linha.Cells["Código"].Value);
+
+            string assunto = "";
+            string mensagem = "";
+
+            var chat = new FormChatAtendimento(ticketId, nome, ra, curso, assunto, data, mensagem, AtualizarListas, usuarioId);
+            chat.StartPosition = FormStartPosition.CenterScreen;
+            chat.ShowDialog();
+
+            AtualizarListas();
+        }
+
+        private string textoHint = "Digite nome, RA ou CPF";
+
+        private void ConfigurarHintTxtBuscar()
+        {
+            txtBuscar.ForeColor = SystemColors.GrayText;
+            txtBuscar.Text = textoHint;
+
+            txtBuscar.Enter += (s, e) =>
+            {
+                if (txtBuscar.Text == textoHint)
+                {
+                    txtBuscar.Text = "";
+                    txtBuscar.ForeColor = SystemColors.WindowText;
+                }
+            };
+
+            txtBuscar.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+                {
+                    txtBuscar.Text = textoHint;
+                    txtBuscar.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
     }
 }

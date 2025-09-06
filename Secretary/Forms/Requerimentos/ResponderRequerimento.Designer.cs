@@ -61,6 +61,9 @@
             this.btnBaixarMidia = new System.Windows.Forms.Button();
             this.txtMotivo = new System.Windows.Forms.TextBox();
             this.lblMotivo = new System.Windows.Forms.Label();
+            this.btnEnviarDocumento = new System.Windows.Forms.Button();
+            this.lblVinculo = new System.Windows.Forms.Label();
+            this.txtVinculo = new System.Windows.Forms.TextBox();
             this.panelDivisor1.SuspendLayout();
             this.panelDivisor2.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +71,7 @@
             // lblMensagemResposta
             // 
             this.lblMensagemResposta.AutoSize = true;
-            this.lblMensagemResposta.Location = new System.Drawing.Point(13, 312);
+            this.lblMensagemResposta.Location = new System.Drawing.Point(13, 336);
             this.lblMensagemResposta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMensagemResposta.Name = "lblMensagemResposta";
             this.lblMensagemResposta.Size = new System.Drawing.Size(168, 16);
@@ -77,7 +80,7 @@
             // 
             // txtResposta
             // 
-            this.txtResposta.Location = new System.Drawing.Point(189, 309);
+            this.txtResposta.Location = new System.Drawing.Point(189, 333);
             this.txtResposta.Margin = new System.Windows.Forms.Padding(4);
             this.txtResposta.Multiline = true;
             this.txtResposta.Name = "txtResposta";
@@ -86,19 +89,19 @@
             // 
             // btnEnviar
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(740, 363);
+            this.btnEnviar.Location = new System.Drawing.Point(740, 381);
             this.btnEnviar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(134, 28);
+            this.btnEnviar.Size = new System.Drawing.Size(172, 28);
             this.btnEnviar.TabIndex = 2;
-            this.btnEnviar.Text = "Responder";
+            this.btnEnviar.Text = "Finalizar";
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(52, 56);
+            this.lblNome.Location = new System.Drawing.Point(41, 56);
             this.lblNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(49, 16);
@@ -107,7 +110,7 @@
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(109, 56);
+            this.txtNome.Location = new System.Drawing.Point(98, 56);
             this.txtNome.Name = "txtNome";
             this.txtNome.ReadOnly = true;
             this.txtNome.Size = new System.Drawing.Size(356, 23);
@@ -126,7 +129,7 @@
             // 
             // txtRA
             // 
-            this.txtRA.Location = new System.Drawing.Point(109, 85);
+            this.txtRA.Location = new System.Drawing.Point(98, 85);
             this.txtRA.Name = "txtRA";
             this.txtRA.ReadOnly = true;
             this.txtRA.Size = new System.Drawing.Size(356, 23);
@@ -135,7 +138,7 @@
             // lblRA
             // 
             this.lblRA.AutoSize = true;
-            this.lblRA.Location = new System.Drawing.Point(71, 85);
+            this.lblRA.Location = new System.Drawing.Point(60, 85);
             this.lblRA.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRA.Name = "lblRA";
             this.lblRA.Size = new System.Drawing.Size(30, 16);
@@ -144,7 +147,7 @@
             // 
             // txtCurso
             // 
-            this.txtCurso.Location = new System.Drawing.Point(109, 114);
+            this.txtCurso.Location = new System.Drawing.Point(98, 114);
             this.txtCurso.Name = "txtCurso";
             this.txtCurso.ReadOnly = true;
             this.txtCurso.Size = new System.Drawing.Size(356, 23);
@@ -153,7 +156,7 @@
             // lblCurso
             // 
             this.lblCurso.AutoSize = true;
-            this.lblCurso.Location = new System.Drawing.Point(52, 114);
+            this.lblCurso.Location = new System.Drawing.Point(41, 114);
             this.lblCurso.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCurso.Name = "lblCurso";
             this.lblCurso.Size = new System.Drawing.Size(50, 16);
@@ -162,7 +165,7 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(109, 143);
+            this.txtEmail.Location = new System.Drawing.Point(98, 143);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.ReadOnly = true;
             this.txtEmail.Size = new System.Drawing.Size(356, 23);
@@ -171,7 +174,7 @@
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(48, 143);
+            this.lblEmail.Location = new System.Drawing.Point(37, 143);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(53, 16);
@@ -180,7 +183,7 @@
             // 
             // txtDataPedido
             // 
-            this.txtDataPedido.Location = new System.Drawing.Point(640, 143);
+            this.txtDataPedido.Location = new System.Drawing.Point(618, 175);
             this.txtDataPedido.Name = "txtDataPedido";
             this.txtDataPedido.ReadOnly = true;
             this.txtDataPedido.Size = new System.Drawing.Size(202, 23);
@@ -189,7 +192,7 @@
             // lblDataPedido
             // 
             this.lblDataPedido.AutoSize = true;
-            this.lblDataPedido.Location = new System.Drawing.Point(520, 143);
+            this.lblDataPedido.Location = new System.Drawing.Point(498, 175);
             this.lblDataPedido.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataPedido.Name = "lblDataPedido";
             this.lblDataPedido.Size = new System.Drawing.Size(113, 16);
@@ -198,16 +201,16 @@
             // 
             // txtTelefone
             // 
-            this.txtTelefone.Location = new System.Drawing.Point(640, 114);
+            this.txtTelefone.Location = new System.Drawing.Point(618, 114);
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.ReadOnly = true;
-            this.txtTelefone.Size = new System.Drawing.Size(281, 23);
+            this.txtTelefone.Size = new System.Drawing.Size(299, 23);
             this.txtTelefone.TabIndex = 18;
             // 
             // lblTelefone
             // 
             this.lblTelefone.AutoSize = true;
-            this.lblTelefone.Location = new System.Drawing.Point(564, 114);
+            this.lblTelefone.Location = new System.Drawing.Point(542, 115);
             this.lblTelefone.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTelefone.Name = "lblTelefone";
             this.lblTelefone.Size = new System.Drawing.Size(69, 16);
@@ -216,7 +219,7 @@
             // 
             // txtRG
             // 
-            this.txtRG.Location = new System.Drawing.Point(640, 85);
+            this.txtRG.Location = new System.Drawing.Point(618, 85);
             this.txtRG.Name = "txtRG";
             this.txtRG.ReadOnly = true;
             this.txtRG.Size = new System.Drawing.Size(300, 23);
@@ -225,7 +228,7 @@
             // lblRg
             // 
             this.lblRg.AutoSize = true;
-            this.lblRg.Location = new System.Drawing.Point(603, 85);
+            this.lblRg.Location = new System.Drawing.Point(581, 85);
             this.lblRg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRg.Name = "lblRg";
             this.lblRg.Size = new System.Drawing.Size(30, 16);
@@ -234,7 +237,7 @@
             // 
             // txtCPF
             // 
-            this.txtCPF.Location = new System.Drawing.Point(640, 56);
+            this.txtCPF.Location = new System.Drawing.Point(618, 56);
             this.txtCPF.Name = "txtCPF";
             this.txtCPF.ReadOnly = true;
             this.txtCPF.Size = new System.Drawing.Size(300, 23);
@@ -243,7 +246,7 @@
             // lblCPF
             // 
             this.lblCPF.AutoSize = true;
-            this.lblCPF.Location = new System.Drawing.Point(595, 56);
+            this.lblCPF.Location = new System.Drawing.Point(573, 57);
             this.lblCPF.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCPF.Name = "lblCPF";
             this.lblCPF.Size = new System.Drawing.Size(38, 16);
@@ -253,7 +256,7 @@
             // txtDocumento
             // 
             this.txtDocumento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDocumento.Location = new System.Drawing.Point(133, 214);
+            this.txtDocumento.Location = new System.Drawing.Point(109, 221);
             this.txtDocumento.Name = "txtDocumento";
             this.txtDocumento.ReadOnly = true;
             this.txtDocumento.Size = new System.Drawing.Size(332, 23);
@@ -262,7 +265,7 @@
             // txtStatus
             // 
             this.txtStatus.ForeColor = System.Drawing.Color.Maroon;
-            this.txtStatus.Location = new System.Drawing.Point(109, 172);
+            this.txtStatus.Location = new System.Drawing.Point(98, 172);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
             this.txtStatus.Size = new System.Drawing.Size(237, 23);
@@ -272,7 +275,7 @@
             // 
             this.lblDocumento.AutoSize = true;
             this.lblDocumento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDocumento.Location = new System.Drawing.Point(31, 217);
+            this.lblDocumento.Location = new System.Drawing.Point(7, 224);
             this.lblDocumento.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDocumento.Name = "lblDocumento";
             this.lblDocumento.Size = new System.Drawing.Size(95, 16);
@@ -282,7 +285,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(44, 175);
+            this.lblStatus.Location = new System.Drawing.Point(33, 175);
             this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(57, 16);
@@ -314,7 +317,7 @@
             // 
             this.lblResponder.AutoSize = true;
             this.lblResponder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResponder.Location = new System.Drawing.Point(13, 271);
+            this.lblResponder.Location = new System.Drawing.Point(13, 295);
             this.lblResponder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResponder.Name = "lblResponder";
             this.lblResponder.Size = new System.Drawing.Size(104, 18);
@@ -326,7 +329,7 @@
             this.panelDivisor2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDivisor2.Controls.Add(this.lblTituloResponder);
             this.panelDivisor2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panelDivisor2.Location = new System.Drawing.Point(119, 282);
+            this.panelDivisor2.Location = new System.Drawing.Point(119, 306);
             this.panelDivisor2.Name = "panelDivisor2";
             this.panelDivisor2.Size = new System.Drawing.Size(820, 1);
             this.panelDivisor2.TabIndex = 37;
@@ -344,10 +347,10 @@
             // 
             // btnBaixarMidia
             // 
-            this.btnBaixarMidia.Location = new System.Drawing.Point(772, 211);
+            this.btnBaixarMidia.Location = new System.Drawing.Point(740, 221);
             this.btnBaixarMidia.Margin = new System.Windows.Forms.Padding(4);
             this.btnBaixarMidia.Name = "btnBaixarMidia";
-            this.btnBaixarMidia.Size = new System.Drawing.Size(167, 28);
+            this.btnBaixarMidia.Size = new System.Drawing.Size(140, 28);
             this.btnBaixarMidia.TabIndex = 38;
             this.btnBaixarMidia.Text = "Baixar Mídia";
             this.btnBaixarMidia.UseVisualStyleBackColor = true;
@@ -356,7 +359,7 @@
             // txtMotivo
             // 
             this.txtMotivo.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMotivo.Location = new System.Drawing.Point(555, 214);
+            this.txtMotivo.Location = new System.Drawing.Point(530, 222);
             this.txtMotivo.Name = "txtMotivo";
             this.txtMotivo.ReadOnly = true;
             this.txtMotivo.Size = new System.Drawing.Size(193, 23);
@@ -366,19 +369,53 @@
             // 
             this.lblMotivo.AutoSize = true;
             this.lblMotivo.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMotivo.Location = new System.Drawing.Point(487, 217);
+            this.lblMotivo.Location = new System.Drawing.Point(462, 225);
             this.lblMotivo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMotivo.Name = "lblMotivo";
             this.lblMotivo.Size = new System.Drawing.Size(61, 16);
             this.lblMotivo.TabIndex = 25;
             this.lblMotivo.Text = "Motivo:";
             // 
+            // btnEnviarDocumento
+            // 
+            this.btnEnviarDocumento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEnviarDocumento.Location = new System.Drawing.Point(740, 341);
+            this.btnEnviarDocumento.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEnviarDocumento.Name = "btnEnviarDocumento";
+            this.btnEnviarDocumento.Size = new System.Drawing.Size(172, 28);
+            this.btnEnviarDocumento.TabIndex = 39;
+            this.btnEnviarDocumento.Text = "Anexar Documento";
+            this.btnEnviarDocumento.UseVisualStyleBackColor = true;
+            this.btnEnviarDocumento.Click += new System.EventHandler(this.btnEnviarDocumento_Click);
+            // 
+            // lblVinculo
+            // 
+            this.lblVinculo.AutoSize = true;
+            this.lblVinculo.Location = new System.Drawing.Point(551, 145);
+            this.lblVinculo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVinculo.Name = "lblVinculo";
+            this.lblVinculo.Size = new System.Drawing.Size(60, 16);
+            this.lblVinculo.TabIndex = 41;
+            this.lblVinculo.Text = "Vínculo:";
+            // 
+            // txtVinculo
+            // 
+            this.txtVinculo.ForeColor = System.Drawing.Color.Maroon;
+            this.txtVinculo.Location = new System.Drawing.Point(618, 143);
+            this.txtVinculo.Name = "txtVinculo";
+            this.txtVinculo.ReadOnly = true;
+            this.txtVinculo.Size = new System.Drawing.Size(299, 23);
+            this.txtVinculo.TabIndex = 40;
+            // 
             // ResponderRequerimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(952, 419);
+            this.ClientSize = new System.Drawing.Size(952, 448);
+            this.Controls.Add(this.lblVinculo);
+            this.Controls.Add(this.txtVinculo);
+            this.Controls.Add(this.btnEnviarDocumento);
             this.Controls.Add(this.btnBaixarMidia);
             this.Controls.Add(this.panelDivisor2);
             this.Controls.Add(this.lblResponder);
@@ -459,5 +496,8 @@
         private System.Windows.Forms.Button btnBaixarMidia;
         private System.Windows.Forms.TextBox txtMotivo;
         private System.Windows.Forms.Label lblMotivo;
+        private System.Windows.Forms.Button btnEnviarDocumento;
+        private System.Windows.Forms.Label lblVinculo;
+        private System.Windows.Forms.TextBox txtVinculo;
     }
 }

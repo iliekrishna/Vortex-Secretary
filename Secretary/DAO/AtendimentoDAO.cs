@@ -8,7 +8,7 @@ namespace Secretary.DAO
 {
     public class AtendimentoDAO
     {
-        public static DataTable ListarTickets(string status, string curso, string vinculo, string categoria)
+        public static DataTable ListarTickets(string status, string curso, string vinculo, string categoria, string termoBusca = null)
         {
             string sql = "";
             List<MySqlParameter> parametros = new List<MySqlParameter>();
@@ -18,7 +18,7 @@ namespace Secretary.DAO
                 sql = @"
                 SELECT 
                     data_pedido AS 'Data da Solicitação',
-                    nome_aluno AS 'Nome do Aluno',
+                    nome_aluno AS 'Nome Completo',
                     categoria AS 'Categoria',
                     cpf AS 'CPF',
                     tipo_vinculo AS 'Vínculo',
@@ -30,10 +30,10 @@ namespace Secretary.DAO
             }
             else if (status == "respondido")
             {
-                        sql = @"
+                sql = @"
                 SELECT 
                     data_resposta AS 'Data da Resposta',
-                    nome_aluno AS 'Nome',
+                    nome_aluno AS 'Nome Completo',
                     categoria AS 'Categoria',
                     assunto AS 'Assunto',
                     resposta AS 'Resposta',
@@ -49,7 +49,6 @@ namespace Secretary.DAO
                   AND resposta IS NOT NULL 
                   AND resposta <> ''";
             }
-
 
             if (curso != "Todos")
             {
@@ -67,6 +66,21 @@ namespace Secretary.DAO
             {
                 sql += " AND categoria = @categoria";
                 parametros.Add(new MySqlParameter("@categoria", categoria));
+            }
+
+            if (!string.IsNullOrWhiteSpace(termoBusca))
+            {
+                sql += " AND (nome_aluno LIKE @termo OR ra LIKE @termo OR cpf LIKE @termo)";
+                parametros.Add(new MySqlParameter("@termo", "%" + termoBusca + "%"));
+            }
+
+            if (status == "aberto")
+            {
+                sql += " ORDER BY data_pedido DESC, id_ticket DESC";
+            }
+            else if (status == "respondido")
+            {
+                sql += " ORDER BY data_resposta DESC, id_ticket DESC";
             }
 
             return ConexaoBD.ExecutarConsultaComParametros(sql, parametros);

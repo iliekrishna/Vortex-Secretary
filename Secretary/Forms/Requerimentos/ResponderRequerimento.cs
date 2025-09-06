@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Secretary.DAO;
+﻿using Secretary.DAO;
+using Secretary.Forms.Requerimentos;
 using Secretary.Models;
-using System.Net.Http;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Secretary.Forms
 {
@@ -86,6 +87,7 @@ namespace Secretary.Forms
                 txtTelefone.Text = requerimento.Telefone;
                 txtDocumento.Text = requerimento.NomeDocumento;
                 txtStatus.Text = requerimento.StatusDocumento;
+                txtVinculo.Text = requerimento.TipoVinculo ?? "";
                 txtDataPedido.Text = requerimento.DataPedido?.ToString("dd/MM/yyyy") ?? "";
 
                 // Inicialmente esconder controles relacionados a mídias e motivo
@@ -157,9 +159,8 @@ namespace Secretary.Forms
         {
             if (btnBaixarMidia.Tag is ImagemRequerimento img)
             {
-                string urlBase = "http://localhost/Vortex-Web-Forms/main.html"; // URL do localhost para testes
 
-                //string urlBase = "https://www.secretaria.aprenderensinando.com.br/Vortex/"; // URL do servidor (indisponível no momento, usar o localhost acima)
+                string urlBase = "https://www.secretaria.aprenderensinando.com.br/vortex/"; // URL do servidor
 
                 if (!string.IsNullOrEmpty(img.EnderecoComprovante))
                 {
@@ -179,5 +180,19 @@ namespace Secretary.Forms
                 MessageBox.Show("Tag do botão não está configurada corretamente.");
             }
         }
-    }
+
+        private void btnEnviarDocumento_Click(object sender, EventArgs e)
+        {
+            if (requerimento == null)
+            {
+                MessageBox.Show("Requerimento não carregado.");
+                return;
+            }
+            string nomeAluno = requerimento.Nome;
+            string nomeDocumento = requerimento.NomeDocumento;
+            string emailAluno = requerimento.Email;
+            var formEnviar = new EnviarDocumento(idRequerimento, requerimento.Nome, requerimento.NomeDocumento, requerimento.Email);
+            formEnviar.ShowDialog();
+        }
+    }    
 }

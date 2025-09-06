@@ -193,6 +193,16 @@ namespace Secretary.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_resposta_email {
+            get {
+                object obj = ResourceManager.GetObject("img_resposta_email", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_cps_versao_br {
             get {
                 object obj = ResourceManager.GetObject("logo_cps_versao_br", resourceCulture);
