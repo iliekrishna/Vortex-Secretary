@@ -125,7 +125,6 @@ namespace Secretary.Forms
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(339, 26);
             this.txtBuscar.TabIndex = 41;
-            this.txtBuscar.Text = "Nome ou RA";
             // 
             // lblBuscar
             // 
@@ -284,9 +283,6 @@ namespace Secretary.Forms
         private DataGridViewTextBoxColumn colunaData;
         private DataGridViewTextBoxColumn colunaAssunto;
         private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private ComboBox cbDocumento;
         private Label lblDocumento;
         private ComboBox cbCurso;

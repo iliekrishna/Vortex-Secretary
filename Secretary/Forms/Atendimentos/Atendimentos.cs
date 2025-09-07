@@ -63,7 +63,7 @@ namespace Secretary.Forms.Atendimentos
             string termoBusca = txtBuscar.Text.Trim();
 
             // Se txtBuscar estiver vazio ou com texto padrão, envie null para não filtrar por termo
-            if (string.IsNullOrWhiteSpace(termoBusca) || termoBusca == "Digite nome, RA ou CPF")
+            if (string.IsNullOrWhiteSpace(termoBusca) || termoBusca == "Nome, CPF ou RA")
             {
                 termoBusca = null;
             }
@@ -199,7 +199,7 @@ namespace Secretary.Forms.Atendimentos
             AtualizarListas();
         }
 
-        private string textoHint = "Digite nome, RA ou CPF";
+        private string textoHint = "Nome, CPF ou RA";
 
         private void ConfigurarHintTxtBuscar()
         {

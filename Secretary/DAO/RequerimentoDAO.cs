@@ -109,7 +109,7 @@ namespace Secretary.DAO
             }
         }
 
-        // Buscar requerimentos com filtro de termo (nome ou RA)
+        // Buscar requerimentos com filtro de termo (nome, CPF ou RA)
         public static DataTable BuscarRequerimentos(string status, string curso, string documento, string termo)
         {
             try
@@ -118,28 +118,30 @@ namespace Secretary.DAO
 
                 if (!string.IsNullOrEmpty(termo))
                 {
-                    sqlBase += " AND (nome LIKE @termo OR ra LIKE @termo)";
+                    sqlBase += " AND (nome LIKE @termo OR ra LIKE @termo OR cpf LIKE @termo)";
                     parametros.Add(new MySqlParameter("@termo", "%" + termo + "%"));
                 }
 
                 string selectClause = status.ToLower() == "aberto"
                 ? @"SELECT 
-                    id_requerimento AS 'ID',
-                    data_pedido AS 'Data',
-                    nome AS 'Nome',
-                    ra AS 'RA',
-                    curso AS 'Curso',
-                    tipo_vinculo AS 'Tipo de Vínculo',
-                    nome_doc AS 'Documento Solicitado' "
+            id_requerimento AS 'ID',
+            data_pedido AS 'Data',
+            nome AS 'Nome',
+            ra AS 'RA',
+            cpf AS 'CPF',
+            curso AS 'Curso',
+            tipo_vinculo AS 'Tipo de Vínculo',
+            nome_doc AS 'Documento Solicitado' "
                 : @"SELECT 
-                    r.id_requerimento AS 'ID',
-                    r.data_resposta AS 'Data de Resposta',
-                    r.nome AS 'Nome',
-                    r.ra AS 'RA',
-                    r.curso AS 'Curso',
-                    r.tipo_vinculo AS 'Tipo de Vínculo',
-                    r.nome_doc AS 'Documento Solicitado',
-                    u.nome_usuario AS 'Respondido Por' ";
+            r.id_requerimento AS 'ID',
+            r.data_resposta AS 'Data de Resposta',
+            r.nome AS 'Nome',
+            r.ra AS 'RA',
+            r.cpf AS 'CPF',
+            r.curso AS 'Curso',
+            r.tipo_vinculo AS 'Tipo de Vínculo',
+            r.nome_doc AS 'Documento Solicitado',
+            u.nome_usuario AS 'Respondido Por' ";
 
                 string orderBy = status.ToLower() == "aberto"
                     ? " ORDER BY data_pedido DESC"

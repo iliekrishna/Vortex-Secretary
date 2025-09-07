@@ -13,7 +13,7 @@ namespace Secretary.Forms
 {
     public partial class RequerimentoForm : Form
     {
-        private readonly string _placeholder = "Nome ou RA";
+        private readonly string _placeholder = "Nome, CPF ou RA";
         private Timer _debounceTimer;
 
 

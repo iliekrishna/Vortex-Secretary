@@ -10,8 +10,7 @@ namespace Secretary.Forms
 {
     public partial class Historico : Form
     {
-        private string textoBuscar = "Nome ou RA"; // texto padrão da txtBuscar
-
+        private string textoBuscar = "Nome, CPF ou RA"; // texto padrão da txtBuscar
         public Historico()
         {
             InitializeComponent();
@@ -170,36 +169,28 @@ namespace Secretary.Forms
                 using (var conn = ConexaoBD.ObterConexao())
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-
                     string query = @"
-                        SELECT t_tickets.*, t_usuarios.nome_usuario
-                        FROM t_tickets
-                        LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
-                        WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca)";
-
+                SELECT t_tickets.*, t_usuarios.nome_usuario
+                FROM t_tickets
+                LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
+                WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca OR t_tickets.cpf LIKE @busca)";
                     if (filtro == "Pendente")
                         query += " AND t_tickets.status = 'Pendente'";
                     else if (filtro == "Cancelado")
                         query += " AND t_tickets.status = 'Cancelado'";
                     else if (filtro == "Respondido")
                         query += " AND t_tickets.status = 'Respondido'";
-
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@busca", $"%{termo}%");
-
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-
                         dgvHistoricoT.Columns.Clear();
                         dgvHistoricoT.DataSource = dt;
-
                         if (dgvHistoricoT.Columns.Contains("id_usuario"))
                             dgvHistoricoT.Columns["id_usuario"].Visible = false;
-
                         if (dgvHistoricoT.Columns.Contains("nome_usuario"))
                             dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13;
-
                         RenomearColunasT();
                     }
                 }
@@ -209,7 +200,6 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao buscar em tickets: " + ex.Message);
             }
         }
-
         private void BuscarRequerimentos(string termo)
         {
             try
