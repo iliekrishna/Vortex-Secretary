@@ -178,7 +178,7 @@ namespace Secretary.Forms
                 flowLayoutPanelUsuarios.SuspendLayout();
                 flowLayoutPanelUsuarios.Controls.Clear();
 
-                string query = "SELECT id_usuario, email_usuario, nome_usuario, tipo_perfil FROM t_usuarios ORDER BY id_usuario";
+                string query = "SELECT id_usuario, email_usuario, nome_usuario, tipo_perfil FROM t_usuarios WHERE ativo = 1 ORDER BY id_usuario";
                 DataTable usuarios = ConexaoBD.ExecutarConsulta(query);
 
                 if (usuarios.Rows.Count == 0)

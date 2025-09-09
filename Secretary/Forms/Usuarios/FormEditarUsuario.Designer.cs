@@ -47,7 +47,7 @@ namespace Secretary.Forms
             this.lblNovaSenha = new System.Windows.Forms.Label();
             this.txtSenhaAtual = new System.Windows.Forms.TextBox();
             this.lblSenhaAtual = new System.Windows.Forms.Label();
-            this.btnExcluirUsuario = new System.Windows.Forms.Button();
+            this.btnDesativarUsuario = new System.Windows.Forms.Button();
             this.panelAlterarSenha.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -236,17 +236,17 @@ namespace Secretary.Forms
             this.lblSenhaAtual.TabIndex = 24;
             this.lblSenhaAtual.Text = "Senha Atual:";
             // 
-            // btnExcluirUsuario
+            // btnDesativarUsuario
             // 
-            this.btnExcluirUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnExcluirUsuario.Location = new System.Drawing.Point(671, 267);
-            this.btnExcluirUsuario.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
-            this.btnExcluirUsuario.Name = "btnExcluirUsuario";
-            this.btnExcluirUsuario.Size = new System.Drawing.Size(162, 29);
-            this.btnExcluirUsuario.TabIndex = 29;
-            this.btnExcluirUsuario.Text = "Excluir Usuário";
-            this.btnExcluirUsuario.UseVisualStyleBackColor = true;
-            this.btnExcluirUsuario.Click += new System.EventHandler(this.btnExcluirUsuario_Click);
+            this.btnDesativarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(167)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDesativarUsuario.Location = new System.Drawing.Point(671, 267);
+            this.btnDesativarUsuario.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
+            this.btnDesativarUsuario.Name = "btnDesativarUsuario";
+            this.btnDesativarUsuario.Size = new System.Drawing.Size(162, 29);
+            this.btnDesativarUsuario.TabIndex = 29;
+            this.btnDesativarUsuario.Text = "Desativar Usuário";
+            this.btnDesativarUsuario.UseVisualStyleBackColor = true;
+            this.btnDesativarUsuario.Click += new System.EventHandler(this.btnDesativarUsuario_Click);
             // 
             // FormEditarUsuario
             // 
@@ -254,7 +254,7 @@ namespace Secretary.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.btnExcluirUsuario);
+            this.Controls.Add(this.btnDesativarUsuario);
             this.Controls.Add(this.panelAlterarSenha);
             this.Controls.Add(this.linklblAlterarSenha);
             this.Controls.Add(this.btnAtualizar);
@@ -298,7 +298,7 @@ namespace Secretary.Forms
         private System.Windows.Forms.Label lblNovaSenha;
         private System.Windows.Forms.TextBox txtSenhaAtual;
         private System.Windows.Forms.Label lblSenhaAtual;
-        private System.Windows.Forms.Button btnExcluirUsuario;
+        private System.Windows.Forms.Button btnDesativarUsuario;
         private System.Windows.Forms.CheckBox cboxExibirSenha;
     }
 }

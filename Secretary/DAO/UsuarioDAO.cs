@@ -48,6 +48,7 @@ namespace Secretary.DAO
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
+                // Verifica se existe usuário com o e-mail, ativo ou desativado
                 string sql = "SELECT COUNT(*) FROM t_usuarios WHERE email_usuario = @Email;";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
@@ -65,9 +66,23 @@ namespace Secretary.DAO
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
+                // Verifica se o e-mail já existe (ativo ou desativado)
+                string sqlVerifica = "SELECT COUNT(*) FROM t_usuarios WHERE email_usuario = @Email;";
+                using (var cmdVerifica = new MySqlCommand(sqlVerifica, conn))
+                {
+                    cmdVerifica.Parameters.AddWithValue("@Email", usuario.Email);
+                    int count = Convert.ToInt32(cmdVerifica.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        // E-mail já existe, não cadastra
+                        return false;
+                    }
+                }
+
+                // Se não existe, cadastra normalmente
                 string sql = @"INSERT INTO t_usuarios 
-                    (nome_usuario, email_usuario, senha, tipo_perfil, criado_em) 
-                    VALUES (@Nome, @Email, @Senha, @TipoPerfil, NOW());";
+            (nome_usuario, email_usuario, senha, tipo_perfil, criado_em, ativo) 
+            VALUES (@Nome, @Email, @Senha, @TipoPerfil, NOW(), 1);";
 
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -80,6 +95,7 @@ namespace Secretary.DAO
                 }
             }
         }
+
 
         public Usuario Autenticar(string email, string senha)
         {
@@ -171,6 +187,55 @@ namespace Secretary.DAO
                     cmd.Parameters.AddWithValue("@Codigo", codigo);
                     cmd.Parameters.AddWithValue("@ExpiraEm", DateTime.Now.AddMinutes(10));
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public bool DesativarUsuario(int idUsuario)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                string sql = "UPDATE t_usuarios SET ativo = 0 WHERE id_usuario = @IdUsuario;";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        // Verifica se o e-mail existe e está desativado
+        public bool EmailExisteDesativado(string email)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                string sql = "SELECT COUNT(*) FROM t_usuarios WHERE email_usuario = @Email AND ativo = 0;";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
+        // Método para reativar usuário pelo e-mail
+        public bool ReativarUsuarioPorEmail(string email)
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                string sql = "UPDATE t_usuarios SET ativo = 1 WHERE email_usuario = @Email;";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }

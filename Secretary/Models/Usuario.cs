@@ -15,6 +15,7 @@ namespace Secretary.Models
         public string SenhaHash { get; set; }
         public string TipoPerfil { get; set; }
         public DateTime CriadoEm { get; set; }
+        public bool Ativo { get; set; }
         public string Senha { get; set; }
     }
 }

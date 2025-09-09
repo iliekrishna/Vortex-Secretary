@@ -85,9 +85,39 @@ namespace Secretary.Forms
             };
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
+
             if (usuarioDAO.EmailExiste(email))
             {
-                MessageBox.Show("E-mail já cadastrado!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (usuarioDAO.EmailExisteDesativado(email))
+                {
+                    // Usuário existe mas está desativado - pergunta se quer reativar
+                    var resposta = MessageBox.Show("Este e-mail está cadastrado, mas o usuário está desativado. Deseja reativar este usuário?",
+                                                  "Usuário desativado", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (resposta == DialogResult.Yes)
+                    {
+                        bool reativado = usuarioDAO.ReativarUsuarioPorEmail(email);
+                        if (reativado)
+                        {
+                            MessageBox.Show("Usuário reativado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Falha ao reativar o usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        // Usuário optou por não reativar
+                        MessageBox.Show("Cadastro cancelado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    // Usuário ativo já existe com esse e-mail
+                    MessageBox.Show("E-mail já cadastrado!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 return;
             }
 

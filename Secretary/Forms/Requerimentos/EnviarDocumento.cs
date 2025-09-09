@@ -41,7 +41,7 @@ namespace Secretary.Forms.Requerimentos
                 $"Prezado(a) {nomeAluno},\r\n\r\n" +
                 $"Conforme solicitado, segue em anexo o documento {nomeDocumento}.\r\n\r\n" +
                 "Horário de atendimento:\r\n" +
-                "Segunda a sexta, das 8h às 22h\r\n\r\n";
+                "Segunda a sexta, das 8h30 às 22h\r\n\r\n";
         }
 
         private void EnviarDocumento_Load(object sender, EventArgs e)

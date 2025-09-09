@@ -43,7 +43,7 @@ namespace Secretary.Forms
         {
             this.Size = new Size(900, 350);
             btnAtualizar.Location = new Point(671, 233);
-            btnExcluirUsuario.Location = new Point(671, 267);
+            btnDesativarUsuario.Location = new Point(671, 267);
             txtSenhaAtual.UseSystemPasswordChar = true;
             txtSenhaNova.UseSystemPasswordChar = true;
             txtConfirmarSenha.UseSystemPasswordChar = true;
@@ -57,45 +57,19 @@ namespace Secretary.Forms
             {
                 this.Size = new Size(900, 500); // aumenta a altura do form
                 btnAtualizar.Location = new Point(671, 418); // posição mais abaixo
-                btnExcluirUsuario.Visible = false;
+                btnDesativarUsuario.Visible = false;
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
             else
             {
                 this.Size = new Size(900, 350); // volta ao tamanho original
                 btnAtualizar.Location = new Point(671, 233); // volta à posição original
-                btnExcluirUsuario.Visible = true;
+                btnDesativarUsuario.Visible = true;
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
         }
 
-        private void btnExcluirUsuario_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Tem certeza que deseja excluir este usuário?",
-                                          "Confirmação",
-                                          MessageBoxButtons.YesNo,
-                                          MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    using (var conexao = ConexaoBD.ObterConexao())
-                    {
-                        string query = "DELETE FROM t_usuarios WHERE id_usuario = @id";
-                        MySqlCommand cmd = new MySqlCommand(query, conexao);
-                        cmd.Parameters.AddWithValue("@id", idUsuario);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Usuário excluído com sucesso.");
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao excluir usuário: " + ex.Message);
-                }
-            }
-        }
+       
 
         private void btnAtualizar_Click(object sender, EventArgs e)
         {
@@ -212,5 +186,34 @@ namespace Secretary.Forms
             txtSenhaNova.UseSystemPasswordChar = !exibir;
             txtConfirmarSenha.UseSystemPasswordChar = !exibir;
         }
+
+        private void btnDesativarUsuario_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Tem certeza que deseja desativar este usuário?",
+                                          "Confirmação",
+                                          MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (var conexao = ConexaoBD.ObterConexao())
+                    {
+                        string query = "UPDATE t_usuarios SET ativo = 0 WHERE id_usuario = @id";
+                        MySqlCommand cmd = new MySqlCommand(query, conexao);
+                        cmd.Parameters.AddWithValue("@id", idUsuario);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Usuário desativado com sucesso.");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao desativar usuário: " + ex.Message);
+                }
+            }
+        }
+
     }
 }
