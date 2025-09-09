@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Secretary.Forms
 {
@@ -27,6 +28,7 @@ namespace Secretary.Forms
         {
             CarregarUsuarios();
             CarregarDocumentosDisponiveis();
+            CarregarUsuariosInativos();
             CarregarFaq();
             AjustarLarguraDosPanels(); // Ajusta largura ao carregar
         }
@@ -207,6 +209,39 @@ namespace Secretary.Forms
             }
         }
 
+        private void CarregarUsuariosInativos()
+        {
+            try
+            {
+                flowLayoutPanelUsuariosInativos.SuspendLayout();
+                flowLayoutPanelUsuariosInativos.Controls.Clear();
+
+                string query = "SELECT id_usuario, email_usuario, nome_usuario, tipo_perfil FROM t_usuarios WHERE ativo = 0 ORDER BY id_usuario";
+                DataTable usuarios = ConexaoBD.ExecutarConsulta(query);
+
+                if (usuarios.Rows.Count == 0)
+                {
+                    flowLayoutPanelUsuariosInativos.Controls.Add(CriarLabelMensagem("Nenhum usuário inativo encontrado"));
+                    return;
+                }
+
+                foreach (DataRow row in usuarios.Rows)
+                {
+                    flowLayoutPanelUsuariosInativos.Controls.Add(CriarPanelUsuarioInativo(row));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar usuários inativos: " + ex.Message, "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                flowLayoutPanelUsuariosInativos.ResumeLayout();
+                AjustarLarguraDosPanels(); // Ajusta largura dos painéis se necessário
+            }
+        }
+
         private Panel CriarPanelUsuario(DataRow row)
         {
             string nome = row["nome_usuario"].ToString();
@@ -259,6 +294,80 @@ namespace Secretary.Forms
 
             return panel;
         }
+
+        private Panel CriarPanelUsuarioInativo(DataRow row)
+        {
+            string nome = row["nome_usuario"].ToString();
+            string tipoPerfil = row["tipo_perfil"].ToString();
+            int id = Convert.ToInt32(row["id_usuario"]);
+            string email = row["email_usuario"].ToString();
+
+            Panel panel = new Panel
+            {
+                Name = $"panelUsuInativo{id}",
+                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
+                Margin = new Padding(0, 0, 0, 10),
+                BackColor = Color.LightGray,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            Label lblNome = new Label
+            {
+                Text = nome,
+                AutoSize = true,
+                Location = new Point(20, 15),
+                Font = new Font("Verdana", 10F),
+                Tag = id
+            };
+
+            Label lblInfo = new Label
+            {
+                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
+                AutoSize = true,
+                Location = new Point(250, 15),
+                ForeColor = Color.DarkGray,
+                Font = new Font("Verdana", 9F, FontStyle.Italic)
+            };
+
+            Button btnReativar = new Button
+            {
+                Text = "Reativar",
+                Font = new Font("Verdana", 9F),
+                Size = new Size(80, 25),
+                Location = new Point(panel.Width - 100, 12),
+                Tag = id,
+                Cursor = Cursors.Hand,
+                BackColor = Color.White
+
+            };
+            btnReativar.Click += BtnReativarUsuario_Click;
+
+            panel.Controls.Add(lblNome);
+            panel.Controls.Add(lblInfo);
+            panel.Controls.Add(btnReativar);
+
+            return panel;
+        }
+        private void BtnReativarUsuario_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is int idUsuario)
+            {
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+                bool reativado = usuarioDAO.ReativarUsuarioPorId(idUsuario);
+                if (reativado)
+                {
+                    MessageBox.Show("Usuário reativado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Atualiza as listas
+                    CarregarUsuarios();
+                    CarregarUsuariosInativos();
+                }
+                else
+                {
+                    MessageBox.Show("Falha ao reativar o usuário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }      
 
         private void BtnEditarUsuario_Click(object sender, EventArgs e)
         {

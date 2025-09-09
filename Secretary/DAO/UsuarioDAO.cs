@@ -239,5 +239,20 @@ namespace Secretary.DAO
                 }
             }
         }
+        public bool ReativarUsuarioPorId(int idUsuario)
+        {
+            using (var conexao = ConexaoBD.ObterConexao())
+            {
+                if (conexao.State != System.Data.ConnectionState.Open)
+                    conexao.Open();
+
+                string sql = "UPDATE t_usuarios SET ativo = 1 WHERE id_usuario = @id";
+                using (var cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
     }
 }

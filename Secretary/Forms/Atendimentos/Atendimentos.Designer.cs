@@ -77,7 +77,7 @@ namespace Secretary.Forms.Atendimentos
             this.tabControlAtendimentos.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlAtendimentos.Name = "tabControlAtendimentos";
             this.tabControlAtendimentos.SelectedIndex = 0;
-            this.tabControlAtendimentos.Size = new System.Drawing.Size(1328, 609);
+            this.tabControlAtendimentos.Size = new System.Drawing.Size(1408, 609);
             this.tabControlAtendimentos.TabIndex = 0;
             // 
             // tpagAberto
@@ -88,7 +88,7 @@ namespace Secretary.Forms.Atendimentos
             this.tpagAberto.Margin = new System.Windows.Forms.Padding(4);
             this.tpagAberto.Name = "tpagAberto";
             this.tpagAberto.Padding = new System.Windows.Forms.Padding(4);
-            this.tpagAberto.Size = new System.Drawing.Size(1320, 578);
+            this.tpagAberto.Size = new System.Drawing.Size(1400, 578);
             this.tpagAberto.TabIndex = 0;
             this.tpagAberto.Text = "Em aberto";
             this.tpagAberto.UseVisualStyleBackColor = true;
@@ -113,7 +113,7 @@ namespace Secretary.Forms.Atendimentos
             this.datagvEmAberto.Location = new System.Drawing.Point(4, 4);
             this.datagvEmAberto.Name = "datagvEmAberto";
             this.datagvEmAberto.ReadOnly = true;
-            this.datagvEmAberto.Size = new System.Drawing.Size(1312, 570);
+            this.datagvEmAberto.Size = new System.Drawing.Size(1392, 570);
             this.datagvEmAberto.TabIndex = 2;
             this.datagvEmAberto.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvEmAberto_CellContentClick);
             this.datagvEmAberto.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagvEmAberto_CellDoubleClick);
@@ -282,24 +282,25 @@ namespace Secretary.Forms.Atendimentos
             this.panelFiltros.Location = new System.Drawing.Point(20, 20);
             this.panelFiltros.Name = "panelFiltros";
             this.panelFiltros.Padding = new System.Windows.Forms.Padding(30);
-            this.panelFiltros.Size = new System.Drawing.Size(1328, 100);
+            this.panelFiltros.Size = new System.Drawing.Size(1408, 100);
             this.panelFiltros.TabIndex = 1;
             // 
             // cbVinculo
             // 
             this.cbVinculo.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbVinculo.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbVinculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVinculo.FormattingEnabled = true;
-            this.cbVinculo.Location = new System.Drawing.Point(1138, 30);
+            this.cbVinculo.Location = new System.Drawing.Point(1171, 30);
             this.cbVinculo.Name = "cbVinculo";
-            this.cbVinculo.Size = new System.Drawing.Size(190, 26);
+            this.cbVinculo.Size = new System.Drawing.Size(226, 26);
             this.cbVinculo.TabIndex = 49;
             // 
             // labelTipoVinculo
             // 
             this.labelTipoVinculo.AutoSize = true;
             this.labelTipoVinculo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelTipoVinculo.Location = new System.Drawing.Point(1063, 30);
+            this.labelTipoVinculo.Location = new System.Drawing.Point(1074, 30);
             this.labelTipoVinculo.Name = "labelTipoVinculo";
             this.labelTipoVinculo.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.labelTipoVinculo.Size = new System.Drawing.Size(97, 18);
@@ -314,7 +315,7 @@ namespace Secretary.Forms.Atendimentos
             this.cbCategoria.FormattingEnabled = true;
             this.cbCategoria.Location = new System.Drawing.Point(851, 30);
             this.cbCategoria.Name = "cbCategoria";
-            this.cbCategoria.Size = new System.Drawing.Size(212, 26);
+            this.cbCategoria.Size = new System.Drawing.Size(223, 26);
             this.cbCategoria.TabIndex = 47;
             // 
             // labelCategoria
@@ -375,7 +376,7 @@ namespace Secretary.Forms.Atendimentos
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1368, 749);
+            this.ClientSize = new System.Drawing.Size(1448, 749);
             this.Controls.Add(this.tabControlAtendimentos);
             this.Controls.Add(this.panelFiltros);
             this.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

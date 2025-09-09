@@ -26,12 +26,19 @@ namespace Secretary.Forms
             this.tabPageDocumentos = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelDocumentos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPageUsuarios = new System.Windows.Forms.TabPage();
+            this.tabControlUsuariosAtivoInativo = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelUsuarios = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPageFaq = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelFaq = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanelUsuariosInativos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControlGerenciamento.SuspendLayout();
             this.tabPageDocumentos.SuspendLayout();
             this.tabPageUsuarios.SuspendLayout();
+            this.tabControlUsuariosAtivoInativo.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPageFaq.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +100,7 @@ namespace Secretary.Forms
             // tabPageUsuarios
             // 
             this.tabPageUsuarios.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPageUsuarios.Controls.Add(this.flowLayoutPanelUsuarios);
+            this.tabPageUsuarios.Controls.Add(this.tabControlUsuariosAtivoInativo);
             this.tabPageUsuarios.Location = new System.Drawing.Point(4, 39);
             this.tabPageUsuarios.Name = "tabPageUsuarios";
             this.tabPageUsuarios.Padding = new System.Windows.Forms.Padding(10);
@@ -101,18 +108,52 @@ namespace Secretary.Forms
             this.tabPageUsuarios.TabIndex = 1;
             this.tabPageUsuarios.Text = "Usuários";
             // 
+            // tabControlUsuariosAtivoInativo
+            // 
+            this.tabControlUsuariosAtivoInativo.Controls.Add(this.tabPage1);
+            this.tabControlUsuariosAtivoInativo.Controls.Add(this.tabPage2);
+            this.tabControlUsuariosAtivoInativo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlUsuariosAtivoInativo.Location = new System.Drawing.Point(10, 10);
+            this.tabControlUsuariosAtivoInativo.Name = "tabControlUsuariosAtivoInativo";
+            this.tabControlUsuariosAtivoInativo.Padding = new System.Drawing.Point(10, 5);
+            this.tabControlUsuariosAtivoInativo.SelectedIndex = 0;
+            this.tabControlUsuariosAtivoInativo.Size = new System.Drawing.Size(772, 357);
+            this.tabControlUsuariosAtivoInativo.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.flowLayoutPanelUsuarios);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(764, 324);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Ativos";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // flowLayoutPanelUsuarios
             // 
             this.flowLayoutPanelUsuarios.AutoScroll = true;
             this.flowLayoutPanelUsuarios.BackColor = System.Drawing.Color.WhiteSmoke;
             this.flowLayoutPanelUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelUsuarios.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelUsuarios.Location = new System.Drawing.Point(10, 10);
+            this.flowLayoutPanelUsuarios.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanelUsuarios.Name = "flowLayoutPanelUsuarios";
             this.flowLayoutPanelUsuarios.Padding = new System.Windows.Forms.Padding(5);
-            this.flowLayoutPanelUsuarios.Size = new System.Drawing.Size(772, 357);
-            this.flowLayoutPanelUsuarios.TabIndex = 0;
+            this.flowLayoutPanelUsuarios.Size = new System.Drawing.Size(758, 318);
+            this.flowLayoutPanelUsuarios.TabIndex = 1;
             this.flowLayoutPanelUsuarios.WrapContents = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.flowLayoutPanelUsuariosInativos);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(764, 324);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Inativos";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPageFaq
             // 
@@ -138,6 +179,14 @@ namespace Secretary.Forms
             this.flowLayoutPanelFaq.TabIndex = 0;
             this.flowLayoutPanelFaq.WrapContents = false;
             // 
+            // flowLayoutPanelUsuariosInativos
+            // 
+            this.flowLayoutPanelUsuariosInativos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelUsuariosInativos.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
+            this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
+            this.flowLayoutPanelUsuariosInativos.TabIndex = 0;
+            // 
             // GerenciamentoAdm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -154,6 +203,9 @@ namespace Secretary.Forms
             this.tabControlGerenciamento.ResumeLayout(false);
             this.tabPageDocumentos.ResumeLayout(false);
             this.tabPageUsuarios.ResumeLayout(false);
+            this.tabControlUsuariosAtivoInativo.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tabPageFaq.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -183,8 +235,12 @@ namespace Secretary.Forms
         private TabPage tabPageDocumentos;
         private FlowLayoutPanel flowLayoutPanelDocumentos;
         private TabPage tabPageUsuarios;
-        private FlowLayoutPanel flowLayoutPanelUsuarios;
         private TabPage tabPageFaq;
         private FlowLayoutPanel flowLayoutPanelFaq;
+        private TabControl tabControlUsuariosAtivoInativo;
+        private TabPage tabPage1;
+        private FlowLayoutPanel flowLayoutPanelUsuarios;
+        private TabPage tabPage2;
+        private FlowLayoutPanel flowLayoutPanelUsuariosInativos;
     }
 }
