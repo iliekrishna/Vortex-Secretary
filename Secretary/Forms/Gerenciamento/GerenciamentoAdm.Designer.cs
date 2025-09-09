@@ -30,9 +30,9 @@ namespace Secretary.Forms
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelUsuarios = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanelUsuariosInativos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPageFaq = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelFaq = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanelUsuariosInativos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControlGerenciamento.SuspendLayout();
             this.tabPageDocumentos.SuspendLayout();
             this.tabPageUsuarios.SuspendLayout();
@@ -155,6 +155,14 @@ namespace Secretary.Forms
             this.tabPage2.Text = "Inativos";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // flowLayoutPanelUsuariosInativos
+            // 
+            this.flowLayoutPanelUsuariosInativos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelUsuariosInativos.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
+            this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
+            this.flowLayoutPanelUsuariosInativos.TabIndex = 0;
+            // 
             // tabPageFaq
             // 
             this.tabPageFaq.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -178,14 +186,6 @@ namespace Secretary.Forms
             this.flowLayoutPanelFaq.Size = new System.Drawing.Size(772, 357);
             this.flowLayoutPanelFaq.TabIndex = 0;
             this.flowLayoutPanelFaq.WrapContents = false;
-            // 
-            // flowLayoutPanelUsuariosInativos
-            // 
-            this.flowLayoutPanelUsuariosInativos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelUsuariosInativos.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
-            this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
-            this.flowLayoutPanelUsuariosInativos.TabIndex = 0;
             // 
             // GerenciamentoAdm
             // 
