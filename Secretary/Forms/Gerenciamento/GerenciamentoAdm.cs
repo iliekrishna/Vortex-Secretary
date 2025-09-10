@@ -304,8 +304,8 @@ namespace Secretary.Forms
 
             Panel panel = new Panel
             {
-                Name = $"panelUsuInativo{id}",
-                Size = new Size(flowLayoutPanelUsuarios.Width -5, 50),
+                Name = $"panelUsu{id}",
+                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.Gainsboro,
                 BorderStyle = BorderStyle.FixedSingle
@@ -324,9 +324,9 @@ namespace Secretary.Forms
             {
                 Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
                 AutoSize = true,
-                Location = new Point(250, 40),
-                ForeColor = Color.Black,
-                Font = new Font("Verdana", 9F, FontStyle.Italic)
+                Location = new Point(250, 15),
+                ForeColor = Color.Gray,
+                Font = new Font("Verdana", 9F, FontStyle.Regular)
             };
 
             Button btnReativar = new Button
@@ -630,37 +630,51 @@ namespace Secretary.Forms
                     }
                 }
             }
+
             // Ajusta painéis de usuários inativos
+
             foreach (Control ctrl in flowLayoutPanelUsuariosInativos.Controls)
             {
-                if (ctrl is Panel panel && panel.Name.StartsWith("panelUsuInativo"))
+                if (ctrl is Panel panel)
                 {
-                    panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width;
-                    Label lblNome = null;
-                    Label lblInfo = null;
-                    Button btnReativar = null;
-                    foreach (Control innerCtrl in panel.Controls)
+                    if (panel.Name.StartsWith("panelUsuInativo"))
                     {
-                        if (innerCtrl is Label lbl)
+                        panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 5;
+
+                        Label lblNome = null;
+                        Label lblInfo = null;
+                        Button btnReativar = null;
+
+                        foreach (Control innerCtrl in panel.Controls)
                         {
-                            if (lbl.Tag != null && lbl.Tag is int)
-                                lblNome = lbl;
-                            else
-                                lblInfo = lbl;
+                            if (innerCtrl is Label lbl)
+                            {
+                                if (lbl.Tag != null && lbl.Tag is int)
+                                    lblNome = lbl;
+                                else
+                                    lblInfo = lbl;
+                            }
+                            else if (innerCtrl is Button btn)
+                            {
+                                btnReativar = btn;
+                            }
                         }
-                        else if (innerCtrl is Button btn)
-                        {
-                            btnReativar = btn;
-                        }
+
+                        if (lblNome != null) lblNome.Location = new Point(20, 15);
+                        if (lblInfo != null && lblNome != null)
+                            lblInfo.Location = new Point(lblNome.Right + 10, 15);
+                        if (btnReativar != null)
+                            btnReativar.Location = new Point(panel.Width - 100, 12);
                     }
-                    if (lblNome != null) lblNome.Location = new Point(20, 15);
-                    if (lblInfo != null && lblNome != null)
-                        lblInfo.Location = new Point(lblNome.Right + 10, 15);
-                    if (btnReativar != null)
-                        btnReativar.Location = new Point(panel.Width - 100, 12);
+                    else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
+                    {
+                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
+                        btn.Location = new Point(20, 10);
+                    }
                 }
-            }
-        }        
+            }            
+        }
+        
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tabControl = (TabControl)sender;
