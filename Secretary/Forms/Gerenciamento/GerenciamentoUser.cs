@@ -177,7 +177,7 @@ namespace Secretary.Forms
                 flowLayoutPanelFaq.Controls.Clear();
 
                 CategoriaDAO categoriaDao = new CategoriaDAO();
-                List<Categoria> categorias = categoriaDao.ListarCategorias();
+                List<Categoria> categorias = FaqDAO.ListarCategoriasOrdenadas();
 
                 if (categorias.Count == 0)
                 {

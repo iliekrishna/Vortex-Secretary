@@ -121,4 +121,31 @@ public class FaqDAO
     {
         throw new NotImplementedException();
     }
+    public static List<Categoria> ListarCategoriasOrdenadas()
+    {
+        var lista = new List<Categoria>();
+        using (var conn = ConexaoBD.ObterConexao())
+        {
+            string sql = @"
+            SELECT id, nome
+            FROM t_faq_categoria
+            ORDER BY (nome = 'Outros') ASC, id";
+
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    lista.Add(new Categoria
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nome = reader.GetString("nome")
+                    });
+                }
+            }
+        }
+        return lista;
+    }
+
+
 }
