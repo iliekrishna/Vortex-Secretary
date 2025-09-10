@@ -162,6 +162,10 @@ namespace Secretary.Forms
             this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
             this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
             this.flowLayoutPanelUsuariosInativos.TabIndex = 0;
+            this.flowLayoutPanelUsuariosInativos.AutoScroll = true;
+            this.flowLayoutPanelUsuariosInativos.Padding = new Padding(5);
+            this.flowLayoutPanelUsuariosInativos.WrapContents = false;
+            this.flowLayoutPanelUsuariosInativos.FlowDirection = FlowDirection.TopDown;
             // 
             // tabPageFaq
             // 

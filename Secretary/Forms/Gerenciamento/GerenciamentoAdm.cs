@@ -306,7 +306,7 @@ namespace Secretary.Forms
             {
                 Name = $"panelUsuInativo{id}",
                 Size = new Size(flowLayoutPanelUsuarios.Width -5, 50),
-                Margin = new Padding(10, 10, 10, 10),
+                Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.Gainsboro,
                 BorderStyle = BorderStyle.FixedSingle
             };
