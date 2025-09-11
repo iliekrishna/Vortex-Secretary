@@ -194,5 +194,29 @@ namespace Secretary.Forms
             var formEnviar = new EnviarDocumento(idRequerimento, requerimento.Nome, requerimento.NomeDocumento, requerimento.Email);
             formEnviar.ShowDialog();
         }
-    }    
+
+        private void btnEditarDados_Click(object sender, EventArgs e)
+        {
+            if (requerimento == null)
+            {
+                MessageBox.Show("Requerimento não carregado.");
+                return;
+            }
+
+            var formEditar = new EditarDadosSolicitante(requerimento);
+            if (formEditar.ShowDialog() == DialogResult.OK)
+            {
+                // Atualizar os campos da tela atual após edição
+                txtNome.Text = requerimento.Nome;
+                txtRA.Text = requerimento.RA;
+                txtCurso.Text = requerimento.Curso;
+                txtCPF.Text = requerimento.CPF;
+                txtRG.Text = requerimento.RG;
+                txtEmail.Text = requerimento.Email;
+            }
+        }
+
+
+
+    }
 }

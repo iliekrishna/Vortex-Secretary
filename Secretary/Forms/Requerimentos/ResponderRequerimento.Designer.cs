@@ -64,6 +64,7 @@
             this.btnEnviarDocumento = new System.Windows.Forms.Button();
             this.lblVinculo = new System.Windows.Forms.Label();
             this.txtVinculo = new System.Windows.Forms.TextBox();
+            this.btnEditarDados = new System.Windows.Forms.Button();
             this.panelDivisor1.SuspendLayout();
             this.panelDivisor2.SuspendLayout();
             this.SuspendLayout();
@@ -407,12 +408,24 @@
             this.txtVinculo.Size = new System.Drawing.Size(299, 23);
             this.txtVinculo.TabIndex = 40;
             // 
+            // btnEditarDados
+            // 
+            this.btnEditarDados.Location = new System.Drawing.Point(740, 257);
+            this.btnEditarDados.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditarDados.Name = "btnEditarDados";
+            this.btnEditarDados.Size = new System.Drawing.Size(140, 28);
+            this.btnEditarDados.TabIndex = 42;
+            this.btnEditarDados.Text = "Editar Dados";
+            this.btnEditarDados.UseVisualStyleBackColor = true;
+            this.btnEditarDados.Click += new System.EventHandler(this.btnEditarDados_Click);
+            // 
             // ResponderRequerimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(952, 448);
+            this.Controls.Add(this.btnEditarDados);
             this.Controls.Add(this.lblVinculo);
             this.Controls.Add(this.txtVinculo);
             this.Controls.Add(this.btnEnviarDocumento);
@@ -499,5 +512,6 @@
         private System.Windows.Forms.Button btnEnviarDocumento;
         private System.Windows.Forms.Label lblVinculo;
         private System.Windows.Forms.TextBox txtVinculo;
+        private System.Windows.Forms.Button btnEditarDados;
     }
 }

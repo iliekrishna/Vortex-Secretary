@@ -246,7 +246,7 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@tipo_vinculo", r.TipoVinculo ?? (object)DBNull.Value);
 
                 cmd.ExecuteNonQuery();
-            }        
+            }
         }
 
         // Atualizar resposta e status do requerimento
@@ -462,5 +462,39 @@ namespace Secretary.DAO
             }
         }
 
+        // Salva dados atualizados no bd
+        public static void AtualizarDadosSolicitante(Requerimento requerimento)
+        {
+            string query = @"
+            UPDATE t_requerimentos SET
+                nome = @Nome,
+                ra = @RA,
+                curso = @Curso,
+                cpf = @CPF,
+                rg = @RG,
+                email = @Email
+            WHERE id_requerimento = @Id";
+
+            var parametros = new List<MySqlParameter>
+        {
+            new MySqlParameter("@Nome", requerimento.Nome),
+            new MySqlParameter("@RA", requerimento.RA),
+            new MySqlParameter("@Curso", requerimento.Curso),
+            new MySqlParameter("@CPF", requerimento.CPF),
+            new MySqlParameter("@RG", requerimento.RG),
+            new MySqlParameter("@Email", requerimento.Email),
+            new MySqlParameter("@Id", requerimento.Id)
+        };
+
+            using (var conexao = ConexaoBD.ObterConexao())
+            {
+                using (var cmd = new MySqlCommand(query, conexao))
+                {
+                    cmd.Parameters.AddRange(parametros.ToArray());
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
+
 }
