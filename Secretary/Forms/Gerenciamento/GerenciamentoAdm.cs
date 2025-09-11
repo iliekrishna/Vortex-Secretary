@@ -238,7 +238,7 @@ namespace Secretary.Forms
             finally
             {
                 flowLayoutPanelUsuariosInativos.ResumeLayout();
-                AjustarLarguraDosPanels(); // Ajusta largura dos painéis se necessário
+                AjustarLarguraDosPanels();
             }
         }
 
@@ -637,7 +637,7 @@ namespace Secretary.Forms
             {
                 if (ctrl is Panel panel)
                 {
-                    if (panel.Name.StartsWith("panelUsuInativo"))
+                    if (panel.Name.StartsWith("panelUsu"))
                     {
                         panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 5;
 
@@ -668,11 +668,11 @@ namespace Secretary.Forms
                     }
                     else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
                     {
-                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
+                        panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 5;
                         btn.Location = new Point(20, 10);
                     }
                 }
-            }            
+            }
         }
         
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)

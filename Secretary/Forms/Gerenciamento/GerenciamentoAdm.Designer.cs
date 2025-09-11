@@ -157,15 +157,16 @@ namespace Secretary.Forms
             // 
             // flowLayoutPanelUsuariosInativos
             // 
-            this.flowLayoutPanelUsuariosInativos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelUsuariosInativos.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
-            this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
-            this.flowLayoutPanelUsuariosInativos.TabIndex = 0;
             this.flowLayoutPanelUsuariosInativos.AutoScroll = true;
-            this.flowLayoutPanelUsuariosInativos.Padding = new Padding(5);
+            this.flowLayoutPanelUsuariosInativos.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.flowLayoutPanelUsuariosInativos.Name = "flowLayoutPanelUsuariosInativos";
+            this.flowLayoutPanelUsuariosInativos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelUsuariosInativos.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanelUsuariosInativos.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanelUsuariosInativos.Padding = new System.Windows.Forms.Padding(5);
+            this.flowLayoutPanelUsuariosInativos.Size = new System.Drawing.Size(758, 318);
             this.flowLayoutPanelUsuariosInativos.WrapContents = false;
-            this.flowLayoutPanelUsuariosInativos.FlowDirection = FlowDirection.TopDown;
+            this.flowLayoutPanelUsuariosInativos.TabIndex = 2;
             // 
             // tabPageFaq
             // 

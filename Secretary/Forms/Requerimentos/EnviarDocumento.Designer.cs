@@ -147,7 +147,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EnviarDocumento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EnviarDocumento";
+            this.Text = "Enviar Documento";
             this.Load += new System.EventHandler(this.EnviarDocumento_Load);
             this.panelDivisor1.ResumeLayout(false);
             this.panelDivisor1.PerformLayout();

@@ -148,7 +148,7 @@
             this.MaximizeBox = false;
             this.Name = "FormEditarFaq";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Editar Perguntar";
+            this.Text = "Editar Pergunta";
             this.ResumeLayout(false);
             this.PerformLayout();
 
