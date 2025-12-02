@@ -341,5 +341,37 @@ namespace Secretary
             Login.ShowDialog();
             this.Close();
         }
+
+        // Método para realizar busca global
+        private void RealizarBuscaGlobal()
+        {
+            string termoBusca = txtLocalizarSolicitacao.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(termoBusca))
+            {
+                MessageBox.Show("Digite um termo para buscar.", "Busca", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtLocalizarSolicitacao.Focus();
+                return;
+            }
+
+            // Abre o formulário de resultados da busca no painel principal
+            OpenChildForm(new Forms.FormResultadosBusca(termoBusca), null);
+        }
+
+        // Evento do botão de busca
+        private void btnLocalizarSolicitacao_Click(object sender, EventArgs e)
+        {
+            RealizarBuscaGlobal();
+        }
+
+        // Evento de tecla pressionada no textbox de busca (Enter para buscar)
+        private void txtLocalizarSolicitacao_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Evita o som de "beep"
+                RealizarBuscaGlobal();
+            }
+        }
     }
 }
