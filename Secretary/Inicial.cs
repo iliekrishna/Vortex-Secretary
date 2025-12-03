@@ -341,5 +341,32 @@ namespace Secretary
             Login.ShowDialog();
             this.Close();
         }
+
+        // Busca global
+        private void ExecutarBuscaGlobal()
+        {
+            string termo = txtLocalizarSolicitacao.Text.Trim();
+            if (string.IsNullOrWhiteSpace(termo))
+            {
+                MessageBox.Show("Digite um termo para buscar.", "Busca", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtLocalizarSolicitacao.Focus();
+                return;
+            }
+            OpenChildForm(new Forms.FormResultadosBusca(termo), null);
+        }
+
+        private void btnLocalizarSolicitacao_Click(object sender, EventArgs e)
+        {
+            ExecutarBuscaGlobal();
+        }
+
+        private void txtLocalizarSolicitacao_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                ExecutarBuscaGlobal();
+            }
+        }
     }
 }

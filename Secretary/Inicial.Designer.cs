@@ -305,6 +305,7 @@ namespace Secretary
             this.btnLocalizarSolicitacao.Size = new System.Drawing.Size(25, 22);
             this.btnLocalizarSolicitacao.TabIndex = 22;
             this.btnLocalizarSolicitacao.UseVisualStyleBackColor = false;
+            this.btnLocalizarSolicitacao.Click += new System.EventHandler(this.btnLocalizarSolicitacao_Click);
             // 
             // panelLocalizar
             // 
@@ -340,6 +341,7 @@ namespace Secretary
             this.txtLocalizarSolicitacao.Name = "txtLocalizarSolicitacao";
             this.txtLocalizarSolicitacao.Size = new System.Drawing.Size(526, 16);
             this.txtLocalizarSolicitacao.TabIndex = 19;
+            this.txtLocalizarSolicitacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLocalizarSolicitacao_KeyDown);
             // 
             // pboxLogoCps
             // 
