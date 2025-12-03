@@ -400,17 +400,6 @@
         gg==
 </value>
   </data>
-  <data name="btnLocalizarSolicitacao.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEXSURBVDhPldO/
-        K8VRGMfx61cWynTrymIz+LGSMCgZKBnMymCwWCxKkj/BZjDcjAYmGZQMRmxYsPo1WZheOjq3vud07433
-        +Pl8nvOcnuecUqkABrGPR3zjHedYQUcxm4AWbOMVWxhCFypYxAVu0Z/X/oId3KA392pgA08o58ZI7FxJ
-        jDpgD9VcPMBmIjYAPfhMboHnMLwk2QScYqkofIWTk1QT4pbWi8JLw+nWAUdYLgonYc9JqgFojwMfKIrz
-        uENnkq4D1nCZ68E4xmHokHs1MIkPDOdeMLtxhitMobXglbEbi8PTHk2rI2jDKu5j8BoPce/VMGgs4A3j
-        eX0C+jAW/0QyG8zFBhNF/V9gNh4ynXt/BjPhh/4A+kJPuin9UuEAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="btnLocalizar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO

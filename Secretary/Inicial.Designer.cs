@@ -42,10 +42,6 @@ namespace Secretary
             this.btnMin = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.panelMenuSuperior = new System.Windows.Forms.Panel();
-            this.btnLocalizarSolicitacao = new System.Windows.Forms.Button();
-            this.panelLocalizar = new System.Windows.Forms.Panel();
-            this.lblLocalizarSolicitacao = new System.Windows.Forms.Label();
-            this.txtLocalizarSolicitacao = new System.Windows.Forms.TextBox();
             this.pboxLogoCps = new System.Windows.Forms.PictureBox();
             this.btnLocalizar = new System.Windows.Forms.Button();
             this.pnlDivisor1 = new System.Windows.Forms.Panel();
@@ -270,10 +266,6 @@ namespace Secretary
             // panelMenuSuperior
             // 
             this.panelMenuSuperior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.panelMenuSuperior.Controls.Add(this.btnLocalizarSolicitacao);
-            this.panelMenuSuperior.Controls.Add(this.panelLocalizar);
-            this.panelMenuSuperior.Controls.Add(this.lblLocalizarSolicitacao);
-            this.panelMenuSuperior.Controls.Add(this.txtLocalizarSolicitacao);
             this.panelMenuSuperior.Controls.Add(this.pboxLogoCps);
             this.panelMenuSuperior.Controls.Add(this.btnLocalizar);
             this.panelMenuSuperior.Controls.Add(this.btnClose);
@@ -291,60 +283,10 @@ namespace Secretary
             this.panelMenuSuperior.Size = new System.Drawing.Size(1113, 80);
             this.panelMenuSuperior.TabIndex = 15;
             // 
-            // btnLocalizarSolicitacao
-            // 
-            this.btnLocalizarSolicitacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLocalizarSolicitacao.BackColor = System.Drawing.Color.Transparent;
-            this.btnLocalizarSolicitacao.FlatAppearance.BorderSize = 0;
-            this.btnLocalizarSolicitacao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLocalizarSolicitacao.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLocalizarSolicitacao.ForeColor = System.Drawing.Color.Black;
-            this.btnLocalizarSolicitacao.Image = ((System.Drawing.Image)(resources.GetObject("btnLocalizarSolicitacao.Image")));
-            this.btnLocalizarSolicitacao.Location = new System.Drawing.Point(822, 32);
-            this.btnLocalizarSolicitacao.Name = "btnLocalizarSolicitacao";
-            this.btnLocalizarSolicitacao.Size = new System.Drawing.Size(25, 22);
-            this.btnLocalizarSolicitacao.TabIndex = 22;
-            this.btnLocalizarSolicitacao.UseVisualStyleBackColor = false;
-            // 
-            // panelLocalizar
-            // 
-            this.panelLocalizar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelLocalizar.BackColor = System.Drawing.Color.White;
-            this.panelLocalizar.ForeColor = System.Drawing.Color.Black;
-            this.panelLocalizar.Location = new System.Drawing.Point(223, 59);
-            this.panelLocalizar.Name = "panelLocalizar";
-            this.panelLocalizar.Size = new System.Drawing.Size(624, 1);
-            this.panelLocalizar.TabIndex = 21;
-            // 
-            // lblLocalizarSolicitacao
-            // 
-            this.lblLocalizarSolicitacao.AutoSize = true;
-            this.lblLocalizarSolicitacao.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLocalizarSolicitacao.ForeColor = System.Drawing.Color.White;
-            this.lblLocalizarSolicitacao.Location = new System.Drawing.Point(220, 36);
-            this.lblLocalizarSolicitacao.Name = "lblLocalizarSolicitacao";
-            this.lblLocalizarSolicitacao.Size = new System.Drawing.Size(70, 16);
-            this.lblLocalizarSolicitacao.TabIndex = 20;
-            this.lblLocalizarSolicitacao.Text = "Localizar:";
-            // 
-            // txtLocalizarSolicitacao
-            // 
-            this.txtLocalizarSolicitacao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLocalizarSolicitacao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtLocalizarSolicitacao.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLocalizarSolicitacao.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocalizarSolicitacao.ForeColor = System.Drawing.Color.White;
-            this.txtLocalizarSolicitacao.Location = new System.Drawing.Point(297, 35);
-            this.txtLocalizarSolicitacao.Name = "txtLocalizarSolicitacao";
-            this.txtLocalizarSolicitacao.Size = new System.Drawing.Size(526, 16);
-            this.txtLocalizarSolicitacao.TabIndex = 19;
-            // 
             // pboxLogoCps
             // 
             this.pboxLogoCps.Image = global::Secretary.Properties.Resources.logo_cps_versao_br;
-            this.pboxLogoCps.Location = new System.Drawing.Point(0, 0);
+            this.pboxLogoCps.Location = new System.Drawing.Point(-31, 0);
             this.pboxLogoCps.Margin = new System.Windows.Forms.Padding(30, 9, 9, 9);
             this.pboxLogoCps.Name = "pboxLogoCps";
             this.pboxLogoCps.Padding = new System.Windows.Forms.Padding(70, 10, 10, 10);
@@ -493,7 +435,7 @@ namespace Secretary
             // 
             this.panelDivisor2.BackColor = System.Drawing.Color.Black;
             this.panelDivisor2.ForeColor = System.Drawing.Color.Black;
-            this.panelDivisor2.Location = new System.Drawing.Point(45, 137);
+            this.panelDivisor2.Location = new System.Drawing.Point(45, 114);
             this.panelDivisor2.Name = "panelDivisor2";
             this.panelDivisor2.Size = new System.Drawing.Size(460, 1);
             this.panelDivisor2.TabIndex = 22;
@@ -574,7 +516,7 @@ namespace Secretary
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDataAtual.AutoSize = true;
             this.lblDataAtual.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDataAtual.Location = new System.Drawing.Point(49, 104);
+            this.lblDataAtual.Location = new System.Drawing.Point(49, 81);
             this.lblDataAtual.Name = "lblDataAtual";
             this.lblDataAtual.Size = new System.Drawing.Size(45, 23);
             this.lblDataAtual.TabIndex = 3;
@@ -586,7 +528,7 @@ namespace Secretary
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSaudacao.AutoSize = true;
             this.lblSaudacao.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaudacao.Location = new System.Drawing.Point(45, 57);
+            this.lblSaudacao.Location = new System.Drawing.Point(45, 34);
             this.lblSaudacao.Name = "lblSaudacao";
             this.lblSaudacao.Size = new System.Drawing.Size(105, 38);
             this.lblSaudacao.TabIndex = 2;
@@ -645,10 +587,6 @@ namespace Secretary
         private System.Windows.Forms.Button btnLocalizar;
         private System.Windows.Forms.Button btnInicio;
         private System.Windows.Forms.PictureBox pboxLogoCps;
-        private System.Windows.Forms.Button btnLocalizarSolicitacao;
-        private System.Windows.Forms.Panel panelLocalizar;
-        private System.Windows.Forms.Label lblLocalizarSolicitacao;
-        private System.Windows.Forms.TextBox txtLocalizarSolicitacao;
         private System.Windows.Forms.Panel panelPrincipal;
         private System.Windows.Forms.Label lblSaudacao;
         private System.Windows.Forms.ContextMenuStrip menuOpcoes;
