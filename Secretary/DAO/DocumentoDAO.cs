@@ -1,82 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using Secretary.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Secretary.DAO
 {
     public class DocumentoDAO
     {
-        public bool CadastrarDocumento(DocumentoDisponivel doc)
+        public void Inserir(DocumentoDisponivel doc)
         {
-            using (var conexao = ConexaoBD.ObterConexao())
+            string sql = @"
+        INSERT INTO t_disponibilidade_doc 
+            (nome_doc, descricao, status_atual, necessidade_imagem)
+        VALUES 
+            (@nome, @desc, @status, @imagem)";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
             {
-                string sql = @"INSERT INTO t_disponibilidade_doc (nome_doc, descricao, status_atual)
-                               VALUES (@Nome, @Descricao, @Status)";
+                cmd.Parameters.AddWithValue("@nome", doc.Nome);
+                cmd.Parameters.AddWithValue("@desc", doc.Descricao);
+                cmd.Parameters.AddWithValue("@status", doc.StatusAtual);
+                cmd.Parameters.AddWithValue("@imagem", doc.NecessitaImagem ? "Sim" : "Não");
 
-                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
-                {
-                    cmd.Parameters.AddWithValue("@Nome", doc.Nome);
-                    cmd.Parameters.AddWithValue("@Descricao", doc.Descricao);
-                    cmd.Parameters.AddWithValue("@Status", doc.StatusAtual);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
-                    return cmd.ExecuteNonQuery() > 0;
-                }
+        public int ObterUltimoIdInserido()
+        {
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", conn))
+            {
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+        public bool ExisteDocumento(string nome)
+        {
+            string sql = "SELECT COUNT(*) FROM t_disponibilidade_doc WHERE nome_doc = @nome";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nome", nome);
+
+                int qtd = Convert.ToInt32(cmd.ExecuteScalar());
+                return qtd > 0;
             }
         }
 
         public List<DocumentoDisponivel> ListarTodos()
         {
-            var lista = new List<DocumentoDisponivel>();
+            List<DocumentoDisponivel> lista = new List<DocumentoDisponivel>();
 
-            try
+            string sql = @"
+        SELECT id_disponibilidade, nome_doc, descricao, status_atual, necessidade_imagem
+        FROM t_disponibilidade_doc
+        ORDER BY nome_doc ASC";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var reader = cmd.ExecuteReader())
             {
-                using (var conn = ConexaoBD.ObterConexao())
+                while (reader.Read())
                 {
-                    string sql = @"SELECT id_disponibilidade, nome_doc, descricao, status_atual 
-                          FROM t_disponibilidade_doc 
-                          ORDER BY status_atual DESC, nome_doc ASC";
-
-                    using (var cmd = new MySqlCommand(sql, conn))
-                    using (var reader = cmd.ExecuteReader())
+                    lista.Add(new DocumentoDisponivel
                     {
-                        while (reader.Read())
-                        {
-                            lista.Add(new DocumentoDisponivel
-                            {
-                                Id = reader.GetInt32("id_disponibilidade"),
-                                Nome = reader.GetString("nome_doc"),
-                                Descricao = reader.GetString("descricao"),
-                                StatusAtual = reader.GetString("status_atual")
-                            });
-                        }
-                    }
+                        Id = reader.GetInt32("id_disponibilidade"),
+                        Nome = reader.GetString("nome_doc"),
+                        Descricao = reader.GetString("descricao"),
+                        StatusAtual = reader.GetString("status_atual"),
+                        NecessitaImagem = reader.GetString("necessidade_imagem") == "Sim",
+
+                        NomeCampoImagem = null,
+                        ObrigatorioSegVia = false
+                    });
                 }
             }
-            catch (Exception ex)
+
+            string sqlCampos = @"
+        SELECT id_disponibilidade, nome_campo, obrigatorio_segunda_via
+        FROM t_campos_documento";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sqlCampos, conn))
+            using (var reader = cmd.ExecuteReader())
             {
-                // Logar o erro ou lançar para ser tratado pelo chamador
-                Console.WriteLine($"Erro ao listar documentos: {ex.Message}");
-                throw;
+                while (reader.Read())
+                {
+                    int idDoc = reader.GetInt32("id_disponibilidade");
+                    var doc = lista.Find(d => d.Id == idDoc);
+
+                    if (doc != null)
+                    {
+                        doc.NomeCampoImagem = reader.GetString("nome_campo");
+                        doc.ObrigatorioSegVia = reader.GetString("obrigatorio_segunda_via") == "Sim";
+                    }
+                }
             }
 
             return lista;
         }
 
-        public bool ExisteDocumento(string nome)
-        {
-            using (var conn = ConexaoBD.ObterConexao())
-            {
-                string sql = "SELECT COUNT(*) FROM t_disponibilidade_doc WHERE nome_doc = @Nome";
-                using (var cmd = new MySqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@Nome", nome);
-                    return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-                }
-            }
-        }
+
     }
 }

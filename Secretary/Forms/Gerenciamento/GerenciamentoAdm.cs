@@ -138,15 +138,24 @@ namespace Secretary.Forms
         {
             if (sender is Button btn && btn.Tag is DocumentoDisponivel doc)
             {
-                using (var form = new FormEditarDocumento(doc.Id, doc.Nome, doc.Descricao, doc.StatusAtual))
+                using (var form = new FormEditarDocumento(
+                    doc.Id,
+                    doc.Nome,
+                    doc.Descricao,
+                    doc.StatusAtual,
+                    doc.NecessitaImagem,
+                    doc.NomeCampoImagem,
+                    doc.ObrigatorioSegVia))
                 {
                     form.FormClosed += (s, args) =>
                     {
                         CarregarDocumentosDisponiveis();
                         AjustarLarguraDosPanels();
                     };
+
                     form.ShowDialog();
                 }
+
             }
         }
         private void AdicionarBotaoNovoDocumento()

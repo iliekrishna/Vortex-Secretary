@@ -18,6 +18,7 @@ public class Requerimento
     public string Resposta { get; set; }
     public int? IdImagem { get; set; }
     public string TipoDocumento { get; set; }
+    public string TipoVia { get; set; }
     public int? IdDisponibilidade { get; set; }
     public string NomeUsuarioResposta { get; set; }
     public string TipoVinculo { get; set; }

@@ -91,6 +91,7 @@ namespace Secretary.DAO
                     r.nome AS 'Nome',
                     r.ra AS 'RA',
                     r.curso AS 'Curso',
+                    r.tipo_via AS 'Via',
                     r.tipo_vinculo AS 'Tipo de Vínculo',
                     r.nome_doc AS 'Documento Solicitado',
                     u.nome_usuario AS 'Respondido Por' ";
@@ -139,6 +140,7 @@ namespace Secretary.DAO
             r.ra AS 'RA',
             r.cpf AS 'CPF',
             r.curso AS 'Curso',
+            r.tipo_via AS 'Via',
             r.tipo_vinculo AS 'Tipo de Vínculo',
             r.nome_doc AS 'Documento Solicitado',
             u.nome_usuario AS 'Respondido Por' ";
@@ -195,7 +197,8 @@ namespace Secretary.DAO
                             IdImagem = reader.IsDBNull(reader.GetOrdinal("id_imagem")) ? (int?)null : reader.GetInt32("id_imagem"),
                             NomeUsuarioResposta = reader["nome_usuario_resposta"]?.ToString(),
                             IdDisponibilidade = reader.IsDBNull(reader.GetOrdinal("id_disponibilidade")) ? (int?)null : reader.GetInt32("id_disponibilidade"),
-                            TipoVinculo = reader["tipo_vinculo"]?.ToString()  // <-- novo campo
+                            TipoVinculo = reader["tipo_vinculo"]?.ToString(),
+                            TipoVia = reader["tipo_via"]?.ToString()
                         };
                     }
                 }
@@ -203,6 +206,38 @@ namespace Secretary.DAO
 
             return null;
         }
+
+        public static int InserirRequerimento(Requerimento r)
+        {
+            string sql = @"
+        INSERT INTO t_requerimentos
+        (ra, telefone, curso, nome, cpf, rg, email, nome_doc, status_doc, 
+         data_pedido, tipo_vinculo, tipo_via, id_disponibilidade)
+        VALUES
+        (@ra, @telefone, @curso, @nome, @cpf, @rg, @email, @nomeDoc, @status,
+         NOW(), @vinculo, @tipoVia, @idDisp);
+        SELECT LAST_INSERT_ID();";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@ra", r.RA);
+                cmd.Parameters.AddWithValue("@telefone", r.Telefone);
+                cmd.Parameters.AddWithValue("@curso", r.Curso);
+                cmd.Parameters.AddWithValue("@nome", r.Nome);
+                cmd.Parameters.AddWithValue("@cpf", r.CPF);
+                cmd.Parameters.AddWithValue("@rg", r.RG);
+                cmd.Parameters.AddWithValue("@email", r.Email);
+                cmd.Parameters.AddWithValue("@nomeDoc", r.NomeDocumento);
+                cmd.Parameters.AddWithValue("@status", "Pendente");
+                cmd.Parameters.AddWithValue("@vinculo", r.TipoVinculo);
+                cmd.Parameters.AddWithValue("@tipoVia", r.TipoVia ?? "Primeira via");
+                cmd.Parameters.AddWithValue("@idDisp", r.IdDisponibilidade);
+
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
 
         public static int? ObterIdDisponibilidadePorNomeDoc(string nomeDoc)
         {
@@ -220,33 +255,6 @@ namespace Secretary.DAO
                 }
             }
             return null;
-        }
-
-        // Inserir novo requerimento
-        public static void Inserir(Requerimento r)
-        {
-            string sql = @"
-            INSERT INTO t_requerimentos 
-            (ra, telefone, curso, nome, cpf, rg, email, nome_doc, tipo_doc, status_doc, data_pedido, tipo_vinculo)
-            VALUES (@ra, @telefone, @curso, @nome, @cpf, @rg, @email, @nome_doc, @tipo_doc, @status_doc, NOW(), @tipo_vinculo)";
-
-            using (var conn = ConexaoBD.ObterConexao())
-            using (var cmd = new MySqlCommand(sql, conn))
-            {
-                cmd.Parameters.AddWithValue("@ra", r.RA);
-                cmd.Parameters.AddWithValue("@telefone", r.Telefone);
-                cmd.Parameters.AddWithValue("@curso", r.Curso);
-                cmd.Parameters.AddWithValue("@nome", r.Nome);
-                cmd.Parameters.AddWithValue("@cpf", r.CPF);
-                cmd.Parameters.AddWithValue("@rg", r.RG);
-                cmd.Parameters.AddWithValue("@email", r.Email);
-                cmd.Parameters.AddWithValue("@nome_doc", r.NomeDocumento);
-                cmd.Parameters.AddWithValue("@tipo_doc", r.TipoDocumento);
-                cmd.Parameters.AddWithValue("@status_doc", "Pendente");
-                cmd.Parameters.AddWithValue("@tipo_vinculo", r.TipoVinculo ?? (object)DBNull.Value);
-
-                cmd.ExecuteNonQuery();
-            }
         }
 
         // Atualizar resposta e status do requerimento
@@ -467,13 +475,15 @@ namespace Secretary.DAO
         {
             string query = @"
             UPDATE t_requerimentos SET
-                nome = @Nome,
-                ra = @RA,
-                curso = @Curso,
-                cpf = @CPF,
-                rg = @RG,
-                email = @Email
-            WHERE id_requerimento = @Id";
+            nome = @Nome,
+            ra = @RA,
+            curso = @Curso,
+            cpf = @CPF,
+            rg = @RG,
+            email = @Email,
+            tipo_via = @TipoVia
+                WHERE id_requerimento = @Id";
+
 
             var parametros = new List<MySqlParameter>
         {
@@ -483,6 +493,7 @@ namespace Secretary.DAO
             new MySqlParameter("@CPF", requerimento.CPF),
             new MySqlParameter("@RG", requerimento.RG),
             new MySqlParameter("@Email", requerimento.Email),
+            new MySqlParameter("@TipoVia", requerimento.TipoVia),
             new MySqlParameter("@Id", requerimento.Id)
         };
 
