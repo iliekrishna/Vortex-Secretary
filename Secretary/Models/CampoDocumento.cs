@@ -11,7 +11,8 @@ namespace Secretary.Models
         public int IdCampo { get; set; }
         public int IdDocumento { get; set; }
         public string NomeCampo { get; set; }
-        public string TipoCampo { get; set; }  // exemplo: 'img'
+        public string TipoCampo { get; set; }
+        public string OpcoesCombobox { get; set; }
         public bool Obrigatorio { get; set; }
     }
 }

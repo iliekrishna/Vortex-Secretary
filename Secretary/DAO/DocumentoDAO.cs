@@ -10,10 +10,10 @@ namespace Secretary.DAO
         public void Inserir(DocumentoDisponivel doc)
         {
             string sql = @"
-        INSERT INTO t_disponibilidade_doc 
-            (nome_doc, descricao, status_atual, necessidade_imagem)
-        VALUES 
-            (@nome, @desc, @status, @imagem)";
+                INSERT INTO t_disponibilidade_doc 
+                    (nome_doc, descricao, status_atual, precisa_pagamento_segunda_via)
+                VALUES 
+                    (@nome, @desc, @status, @pagamento)";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -21,7 +21,7 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@nome", doc.Nome);
                 cmd.Parameters.AddWithValue("@desc", doc.Descricao);
                 cmd.Parameters.AddWithValue("@status", doc.StatusAtual);
-                cmd.Parameters.AddWithValue("@imagem", doc.NecessitaImagem ? "Sim" : "Não");
+                cmd.Parameters.AddWithValue("@pagamento", doc.PrecisaPagamentoSegundaVia);
 
                 cmd.ExecuteNonQuery();
             }
@@ -35,6 +35,7 @@ namespace Secretary.DAO
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
+
         public bool ExisteDocumento(string nome)
         {
             string sql = "SELECT COUNT(*) FROM t_disponibilidade_doc WHERE nome_doc = @nome";
@@ -51,12 +52,17 @@ namespace Secretary.DAO
 
         public List<DocumentoDisponivel> ListarTodos()
         {
-            List<DocumentoDisponivel> lista = new List<DocumentoDisponivel>();
+            var lista = new List<DocumentoDisponivel>();
 
             string sql = @"
-        SELECT id_disponibilidade, nome_doc, descricao, status_atual, necessidade_imagem
-        FROM t_disponibilidade_doc
-        ORDER BY nome_doc ASC";
+                SELECT 
+                    id_disponibilidade, 
+                    nome_doc, 
+                    descricao, 
+                    status_atual,
+                    precisa_pagamento_segunda_via
+                FROM t_disponibilidade_doc
+                ORDER BY nome_doc ASC";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -70,38 +76,12 @@ namespace Secretary.DAO
                         Nome = reader.GetString("nome_doc"),
                         Descricao = reader.GetString("descricao"),
                         StatusAtual = reader.GetString("status_atual"),
-                        NecessitaImagem = reader.GetString("necessidade_imagem") == "Sim",
-
-                        NomeCampoImagem = null,
-                        ObrigatorioSegVia = false
+                        PrecisaPagamentoSegundaVia = reader.GetInt32("precisa_pagamento_segunda_via")
                     });
-                }
-            }
-
-            string sqlCampos = @"
-        SELECT id_disponibilidade, nome_campo, obrigatorio_segunda_via
-        FROM t_campos_documento";
-
-            using (var conn = ConexaoBD.ObterConexao())
-            using (var cmd = new MySqlCommand(sqlCampos, conn))
-            using (var reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    int idDoc = reader.GetInt32("id_disponibilidade");
-                    var doc = lista.Find(d => d.Id == idDoc);
-
-                    if (doc != null)
-                    {
-                        doc.NomeCampoImagem = reader.GetString("nome_campo");
-                        doc.ObrigatorioSegVia = reader.GetString("obrigatorio_segunda_via") == "Sim";
-                    }
                 }
             }
 
             return lista;
         }
-
-
     }
 }

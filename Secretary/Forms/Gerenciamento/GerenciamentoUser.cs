@@ -138,9 +138,7 @@ namespace Secretary.Forms
                     doc.Nome,
                     doc.Descricao,
                     doc.StatusAtual,
-                    doc.NecessitaImagem,
-                    doc.NomeCampoImagem,
-                    doc.ObrigatorioSegVia
+                    doc.PrecisaPagamentoSegundaVia
                 ))
                 {
                     form.FormClosed += (s, args) =>
@@ -148,6 +146,7 @@ namespace Secretary.Forms
                         CarregarDocumentosDisponiveis();
                         AjustarLarguraDosPanels();
                     };
+
                     form.ShowDialog();
                 }
             }

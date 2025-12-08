@@ -13,9 +13,7 @@ namespace Secretary.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public string StatusAtual { get; set; }
-        public bool NecessitaImagem { get; set; }
-        public string NomeCampoImagem { get; set; }
-        public bool ObrigatorioSegVia { get; set; }
+        public int PrecisaPagamentoSegundaVia { get; set; }
     }
 
 }

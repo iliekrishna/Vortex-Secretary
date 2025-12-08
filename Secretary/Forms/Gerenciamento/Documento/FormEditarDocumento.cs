@@ -1,12 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
+using Secretary.DAO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Secretary.Forms
@@ -14,157 +9,162 @@ namespace Secretary.Forms
     public partial class FormEditarDocumento : Form
     {
         private int idDocumento;
-        private bool exigeImagem;
-        private string nomeCampoImagem;
-        private bool obrigatorioSegVia;
 
-        public FormEditarDocumento(int id, string nome, string descricao, string status, bool exigeImagem, string nomeCampoImagem, bool obrigatorioSegVia)
+        public FormEditarDocumento(int id, string nome, string descricao, string status, int precisaPagamentoSegVia)
         {
             InitializeComponent();
 
             idDocumento = id;
-            this.exigeImagem = exigeImagem;
-            this.nomeCampoImagem = nomeCampoImagem;
-            this.obrigatorioSegVia = obrigatorioSegVia;
 
             txtNomeRequerimento.Text = nome;
             txtPrazo.Text = descricao;
 
-            rbtnAtivo.Checked = (status == "Disponível" || status == "Ativo");
+            rbtnAtivo.Checked = status == "Disponível" || status == "Ativo";
             rbtnInativo.Checked = !rbtnAtivo.Checked;
 
-            if (exigeImagem)
-                rdbSim.Checked = true;
-            else
-                rdbNao.Checked = true;
+            chbPagamentoTaxa.Checked = (precisaPagamentoSegVia == 1);
         }
 
+        private void FormEditarDocumento_Load(object sender, EventArgs e)
+        {
+            CarregarCampos();
+        }
+
+        // ===========================================
+        // SALVAR ALTERAÇÕES DO DOCUMENTO
+        // ===========================================
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             string novoNome = txtNomeRequerimento.Text.Trim();
             string novaDescricao = txtPrazo.Text.Trim();
             string novoStatus = rbtnAtivo.Checked ? "Disponível" : "Indisponível";
-            bool necessitaImagem = rdbSim.Checked;
+            int pagamento = chbPagamentoTaxa.Checked ? 1 : 0;
 
             try
             {
                 using (var conexao = ConexaoBD.ObterConexao())
                 {
-                    // Atualiza documento principal
-                    string query = @"UPDATE t_disponibilidade_doc 
-                             SET nome_doc = @nome, 
-                                 descricao = @desc, 
-                                 status_atual = @status,
-                                 necessidade_imagem = @img 
-                             WHERE id_disponibilidade = @id";
+                    string query = @"
+                        UPDATE t_disponibilidade_doc 
+                        SET nome_doc = @nome,
+                            descricao = @desc,
+                            status_atual = @status,
+                            precisa_pagamento_segunda_via = @pagamento
+                        WHERE id_disponibilidade = @id";
 
                     MySqlCommand cmd = new MySqlCommand(query, conexao);
                     cmd.Parameters.AddWithValue("@nome", novoNome);
                     cmd.Parameters.AddWithValue("@desc", novaDescricao);
                     cmd.Parameters.AddWithValue("@status", novoStatus);
-                    cmd.Parameters.AddWithValue("@img", necessitaImagem ? "Sim" : "Não");
+                    cmd.Parameters.AddWithValue("@pagamento", pagamento);
                     cmd.Parameters.AddWithValue("@id", idDocumento);
 
                     cmd.ExecuteNonQuery();
                 }
 
-                // --------- CAMPOS DE IMAGEM ----------
-                if (necessitaImagem)
-                {
-                    // Salva ou atualiza campo
-                    SalvarOuAtualizarCampoImagem();
-                }
-                else
-                {
-                    // Remove campo caso exista
-                    RemoverCampoImagem();
-                }
+                MessageBox.Show("Documento atualizado com sucesso!", "Sucesso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MessageBox.Show("Documento atualizado com sucesso!");
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao atualizar: " + ex.Message);
+                MessageBox.Show("Erro ao atualizar: " + ex.Message,
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void SalvarOuAtualizarCampoImagem()
+        // ===========================================
+        // ABRIR FORM DE ADICIONAR CAMPOS
+        // ===========================================
+        private void btnAdicionarCampo_Click(object sender, EventArgs e)
         {
-            using (var conn = ConexaoBD.ObterConexao())
-            {
-                string sql = @"
-            INSERT INTO t_campos_documento 
-                (id_disponibilidade, nome_campo, obrigatorio_segunda_via)
-            VALUES 
-                (@id, @nome, @obrigatorio)
-            ON DUPLICATE KEY UPDATE
-                nome_campo = @nome,
-                obrigatorio_segunda_via = @obrigatorio";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", idDocumento);
-                cmd.Parameters.AddWithValue("@nome", txtNomeCampo.Text.Trim());
-                cmd.Parameters.AddWithValue("@obrigatorio", chkObrigatorio.Checked ? "Sim" : "Não");
-
-                cmd.ExecuteNonQuery();
-            }
+            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(idDocumento);
+            formCampo.FormClosed += (s, args) => CarregarCampos();
+            formCampo.ShowDialog();
         }
-        private void RemoverCampoImagem()
+
+        // ===========================================
+        // CARREGAR LISTA DE CAMPOS
+        // ===========================================
+        private void CarregarCampos()
         {
-            using (var conn = ConexaoBD.ObterConexao())
+            panelCampos.Controls.Clear();
+
+            CampoDocumentoDAO dao = new CampoDocumentoDAO();
+            var campos = dao.ListarPorDocumento(idDocumento);
+
+            int y = 10;
+
+            foreach (var campo in campos)
             {
-                string sql = "DELETE FROM t_campos_documento WHERE id_disponibilidade = @id";
+                Panel card = new Panel();
+                card.BorderStyle = BorderStyle.FixedSingle;
+                card.Size = new Size(560, 48);
+                card.Location = new Point(10, y);
+                card.BackColor = Color.WhiteSmoke;
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", idDocumento);
+                Label lbl = new Label();
+                lbl.Text = $"{campo.NomeCampo}  ({campo.TipoCampo})";
+                lbl.Font = new Font("Verdana", 9, FontStyle.Bold);
+                lbl.Location = new Point(10, 14);
+                lbl.AutoSize = true;
 
-                cmd.ExecuteNonQuery();
+                Button btnEditar = new Button();
+                btnEditar.Text = "Editar";
+                btnEditar.Size = new Size(80, 26);
+                btnEditar.Location = new Point(370, 10);
+                btnEditar.Click += (s, e) =>
+                {
+                    var editForm = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(idDocumento, campo);
+                    editForm.FormClosed += (x, z) => CarregarCampos();
+                    editForm.ShowDialog();
+                };
+
+                Button btnExcluir = new Button();
+                btnExcluir.Text = "Excluir";
+                btnExcluir.Size = new Size(80, 26);
+                btnExcluir.Location = new Point(460, 10);
+                btnExcluir.ForeColor = Color.Red;
+
+                btnExcluir.Click += (s, e) =>
+                {
+                    if (MessageBox.Show("Deseja realmente excluir este campo?",
+                        "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        dao.Excluir(campo.IdCampo);
+                        CarregarCampos();
+                    }
+                };
+
+                card.Controls.Add(lbl);
+                card.Controls.Add(btnEditar);
+                card.Controls.Add(btnExcluir);
+
+                panelCampos.Controls.Add(card);
+
+                y += 55;
             }
-        }
-        private void FormEditarDocumento_Load(object sender, EventArgs e)
-        {
-            if (exigeImagem)
-            {
-                rdbSim.Checked = true;
-                panelCampoImagem.Visible = true;
-                txtNomeCampo.Text = nomeCampoImagem;
-                chkObrigatorio.Checked = obrigatorioSegVia;
 
-                this.Size = new Size(611, 456);
-                btnSalvar.Location = new Point(461, 369);
+            // ============================================================
+            // AJUSTA O TAMANHO DO FORM SE EXISTIREM CAMPOS EXTRAS
+            // ============================================================
+            if (campos.Count > 0)
+            {
+                // Existe pelo menos um campo extra
+                this.Size = new Size(611, 656);
+                panelCampos.Visible = true;
+                this.CenterToScreen();
+
             }
             else
             {
-                rdbNao.Checked = true;
-                panelCampoImagem.Visible = false;
+                // Não existe campo algum
+                this.Size = new Size(611, 378);
+                panelCampos.Visible = false; // opcional
+                this.CenterToScreen();
 
-                this.Size = new Size(611, 302);
-                btnSalvar.Location = new Point(450, 210);
             }
-
-            rdbSim.CheckedChanged += (s, ev) =>
-            {
-                if (rdbSim.Checked)
-                {
-                    panelCampoImagem.Visible = true;
-
-                    this.Size = new Size(611, 456);
-                    btnSalvar.Location = new Point(461, 369);
-                }
-            };
-
-            rdbNao.CheckedChanged += (s, ev) =>
-            {
-                if (rdbNao.Checked)
-                {
-                    panelCampoImagem.Visible = false;
-
-                    this.Size = new Size(611, 302);
-                    btnSalvar.Location = new Point(450, 210);
-                }
-            };
         }
-
     }
 }
