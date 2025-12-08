@@ -4,6 +4,7 @@ using Secretary.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -95,34 +96,44 @@ namespace Secretary.Forms
                 txtMotivo.Visible = false;
                 lblMotivo.Visible = false;
 
-                // Verifica se o documento é Carteira de Identidade Escolar (RA) e se está disponível (id_disponibilidade = 5)
-                bool carteiraDisponivel = RequerimentoDAO.DocumentoDisponivel(5);
+                // Buscar imagens associadas ao requerimento
+                var imagens = RequerimentoDAO.BuscarImagensPorRequerimento(idRequerimento);
+                List<ImagemRequerimento> listaImagens = new List<ImagemRequerimento>();
 
-                if (requerimento.NomeDocumento == "Carteira de Identidade Escolar (RA)" && carteiraDisponivel)
+                if (imagens != null && imagens.Count > 0)
                 {
-                    if (requerimento.IdImagem.HasValue)
+                    // Usa as imagens encontradas via id_campo
+                    listaImagens = imagens;
+                }
+                else if (requerimento.IdImagem.HasValue)
+                {
+                    // Fallback: busca via id_imagem (para registros antigos)
+                    var img = RequerimentoDAO.BuscarImagemPorId(requerimento.IdImagem.Value);
+                    if (img != null)
                     {
-                        var img = RequerimentoDAO.BuscarImagemPorId(requerimento.IdImagem.Value);
-
-                        if (img != null)
-                        {
-                            txtMotivo.Text = img.MotivoSegundaVia ?? "";
-                            txtMotivo.Visible = true;
-                            lblMotivo.Visible = true;
-
-                            if (!string.IsNullOrEmpty(img.EnderecoComprovante) || !string.IsNullOrEmpty(img.EnderecoBO))
-                            {
-                                btnBaixarMidia.Visible = true;
-                                btnBaixarMidia.Tag = img;
-                            }
-                        }
+                        listaImagens.Add(img);
                     }
                 }
-                else
+
+                if (listaImagens.Count > 0)
                 {
-                    btnBaixarMidia.Visible = false;
-                    txtMotivo.Visible = false;
-                    lblMotivo.Visible = false;
+                    var img = listaImagens[0];  // Usa a primeira para motivo (assumindo 1:1)
+
+                    // Mostrar motivo apenas se houver (ex.: para segunda via)
+                    if (!string.IsNullOrEmpty(img.MotivoSegundaVia))
+                    {
+                        txtMotivo.Text = img.MotivoSegundaVia;
+                        txtMotivo.Visible = true;
+                        lblMotivo.Visible = true;
+                    }
+
+                    // Mostrar botão de baixar mídia se houver comprovante ou BO em qualquer imagem
+                    bool temMidia = listaImagens.Any(i => !string.IsNullOrEmpty(i.EnderecoComprovante) || !string.IsNullOrEmpty(i.EnderecoBO));
+                    if (temMidia)
+                    {
+                        btnBaixarMidia.Visible = true;
+                        btnBaixarMidia.Tag = listaImagens;  // Sempre uma lista
+                    }
                 }
             }
             catch (Exception ex)
@@ -130,7 +141,6 @@ namespace Secretary.Forms
                 MessageBox.Show("Erro ao carregar requerimento: " + ex.Message);
             }
         }
-
         private void btnEnviar_Click(object sender, EventArgs e)
         {
             try
@@ -157,27 +167,28 @@ namespace Secretary.Forms
 
         private async void btnBaixarMidia_Click_1(object sender, EventArgs e)
         {
-            if (btnBaixarMidia.Tag is ImagemRequerimento img)
+            if (btnBaixarMidia.Tag is List<ImagemRequerimento> imagens && imagens.Count > 0)
             {
-
                 string urlBase = "https://www.secretaria.aprenderensinando.com.br/vortex/"; // URL do servidor
-
-                if (!string.IsNullOrEmpty(img.EnderecoComprovante))
+                foreach (var img in imagens)
                 {
-                    string urlComprovante = new Uri(new Uri(urlBase), img.EnderecoComprovante.Replace("\\", "/")).ToString();
-                    string nomeArquivo = Path.GetFileName(img.EnderecoComprovante);
-                    await BaixarArquivoAsync(urlComprovante, nomeArquivo);
-                }
-                if (img.MotivoSegundaVia == "Roubo/Furto" && !string.IsNullOrEmpty(img.EnderecoBO))
-                {
-                    string urlBO = new Uri(new Uri(urlBase), img.EnderecoBO.Replace("\\", "/")).ToString();
-                    string nomeArquivoBO = Path.GetFileName(img.EnderecoBO);
-                    await BaixarArquivoAsync(urlBO, nomeArquivoBO);
+                    if (!string.IsNullOrEmpty(img.EnderecoComprovante))
+                    {
+                        string urlComprovante = new Uri(new Uri(urlBase), img.EnderecoComprovante.Replace("\\", "/")).ToString();
+                        string nomeArquivo = Path.GetFileName(img.EnderecoComprovante);
+                        await BaixarArquivoAsync(urlComprovante, nomeArquivo);
+                    }
+                    if (img.MotivoSegundaVia == "Roubo/Furto" && !string.IsNullOrEmpty(img.EnderecoBO))
+                    {
+                        string urlBO = new Uri(new Uri(urlBase), img.EnderecoBO.Replace("\\", "/")).ToString();
+                        string nomeArquivoBO = Path.GetFileName(img.EnderecoBO);
+                        await BaixarArquivoAsync(urlBO, nomeArquivoBO);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Tag do botão não está configurada corretamente.");
+                MessageBox.Show("Nenhuma mídia encontrada para baixar.");
             }
         }
 

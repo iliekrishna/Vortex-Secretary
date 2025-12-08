@@ -155,10 +155,8 @@ namespace Secretary.Forms.Requerimentos
 
                 message.AlternateViews.Add(avHtml);
 
-                // Envia
                 smtp.Send(message);
 
-                // 🔹 Agora sim pode liberar memória
                 ms.Dispose();
             }
         }

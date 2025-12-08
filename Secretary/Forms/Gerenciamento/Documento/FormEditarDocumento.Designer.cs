@@ -74,6 +74,7 @@
             this.btnAdicionarCampo.TabIndex = 73;
             this.btnAdicionarCampo.Text = "Campo Extra";
             this.btnAdicionarCampo.UseVisualStyleBackColor = true;
+            this.btnAdicionarCampo.Click += new System.EventHandler(this.btnAdicionarCampo_Click_1);
             // 
             // panelDivisor
             // 
@@ -159,6 +160,7 @@
             this.btnSalvar.TabIndex = 71;
             this.btnSalvar.Text = "Salvar Alteração";
             this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
             // 
             // txtNomeRequerimento
             // 

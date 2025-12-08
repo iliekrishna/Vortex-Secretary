@@ -339,9 +339,9 @@ namespace Secretary.DAO
             List<ImagemRequerimento> imagens = new List<ImagemRequerimento>();
 
             string sql = @"
-                SELECT id_imagem, motivo_segunda_via, endereco_bo, endereco_comprovante
-                FROM t_img_requerimento
-                WHERE id_requerimento = @idRequerimento";
+        SELECT id_imagem, motivo_segunda_via, endereco_bo, endereco_comprovante
+        FROM t_img_requerimento
+        WHERE id_campo = @idRequerimento";  // Corrigido: usa id_campo como FK para t_requerimentos.id_requerimento
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -365,7 +365,6 @@ namespace Secretary.DAO
 
             return imagens;
         }
-
         // Verifica se o documento está disponível (exemplo para id_disponibilidade)
         public static bool DocumentoDisponivel(int idDisponibilidade)
         {
@@ -380,22 +379,22 @@ namespace Secretary.DAO
         }
 
         // Insere imagens enviadas pelo aluno e retorna o id_imagem gerado
-        public static int InserirImagensAluno(string motivo, string enderecoBo, string enderecoComprovante)
+        public static int InserirImagensAluno(int idRequerimento, string motivo, string enderecoBo, string enderecoComprovante)
         {
             string sqlInsert = @"
-            INSERT INTO t_img_requerimento (motivo_segunda_via, endereco_bo, endereco_comprovante)
-            VALUES (@motivo, @bo, @comprovante);
+            INSERT INTO t_img_requerimento (id_campo, motivo_segunda_via, endereco_bo, endereco_comprovante)
+            VALUES (@idCampo, @motivo, @bo, @comprovante);
             SELECT LAST_INSERT_ID();";
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sqlInsert, conn))
             {
-                cmd.Parameters.AddWithValue("@motivo", motivo);
+                cmd.Parameters.AddWithValue("@idCampo", idRequerimento);  // Novo: seta id_campo
+                cmd.Parameters.AddWithValue("@motivo", (object)motivo ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@bo", (object)enderecoBo ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@comprovante", (object)enderecoComprovante ?? DBNull.Value);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
-
         // Atualiza o campo id_imagem na tabela t_requerimentos
         public static void AtualizarIdImagemRequerimento(int idRequerimento, int idImagem)
         {
@@ -504,6 +503,34 @@ namespace Secretary.DAO
                     cmd.Parameters.AddRange(parametros.ToArray());
                     cmd.ExecuteNonQuery();
                 }
+            }
+        }
+
+        // Atualiza o caminho do arquivo enviado pela secretaria (em vez de blob)
+        public static void AtualizarCaminhoArquivoRespostaSecretaria(int idImagem, string caminhoArquivo, string nomeArquivo)
+        {
+            string sql = "UPDATE t_img_requerimento SET nome_arquivo_resposta = @caminhoArquivo WHERE id_imagem = @idImagem";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@caminhoArquivo", caminhoArquivo);
+                cmd.Parameters.AddWithValue("@idImagem", idImagem);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Insere um novo registro com caminho (em vez de blob)
+        public static int InserirCaminhoArquivoRespostaSecretaria(string caminhoArquivo, string nomeArquivo)
+        {
+            string sqlInsert = @"
+    INSERT INTO t_img_requerimento (nome_arquivo_resposta)
+    VALUES (@caminhoArquivo);
+    SELECT LAST_INSERT_ID();";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sqlInsert, conn))
+            {
+                cmd.Parameters.AddWithValue("@caminhoArquivo", caminhoArquivo);
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
     }

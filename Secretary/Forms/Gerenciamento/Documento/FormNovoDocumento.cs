@@ -8,87 +8,39 @@ namespace Secretary.Forms.Gerenciamento
 {
     public partial class FormNovoDocumento : Form
     {
-        private int _idDocumentoCriado = 0;
+        private int? _idDocumentoEditar = null;  // Null para criação, valor para edição
+        private bool _modoEdicao = false;
 
-        public FormNovoDocumento()
+        public FormNovoDocumento(int? idDocumentoEditar = null)
         {
             InitializeComponent();
 
-            btnAdicionarCampo.Click += BtnAdicionarCampo_Click;
-            btnAdicionar.Click += btnAdicionar_Click_1;
+            _idDocumentoEditar = idDocumentoEditar;
+            _modoEdicao = idDocumentoEditar.HasValue;
 
-            btnAdicionarCampo.Enabled = false; // só libera após salvar documento
+            btnAdicionarCampo.Enabled = false;  // Só libera após salvar documento (criação) ou sempre em edição
+
+            if (_modoEdicao)
+            {
+                this.Text = "Editar Documento";
+                btnAdicionarCampo.Text = "Salvar Alterações";
+                btnAdicionarCampo.Enabled = true;  // Em edição, sempre habilitado
+                CarregarDadosParaEdicao();
+                CarregarCampos();
+            }
         }
 
-        // ============================================================
-        // BOTÃO SALVAR DOCUMENTO
-        // ============================================================
-        private void btnAdicionar_Click_1(object sender, EventArgs e)
+        private void CarregarDadosParaEdicao()
         {
-            string nome = txtNomeDoc.Text.Trim();
-            string descricao = txtDescricao.Text.Trim();
-            bool pagamentoTaxa = chbPagamentoTaxa.Checked;
-
             DocumentoDAO dao = new DocumentoDAO();
+            var doc = dao.BuscarPorId(_idDocumentoEditar.Value);
 
-            // Verifica se existe documento com mesmo nome
-            if (dao.ExisteDocumento(nome))
+            if (doc != null)
             {
-                MessageBox.Show("Já existe um documento com esse nome.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                txtNomeDoc.Text = doc.Nome;
+                txtDescricao.Text = doc.Descricao;
+                chbPagamentoTaxa.Checked = doc.PrecisaPagamentoSegundaVia == 1;
             }
-
-            // Campos obrigatórios
-            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(descricao))
-            {
-                MessageBox.Show("Preencha os campos obrigatórios (Nome e Descrição).",
-                    "Campos obrigatórios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                DocumentoDisponivel novoDoc = new DocumentoDisponivel
-                {
-                    Nome = nome,
-                    Descricao = descricao,
-                    PrecisaPagamentoSegundaVia = pagamentoTaxa ? 1 : 0,
-                    StatusAtual = "Disponível"
-                };
-
-                dao.Inserir(novoDoc);
-
-                _idDocumentoCriado = dao.ObterUltimoIdInserido();
-
-                MessageBox.Show("Documento adicionado com sucesso! Agora você pode criar campos adicionais.",
-                    "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                btnAdicionar.Enabled = false;
-                btnAdicionarCampo.Enabled = true; 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar: " + ex.Message,
-                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // ============================================================
-        // ABRIR TELA PARA ADICIONAR CAMPO
-        // ============================================================
-        private void BtnAdicionarCampo_Click(object sender, EventArgs e)
-        {
-            if (_idDocumentoCriado == 0)
-            {
-                MessageBox.Show("Salve o documento antes de adicionar campos.",
-                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoCriado);
-            formCampo.FormClosed += (s, args) => CarregarCampos();
-            formCampo.ShowDialog();
         }
 
         // ============================================================
@@ -101,7 +53,7 @@ namespace Secretary.Forms.Gerenciamento
             panelCampos.Controls.Clear();
 
             CampoDocumentoDAO dao = new CampoDocumentoDAO();
-            var campos = dao.ListarPorDocumento(_idDocumentoCriado);
+            var campos = dao.ListarPorDocumento(_idDocumentoEditar ?? 0);  // Usa ID se edição, senão 0 (não carrega)
 
             int y = 10;
 
@@ -125,7 +77,7 @@ namespace Secretary.Forms.Gerenciamento
                 btnEditar.Location = new Point(370, 10);
                 btnEditar.Click += (s, e) =>
                 {
-                    var editForm = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoCriado, campo);
+                    var editForm = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoEditar.Value, campo);
                     editForm.FormClosed += (x, z) => CarregarCampos();
                     editForm.ShowDialog();
                 };
@@ -173,6 +125,111 @@ namespace Secretary.Forms.Gerenciamento
                 panelCampos.Visible = false;
                 this.CenterToScreen();
 
+            }
+        }
+        
+        // ============================================================
+        // ABRIR TELA PARA ADICIONAR CAMPO
+        // ============================================================
+        private void btnAdicionarCampo_Click_1(object sender, EventArgs e)
+        {    
+            if (!_idDocumentoEditar.HasValue || _idDocumentoEditar.Value == 0)
+            {
+                MessageBox.Show("Salve o documento antes de adicionar campos.",
+                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoEditar.Value);
+            formCampo.FormClosed += (s, args) => CarregarCampos();
+            formCampo.ShowDialog();
+        }
+
+        // ============================================================
+        // BOTÃO SALVAR DOCUMENTO (CRIAÇÃO OU EDIÇÃO)
+        // ============================================================
+        private void btnAdicionar_Click(object sender, EventArgs e)
+        {
+            string nome = txtNomeDoc.Text.Trim();
+            string descricao = txtDescricao.Text.Trim();
+            bool pagamentoTaxa = chbPagamentoTaxa.Checked;
+
+            // Campos obrigatórios
+            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(descricao))
+            {
+                MessageBox.Show("Preencha os campos obrigatórios (Nome e Descrição).",
+                    "Campos obrigatórios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DocumentoDAO dao = new DocumentoDAO();
+
+            // Verifica duplicatas
+            if (_modoEdicao)
+            {
+                if (dao.ExisteDocumentoExcetoId(nome, _idDocumentoEditar.Value))
+                {
+                    MessageBox.Show("Já existe um documento com esse nome.",
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                if (dao.ExisteDocumento(nome))
+                {
+                    MessageBox.Show("Já existe um documento com esse nome.",
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            try
+            {
+                if (_modoEdicao)
+                {
+                    // EDIÇÃO
+                    DocumentoDisponivel docEditado = new DocumentoDisponivel
+                    {
+                        Id = _idDocumentoEditar.Value,
+                        Nome = nome,
+                        Descricao = descricao,
+                        PrecisaPagamentoSegundaVia = pagamentoTaxa ? 1 : 0,
+                        StatusAtual = "Disponível"
+                    };
+
+                    dao.Atualizar(docEditado);
+
+                    MessageBox.Show("Documento atualizado com sucesso!",
+                        "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // CRIAÇÃO
+                    DocumentoDisponivel novoDoc = new DocumentoDisponivel
+                    {
+                        Nome = nome,
+                        Descricao = descricao,
+                        PrecisaPagamentoSegundaVia = pagamentoTaxa ? 1 : 0,
+                        StatusAtual = "Disponível"
+                    };
+
+                    dao.Inserir(novoDoc);
+
+                    _idDocumentoEditar = dao.ObterUltimoIdInserido();
+                    _modoEdicao = true;
+
+                    MessageBox.Show("Documento adicionado com sucesso! Agora você pode criar campos adicionais.",
+                        "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    btnAdicionar.Text = "Salvar Alterações";
+                    btnAdicionarCampo.Enabled = true;  // Habilita botão de campos
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao salvar: " + ex.Message,
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

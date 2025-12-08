@@ -59,8 +59,7 @@ namespace Secretary.Forms.Gerenciamento.Documento
             switch (tipo)
             {
                 case "texto": return "Texto";
-                case "número": return "Número";
-                case "data": return "Data";
+                case "imagem": return "Imagem"; 
                 case "seleção": return "Seleção";
                 default: return "Texto";
             }
@@ -71,8 +70,7 @@ namespace Secretary.Forms.Gerenciamento.Documento
             switch (combo)
             {
                 case "Texto": return "texto";
-                case "Número": return "número";
-                case "Data": return "data";
+                case "Imagem": return "imagem";
                 case "Seleção": return "seleção";
                 default: return "texto";
             }
@@ -87,45 +85,84 @@ namespace Secretary.Forms.Gerenciamento.Documento
                 panel1.Visible = true;
                 this.Size = new Size(600, 475);
                 btnAdicionar.Location = new Point(391, 385);
+                this.CenterToScreen();
+
             }
             else
             {
                 panel1.Visible = false;
                 this.Size = new Size(600, 264);
                 btnAdicionar.Location = new Point(395, 189);
+                this.CenterToScreen();
+
             }
         }
 
         private void btnAdicionar_Click_1(object sender, EventArgs e)
         {
+            // =====================
+            // VALIDAÇÕES OBRIGATÓRIAS
+            // =====================
             string nomeCampo = txtNomeCampo.Text.Trim();
-
-            if (nomeCampo == "")
+            if (string.IsNullOrEmpty(nomeCampo))
             {
                 MessageBox.Show("Digite o nome do campo.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNomeCampo.Focus();
                 return;
             }
 
-            string tipoCampo = ConverterComboParaTipo(comboBox1.SelectedItem.ToString());
-            bool obrigatorio = chkObrigatorio.Checked;
+            if (comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione o tipo do campo.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                comboBox1.Focus();
+                return;
+            }
 
+            string tipoCampoSelecionado = comboBox1.SelectedItem.ToString();
+            string tipoCampo = ConverterComboParaTipo(tipoCampoSelecionado);
+
+            if (tipoCampo == "seleção")
+            {
+                string opcoesTexto = txtOpcoes.Text.Trim();
+                if (string.IsNullOrEmpty(opcoesTexto))
+                {
+                    MessageBox.Show("Para o tipo 'Seleção', é obrigatório preencher as opções.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtOpcoes.Focus();
+                    return;
+                }
+
+                // Verifica se há pelo menos uma opção válida (não vazia)
+                string[] opcoes = opcoesTexto.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                if (opcoes.Length == 0)
+                {
+                    MessageBox.Show("Para o tipo 'Seleção', é obrigatório informar pelo menos uma opção válida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtOpcoes.Focus();
+                    return;
+                }
+            }
+
+            // =====================
+            // PROCESSAMENTO APÓS VALIDAÇÕES
+            // =====================
+            bool obrigatorio = chkObrigatorio.Checked;
             CampoDocumentoDAO dao = new CampoDocumentoDAO();
 
             if (_modoEdicao)
             {
                 // =====================
-                // ⭐ MODO EDIÇÃO
+                // MODO EDIÇÃO
                 // =====================
+                dao.RemoverOpcoes(_campoEditar.IdCampo);
+
                 _campoEditar.NomeCampo = nomeCampo;
                 _campoEditar.TipoCampo = tipoCampo;
                 _campoEditar.Obrigatorio = obrigatorio;
 
                 dao.Atualizar(_campoEditar);
 
+                // Só adicionar opções se o novo tipo for "seleção"
                 if (tipoCampo == "seleção")
                 {
-                    dao.RemoverOpcoes(_campoEditar.IdCampo);
-
                     string[] opcoes = txtOpcoes.Text.Split(
                         new[] { "\r\n", "\n" },
                         StringSplitOptions.RemoveEmptyEntries
@@ -143,7 +180,7 @@ namespace Secretary.Forms.Gerenciamento.Documento
             else
             {
                 // =====================
-                // ⭐ MODO CRIAÇÃO
+                // MODO CRIAÇÃO
                 // =====================
                 CampoDocumento novo = new CampoDocumento
                 {

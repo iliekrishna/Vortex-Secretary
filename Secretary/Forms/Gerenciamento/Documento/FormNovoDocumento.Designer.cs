@@ -68,6 +68,7 @@
             this.btnAdicionarCampo.TabIndex = 59;
             this.btnAdicionarCampo.Text = "Campo Extra";
             this.btnAdicionarCampo.UseVisualStyleBackColor = true;
+            this.btnAdicionarCampo.Click += new System.EventHandler(this.btnAdicionarCampo_Click_1);
             // 
             // panelDivisor
             // 
@@ -96,6 +97,7 @@
             this.btnAdicionar.TabIndex = 58;
             this.btnAdicionar.Text = "Adicionar Documento";
             this.btnAdicionar.UseVisualStyleBackColor = true;
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             // 
             // lblNomeDoc
             // 

@@ -30,59 +30,6 @@ namespace Secretary.Forms
             CarregarCampos();
         }
 
-        // ===========================================
-        // SALVAR ALTERAÇÕES DO DOCUMENTO
-        // ===========================================
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            string novoNome = txtNomeRequerimento.Text.Trim();
-            string novaDescricao = txtPrazo.Text.Trim();
-            string novoStatus = rbtnAtivo.Checked ? "Disponível" : "Indisponível";
-            int pagamento = chbPagamentoTaxa.Checked ? 1 : 0;
-
-            try
-            {
-                using (var conexao = ConexaoBD.ObterConexao())
-                {
-                    string query = @"
-                        UPDATE t_disponibilidade_doc 
-                        SET nome_doc = @nome,
-                            descricao = @desc,
-                            status_atual = @status,
-                            precisa_pagamento_segunda_via = @pagamento
-                        WHERE id_disponibilidade = @id";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conexao);
-                    cmd.Parameters.AddWithValue("@nome", novoNome);
-                    cmd.Parameters.AddWithValue("@desc", novaDescricao);
-                    cmd.Parameters.AddWithValue("@status", novoStatus);
-                    cmd.Parameters.AddWithValue("@pagamento", pagamento);
-                    cmd.Parameters.AddWithValue("@id", idDocumento);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Documento atualizado com sucesso!", "Sucesso",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao atualizar: " + ex.Message,
-                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // ===========================================
-        // ABRIR FORM DE ADICIONAR CAMPOS
-        // ===========================================
-        private void btnAdicionarCampo_Click(object sender, EventArgs e)
-        {
-            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(idDocumento);
-            formCampo.FormClosed += (s, args) => CarregarCampos();
-            formCampo.ShowDialog();
-        }
 
         // ===========================================
         // CARREGAR LISTA DE CAMPOS
@@ -161,10 +108,65 @@ namespace Secretary.Forms
             {
                 // Não existe campo algum
                 this.Size = new Size(611, 378);
-                panelCampos.Visible = false; // opcional
+                panelCampos.Visible = false;
                 this.CenterToScreen();
 
             }
+        }
+
+        // ===========================================
+        // SALVAR ALTERAÇÕES DO DOCUMENTO
+        // ===========================================
+        private void btnSalvar_Click_1(object sender, EventArgs e)
+        {
+            string novoNome = txtNomeRequerimento.Text.Trim();
+            string novaDescricao = txtPrazo.Text.Trim();
+            string novoStatus = rbtnAtivo.Checked ? "Disponível" : "Indisponível";
+            int pagamento = chbPagamentoTaxa.Checked ? 1 : 0;
+
+            try
+            {
+                using (var conexao = ConexaoBD.ObterConexao())
+                {
+                    string query = @"
+                        UPDATE t_disponibilidade_doc 
+                        SET nome_doc = @nome,
+                            descricao = @desc,
+                            status_atual = @status,
+                            precisa_pagamento_segunda_via = @pagamento
+                        WHERE id_disponibilidade = @id";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conexao);
+                    cmd.Parameters.AddWithValue("@nome", novoNome);
+                    cmd.Parameters.AddWithValue("@desc", novaDescricao);
+                    cmd.Parameters.AddWithValue("@status", novoStatus);
+                    cmd.Parameters.AddWithValue("@pagamento", pagamento);
+                    cmd.Parameters.AddWithValue("@id", idDocumento);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Documento atualizado com sucesso!", "Sucesso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao atualizar: " + ex.Message,
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ===========================================
+        // ABRIR FORM DE ADICIONAR CAMPOS
+        // ===========================================
+
+        private void btnAdicionarCampo_Click_1(object sender, EventArgs e)
+        {
+            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(idDocumento);
+            formCampo.FormClosed += (s, args) => CarregarCampos();
+            formCampo.ShowDialog();
         }
     }
 }

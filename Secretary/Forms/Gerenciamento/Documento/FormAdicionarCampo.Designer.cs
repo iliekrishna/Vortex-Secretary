@@ -117,6 +117,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Texto",
@@ -145,9 +146,10 @@
             this.label2.Location = new System.Drawing.Point(12, 142);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(282, 13);
+            this.label2.Size = new System.Drawing.Size(488, 13);
             this.label2.TabIndex = 71;
-            this.label2.Text = "(Separado por \" , \". Ex.: \"Opção 1, Opção 2, ...)";
+            this.label2.Text = "Insira as opções separadas por \" , \" (vírgula). Ex.: \"Opção 1, Opção 2, Opção 3, " +
+    "...\"\r\n";
             // 
             // txtOpcoes
             // 
