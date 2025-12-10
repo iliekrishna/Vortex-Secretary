@@ -333,21 +333,18 @@ namespace Secretary.DAO
             return null;
         }
 
-        // Buscar todas as imagens/documentos relacionados a um requerimento
+        // Buscar todas as imagens/documentos relacionados a um requerimento, incluindo arquivo de resposta
         public static List<ImagemRequerimento> BuscarImagensPorRequerimento(int idRequerimento)
         {
             List<ImagemRequerimento> imagens = new List<ImagemRequerimento>();
-
             string sql = @"
-        SELECT id_imagem, motivo_segunda_via, endereco_bo, endereco_comprovante
-        FROM t_img_requerimento
-        WHERE id_campo = @idRequerimento";  // Corrigido: usa id_campo como FK para t_requerimentos.id_requerimento
-
+    SELECT id_imagem, motivo_segunda_via, endereco_bo, endereco_comprovante, arquivo_resposta, nome_arquivo_resposta
+    FROM t_img_requerimento
+    WHERE id_imagem = (SELECT id_imagem FROM t_requerimentos WHERE id_requerimento = @idRequerimento)";
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@idRequerimento", idRequerimento);
-
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -357,12 +354,13 @@ namespace Secretary.DAO
                             IdImagem = reader.GetInt32("id_imagem"),
                             MotivoSegundaVia = reader["motivo_segunda_via"]?.ToString(),
                             EnderecoBO = reader["endereco_bo"]?.ToString(),
-                            EnderecoComprovante = reader["endereco_comprovante"]?.ToString()
+                            EnderecoComprovante = reader["endereco_comprovante"]?.ToString(),
+                            ArquivoResposta = reader["arquivo_resposta"] as byte[],
+                            NomeArquivoResposta = reader["nome_arquivo_resposta"]?.ToString()
                         });
                     }
                 }
             }
-
             return imagens;
         }
         // Verifica se o documento está disponível (exemplo para id_disponibilidade)
@@ -382,17 +380,20 @@ namespace Secretary.DAO
         public static int InserirImagensAluno(int idRequerimento, string motivo, string enderecoBo, string enderecoComprovante)
         {
             string sqlInsert = @"
-            INSERT INTO t_img_requerimento (id_campo, motivo_segunda_via, endereco_bo, endereco_comprovante)
-            VALUES (@idCampo, @motivo, @bo, @comprovante);
-            SELECT LAST_INSERT_ID();";
+    INSERT INTO t_img_requerimento (motivo_segunda_via, endereco_bo, endereco_comprovante)
+    VALUES (@motivo, @bo, @comprovante);
+    SELECT LAST_INSERT_ID();";
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sqlInsert, conn))
             {
-                cmd.Parameters.AddWithValue("@idCampo", idRequerimento);  // Novo: seta id_campo
                 cmd.Parameters.AddWithValue("@motivo", (object)motivo ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@bo", (object)enderecoBo ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@comprovante", (object)enderecoComprovante ?? DBNull.Value);
-                return Convert.ToInt32(cmd.ExecuteScalar());
+                int idImagem = Convert.ToInt32(cmd.ExecuteScalar());
+
+                // Ligue ao requerimento via id_imagem
+                AtualizarIdImagemRequerimento(idRequerimento, idImagem);
+                return idImagem;
             }
         }
         // Atualiza o campo id_imagem na tabela t_requerimentos
@@ -531,6 +532,26 @@ namespace Secretary.DAO
             {
                 cmd.Parameters.AddWithValue("@caminhoArquivo", caminhoArquivo);
                 return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+
+        // Insere um novo registro na tabela t_img_requerimento com arquivo_resposta e id_campo
+        public static int InserirImagemRespostaSecretariaComIdCampo(int idRequerimento, byte[] arquivoBlob, string nomeArquivo)
+        {
+            string sqlInsert = @"
+    INSERT INTO t_img_requerimento (arquivo_resposta, nome_arquivo_resposta)
+    VALUES (@arquivoResposta, @nomeArquivo);
+    SELECT LAST_INSERT_ID();";
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sqlInsert, conn))
+            {
+                cmd.Parameters.AddWithValue("@arquivoResposta", arquivoBlob);
+                cmd.Parameters.AddWithValue("@nomeArquivo", nomeArquivo);
+                int idImagem = Convert.ToInt32(cmd.ExecuteScalar());
+
+                // Ligue ao requerimento
+                AtualizarIdImagemRequerimento(idRequerimento, idImagem);
+                return idImagem;
             }
         }
     }

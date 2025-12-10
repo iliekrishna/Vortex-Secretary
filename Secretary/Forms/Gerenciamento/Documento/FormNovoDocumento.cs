@@ -18,15 +18,10 @@ namespace Secretary.Forms.Gerenciamento
             _idDocumentoEditar = idDocumentoEditar;
             _modoEdicao = idDocumentoEditar.HasValue;
 
-            btnAdicionarCampo.Enabled = false;  // Só libera após salvar documento (criação) ou sempre em edição
-
             if (_modoEdicao)
             {
                 this.Text = "Editar Documento";
-                btnAdicionarCampo.Text = "Salvar Alterações";
-                btnAdicionarCampo.Enabled = true;  // Em edição, sempre habilitado
                 CarregarDadosParaEdicao();
-                CarregarCampos();
             }
         }
 
@@ -44,111 +39,9 @@ namespace Secretary.Forms.Gerenciamento
         }
 
         // ============================================================
-        // CARREGAR A LISTA DE CAMPOS DO DOCUMENTO
-        // ============================================================
-        private void CarregarCampos()
-        {
-            this.CenterToScreen();
-
-            panelCampos.Controls.Clear();
-
-            CampoDocumentoDAO dao = new CampoDocumentoDAO();
-            var campos = dao.ListarPorDocumento(_idDocumentoEditar ?? 0);  // Usa ID se edição, senão 0 (não carrega)
-
-            int y = 10;
-
-            foreach (var campo in campos)
-            {
-                Panel card = new Panel();
-                card.BorderStyle = BorderStyle.FixedSingle;
-                card.Size = new Size(560, 48);
-                card.Location = new Point(10, y);
-                card.BackColor = Color.WhiteSmoke;
-
-                Label lbl = new Label();
-                lbl.Text = $"{campo.NomeCampo}  ({campo.TipoCampo})";
-                lbl.Font = new Font("Verdana", 9, FontStyle.Bold);
-                lbl.Location = new Point(10, 14);
-                lbl.AutoSize = true;
-
-                Button btnEditar = new Button();
-                btnEditar.Text = "Editar";
-                btnEditar.Size = new Size(80, 26);
-                btnEditar.Location = new Point(370, 10);
-                btnEditar.Click += (s, e) =>
-                {
-                    var editForm = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoEditar.Value, campo);
-                    editForm.FormClosed += (x, z) => CarregarCampos();
-                    editForm.ShowDialog();
-                };
-
-                Button btnExcluir = new Button();
-                btnExcluir.Text = "Excluir";
-                btnExcluir.Size = new Size(80, 26);
-                btnExcluir.Location = new Point(460, 10);
-                btnExcluir.ForeColor = Color.Red;
-
-                btnExcluir.Click += (s, e) =>
-                {
-                    if (MessageBox.Show("Deseja realmente excluir este campo?",
-                        "Confirmar Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        dao.Excluir(campo.IdCampo);
-                        CarregarCampos();
-                    }
-                };
-
-                card.Controls.Add(lbl);
-                card.Controls.Add(btnEditar);
-                card.Controls.Add(btnExcluir);
-
-                panelCampos.Controls.Add(card);
-
-                y += 55;
-            }
-
-            // ============================================================
-            // AJUSTA O TAMANHO DO FORM SE EXISTIREM CAMPOS EXTRAS
-            // ============================================================
-            if (campos.Count > 0)
-            {
-                // Existe pelo menos um campo extra
-                this.Size = new Size(611, 656);
-                panelCampos.Visible = true;
-                this.CenterToScreen();
-
-            }
-            else
-            {
-                // Não existe campo algum
-                this.Size = new Size(611, 378);
-                panelCampos.Visible = false;
-                this.CenterToScreen();
-
-            }
-        }
-        
-        // ============================================================
-        // ABRIR TELA PARA ADICIONAR CAMPO
-        // ============================================================
-        private void btnAdicionarCampo_Click_1(object sender, EventArgs e)
-        {    
-            if (!_idDocumentoEditar.HasValue || _idDocumentoEditar.Value == 0)
-            {
-                MessageBox.Show("Salve o documento antes de adicionar campos.",
-                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var formCampo = new Secretary.Forms.Gerenciamento.Documento.FormAdicionarCampo(_idDocumentoEditar.Value);
-            formCampo.FormClosed += (s, args) => CarregarCampos();
-            formCampo.ShowDialog();
-        }
-
-        // ============================================================
         // BOTÃO SALVAR DOCUMENTO (CRIAÇÃO OU EDIÇÃO)
         // ============================================================
-        private void btnAdicionar_Click(object sender, EventArgs e)
+        private void btnAdicionar_Click_1(object sender, EventArgs e)
         {
             string nome = txtNomeDoc.Text.Trim();
             string descricao = txtDescricao.Text.Trim();
@@ -219,12 +112,12 @@ namespace Secretary.Forms.Gerenciamento
                     _idDocumentoEditar = dao.ObterUltimoIdInserido();
                     _modoEdicao = true;
 
-                    MessageBox.Show("Documento adicionado com sucesso! Agora você pode criar campos adicionais.",
+                    MessageBox.Show("Documento adicionado com sucesso!",
                         "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     btnAdicionar.Text = "Salvar Alterações";
-                    btnAdicionarCampo.Enabled = true;  // Habilita botão de campos
                 }
+
             }
             catch (Exception ex)
             {
@@ -232,5 +125,7 @@ namespace Secretary.Forms.Gerenciamento
                     "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
     }
 }

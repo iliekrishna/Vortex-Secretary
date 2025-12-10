@@ -3,7 +3,7 @@ using Secretary.Models;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;  
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,14 +14,12 @@ namespace Secretary.Forms
     {
         private int idRequerimento;
         private Requerimento requerimento;
-
         public DetalhesRequerimento(int idRequerimento)
         {
             InitializeComponent();
             this.idRequerimento = idRequerimento;
             this.Load += DetalhesRequerimento_Load;
         }
-
         private void DetalhesRequerimento_Load(object sender, EventArgs e)
         {
             try
@@ -34,7 +32,7 @@ namespace Secretary.Forms
                     return;
                 }
 
-                // Preencher campos
+                // Preencher campos (mantém igual)
                 txtNome.Text = requerimento.Nome;
                 txtRA.Text = requerimento.RA;
                 txtCurso.Text = requerimento.Curso;
@@ -48,33 +46,19 @@ namespace Secretary.Forms
                 txtDataPedido.Text = requerimento.DataPedido?.ToString("dd/MM/yyyy") ?? "";
                 txtRespostaEnviada.Text = requerimento.Resposta ?? "";
 
-                // Exibir nome do usuário que respondeu e data da resposta
-                if (!string.IsNullOrEmpty(requerimento.Resposta) && requerimento.DataResposta.HasValue && !string.IsNullOrEmpty(requerimento.NomeUsuarioResposta))
-                {
-                    lblRespondidoPor.Text = $"Respondido por: {requerimento.NomeUsuarioResposta} em {requerimento.DataResposta.Value:dd/MM/yyyy}";
-                }
-                else
-                {
-                    lblRespondidoPor.Text = "Ainda não respondido.";
-                }
-
                 // Inicialmente esconder controles relacionados a mídias e motivo
                 btnBaixarMidia.Visible = false;
                 lblMotivo.Visible = false;
                 txtMotivo.Visible = false;
-
                 // Buscar imagens associadas ao requerimento
                 var imagens = RequerimentoDAO.BuscarImagensPorRequerimento(idRequerimento);
                 List<ImagemRequerimento> listaImagens = new List<ImagemRequerimento>();
-
                 if (imagens != null && imagens.Count > 0)
                 {
-                    // Usa as imagens encontradas via id_campo
                     listaImagens = imagens;
                 }
                 else if (requerimento.IdImagem.HasValue)
                 {
-                    // Fallback: busca via id_imagem (para registros antigos)
                     var img = RequerimentoDAO.BuscarImagemPorId(requerimento.IdImagem.Value);
                     if (img != null)
                     {
@@ -84,9 +68,8 @@ namespace Secretary.Forms
 
                 if (listaImagens.Count > 0)
                 {
-                    var img = listaImagens[0];  // Usa a primeira para motivo (assumindo 1:1)
-
-                    // Mostrar motivo apenas se houver (ex.: para segunda via)
+                    var img = listaImagens[0];  // Usa a primeira para motivo
+                    // Mostrar motivo apenas se houver
                     if (!string.IsNullOrEmpty(img.MotivoSegundaVia))
                     {
                         txtMotivo.Text = img.MotivoSegundaVia;
@@ -94,12 +77,16 @@ namespace Secretary.Forms
                         txtMotivo.Visible = true;
                     }
 
-                    // Mostrar botão de baixar mídia se houver comprovante ou BO em qualquer imagem
-                    bool temMidia = listaImagens.Any(i => !string.IsNullOrEmpty(i.EnderecoComprovante) || !string.IsNullOrEmpty(i.EnderecoBO));
+                    // Alinhar com ResponderRequerimento: mostrar botão se houver comprovante ou BO (ou ArquivoResposta para consistência)
+                    bool temMidia = listaImagens.Any(i =>
+                        !string.IsNullOrEmpty(i.EnderecoComprovante) ||
+                        !string.IsNullOrEmpty(i.EnderecoBO) ||
+                        (i.ArquivoResposta != null && i.ArquivoResposta.Length > 0));
+
                     if (temMidia)
                     {
                         btnBaixarMidia.Visible = true;
-                        btnBaixarMidia.Tag = listaImagens;  // Sempre uma lista
+                        btnBaixarMidia.Tag = listaImagens;
                     }
                 }
             }
@@ -135,35 +122,39 @@ namespace Secretary.Forms
             if (btnBaixarMidia.Tag is List<ImagemRequerimento> imagens && imagens.Count > 0)
             {
                 string urlBase = "https://www.secretaria.aprenderensinando.com.br/vortex/";
-
                 foreach (var img in imagens)
                 {
-                    // Baixar comprovante
+                    // Baixar comprovante (sempre, se existir)
                     if (!string.IsNullOrEmpty(img.EnderecoComprovante))
                     {
                         string urlComprovante = new Uri(new Uri(urlBase), img.EnderecoComprovante.Replace("\\", "/")).ToString();
                         string nomeArquivoComprovante = Path.GetFileName(img.EnderecoComprovante);
                         await BaixarArquivoAsync(urlComprovante, nomeArquivoComprovante);
                     }
-
-                    // Baixar BO
+                    // Baixar BO (sempre, se existir)
                     if (!string.IsNullOrEmpty(img.EnderecoBO))
                     {
                         string urlBO = new Uri(new Uri(urlBase), img.EnderecoBO.Replace("\\", "/")).ToString();
                         string nomeArquivoBO = Path.GetFileName(img.EnderecoBO);
                         await BaixarArquivoAsync(urlBO, nomeArquivoBO);
                     }
-                }
-
-                // Para o arquivo resposta da secretaria (blob), buscar separadamente se necessário
-                var arquivos = RequerimentoDAO.BuscarArquivosPorRequerimento(idRequerimento);
-                if (arquivos.arquivoResposta != null && arquivos.arquivoResposta.Length > 0)
-                {
-                    string pastaDownloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                    string nomeArquivo = arquivos.nomeArquivoResposta ?? $"Resposta_Secretaria_{idRequerimento}.pdf";
-                    string caminhoDestino = Path.Combine(pastaDownloads, nomeArquivo);
-                    File.WriteAllBytes(caminhoDestino, arquivos.arquivoResposta);
-                    MessageBox.Show($"Arquivo da secretaria salvo em: {caminhoDestino}");
+                    // Baixar arquivo de resposta da secretaria (se existir)
+                    if (img.ArquivoResposta != null && img.ArquivoResposta.Length > 0)
+                    {
+                        string pastaDownloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                        string nomeArquivo = img.NomeArquivoResposta ?? $"Resposta_Secretaria_{idRequerimento}_{img.IdImagem}.pdf";
+                        string caminhoDestino = Path.Combine(pastaDownloads, nomeArquivo);
+                      
+                        try
+                        {
+                            File.WriteAllBytes(caminhoDestino, img.ArquivoResposta);
+                            MessageBox.Show($"Arquivo da secretaria salvo em: {caminhoDestino}");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Erro ao salvar resposta: {ex.Message}");
+                        }
+                    }
                 }
             }
             else
@@ -171,5 +162,5 @@ namespace Secretary.Forms
                 MessageBox.Show("Nenhuma mídia encontrada para baixar.");
             }
         }
-    }
+    }    
 }

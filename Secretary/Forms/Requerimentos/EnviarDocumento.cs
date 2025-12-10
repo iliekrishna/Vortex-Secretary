@@ -169,14 +169,19 @@ namespace Secretary.Forms.Requerimentos
             if (requerimento == null)
                 throw new Exception("Requerimento não encontrado.");
 
-            bool isCarteiraIdentidade = idDisponibilidade.HasValue && idDisponibilidade.Value == 5;
-            if (isCarteiraIdentidade && requerimento.IdImagem.HasValue)
+            // Buscar imagens existentes para este requerimento
+            var imagensExistentes = RequerimentoDAO.BuscarImagensPorRequerimento(idRequerimento);
+
+            if (imagensExistentes != null && imagensExistentes.Count > 0)
             {
-                RequerimentoDAO.AtualizarArquivoRespostaSecretaria(requerimento.IdImagem.Value, arquivoBytes, nomeArquivo);
+                // Atualizar o primeiro registro existente com o arquivo resposta
+                int idImagemExistente = imagensExistentes[0].IdImagem;
+                RequerimentoDAO.AtualizarArquivoRespostaSecretaria(idImagemExistente, arquivoBytes, nomeArquivo);
             }
             else
             {
-                int novoIdImagem = RequerimentoDAO.InserirImagemRespostaSecretaria(arquivoBytes, nomeArquivo);
+                // Se não houver imagens (caso raro), inserir um novo registro com id_campo
+                int novoIdImagem = RequerimentoDAO.InserirImagemRespostaSecretariaComIdCampo(idRequerimento, arquivoBytes, nomeArquivo);
                 RequerimentoDAO.AtualizarIdImagemRequerimento(idRequerimento, novoIdImagem);
             }
         }

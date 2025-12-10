@@ -23,20 +23,12 @@ namespace Secretary.Forms
 
         private void Historico_Load(object sender, EventArgs e)
         {
-            // Adiciona os filtros à ComboBox
-            cmbFiltroStatus.Items.Add("Todos");
-            cmbFiltroStatus.Items.Add("Pendente");
             cmbFiltroStatus.Items.Add("Respondido");
             cmbFiltroStatus.Items.Add("Cancelado");
-
-            cmbFiltroStatus.SelectedIndex = 0; // Define "Todos" como padrão
-
+            cmbFiltroStatus.SelectedIndex = 0;
             CarregarTickets();
             CarregarRequerimentos();
-
-            //dgvHistoricoT.CellContentClick += dgvHistoricoT_CellContentClick;
             dgvHistoricoR.CellContentClick += dgvHistoricoR_CellContentClick;
-
             TxtCinza();
         }
 
@@ -51,8 +43,9 @@ namespace Secretary.Forms
                         SELECT t_tickets.*, t_usuarios.nome_usuario AS nome_usuario
                         FROM t_tickets
                         LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario";
-
-                    if (filtro == "Pendente")
+                    if (filtro == "Atendidos")
+                        query += " WHERE status IN ('Respondido', 'Cancelado')";
+                    else if (filtro == "Pendente")
                         query += " WHERE status = 'Pendente'";
                     else if (filtro == "Cancelado")
                         query += " WHERE status = 'Cancelado'";
@@ -65,13 +58,12 @@ namespace Secretary.Forms
                         da.Fill(dt);
                         dgvHistoricoT.Columns.Clear();
                         dgvHistoricoT.DataSource = dt;
-
                         if (dgvHistoricoT.Columns.Contains("id_usuario"))
                             dgvHistoricoT.Columns["id_usuario"].Visible = false;
-
+                        if (dgvHistoricoT.Columns.Contains("id_ticket"))
+                            dgvHistoricoT.Columns["id_ticket"].Visible = false;
                         if (dgvHistoricoT.Columns.Contains("nome_usuario"))
                             dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13;
-
                         RenomearColunasT();
                     }
                 }
@@ -93,30 +85,26 @@ namespace Secretary.Forms
                         SELECT t_requerimentos.*, t_usuarios.nome_usuario AS nome_usuario
                         FROM t_requerimentos
                         LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario";
-
-                    if (filtro == "Pendente")
-                        query += " WHERE status_doc = 'Pendente'";
+                    if (filtro == "Respondido")
+                        query += " WHERE status_doc = 'Respondido'";
                     else if (filtro == "Cancelado")
                         query += " WHERE status_doc = 'Cancelado'";
-                    else if (filtro == "Respondido")
-                        query += " WHERE status_doc = 'Respondido'";
-
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
                         dgvHistoricoR.Columns.Clear();
                         dgvHistoricoR.DataSource = dt;
-
                         if (dgvHistoricoR.Columns.Contains("id_usuario"))
                             dgvHistoricoR.Columns["id_usuario"].Visible = false;
                         if (dgvHistoricoR.Columns.Contains("id_imagem"))
                             dgvHistoricoR.Columns["id_imagem"].Visible = false;
                         if (dgvHistoricoR.Columns.Contains("tipo_doc"))
                             dgvHistoricoR.Columns["tipo_doc"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("id_requerimento"))
+                            dgvHistoricoR.Columns["id_requerimento"].Visible = false;
                         if (dgvHistoricoR.Columns.Contains("nome_usuario"))
                             dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15;
-
                         RenomearColunasR();
                     }
                 }
@@ -170,16 +158,15 @@ namespace Secretary.Forms
                 {
                     string filtro = cmbFiltroStatus.SelectedItem?.ToString();
                     string query = @"
-                SELECT t_tickets.*, t_usuarios.nome_usuario
-                FROM t_tickets
-                LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
-                WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca OR t_tickets.cpf LIKE @busca)";
-                    if (filtro == "Pendente")
-                        query += " AND t_tickets.status = 'Pendente'";
+                        SELECT t_tickets.*, t_usuarios.nome_usuario
+                        FROM t_tickets
+                        LEFT JOIN t_usuarios ON t_tickets.id_usuario = t_usuarios.id_usuario
+                        WHERE (t_tickets.nome_aluno LIKE @busca OR t_tickets.ra LIKE @busca OR t_tickets.cpf LIKE @busca)";
+                    if (filtro == "Respondido")
+                        query += " AND t_tickets.status = 'Respondido'";
                     else if (filtro == "Cancelado")
                         query += " AND t_tickets.status = 'Cancelado'";
-                    else if (filtro == "Respondido")
-                        query += " AND t_tickets.status = 'Respondido'";
+
                     using (var da = new MySqlDataAdapter(query, conn))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@busca", $"%{termo}%");
@@ -189,6 +176,8 @@ namespace Secretary.Forms
                         dgvHistoricoT.DataSource = dt;
                         if (dgvHistoricoT.Columns.Contains("id_usuario"))
                             dgvHistoricoT.Columns["id_usuario"].Visible = false;
+                        if (dgvHistoricoT.Columns.Contains("id_ticket"))
+                            dgvHistoricoT.Columns["id_ticket"].Visible = false;
                         if (dgvHistoricoT.Columns.Contains("nome_usuario"))
                             dgvHistoricoT.Columns["nome_usuario"].DisplayIndex = 13;
                         RenomearColunasT();
@@ -204,29 +193,38 @@ namespace Secretary.Forms
         {
             try
             {
-                string filtro = cmbFiltroStatus.SelectedItem?.ToString();
-                string statusFiltro = filtro == "Todos" ? "" : filtro;
-
-                DataTable dt = RequerimentoDAO.BuscarRequerimentos(
-                    string.IsNullOrEmpty(statusFiltro) ? "aberto" : statusFiltro,
-                    "Todos",
-                    "Todos",
-                    termo
-                );
-
-                dgvHistoricoR.Columns.Clear();
-                dgvHistoricoR.DataSource = dt;
-
-                if (dgvHistoricoR.Columns.Contains("id_usuario"))
-                    dgvHistoricoR.Columns["id_usuario"].Visible = false;
-                if (dgvHistoricoR.Columns.Contains("id_imagem"))
-                    dgvHistoricoR.Columns["id_imagem"].Visible = false;
-                if (dgvHistoricoR.Columns.Contains("tipo_doc"))
-                    dgvHistoricoR.Columns["tipo_doc"].Visible = false;
-                if (dgvHistoricoR.Columns.Contains("nome_usuario"))
-                    dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15;
-
-                RenomearColunasR();
+                using (var conn = ConexaoBD.ObterConexao())
+                {
+                    string filtro = cmbFiltroStatus.SelectedItem?.ToString();
+                    string query = @"
+                        SELECT t_requerimentos.*, t_usuarios.nome_usuario AS nome_usuario
+                        FROM t_requerimentos
+                        LEFT JOIN t_usuarios ON t_requerimentos.id_usuario = t_usuarios.id_usuario
+                        WHERE (t_requerimentos.nome LIKE @busca OR t_requerimentos.ra LIKE @busca OR t_requerimentos.cpf LIKE @busca)";
+                    if (filtro == "Respondido")
+                        query += " AND t_requerimentos.status_doc = 'Respondido'";
+                    else if (filtro == "Cancelado")
+                        query += " AND t_requerimentos.status_doc = 'Cancelado'";
+                    using (var da = new MySqlDataAdapter(query, conn))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@busca", $"%{termo}%");
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dgvHistoricoR.Columns.Clear();
+                        dgvHistoricoR.DataSource = dt;
+                        if (dgvHistoricoR.Columns.Contains("id_usuario"))
+                            dgvHistoricoR.Columns["id_usuario"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("id_imagem"))
+                            dgvHistoricoR.Columns["id_imagem"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("tipo_doc"))
+                            dgvHistoricoR.Columns["tipo_doc"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("id_requerimento"))
+                            dgvHistoricoR.Columns["id_requerimento"].Visible = false;
+                        if (dgvHistoricoR.Columns.Contains("nome_usuario"))
+                            dgvHistoricoR.Columns["nome_usuario"].DisplayIndex = 15;
+                        RenomearColunasR();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -332,6 +330,30 @@ namespace Secretary.Forms
                 dgvHistoricoR.Columns["resposta"].HeaderText = "Resposta";
             if (dgvHistoricoR.Columns.Contains("nome_usuario"))
                 dgvHistoricoR.Columns["nome_usuario"].HeaderText = "Respondido Por";
+            if (dgvHistoricoR.Columns.Contains("tipo_vinculo"))
+            {
+                dgvHistoricoR.Columns["tipo_vinculo"].HeaderText = "Tipo de Vínculo"; 
+                foreach (DataGridViewRow row in dgvHistoricoR.Rows)
+                {
+                    if (row.Cells["tipo_vinculo"].Value != null)
+                    {
+                        string valor = row.Cells["tipo_vinculo"].Value.ToString();
+                        row.Cells["tipo_vinculo"].Value = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(valor.ToLower());
+                    }
+                }
+            }
+            if (dgvHistoricoR.Columns.Contains("tipo_via"))
+            {
+                dgvHistoricoR.Columns["tipo_via"].HeaderText = "Tipo de Via";
+                foreach (DataGridViewRow row in dgvHistoricoR.Rows)
+                {
+                    if (row.Cells["tipo_via"].Value != null)
+                    {
+                        string valor = row.Cells["tipo_via"].Value.ToString();
+                        row.Cells["tipo_via"].Value = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(valor.ToLower());
+                    }
+                }
+            }
         }
 
         private void TxtCinza()
