@@ -26,18 +26,22 @@
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.lblDescricao = new System.Windows.Forms.Label();
             this.txtNomeDoc = new System.Windows.Forms.TextBox();
+            this.lblTipoGratuidade = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbTipoGratuidade = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // chbPagamentoTaxa
             // 
             this.chbPagamentoTaxa.AutoSize = true;
             this.chbPagamentoTaxa.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbPagamentoTaxa.Location = new System.Drawing.Point(28, 171);
+            this.chbPagamentoTaxa.Location = new System.Drawing.Point(28, 186);
             this.chbPagamentoTaxa.Name = "chbPagamentoTaxa";
             this.chbPagamentoTaxa.Size = new System.Drawing.Size(444, 22);
             this.chbPagamentoTaxa.TabIndex = 68;
             this.chbPagamentoTaxa.Text = "Necessário pagamento de taxa em caso de segunda via";
             this.chbPagamentoTaxa.UseVisualStyleBackColor = true;
+            this.chbPagamentoTaxa.CheckedChanged += new System.EventHandler(this.chbPagamentoTaxa_CheckedChanged);
             // 
             // panelDivisor
             // 
@@ -60,7 +64,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(410, 216);
+            this.btnAdicionar.Location = new System.Drawing.Point(407, 275);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(166, 29);
             this.btnAdicionar.TabIndex = 67;
@@ -110,12 +114,48 @@
             this.txtNomeDoc.Size = new System.Drawing.Size(354, 23);
             this.txtNomeDoc.TabIndex = 64;
             // 
+            // lblTipoGratuidade
+            // 
+            this.lblTipoGratuidade.AutoSize = true;
+            this.lblTipoGratuidade.Location = new System.Drawing.Point(28, 211);
+            this.lblTipoGratuidade.Name = "lblTipoGratuidade";
+            this.lblTipoGratuidade.Size = new System.Drawing.Size(0, 16);
+            this.lblTipoGratuidade.TabIndex = 69;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 11.25F);
+            this.label1.Location = new System.Drawing.Point(38, 228);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(165, 18);
+            this.label1.TabIndex = 70;
+            this.label1.Text = "Limite de gratuidade:";
+            // 
+            // cbTipoGratuidade
+            // 
+            this.cbTipoGratuidade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTipoGratuidade.Enabled = false;
+            this.cbTipoGratuidade.FormattingEnabled = true;
+            this.cbTipoGratuidade.Items.AddRange(new object[] {
+            "Nenhuma",
+            "Curso",
+            "Período letivo"});
+            this.cbTipoGratuidade.Location = new System.Drawing.Point(206, 227);
+            this.cbTipoGratuidade.Name = "cbTipoGratuidade";
+            this.cbTipoGratuidade.Size = new System.Drawing.Size(234, 24);
+            this.cbTipoGratuidade.TabIndex = 71;
+            // 
             // FormNovoDocumento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(594, 266);
+            this.ClientSize = new System.Drawing.Size(594, 321);
+            this.Controls.Add(this.cbTipoGratuidade);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTipoGratuidade);
             this.Controls.Add(this.chbPagamentoTaxa);
             this.Controls.Add(this.panelDivisor);
             this.Controls.Add(this.lblTitulo);
@@ -147,5 +187,8 @@
         private System.Windows.Forms.TextBox txtDescricao;
         private System.Windows.Forms.Label lblDescricao;
         private System.Windows.Forms.TextBox txtNomeDoc;
+        private System.Windows.Forms.Label lblTipoGratuidade;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbTipoGratuidade;
     }
 }

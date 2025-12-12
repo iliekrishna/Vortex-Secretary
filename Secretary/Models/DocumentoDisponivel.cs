@@ -14,6 +14,7 @@ namespace Secretary.Models
         public string Descricao { get; set; }
         public string StatusAtual { get; set; }
         public int PrecisaPagamentoSegundaVia { get; set; }
+        public string TipoGratuidade { get; set; }  // "Nenhuma", "Semestral", "Anual", "Curso"
     }
 
 }

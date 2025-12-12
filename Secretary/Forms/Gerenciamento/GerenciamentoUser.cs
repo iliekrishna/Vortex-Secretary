@@ -138,7 +138,8 @@ namespace Secretary.Forms
                     doc.Nome,
                     doc.Descricao,
                     doc.StatusAtual,
-                    doc.PrecisaPagamentoSegundaVia
+                    doc.PrecisaPagamentoSegundaVia,
+                    doc.TipoGratuidade
                 ))
                 {
                     form.FormClosed += (s, args) =>

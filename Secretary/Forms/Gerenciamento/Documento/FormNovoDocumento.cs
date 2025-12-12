@@ -8,7 +8,7 @@ namespace Secretary.Forms.Gerenciamento
 {
     public partial class FormNovoDocumento : Form
     {
-        private int? _idDocumentoEditar = null;  // Null para criação, valor para edição
+        private int? _idDocumentoEditar = null;
         private bool _modoEdicao = false;
 
         public FormNovoDocumento(int? idDocumentoEditar = null)
@@ -23,6 +23,12 @@ namespace Secretary.Forms.Gerenciamento
                 this.Text = "Editar Documento";
                 CarregarDadosParaEdicao();
             }
+            else
+            {
+                // Para novos documentos, desabilitar a combobox inicialmente
+                cbTipoGratuidade.Enabled = false;
+                cbTipoGratuidade.SelectedItem = "Nenhuma";
+            }
         }
 
         private void CarregarDadosParaEdicao()
@@ -34,24 +40,38 @@ namespace Secretary.Forms.Gerenciamento
             {
                 txtNomeDoc.Text = doc.Nome;
                 txtDescricao.Text = doc.Descricao;
+
                 chbPagamentoTaxa.Checked = doc.PrecisaPagamentoSegundaVia == 1;
+                cbTipoGratuidade.SelectedItem = doc.TipoGratuidade;
+
+                cbTipoGratuidade.Enabled = (doc.PrecisaPagamentoSegundaVia == 1);
             }
         }
 
         // ============================================================
-        // BOTÃO SALVAR DOCUMENTO (CRIAÇÃO OU EDIÇÃO)
+        // BOTÃO SALVAR DOCUMENTO
         // ============================================================
         private void btnAdicionar_Click_1(object sender, EventArgs e)
         {
             string nome = txtNomeDoc.Text.Trim();
             string descricao = txtDescricao.Text.Trim();
             bool pagamentoTaxa = chbPagamentoTaxa.Checked;
+            string tipoGratuidade = cbTipoGratuidade.SelectedItem?.ToString();
 
-            // Campos obrigatórios
+            // ------------------- VALIDAÇÕES -------------------
+
             if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(descricao))
             {
                 MessageBox.Show("Preencha os campos obrigatórios (Nome e Descrição).",
                     "Campos obrigatórios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Se precisa pagar, não pode deixar tipo de gratuidade como "Nenhuma"
+            if (pagamentoTaxa && tipoGratuidade == "Nenhuma")
+            {
+                MessageBox.Show("Selecione o limite de gratuidade para documentos que possuem taxa de segunda via.",
+                    "Seleção obrigatória", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -81,13 +101,14 @@ namespace Secretary.Forms.Gerenciamento
             {
                 if (_modoEdicao)
                 {
-                    // EDIÇÃO
+                    // ------------------- EDIÇÃO -------------------
                     DocumentoDisponivel docEditado = new DocumentoDisponivel
                     {
                         Id = _idDocumentoEditar.Value,
                         Nome = nome,
                         Descricao = descricao,
                         PrecisaPagamentoSegundaVia = pagamentoTaxa ? 1 : 0,
+                        TipoGratuidade = tipoGratuidade,
                         StatusAtual = "Disponível"
                     };
 
@@ -98,12 +119,13 @@ namespace Secretary.Forms.Gerenciamento
                 }
                 else
                 {
-                    // CRIAÇÃO
+                    // ------------------- CRIAÇÃO -------------------
                     DocumentoDisponivel novoDoc = new DocumentoDisponivel
                     {
                         Nome = nome,
                         Descricao = descricao,
                         PrecisaPagamentoSegundaVia = pagamentoTaxa ? 1 : 0,
+                        TipoGratuidade = tipoGratuidade,
                         StatusAtual = "Disponível"
                     };
 
@@ -117,7 +139,6 @@ namespace Secretary.Forms.Gerenciamento
 
                     btnAdicionar.Text = "Salvar Alterações";
                 }
-
             }
             catch (Exception ex)
             {
@@ -126,6 +147,27 @@ namespace Secretary.Forms.Gerenciamento
             }
         }
 
+        // ============================================================
+        // CHECKBOX — HABILITA/DESABILITA GRATUIDADE
+        // ============================================================
+        private void chbPagamentoTaxa_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbPagamentoTaxa.Checked)
+            {
+                cbTipoGratuidade.Enabled = true;
 
+                // Se estava "Nenhuma", sugere a primeira gratuidade
+                if (cbTipoGratuidade.SelectedItem != null &&
+                    cbTipoGratuidade.SelectedItem.ToString() == "Nenhuma")
+                {
+                    cbTipoGratuidade.SelectedItem = "Curso";
+                }
+            }
+            else
+            {
+                cbTipoGratuidade.SelectedItem = "Nenhuma";
+                cbTipoGratuidade.Enabled = false;
+            }
+        }
     }
 }

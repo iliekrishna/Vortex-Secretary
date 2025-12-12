@@ -10,10 +10,11 @@ namespace Secretary.DAO
         public void Inserir(DocumentoDisponivel doc)
         {
             string sql = @"
-                INSERT INTO t_disponibilidade_doc 
-                    (nome_doc, descricao, status_atual, precisa_pagamento_segunda_via)
-                VALUES 
-                    (@nome, @desc, @status, @pagamento)";
+            INSERT INTO t_disponibilidade_doc 
+                (nome_doc, descricao, status_atual, precisa_pagamento_segunda_via, tipo_gratuidade)
+            VALUES 
+                (@nome, @desc, @status, @pagamento, @gratuidade)";
+
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -22,6 +23,7 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@desc", doc.Descricao);
                 cmd.Parameters.AddWithValue("@status", doc.StatusAtual);
                 cmd.Parameters.AddWithValue("@pagamento", doc.PrecisaPagamentoSegundaVia);
+                cmd.Parameters.AddWithValue("@gratuidade", doc.TipoGratuidade);
 
                 cmd.ExecuteNonQuery();
             }
@@ -56,11 +58,9 @@ namespace Secretary.DAO
 
             string sql = @"
                 SELECT 
-                    id_disponibilidade, 
-                    nome_doc, 
-                    descricao, 
-                    status_atual,
-                    precisa_pagamento_segunda_via
+                     id_disponibilidade, nome_doc, descricao, status_atual,
+                        precisa_pagamento_segunda_via, tipo_gratuidade
+
                 FROM t_disponibilidade_doc
                 ORDER BY nome_doc ASC";
 
@@ -76,7 +76,8 @@ namespace Secretary.DAO
                         Nome = reader.GetString("nome_doc"),
                         Descricao = reader.GetString("descricao"),
                         StatusAtual = reader.GetString("status_atual"),
-                        PrecisaPagamentoSegundaVia = reader.GetInt32("precisa_pagamento_segunda_via")
+                        PrecisaPagamentoSegundaVia = reader.GetInt32("precisa_pagamento_segunda_via"),
+                        TipoGratuidade = reader.GetString("tipo_gratuidade")
                     });
                 }
             }
@@ -87,9 +88,10 @@ namespace Secretary.DAO
         public DocumentoDisponivel BuscarPorId(int id)
         {
             string sql = @"
-        SELECT id_disponibilidade, nome_doc, descricao, status_atual, precisa_pagamento_segunda_via
-        FROM t_disponibilidade_doc
-        WHERE id_disponibilidade = @id";
+             SELECT id_disponibilidade, nome_doc, descricao, status_atual,
+                 precisa_pagamento_segunda_via, tipo_gratuidade
+                 FROM t_disponibilidade_doc
+             WHERE id_disponibilidade = @id";
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -106,7 +108,8 @@ namespace Secretary.DAO
                             Nome = reader.GetString("nome_doc"),
                             Descricao = reader.GetString("descricao"),
                             StatusAtual = reader.GetString("status_atual"),
-                            PrecisaPagamentoSegundaVia = reader.GetInt32("precisa_pagamento_segunda_via")
+                            PrecisaPagamentoSegundaVia = reader.GetInt32("precisa_pagamento_segunda_via"),
+                            TipoGratuidade = reader.GetString("tipo_gratuidade")
                         };
                     }
                 }
@@ -117,13 +120,15 @@ namespace Secretary.DAO
 
         public void Atualizar(DocumentoDisponivel doc)
         {
-            string sql = @"
-        UPDATE t_disponibilidade_doc
-        SET nome_doc = @nome,
-            descricao = @desc,
-            status_atual = @status,
-            precisa_pagamento_segunda_via = @pagamento
-        WHERE id_disponibilidade = @id";
+           string sql = @"
+            UPDATE t_disponibilidade_doc
+            SET nome_doc = @nome,
+                descricao = @desc,
+                status_atual = @status,
+                precisa_pagamento_segunda_via = @pagamento,
+                tipo_gratuidade = @gratuidade
+            WHERE id_disponibilidade = @id";
+
 
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -133,6 +138,7 @@ namespace Secretary.DAO
                 cmd.Parameters.AddWithValue("@desc", doc.Descricao);
                 cmd.Parameters.AddWithValue("@status", doc.StatusAtual);
                 cmd.Parameters.AddWithValue("@pagamento", doc.PrecisaPagamentoSegundaVia);
+                cmd.Parameters.AddWithValue("@gratuidade", doc.TipoGratuidade);
 
                 cmd.ExecuteNonQuery();
             }
