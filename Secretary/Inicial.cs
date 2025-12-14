@@ -220,6 +220,13 @@ namespace Secretary
             ActivateButton(sender);
         }
 
+
+        private void btnRelatorio_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Forms.FormEstatisticasFuncionarios(), sender);
+            ActivateButton(sender);
+        }
+
         // Evento do botão Gerenciamento: abre formulário Gerenciamento e ativa botão visualmente
         private void btnGerenciamento_Click(object sender, EventArgs e)
         {
@@ -341,5 +348,6 @@ namespace Secretary
             Login.ShowDialog();
             this.Close();
         }
+
     }
 }

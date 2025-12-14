@@ -32,8 +32,9 @@ namespace Secretary
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicial));
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnSair = new System.Windows.Forms.Button();
             this.btnGerenciamento = new System.Windows.Forms.Button();
+            this.btnRelatorio = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
             this.btnHistorico = new System.Windows.Forms.Button();
             this.btnAtendimentos = new System.Windows.Forms.Button();
             this.btnRequerimentos = new System.Windows.Forms.Button();
@@ -77,8 +78,9 @@ namespace Secretary
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.panelMenu.Controls.Add(this.btnSair);
             this.panelMenu.Controls.Add(this.btnGerenciamento);
+            this.panelMenu.Controls.Add(this.btnRelatorio);
+            this.panelMenu.Controls.Add(this.btnSair);
             this.panelMenu.Controls.Add(this.btnHistorico);
             this.panelMenu.Controls.Add(this.btnAtendimentos);
             this.panelMenu.Controls.Add(this.btnRequerimentos);
@@ -91,6 +93,47 @@ namespace Secretary
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(257, 749);
             this.panelMenu.TabIndex = 0;
+            // 
+            // btnGerenciamento
+            // 
+            this.btnGerenciamento.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnGerenciamento.FlatAppearance.BorderSize = 0;
+            this.btnGerenciamento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGerenciamento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGerenciamento.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnGerenciamento.Image = global::Secretary.Properties.Resources.settings;
+            this.btnGerenciamento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGerenciamento.Location = new System.Drawing.Point(0, 380);
+            this.btnGerenciamento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnGerenciamento.Name = "btnGerenciamento";
+            this.btnGerenciamento.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.btnGerenciamento.Size = new System.Drawing.Size(257, 60);
+            this.btnGerenciamento.TabIndex = 9;
+            this.btnGerenciamento.Text = "   Gerenciamento";
+            this.btnGerenciamento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGerenciamento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGerenciamento.UseVisualStyleBackColor = true;
+            // 
+            // btnRelatorio
+            // 
+            this.btnRelatorio.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRelatorio.FlatAppearance.BorderSize = 0;
+            this.btnRelatorio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRelatorio.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRelatorio.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnRelatorio.Image = global::Secretary.Properties.Resources.bar_chart1;
+            this.btnRelatorio.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRelatorio.Location = new System.Drawing.Point(0, 320);
+            this.btnRelatorio.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnRelatorio.Name = "btnRelatorio";
+            this.btnRelatorio.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.btnRelatorio.Size = new System.Drawing.Size(257, 60);
+            this.btnRelatorio.TabIndex = 8;
+            this.btnRelatorio.Text = "   Relatório";
+            this.btnRelatorio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRelatorio.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRelatorio.UseVisualStyleBackColor = true;
+            this.btnRelatorio.Click += new System.EventHandler(this.btnRelatorio_Click);
             // 
             // btnSair
             // 
@@ -112,27 +155,6 @@ namespace Secretary
             this.btnSair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click_1);
-            // 
-            // btnGerenciamento
-            // 
-            this.btnGerenciamento.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnGerenciamento.FlatAppearance.BorderSize = 0;
-            this.btnGerenciamento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGerenciamento.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGerenciamento.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnGerenciamento.Image = global::Secretary.Properties.Resources.settings;
-            this.btnGerenciamento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGerenciamento.Location = new System.Drawing.Point(0, 320);
-            this.btnGerenciamento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnGerenciamento.Name = "btnGerenciamento";
-            this.btnGerenciamento.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnGerenciamento.Size = new System.Drawing.Size(257, 60);
-            this.btnGerenciamento.TabIndex = 5;
-            this.btnGerenciamento.Text = "   Gerenciamento";
-            this.btnGerenciamento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGerenciamento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnGerenciamento.UseVisualStyleBackColor = true;
-            this.btnGerenciamento.Click += new System.EventHandler(this.btnGerenciamento_Click);
             // 
             // btnHistorico
             // 
@@ -575,7 +597,6 @@ namespace Secretary
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button btnRequerimentos;
         private System.Windows.Forms.Panel panelLogo;
-        private System.Windows.Forms.Button btnGerenciamento;
         private System.Windows.Forms.Button btnHistorico;
         private System.Windows.Forms.Button btnAtendimentos;
         private System.Windows.Forms.Button btnMin;
@@ -605,5 +626,7 @@ namespace Secretary
         private System.Windows.Forms.Panel panelDivisor2;
         private System.Windows.Forms.Label lblNomeUsuario;
         private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Button btnGerenciamento;
+        private System.Windows.Forms.Button btnRelatorio;
     }
 }
