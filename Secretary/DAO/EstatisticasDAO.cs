@@ -233,8 +233,8 @@ namespace Secretary.DAO
           )
         
         ORDER BY `Data da Resposta` DESC, `Tipo` ASC";
-        
-    using (var conn = ConexaoBD.ObterConexao())
+
+            using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
             using (var ad = new MySqlDataAdapter(cmd))
             {
@@ -271,7 +271,7 @@ namespace Secretary.DAO
                   AND r.data_resposta BETWEEN @ini AND @fim
                   AND r.status_doc IN ('Respondido', 'Cancelado')
                   AND r.curso IS NOT NULL AND r.curso != ''
-                GROUP BY r.id_usuario"; 
+                GROUP BY r.id_usuario";
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
             using (var ad = new MySqlDataAdapter(cmd))
@@ -348,7 +348,7 @@ namespace Secretary.DAO
 
         // 4) Usuário e curso selecionados → lista detalhada de requerimentos e tickets atendidos por esse usuário para esse curso
         public static DataTable ListarResumoPorUsuarioECurso(int idUsuario, string curso, DateTime inicio, DateTime fim)
-        {          
+        {
             string sql = @"
         SELECT 
             'Requerimento' AS `Tipo`,
@@ -388,8 +388,8 @@ namespace Secretary.DAO
           )
         
         ORDER BY `Data da Resposta` DESC, `Tipo` ASC";
-        
-    using (var conn = ConexaoBD.ObterConexao())
+
+            using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
             using (var ad = new MySqlDataAdapter(cmd))
             {
@@ -456,6 +456,206 @@ namespace Secretary.DAO
                 }
             }
             return dt;
+        }
+
+        public static DataTable ListarResumoAgrupadoPorUsuario(DateTime inicio, DateTime fim)
+        {
+            string sql = @"
+        SELECT
+            u.nome_usuario AS 'Usuário',
+            COUNT(DISTINCT r.id_requerimento) AS 'Total Requerimentos',
+            COUNT(DISTINCT t.id_ticket) AS 'Total Tickets'
+        FROM t_usuarios u
+        LEFT JOIN t_requerimentos r 
+            ON r.id_usuario = u.id_usuario
+           AND r.status_doc IN ('Respondido', 'Cancelado')
+           AND r.data_resposta BETWEEN @ini AND @fim
+        LEFT JOIN t_tickets t
+            ON t.id_usuario = u.id_usuario
+           AND t.status IN ('Respondido', 'Cancelado')
+           AND (
+                (t.status = 'Respondido' AND t.data_resposta BETWEEN @ini AND @fim)
+                OR
+                (t.status = 'Cancelado' AND t.data_pedido BETWEEN @ini AND @fim)
+           )
+        WHERE u.ativo = 1
+        GROUP BY u.id_usuario
+        ORDER BY u.nome_usuario";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var ad = new MySqlDataAdapter(cmd))
+            {
+                cmd.Parameters.AddWithValue("@ini", inicio);
+                cmd.Parameters.AddWithValue("@fim", fim);
+
+                DataTable dt = new DataTable();
+                ad.Fill(dt);
+                return dt;
+            }
+        }
+
+        public static DataTable ListarResumoAgrupadoPorCurso(DateTime inicio, DateTime fim)
+        {
+            string sql = @"
+        SELECT
+            curso AS 'Curso',
+            SUM(TotalRequerimentos) AS 'Total Requerimentos',
+            SUM(TotalTickets) AS 'Total Tickets'
+        FROM (
+            SELECT 
+                r.curso,
+                COUNT(*) AS TotalRequerimentos,
+                0 AS TotalTickets
+            FROM t_requerimentos r
+            WHERE r.status_doc IN ('Respondido', 'Cancelado')
+              AND r.data_resposta BETWEEN @ini AND @fim
+              AND r.curso IS NOT NULL
+            GROUP BY r.curso
+
+            UNION ALL
+
+            SELECT 
+                CASE 
+                    WHEN t.tipo_vinculo = 'Comunidade externa' 
+                    THEN 'Comunidade Externa' 
+                    ELSE t.curso 
+                END AS curso,
+                0,
+                COUNT(*)
+            FROM t_tickets t
+            WHERE t.status IN ('Respondido', 'Cancelado')
+              AND (
+                    (t.status = 'Respondido' AND t.data_resposta BETWEEN @ini AND @fim)
+                    OR
+                    (t.status = 'Cancelado' AND t.data_pedido BETWEEN @ini AND @fim)
+                  )
+            GROUP BY curso
+        ) x
+        GROUP BY curso
+        ORDER BY curso";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var ad = new MySqlDataAdapter(cmd))
+            {
+                cmd.Parameters.AddWithValue("@ini", inicio);
+                cmd.Parameters.AddWithValue("@fim", fim);
+
+                DataTable dt = new DataTable();
+                ad.Fill(dt);
+                return dt;
+            }
+        }
+
+        // -------------------------------
+        // MÉTODOS PARA SUPORTE A FILTROS
+        // -------------------------------
+
+        // Agrupar por cursos, filtrado por usuário (para "Cursos" com filtro de usuário)
+        public static DataTable ListarResumoAgrupadoPorCursoFiltradoPorUsuario(int idUsuario, DateTime inicio, DateTime fim)
+        {
+            string sql = @"
+    SELECT
+        curso AS 'Curso',
+        SUM(TotalRequerimentos) AS 'Total Requerimentos',
+        SUM(TotalTickets) AS 'Total Tickets'
+    FROM (
+        SELECT 
+            r.curso,
+            COUNT(*) AS TotalRequerimentos,
+            0 AS TotalTickets
+        FROM t_requerimentos r
+        WHERE r.id_usuario = @id
+          AND r.status_doc IN ('Respondido', 'Cancelado')
+          AND r.data_resposta BETWEEN @ini AND @fim
+          AND r.curso IS NOT NULL
+        GROUP BY r.curso
+
+        UNION ALL
+
+        SELECT 
+            CASE 
+                WHEN t.tipo_vinculo = 'Comunidade externa' 
+                THEN 'Comunidade Externa' 
+                ELSE t.curso 
+            END AS curso,
+            0,
+            COUNT(*)
+        FROM t_tickets t
+        WHERE t.id_usuario = @id
+          AND t.status IN ('Respondido', 'Cancelado')
+          AND (
+                (t.status = 'Respondido' AND t.data_resposta BETWEEN @ini AND @fim)
+                OR
+                (t.status = 'Cancelado' AND t.data_pedido BETWEEN @ini AND @fim)
+              )
+        GROUP BY curso
+    ) x
+    GROUP BY curso
+    ORDER BY curso";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var ad = new MySqlDataAdapter(cmd))
+            {
+                cmd.Parameters.AddWithValue("@id", idUsuario);
+                cmd.Parameters.AddWithValue("@ini", inicio);
+                cmd.Parameters.AddWithValue("@fim", fim);
+
+                DataTable dt = new DataTable();
+                ad.Fill(dt);
+                return dt;
+            }
+        }
+
+        // Listar detalhes (registros individuais) filtrados por curso (para "Detalhado" com filtro de curso)
+        public static DataTable ListarDetalhesPorCurso(string curso, DateTime inicio, DateTime fim)
+        {
+            string sql = @"
+    SELECT 
+        r.data_resposta AS `Data da resposta`,
+        u.nome_usuario AS `Nome de quem respondeu`,
+        r.nome_doc AS `Nome do documento`,
+        COALESCE(r.ra, 'Não informado') AS `RA do aluno`,
+        'Requerimento' AS `Tipo`
+    FROM t_requerimentos r
+    INNER JOIN t_usuarios u ON r.id_usuario = u.id_usuario
+    WHERE r.curso = @curso
+      AND r.status_doc IN ('Respondido', 'Cancelado')
+      AND r.data_resposta BETWEEN @ini AND @fim
+      AND r.data_resposta IS NOT NULL
+     UNION ALL
+    
+    SELECT 
+        t.data_resposta AS `Data da resposta`,
+        u.nome_usuario AS `Nome de quem respondeu`,
+        NULL AS `Nome do documento`,
+        COALESCE(t.ra, 'Não informado') AS `RA do aluno`,
+        'Ticket' AS `Tipo`
+    FROM t_tickets t
+    INNER JOIN t_usuarios u ON t.id_usuario = u.id_usuario
+    WHERE CASE WHEN @curso = 'Comunidade Externa' THEN t.tipo_vinculo = 'Comunidade externa' ELSE t.curso = @curso END
+      AND t.status IN ('Respondido', 'Cancelado')
+      AND (
+          (t.status = 'Respondido' AND t.data_resposta BETWEEN @ini AND @fim AND t.data_resposta IS NOT NULL)
+          OR
+          (t.status = 'Cancelado' AND t.data_pedido BETWEEN @ini AND @fim)
+      )
+    
+    ORDER BY `Data da resposta` DESC";
+
+            using (var conn = ConexaoBD.ObterConexao())
+            using (var cmd = new MySqlCommand(sql, conn))
+            using (var ad = new MySqlDataAdapter(cmd))
+            {
+                cmd.Parameters.AddWithValue("@curso", curso);
+                cmd.Parameters.AddWithValue("@ini", inicio);
+                cmd.Parameters.AddWithValue("@fim", fim);
+                DataTable dt = new DataTable();
+                ad.Fill(dt);
+                return dt;
+            }
         }
     }
 }

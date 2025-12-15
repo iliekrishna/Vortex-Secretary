@@ -91,7 +91,7 @@ namespace Secretary
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(257, 749);
+            this.panelMenu.Size = new System.Drawing.Size(220, 749);
             this.panelMenu.TabIndex = 0;
             // 
             // btnGerenciamento
@@ -107,7 +107,7 @@ namespace Secretary
             this.btnGerenciamento.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnGerenciamento.Name = "btnGerenciamento";
             this.btnGerenciamento.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnGerenciamento.Size = new System.Drawing.Size(257, 60);
+            this.btnGerenciamento.Size = new System.Drawing.Size(220, 60);
             this.btnGerenciamento.TabIndex = 9;
             this.btnGerenciamento.Text = "   Gerenciamento";
             this.btnGerenciamento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -128,7 +128,7 @@ namespace Secretary
             this.btnRelatorio.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnRelatorio.Name = "btnRelatorio";
             this.btnRelatorio.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnRelatorio.Size = new System.Drawing.Size(257, 60);
+            this.btnRelatorio.Size = new System.Drawing.Size(220, 60);
             this.btnRelatorio.TabIndex = 8;
             this.btnRelatorio.Text = "   Relatório";
             this.btnRelatorio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -149,7 +149,7 @@ namespace Secretary
             this.btnSair.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSair.Name = "btnSair";
             this.btnSair.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnSair.Size = new System.Drawing.Size(257, 50);
+            this.btnSair.Size = new System.Drawing.Size(220, 50);
             this.btnSair.TabIndex = 7;
             this.btnSair.Text = "Sair";
             this.btnSair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -170,7 +170,7 @@ namespace Secretary
             this.btnHistorico.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnHistorico.Name = "btnHistorico";
             this.btnHistorico.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnHistorico.Size = new System.Drawing.Size(257, 60);
+            this.btnHistorico.Size = new System.Drawing.Size(220, 60);
             this.btnHistorico.TabIndex = 4;
             this.btnHistorico.Text = "   Histórico";
             this.btnHistorico.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -191,7 +191,7 @@ namespace Secretary
             this.btnAtendimentos.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAtendimentos.Name = "btnAtendimentos";
             this.btnAtendimentos.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnAtendimentos.Size = new System.Drawing.Size(257, 60);
+            this.btnAtendimentos.Size = new System.Drawing.Size(220, 60);
             this.btnAtendimentos.TabIndex = 3;
             this.btnAtendimentos.Text = "   Atendimentos";
             this.btnAtendimentos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -212,7 +212,7 @@ namespace Secretary
             this.btnRequerimentos.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnRequerimentos.Name = "btnRequerimentos";
             this.btnRequerimentos.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnRequerimentos.Size = new System.Drawing.Size(257, 60);
+            this.btnRequerimentos.Size = new System.Drawing.Size(220, 60);
             this.btnRequerimentos.TabIndex = 2;
             this.btnRequerimentos.Text = "   Requerimentos";
             this.btnRequerimentos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -233,7 +233,7 @@ namespace Secretary
             this.btnInicio.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnInicio.Name = "btnInicio";
             this.btnInicio.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnInicio.Size = new System.Drawing.Size(257, 60);
+            this.btnInicio.Size = new System.Drawing.Size(220, 60);
             this.btnInicio.TabIndex = 1;
             this.btnInicio.Text = "    Início";
             this.btnInicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -251,7 +251,7 @@ namespace Secretary
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
             this.panelLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(257, 80);
+            this.panelLogo.Size = new System.Drawing.Size(220, 80);
             this.panelLogo.TabIndex = 0;
             // 
             // btnMin
@@ -262,7 +262,7 @@ namespace Secretary
             this.btnMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMin.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMin.ForeColor = System.Drawing.Color.White;
-            this.btnMin.Location = new System.Drawing.Point(2324, 0);
+            this.btnMin.Location = new System.Drawing.Point(2361, 0);
             this.btnMin.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnMin.Name = "btnMin";
             this.btnMin.Size = new System.Drawing.Size(47, 30);
@@ -278,7 +278,7 @@ namespace Secretary
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(2367, 0);
+            this.btnClose.Location = new System.Drawing.Point(2404, 0);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(47, 30);
@@ -300,10 +300,10 @@ namespace Secretary
             this.panelMenuSuperior.Controls.Add(this.lblNomeUsuario);
             this.panelMenuSuperior.Controls.Add(this.lblUsuario);
             this.panelMenuSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMenuSuperior.Location = new System.Drawing.Point(257, 0);
+            this.panelMenuSuperior.Location = new System.Drawing.Point(220, 0);
             this.panelMenuSuperior.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panelMenuSuperior.Name = "panelMenuSuperior";
-            this.panelMenuSuperior.Size = new System.Drawing.Size(1113, 80);
+            this.panelMenuSuperior.Size = new System.Drawing.Size(1150, 80);
             this.panelMenuSuperior.TabIndex = 15;
             // 
             // pboxLogoCps
@@ -327,7 +327,7 @@ namespace Secretary
             this.btnLocalizar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLocalizar.ForeColor = System.Drawing.Color.Black;
             this.btnLocalizar.Image = ((System.Drawing.Image)(resources.GetObject("btnLocalizar.Image")));
-            this.btnLocalizar.Location = new System.Drawing.Point(2235, 28);
+            this.btnLocalizar.Location = new System.Drawing.Point(2272, 28);
             this.btnLocalizar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnLocalizar.Name = "btnLocalizar";
             this.btnLocalizar.Size = new System.Drawing.Size(29, 22);
@@ -339,7 +339,7 @@ namespace Secretary
             this.pnlDivisor1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDivisor1.BackColor = System.Drawing.Color.White;
             this.pnlDivisor1.ForeColor = System.Drawing.Color.Black;
-            this.pnlDivisor1.Location = new System.Drawing.Point(1748, 55);
+            this.pnlDivisor1.Location = new System.Drawing.Point(1785, 55);
             this.pnlDivisor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pnlDivisor1.Name = "pnlDivisor1";
             this.pnlDivisor1.Size = new System.Drawing.Size(518, 1);
@@ -351,7 +351,7 @@ namespace Secretary
             this.lblLocalizar.AutoSize = true;
             this.lblLocalizar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLocalizar.ForeColor = System.Drawing.Color.White;
-            this.lblLocalizar.Location = new System.Drawing.Point(1745, 33);
+            this.lblLocalizar.Location = new System.Drawing.Point(1782, 33);
             this.lblLocalizar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLocalizar.Name = "lblLocalizar";
             this.lblLocalizar.Size = new System.Drawing.Size(70, 16);
@@ -365,7 +365,7 @@ namespace Secretary
             this.txtLocalizar.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLocalizar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLocalizar.ForeColor = System.Drawing.Color.White;
-            this.txtLocalizar.Location = new System.Drawing.Point(1816, 32);
+            this.txtLocalizar.Location = new System.Drawing.Point(1853, 32);
             this.txtLocalizar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtLocalizar.Name = "txtLocalizar";
             this.txtLocalizar.Size = new System.Drawing.Size(411, 16);
@@ -380,7 +380,7 @@ namespace Secretary
             this.btnPerfil.ForeColor = System.Drawing.Color.White;
             this.btnPerfil.Image = ((System.Drawing.Image)(resources.GetObject("btnPerfil.Image")));
             this.btnPerfil.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPerfil.Location = new System.Drawing.Point(891, 24);
+            this.btnPerfil.Location = new System.Drawing.Point(928, 24);
             this.btnPerfil.Margin = new System.Windows.Forms.Padding(0);
             this.btnPerfil.Name = "btnPerfil";
             this.btnPerfil.Size = new System.Drawing.Size(213, 38);
@@ -448,10 +448,10 @@ namespace Secretary
             this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPrincipal.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelPrincipal.ForeColor = System.Drawing.Color.Black;
-            this.panelPrincipal.Location = new System.Drawing.Point(257, 80);
+            this.panelPrincipal.Location = new System.Drawing.Point(220, 80);
             this.panelPrincipal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panelPrincipal.Name = "panelPrincipal";
-            this.panelPrincipal.Size = new System.Drawing.Size(1113, 669);
+            this.panelPrincipal.Size = new System.Drawing.Size(1150, 669);
             this.panelPrincipal.TabIndex = 16;
             // 
             // panelDivisor2
@@ -468,7 +468,7 @@ namespace Secretary
             this.lblCanceladas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCanceladas.AutoSize = true;
             this.lblCanceladas.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCanceladas.Location = new System.Drawing.Point(786, 409);
+            this.lblCanceladas.Location = new System.Drawing.Point(823, 409);
             this.lblCanceladas.Name = "lblCanceladas";
             this.lblCanceladas.Size = new System.Drawing.Size(154, 23);
             this.lblCanceladas.TabIndex = 10;
@@ -479,7 +479,7 @@ namespace Secretary
             this.lblEmAndamento.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblEmAndamento.AutoSize = true;
             this.lblEmAndamento.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmAndamento.Location = new System.Drawing.Point(477, 409);
+            this.lblEmAndamento.Location = new System.Drawing.Point(496, 409);
             this.lblEmAndamento.Name = "lblEmAndamento";
             this.lblEmAndamento.Size = new System.Drawing.Size(192, 23);
             this.lblEmAndamento.TabIndex = 9;
@@ -499,7 +499,7 @@ namespace Secretary
             // 
             this.pboxCanceladas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pboxCanceladas.Image = ((System.Drawing.Image)(resources.GetObject("pboxCanceladas.Image")));
-            this.pboxCanceladas.Location = new System.Drawing.Point(779, 234);
+            this.pboxCanceladas.Location = new System.Drawing.Point(816, 234);
             this.pboxCanceladas.Name = "pboxCanceladas";
             this.pboxCanceladas.Size = new System.Drawing.Size(161, 172);
             this.pboxCanceladas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -512,7 +512,7 @@ namespace Secretary
             // 
             this.pboxEmAndamento.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pboxEmAndamento.Image = ((System.Drawing.Image)(resources.GetObject("pboxEmAndamento.Image")));
-            this.pboxEmAndamento.Location = new System.Drawing.Point(481, 240);
+            this.pboxEmAndamento.Location = new System.Drawing.Point(500, 240);
             this.pboxEmAndamento.Name = "pboxEmAndamento";
             this.pboxEmAndamento.Size = new System.Drawing.Size(167, 160);
             this.pboxEmAndamento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

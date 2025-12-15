@@ -21,7 +21,7 @@ namespace Secretary.Utils
             if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
 
             // Cria o documento PDF
-            Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
+            Document doc = new Document(PageSize.A4.Rotate(), 30, 30, 30, 30);
             PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
             doc.Open();
 

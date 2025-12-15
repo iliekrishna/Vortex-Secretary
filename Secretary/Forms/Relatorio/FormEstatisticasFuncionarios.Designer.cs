@@ -31,6 +31,9 @@ namespace Secretary.Forms
         private void InitializeComponent()
         {
             this.panelFiltros = new System.Windows.Forms.Panel();
+            this.tableLayoutPanelVisualizarPor = new System.Windows.Forms.TableLayoutPanel();
+            this.lblVisualizarPor = new System.Windows.Forms.Label();
+            this.cmbVisualizarPor = new System.Windows.Forms.ComboBox();
             this.tableFiltros = new System.Windows.Forms.TableLayoutPanel();
             this.dtpFim = new System.Windows.Forms.DateTimePicker();
             this.lblDataFim = new System.Windows.Forms.Label();
@@ -39,9 +42,10 @@ namespace Secretary.Forms
             this.cmbCurso = new System.Windows.Forms.ComboBox();
             this.lblCurso = new System.Windows.Forms.Label();
             this.cmbUsuario = new System.Windows.Forms.ComboBox();
-            this.lblUsuario = new System.Windows.Forms.Label();
+            this.lblFuncionário = new System.Windows.Forms.Label();
             this.panelConteudo = new System.Windows.Forms.Panel();
             this.paneTable = new System.Windows.Forms.Panel();
+            this.panelDGV = new System.Windows.Forms.Panel();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.panelBotao = new System.Windows.Forms.Panel();
             this.btnBaixarPDF = new System.Windows.Forms.Button();
@@ -57,9 +61,11 @@ namespace Secretary.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.lblResultado = new System.Windows.Forms.Label();
             this.panelFiltros.SuspendLayout();
+            this.tableLayoutPanelVisualizarPor.SuspendLayout();
             this.tableFiltros.SuspendLayout();
             this.panelConteudo.SuspendLayout();
             this.paneTable.SuspendLayout();
+            this.panelDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
             this.panelBotao.SuspendLayout();
             this.panelCards.SuspendLayout();
@@ -73,13 +79,53 @@ namespace Secretary.Forms
             // 
             this.panelFiltros.AutoSize = true;
             this.panelFiltros.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelFiltros.Controls.Add(this.tableLayoutPanelVisualizarPor);
             this.panelFiltros.Controls.Add(this.tableFiltros);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Location = new System.Drawing.Point(0, 0);
             this.panelFiltros.Name = "panelFiltros";
             this.panelFiltros.Padding = new System.Windows.Forms.Padding(34, 34, 34, 10);
-            this.panelFiltros.Size = new System.Drawing.Size(1370, 76);
+            this.panelFiltros.Size = new System.Drawing.Size(1370, 125);
             this.panelFiltros.TabIndex = 3;
+            // 
+            // tableLayoutPanelVisualizarPor
+            // 
+            this.tableLayoutPanelVisualizarPor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelVisualizarPor.ColumnCount = 3;
+            this.tableLayoutPanelVisualizarPor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelVisualizarPor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelVisualizarPor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelVisualizarPor.Controls.Add(this.lblVisualizarPor, 1, 0);
+            this.tableLayoutPanelVisualizarPor.Controls.Add(this.cmbVisualizarPor, 2, 0);
+            this.tableLayoutPanelVisualizarPor.Location = new System.Drawing.Point(34, 66);
+            this.tableLayoutPanelVisualizarPor.Name = "tableLayoutPanelVisualizarPor";
+            this.tableLayoutPanelVisualizarPor.Padding = new System.Windows.Forms.Padding(0, 15, 0, 5);
+            this.tableLayoutPanelVisualizarPor.RowCount = 1;
+            this.tableLayoutPanelVisualizarPor.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelVisualizarPor.Size = new System.Drawing.Size(1302, 46);
+            this.tableLayoutPanelVisualizarPor.TabIndex = 53;
+            // 
+            // lblVisualizarPor
+            // 
+            this.lblVisualizarPor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblVisualizarPor.AutoSize = true;
+            this.lblVisualizarPor.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVisualizarPor.Location = new System.Drawing.Point(865, 19);
+            this.lblVisualizarPor.Name = "lblVisualizarPor";
+            this.lblVisualizarPor.Size = new System.Drawing.Size(114, 18);
+            this.lblVisualizarPor.TabIndex = 42;
+            this.lblVisualizarPor.Text = "Visualizar por:";
+            // 
+            // cmbVisualizarPor
+            // 
+            this.cmbVisualizarPor.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cmbVisualizarPor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVisualizarPor.FormattingEnabled = true;
+            this.cmbVisualizarPor.Location = new System.Drawing.Point(985, 18);
+            this.cmbVisualizarPor.Name = "cmbVisualizarPor";
+            this.cmbVisualizarPor.Size = new System.Drawing.Size(314, 26);
+            this.cmbVisualizarPor.TabIndex = 57;
+            this.cmbVisualizarPor.SelectedIndexChanged += new System.EventHandler(this.cmbVisualizarPor_SelectedIndexChanged);
             // 
             // tableFiltros
             // 
@@ -100,8 +146,8 @@ namespace Secretary.Forms
             this.tableFiltros.Controls.Add(this.cmbCurso, 3, 0);
             this.tableFiltros.Controls.Add(this.lblCurso, 2, 0);
             this.tableFiltros.Controls.Add(this.cmbUsuario, 1, 0);
-            this.tableFiltros.Controls.Add(this.lblUsuario, 0, 0);
-            this.tableFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableFiltros.Controls.Add(this.lblFuncionário, 0, 0);
+            this.tableFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableFiltros.Location = new System.Drawing.Point(34, 34);
             this.tableFiltros.Name = "tableFiltros";
             this.tableFiltros.RowCount = 1;
@@ -189,17 +235,17 @@ namespace Secretary.Forms
             this.cmbUsuario.TabIndex = 50;
             this.cmbUsuario.SelectedIndexChanged += new System.EventHandler(this.cmbUsuario_SelectedIndexChanged);
             // 
-            // lblUsuario
+            // lblFuncionário
             // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblUsuario.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(3, 0);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.lblUsuario.Size = new System.Drawing.Size(71, 32);
-            this.lblUsuario.TabIndex = 41;
-            this.lblUsuario.Text = "Usuário:";
+            this.lblFuncionário.AutoSize = true;
+            this.lblFuncionário.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblFuncionário.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFuncionário.Location = new System.Drawing.Point(3, 0);
+            this.lblFuncionário.Name = "lblFuncionário";
+            this.lblFuncionário.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.lblFuncionário.Size = new System.Drawing.Size(71, 32);
+            this.lblFuncionário.TabIndex = 41;
+            this.lblFuncionário.Text = "Usuário:";
             // 
             // panelConteudo
             // 
@@ -207,23 +253,32 @@ namespace Secretary.Forms
             this.panelConteudo.Controls.Add(this.panelCards);
             this.panelConteudo.Controls.Add(this.lblResultado);
             this.panelConteudo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelConteudo.Location = new System.Drawing.Point(0, 76);
-            this.panelConteudo.Margin = new System.Windows.Forms.Padding(34);
+            this.panelConteudo.Location = new System.Drawing.Point(0, 125);
+            this.panelConteudo.Margin = new System.Windows.Forms.Padding(20, 34, 0, 34);
             this.panelConteudo.Name = "panelConteudo";
-            this.panelConteudo.Padding = new System.Windows.Forms.Padding(34);
+            this.panelConteudo.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.panelConteudo.Size = new System.Drawing.Size(1370, 612);
             this.panelConteudo.TabIndex = 46;
             // 
             // paneTable
             // 
-            this.paneTable.Controls.Add(this.dgvDados);
+            this.paneTable.Controls.Add(this.panelDGV);
             this.paneTable.Controls.Add(this.panelBotao);
-            this.paneTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paneTable.Location = new System.Drawing.Point(452, 83);
+            this.paneTable.Dock = System.Windows.Forms.DockStyle.Top;
+            this.paneTable.Location = new System.Drawing.Point(390, 29);
             this.paneTable.Name = "paneTable";
-            this.paneTable.Padding = new System.Windows.Forms.Padding(20, 22, 20, 5);
-            this.paneTable.Size = new System.Drawing.Size(884, 495);
+            this.paneTable.Padding = new System.Windows.Forms.Padding(10, 20, 40, 10);
+            this.paneTable.Size = new System.Drawing.Size(980, 495);
             this.paneTable.TabIndex = 53;
+            // 
+            // panelDGV
+            // 
+            this.panelDGV.Controls.Add(this.dgvDados);
+            this.panelDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDGV.Location = new System.Drawing.Point(10, 20);
+            this.panelDGV.Name = "panelDGV";
+            this.panelDGV.Size = new System.Drawing.Size(930, 349);
+            this.panelDGV.TabIndex = 52;
             // 
             // dgvDados
             // 
@@ -235,20 +290,20 @@ namespace Secretary.Forms
             this.dgvDados.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvDados.Location = new System.Drawing.Point(20, 22);
+            this.dgvDados.Location = new System.Drawing.Point(0, 0);
             this.dgvDados.Name = "dgvDados";
-            this.dgvDados.Size = new System.Drawing.Size(844, 340);
-            this.dgvDados.TabIndex = 51;
+            this.dgvDados.Size = new System.Drawing.Size(930, 349);
+            this.dgvDados.TabIndex = 52;
             // 
             // panelBotao
             // 
             this.panelBotao.Controls.Add(this.btnBaixarPDF);
             this.panelBotao.Controls.Add(this.btnBaixarExcel);
             this.panelBotao.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBotao.Location = new System.Drawing.Point(20, 362);
+            this.panelBotao.Location = new System.Drawing.Point(10, 369);
             this.panelBotao.Name = "panelBotao";
-            this.panelBotao.Padding = new System.Windows.Forms.Padding(20, 20, 20, 50);
-            this.panelBotao.Size = new System.Drawing.Size(844, 128);
+            this.panelBotao.Padding = new System.Windows.Forms.Padding(20, 20, 20, 35);
+            this.panelBotao.Size = new System.Drawing.Size(930, 116);
             this.panelBotao.TabIndex = 50;
             // 
             // btnBaixarPDF
@@ -259,11 +314,11 @@ namespace Secretary.Forms
             this.btnBaixarPDF.ForeColor = System.Drawing.Color.Black;
             this.btnBaixarPDF.Image = global::Secretary.Properties.Resources.pdf__1_;
             this.btnBaixarPDF.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBaixarPDF.Location = new System.Drawing.Point(434, 20);
+            this.btnBaixarPDF.Location = new System.Drawing.Point(520, 20);
             this.btnBaixarPDF.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBaixarPDF.Name = "btnBaixarPDF";
             this.btnBaixarPDF.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnBaixarPDF.Size = new System.Drawing.Size(195, 58);
+            this.btnBaixarPDF.Size = new System.Drawing.Size(195, 61);
             this.btnBaixarPDF.TabIndex = 50;
             this.btnBaixarPDF.Text = "   Baixar PDF";
             this.btnBaixarPDF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -279,11 +334,11 @@ namespace Secretary.Forms
             this.btnBaixarExcel.ForeColor = System.Drawing.Color.Black;
             this.btnBaixarExcel.Image = global::Secretary.Properties.Resources.excel;
             this.btnBaixarExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBaixarExcel.Location = new System.Drawing.Point(629, 20);
+            this.btnBaixarExcel.Location = new System.Drawing.Point(715, 20);
             this.btnBaixarExcel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBaixarExcel.Name = "btnBaixarExcel";
             this.btnBaixarExcel.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.btnBaixarExcel.Size = new System.Drawing.Size(195, 58);
+            this.btnBaixarExcel.Size = new System.Drawing.Size(195, 61);
             this.btnBaixarExcel.TabIndex = 49;
             this.btnBaixarExcel.Text = "   Baixar Excel";
             this.btnBaixarExcel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -296,10 +351,11 @@ namespace Secretary.Forms
             this.panelCards.Controls.Add(this.panel1);
             this.panelCards.Controls.Add(this.panel2);
             this.panelCards.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelCards.Location = new System.Drawing.Point(34, 83);
+            this.panelCards.Location = new System.Drawing.Point(10, 29);
+            this.panelCards.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.panelCards.Name = "panelCards";
             this.panelCards.Padding = new System.Windows.Forms.Padding(10);
-            this.panelCards.Size = new System.Drawing.Size(418, 495);
+            this.panelCards.Size = new System.Drawing.Size(380, 583);
             this.panelCards.TabIndex = 52;
             // 
             // panel1
@@ -309,7 +365,7 @@ namespace Secretary.Forms
             this.panel1.Location = new System.Drawing.Point(10, 191);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(398, 185);
+            this.panel1.Size = new System.Drawing.Size(360, 185);
             this.panel1.TabIndex = 58;
             // 
             // materialCard1
@@ -326,7 +382,7 @@ namespace Secretary.Forms
             this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(15);
-            this.materialCard1.Size = new System.Drawing.Size(378, 158);
+            this.materialCard1.Size = new System.Drawing.Size(340, 158);
             this.materialCard1.TabIndex = 53;
             // 
             // lblTotalTickets
@@ -336,7 +392,7 @@ namespace Secretary.Forms
             this.lblTotalTickets.Location = new System.Drawing.Point(15, 74);
             this.lblTotalTickets.Name = "lblTotalTickets";
             this.lblTotalTickets.Padding = new System.Windows.Forms.Padding(10);
-            this.lblTotalTickets.Size = new System.Drawing.Size(348, 69);
+            this.lblTotalTickets.Size = new System.Drawing.Size(310, 69);
             this.lblTotalTickets.TabIndex = 43;
             this.lblTotalTickets.Text = "Total";
             this.lblTotalTickets.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -348,7 +404,7 @@ namespace Secretary.Forms
             this.label6.Location = new System.Drawing.Point(15, 15);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.label6.Size = new System.Drawing.Size(348, 59);
+            this.label6.Size = new System.Drawing.Size(310, 59);
             this.label6.TabIndex = 42;
             this.label6.Text = "Tickets Atendidos";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -360,7 +416,7 @@ namespace Secretary.Forms
             this.panel2.Location = new System.Drawing.Point(10, 10);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(10);
-            this.panel2.Size = new System.Drawing.Size(398, 181);
+            this.panel2.Size = new System.Drawing.Size(360, 181);
             this.panel2.TabIndex = 57;
             // 
             // materialCard3
@@ -377,7 +433,7 @@ namespace Secretary.Forms
             this.materialCard3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard3.Name = "materialCard3";
             this.materialCard3.Padding = new System.Windows.Forms.Padding(15);
-            this.materialCard3.Size = new System.Drawing.Size(378, 158);
+            this.materialCard3.Size = new System.Drawing.Size(340, 158);
             this.materialCard3.TabIndex = 52;
             // 
             // lblTotalRequerimentos
@@ -387,7 +443,7 @@ namespace Secretary.Forms
             this.lblTotalRequerimentos.Location = new System.Drawing.Point(15, 74);
             this.lblTotalRequerimentos.Name = "lblTotalRequerimentos";
             this.lblTotalRequerimentos.Padding = new System.Windows.Forms.Padding(10);
-            this.lblTotalRequerimentos.Size = new System.Drawing.Size(348, 69);
+            this.lblTotalRequerimentos.Size = new System.Drawing.Size(310, 69);
             this.lblTotalRequerimentos.TabIndex = 43;
             this.lblTotalRequerimentos.Text = "Total";
             this.lblTotalRequerimentos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -399,7 +455,7 @@ namespace Secretary.Forms
             this.label3.Location = new System.Drawing.Point(15, 15);
             this.label3.Name = "label3";
             this.label3.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.label3.Size = new System.Drawing.Size(348, 59);
+            this.label3.Size = new System.Drawing.Size(310, 59);
             this.label3.TabIndex = 42;
             this.label3.Text = "Requerimentos Atendidos";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -409,11 +465,10 @@ namespace Secretary.Forms
             this.lblResultado.AutoSize = true;
             this.lblResultado.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblResultado.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResultado.Location = new System.Drawing.Point(34, 34);
-            this.lblResultado.Margin = new System.Windows.Forms.Padding(30);
+            this.lblResultado.Location = new System.Drawing.Point(10, 0);
+            this.lblResultado.Margin = new System.Windows.Forms.Padding(0);
             this.lblResultado.Name = "lblResultado";
-            this.lblResultado.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.lblResultado.Size = new System.Drawing.Size(275, 49);
+            this.lblResultado.Size = new System.Drawing.Size(275, 29);
             this.lblResultado.TabIndex = 45;
             this.lblResultado.Text = "Resultado da consulta";
             // 
@@ -431,11 +486,14 @@ namespace Secretary.Forms
             this.Load += new System.EventHandler(this.FormEstatisticasFuncionarios_Load);
             this.panelFiltros.ResumeLayout(false);
             this.panelFiltros.PerformLayout();
+            this.tableLayoutPanelVisualizarPor.ResumeLayout(false);
+            this.tableLayoutPanelVisualizarPor.PerformLayout();
             this.tableFiltros.ResumeLayout(false);
             this.tableFiltros.PerformLayout();
             this.panelConteudo.ResumeLayout(false);
             this.panelConteudo.PerformLayout();
             this.paneTable.ResumeLayout(false);
+            this.panelDGV.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).EndInit();
             this.panelBotao.ResumeLayout(false);
             this.panelCards.ResumeLayout(false);
@@ -465,7 +523,6 @@ namespace Secretary.Forms
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel paneTable;
         private System.Windows.Forms.Panel panelBotao;
-        private System.Windows.Forms.DataGridView dgvDados;
         private System.Windows.Forms.Button btnBaixarPDF;
         private System.Windows.Forms.TableLayoutPanel tableFiltros;
         private System.Windows.Forms.DateTimePicker dtpFim;
@@ -475,6 +532,11 @@ namespace Secretary.Forms
         private System.Windows.Forms.ComboBox cmbCurso;
         private System.Windows.Forms.Label lblCurso;
         private System.Windows.Forms.ComboBox cmbUsuario;
-        private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Label lblFuncionário;
+        private Panel panelDGV;
+        private DataGridView dgvDados;
+        private TableLayoutPanel tableLayoutPanelVisualizarPor;
+        private Label lblVisualizarPor;
+        private ComboBox cmbVisualizarPor;
     }
 }
