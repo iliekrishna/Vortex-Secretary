@@ -15,9 +15,8 @@ namespace Secretary.Forms
 
         private void FormEstatisticasFuncionarios_Load(object sender, EventArgs e)
         {
-            // Define dtpInicio para o primeiro dia do mês atual (ou ajuste conforme necessário)
-            dtpInicio.Value = new DateTime(2026, 1, 1);
-            // Define dtpFim para a data atual (sem hora)
+            dtpInicio.Value = new DateTime(2025, 1, 1);
+            // Define dtpFim para a data atual
             dtpFim.Value = DateTime.Now.Date;
 
             CarregarUsuarios();
@@ -100,7 +99,6 @@ namespace Secretary.Forms
         // -----------------------------------------
         private void AtualizarEstatisticas()
         {
-            // Verificações de segurança para evitar erros se os comboboxes não estiverem carregados
             string curso = null;
             int idUsuario = 0;
 
@@ -118,7 +116,6 @@ namespace Secretary.Forms
             DateTime inicio = dtpInicio.Value;
             DateTime fim = dtpFim.Value;
 
-            // Ajustar fim para incluir o dia inteiro (até 23:59:59.999)
             DateTime fimAjustado = fim.Date.AddDays(1).AddTicks(-1);
 
             try
@@ -185,7 +182,7 @@ namespace Secretary.Forms
         }
 
         // -----------------------------------------
-        // BOTÕES DE EXPORTAÇÃO (IMPLEMENTAÇÃO BÁSICA, AJUSTE CONFORME NECESSÁRIO)
+        // BOTÕES DE EXPORTAÇÃO
         // -----------------------------------------
         private void btnBaixarPDF_Click(object sender, EventArgs e)
         {

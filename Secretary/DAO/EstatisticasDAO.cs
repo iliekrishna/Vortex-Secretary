@@ -13,7 +13,6 @@ namespace Secretary.DAO
         // -------------------------------
         public static int TotalRequerimentosUsuario(int idUsuario, DateTime inicio, DateTime fim)
         {
-            // Mantido como está (assumindo que cancelados têm data_resposta)
             string sql = @"
                 SELECT COUNT(*)
                 FROM t_requerimentos
@@ -121,7 +120,6 @@ namespace Secretary.DAO
 
         public static int TotalTicketsGeral(DateTime inicio, DateTime fim)
         {
-            // Ajustado similarmente
             string sql = @"
                 SELECT COUNT(*)
                 FROM t_tickets
@@ -195,13 +193,9 @@ namespace Secretary.DAO
         // -------------------------------
 
 
-        // 1) Usuário selecionado → lista detalhada de requerimentos e tickets atendidos por esse usuário (unificada em uma DataGridView)
+        // 1) Usuário selecionado → lista detalhada de requerimentos e tickets atendidos por esse usuário
         public static DataTable ListarResumoPorUsuario(int idUsuario, DateTime inicio, DateTime fim)
         {
-            // Ajustado: Usa UNION ALL para combinar requerimentos e tickets em uma única lista.
-            // Adiciona coluna "Tipo" para distinguir.
-            // Campos específicos para cada tipo, com CASE para curso e RA conforme solicitado.
-            // Ordena por data_resposta DESC (requerimentos primeiro, depois tickets).
             string sql = @"
         SELECT 
             'Requerimento' AS `Tipo`,
@@ -254,9 +248,6 @@ namespace Secretary.DAO
             }
         }
 
-
-
-
         // 2) Curso selecionado → listar usuários que atenderam esse curso
         public static DataTable ListarResumoPorCurso(string curso, DateTime inicio, DateTime fim)
         {
@@ -296,10 +287,6 @@ namespace Secretary.DAO
         // 3) Nenhum filtro → geral por usuário e curso
         public static DataTable ListarResumoGeral(DateTime inicio, DateTime fim)
         {
-            // Reescrevido sem CTE para compatibilidade com MySQL < 8.0.
-            // Usa UNION ALL em subquery e GROUP BY externo para combinar cursos de requerimentos e tickets.
-            // Aliases corrigidos para usar aspas invertidas (`).
-            // Ajustado: Para tickets, se tipo_vinculo = 'Comunidade externa', define "Curso" como 'Comunidade Externa'; senão, usa COALESCE(t.curso, 'Sem Curso').
             string sql = @"
         SELECT 
             combined.`Usuário`,
@@ -354,10 +341,6 @@ namespace Secretary.DAO
             }
         }
 
-
-
-
-
         // -------------------------------
         // LISTAGEM PARA O DATAGRIDVIEW (USUÁRIO E CURSO COMBINADO)
         // -------------------------------
@@ -365,11 +348,7 @@ namespace Secretary.DAO
 
         // 4) Usuário e curso selecionados → lista detalhada de requerimentos e tickets atendidos por esse usuário para esse curso
         public static DataTable ListarResumoPorUsuarioECurso(int idUsuario, string curso, DateTime inicio, DateTime fim)
-        {
-            // Ajustado: Usa UNION ALL para combinar requerimentos e tickets em uma única lista detalhada.
-            // Filtra por id_usuario E curso (considerando "Comunidade Externa" para tickets externos).
-            // Campos específicos para cada tipo, com CASE para curso e RA conforme solicitado.
-            // Ordena por data_resposta DESC (requerimentos primeiro, depois tickets).
+        {          
             string sql = @"
         SELECT 
             'Requerimento' AS `Tipo`,
@@ -436,10 +415,8 @@ namespace Secretary.DAO
             dt.Columns.Add("id_usuario", typeof(int));
             dt.Columns.Add("nome_usuario", typeof(string));
 
-            // Adicionar linha "Todos"
             dt.Rows.Add(0, "Todos");
 
-            // Adicionar usuários ativos
             string sql = "SELECT id_usuario, nome_usuario FROM t_usuarios WHERE ativo = 1 ORDER BY nome_usuario";
             using (var conn = ConexaoBD.ObterConexao())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -460,10 +437,8 @@ namespace Secretary.DAO
             DataTable dt = new DataTable();
             dt.Columns.Add("curso", typeof(string));
 
-            // Adicionar "Todos"
             dt.Rows.Add("Todos");
 
-            // Adicionar cursos únicos
             string sql = @"
                 SELECT DISTINCT curso FROM t_requerimentos WHERE curso IS NOT NULL AND curso != ''
                 UNION
