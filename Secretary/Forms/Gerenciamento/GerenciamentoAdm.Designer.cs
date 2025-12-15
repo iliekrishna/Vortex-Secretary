@@ -79,7 +79,7 @@ namespace Secretary.Forms
             this.tabPageDocumentos.Controls.Add(this.flowLayoutPanelDocumentos);
             this.tabPageDocumentos.Location = new System.Drawing.Point(4, 39);
             this.tabPageDocumentos.Name = "tabPageDocumentos";
-            this.tabPageDocumentos.Padding = new System.Windows.Forms.Padding(10);
+            this.tabPageDocumentos.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDocumentos.Size = new System.Drawing.Size(792, 377);
             this.tabPageDocumentos.TabIndex = 0;
             this.tabPageDocumentos.Text = "Documentos";

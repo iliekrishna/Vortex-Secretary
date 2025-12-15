@@ -32,12 +32,6 @@ namespace Secretary.Forms
         private void InitializeComponent()
         {
             this.panelFiltros = new System.Windows.Forms.Panel();
-            this.cbDocumento = new System.Windows.Forms.ComboBox();
-            this.lblDocumento = new System.Windows.Forms.Label();
-            this.cbCurso = new System.Windows.Forms.ComboBox();
-            this.lblCurso = new System.Windows.Forms.Label();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.lblBuscar = new System.Windows.Forms.Label();
             this.tabControlRequerimentos = new System.Windows.Forms.TabControl();
             this.tpagAberto = new System.Windows.Forms.TabPage();
             this.datagvEmAberto = new System.Windows.Forms.DataGridView();
@@ -49,6 +43,13 @@ namespace Secretary.Forms
             this.colunaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colunaAssunto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblBuscar = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblCurso = new System.Windows.Forms.Label();
+            this.cbCurso = new System.Windows.Forms.ComboBox();
+            this.lblDocumento = new System.Windows.Forms.Label();
+            this.cbDocumento = new System.Windows.Forms.ComboBox();
             this.panelFiltros.SuspendLayout();
             this.tabControlRequerimentos.SuspendLayout();
             this.tpagAberto.SuspendLayout();
@@ -56,86 +57,18 @@ namespace Secretary.Forms
             this.tpagRespondido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelFiltros
             // 
-            this.panelFiltros.Controls.Add(this.cbDocumento);
-            this.panelFiltros.Controls.Add(this.lblDocumento);
-            this.panelFiltros.Controls.Add(this.cbCurso);
-            this.panelFiltros.Controls.Add(this.lblCurso);
-            this.panelFiltros.Controls.Add(this.txtBuscar);
-            this.panelFiltros.Controls.Add(this.lblBuscar);
+            this.panelFiltros.Controls.Add(this.tableLayoutPanel1);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Location = new System.Drawing.Point(20, 20);
             this.panelFiltros.Name = "panelFiltros";
-            this.panelFiltros.Padding = new System.Windows.Forms.Padding(30);
+            this.panelFiltros.Padding = new System.Windows.Forms.Padding(0, 30, 30, 30);
             this.panelFiltros.Size = new System.Drawing.Size(1328, 100);
             this.panelFiltros.TabIndex = 2;
-            // 
-            // cbDocumento
-            // 
-            this.cbDocumento.BackColor = System.Drawing.SystemColors.Menu;
-            this.cbDocumento.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cbDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDocumento.FormattingEnabled = true;
-            this.cbDocumento.Location = new System.Drawing.Point(986, 30);
-            this.cbDocumento.Name = "cbDocumento";
-            this.cbDocumento.Size = new System.Drawing.Size(319, 26);
-            this.cbDocumento.TabIndex = 45;
-            // 
-            // lblDocumento
-            // 
-            this.lblDocumento.AutoSize = true;
-            this.lblDocumento.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDocumento.Location = new System.Drawing.Point(854, 30);
-            this.lblDocumento.Name = "lblDocumento";
-            this.lblDocumento.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblDocumento.Size = new System.Drawing.Size(132, 18);
-            this.lblDocumento.TabIndex = 44;
-            this.lblDocumento.Text = "Documento:";
-            // 
-            // cbCurso
-            // 
-            this.cbCurso.BackColor = System.Drawing.SystemColors.Menu;
-            this.cbCurso.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCurso.FormattingEnabled = true;
-            this.cbCurso.Location = new System.Drawing.Point(523, 30);
-            this.cbCurso.Name = "cbCurso";
-            this.cbCurso.Size = new System.Drawing.Size(331, 26);
-            this.cbCurso.TabIndex = 43;
-            // 
-            // lblCurso
-            // 
-            this.lblCurso.AutoSize = true;
-            this.lblCurso.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblCurso.Location = new System.Drawing.Point(434, 30);
-            this.lblCurso.Name = "lblCurso";
-            this.lblCurso.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblCurso.Size = new System.Drawing.Size(89, 18);
-            this.lblCurso.TabIndex = 42;
-            this.lblCurso.Text = "Curso:";
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
-            this.txtBuscar.Location = new System.Drawing.Point(95, 30);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(339, 26);
-            this.txtBuscar.TabIndex = 41;
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.AutoSize = true;
-            this.lblBuscar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBuscar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuscar.Location = new System.Drawing.Point(30, 30);
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(65, 18);
-            this.lblBuscar.TabIndex = 40;
-            this.lblBuscar.Text = "Buscar:";
             // 
             // tabControlRequerimentos
             // 
@@ -244,6 +177,92 @@ namespace Secretary.Forms
             // 
             this.Column1.Name = "Column1";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.cbDocumento, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblDocumento, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cbCurso, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblCurso, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.txtBuscar, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblBuscar, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 30);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1298, 40);
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // lblBuscar
+            // 
+            this.lblBuscar.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscar.Location = new System.Drawing.Point(3, 11);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(65, 18);
+            this.lblBuscar.TabIndex = 41;
+            this.lblBuscar.Text = "Buscar:";
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
+            this.txtBuscar.Location = new System.Drawing.Point(74, 7);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(227, 26);
+            this.txtBuscar.TabIndex = 42;
+            // 
+            // lblCurso
+            // 
+            this.lblCurso.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblCurso.AutoSize = true;
+            this.lblCurso.Location = new System.Drawing.Point(307, 11);
+            this.lblCurso.Name = "lblCurso";
+            this.lblCurso.Size = new System.Drawing.Size(59, 18);
+            this.lblCurso.TabIndex = 43;
+            this.lblCurso.Text = "Curso:";
+            // 
+            // cbCurso
+            // 
+            this.cbCurso.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbCurso.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCurso.FormattingEnabled = true;
+            this.cbCurso.Location = new System.Drawing.Point(372, 7);
+            this.cbCurso.Name = "cbCurso";
+            this.cbCurso.Size = new System.Drawing.Size(247, 26);
+            this.cbCurso.TabIndex = 44;
+            // 
+            // lblDocumento
+            // 
+            this.lblDocumento.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblDocumento.AutoSize = true;
+            this.lblDocumento.Location = new System.Drawing.Point(625, 11);
+            this.lblDocumento.Name = "lblDocumento";
+            this.lblDocumento.Size = new System.Drawing.Size(102, 18);
+            this.lblDocumento.TabIndex = 45;
+            this.lblDocumento.Text = "Documento:";
+            // 
+            // cbDocumento
+            // 
+            this.cbDocumento.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbDocumento.BackColor = System.Drawing.SystemColors.Menu;
+            this.cbDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDocumento.FormattingEnabled = true;
+            this.cbDocumento.Location = new System.Drawing.Point(733, 7);
+            this.cbDocumento.Name = "cbDocumento";
+            this.cbDocumento.Size = new System.Drawing.Size(287, 26);
+            this.cbDocumento.TabIndex = 46;
+            // 
             // RequerimentoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -265,6 +284,8 @@ namespace Secretary.Forms
             this.tpagRespondido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagvRespondidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -283,6 +304,7 @@ namespace Secretary.Forms
         private DataGridViewTextBoxColumn colunaData;
         private DataGridViewTextBoxColumn colunaAssunto;
         private DataGridViewTextBoxColumn Column1;
+        private TableLayoutPanel tableLayoutPanel1;
         private ComboBox cbDocumento;
         private Label lblDocumento;
         private ComboBox cbCurso;

@@ -20,7 +20,7 @@ namespace Secretary.Forms
 
             // Eventos do Form
             Load += GerenciamentoAdm_Load;
-            Resize += (s, e) => AjustarLarguraDosPanels(); // Ajusta largura ao redimensionar
+            Resize += (s, e) => AjustarLarguraDosPanels();
         }
 
         #region ====== EVENTO DE CARREGAMENTO ======
@@ -30,7 +30,7 @@ namespace Secretary.Forms
             CarregarDocumentosDisponiveis();
             CarregarUsuariosInativos();
             CarregarFaq();
-            AjustarLarguraDosPanels(); // Ajusta largura ao carregar
+            AjustarLarguraDosPanels();
         }
         #endregion
 
@@ -75,7 +75,8 @@ namespace Secretary.Forms
             Panel panelDoc = new Panel
             {
                 Name = $"panelDoc{doc.Id}",
-                Size = new Size(flowLayoutPanelDocumentos.Width - 5, 50),
+                Height = 50,
+                Width = flowLayoutPanelDocumentos.ClientSize.Width - 10,
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
@@ -85,10 +86,12 @@ namespace Secretary.Forms
             Label lblNome = new Label
             {
                 Text = doc.Nome,
-                AutoSize = true,
+                AutoSize = false,  
+                AutoEllipsis = true,  
+                MaximumSize = new Size(550, 0),  
+                Size = new Size(550, 20),  
                 Location = new Point(20, 15),
                 Font = new Font("Verdana", 10F),
-                Tag = doc.Id,
                 ForeColor = Color.Black
             };
 
@@ -97,22 +100,29 @@ namespace Secretary.Forms
             {
                 Text = doc.StatusAtual,
                 ForeColor = doc.StatusAtual.Equals("Disponível", StringComparison.OrdinalIgnoreCase) ? Color.Green : Color.Red,
-                AutoSize = true,
+                AutoSize = false,
+                AutoEllipsis = true,
+                MaximumSize = new Size(120, 0),
+                Size = new Size(120, 20),
                 Font = new Font("Verdana", 9F, FontStyle.Regular)
             };
-            lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
+            int espacoMinimo = 10;
+            lblStatus.Location = new Point(lblNome.Right + espacoMinimo, 15);
 
-            // Botão editar
+            int alturaNecessaria = Math.Max(50, lblNome.Bottom + 10);
+            panelDoc.Height = alturaNecessaria;
+
             Button btnEditar = new Button
             {
                 Text = "Editar",
                 Font = new Font("Verdana", 9F),
                 Size = new Size(80, 25),
-                Location = new Point(panelDoc.Width - 100, 12),
                 Tag = doc,
                 Cursor = Cursors.Hand,
                 BackColor = Color.White
             };
+            btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditar.Location = new Point(panelDoc.ClientSize.Width - btnEditar.Width - 20, 12);
             btnEditar.Click += BtnEditar_Click;
 
             // Adiciona controles ao painel
@@ -261,7 +271,8 @@ namespace Secretary.Forms
             Panel panel = new Panel
             {
                 Name = $"panelUsu{id}",
-                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
+                Height = 50,
+                Width = flowLayoutPanelUsuarios.ClientSize.Width - 10,
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.WhiteSmoke,
                 BorderStyle = BorderStyle.FixedSingle
@@ -278,8 +289,11 @@ namespace Secretary.Forms
 
             Label lblInfo = new Label
             {
-                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
-                AutoSize = true,
+                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário")})",
+                AutoSize = false,
+                AutoEllipsis = true,
+                MaximumSize = new Size(400, 0),
+                Size = new Size(300, 20),
                 Location = new Point(250, 15),
                 ForeColor = Color.Gray,
                 Font = new Font("Verdana", 9F, FontStyle.Regular)
@@ -290,12 +304,13 @@ namespace Secretary.Forms
                 Text = "Editar",
                 Font = new Font("Verdana", 9F),
                 Size = new Size(80, 25),
-                Location = new Point(panel.Width - 100, 12),
                 Tag = id,
                 Cursor = Cursors.Hand,
                 BackColor = Color.White
             };
             btnEditar.Click += BtnEditarUsuario_Click;
+            btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditar.Location = new Point(panel.ClientSize.Width - btnEditar.Width - 20, 12);
 
             panel.Controls.Add(lblNome);
             panel.Controls.Add(lblInfo);
@@ -314,7 +329,8 @@ namespace Secretary.Forms
             Panel panel = new Panel
             {
                 Name = $"panelUsu{id}",
-                Size = new Size(flowLayoutPanelUsuarios.Width - 5, 50),
+                Height = 50,
+                Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 10,
                 Margin = new Padding(0, 0, 0, 10),
                 BackColor = Color.Gainsboro,
                 BorderStyle = BorderStyle.FixedSingle
@@ -323,7 +339,9 @@ namespace Secretary.Forms
             Label lblNome = new Label
             {
                 Text = nome,
-                AutoSize = true,
+                AutoSize = false,
+                AutoEllipsis = true,
+                MaximumSize = new Size(400, 0),
                 Location = new Point(20, 15),
                 Font = new Font("Verdana", 10F),
                 Tag = id
@@ -331,25 +349,29 @@ namespace Secretary.Forms
 
             Label lblInfo = new Label
             {
-                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário Comum")})",
-                AutoSize = true,
+                Text = $"{email} ({(tipoPerfil == "ADM" ? "Administrador" : "Usuário")})",
+                AutoSize = false,
+                AutoEllipsis = true,
+                MaximumSize = new Size(400, 0),
+                Size = new Size(300, 20),
                 Location = new Point(250, 15),
                 ForeColor = Color.Gray,
                 Font = new Font("Verdana", 9F, FontStyle.Regular)
             };
+
 
             Button btnReativar = new Button
             {
                 Text = "Reativar",
                 Font = new Font("Verdana", 9F),
                 Size = new Size(80, 25),
-                Location = new Point(panel.Width - 100, 12),
                 Tag = id,
                 Cursor = Cursors.Hand,
                 BackColor = Color.White
-
             };
             btnReativar.Click += BtnReativarUsuario_Click;
+            btnReativar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnReativar.Location = new Point(panel.ClientSize.Width - btnReativar.Width - 20, 12);
 
             panel.Controls.Add(lblNome);
             panel.Controls.Add(lblInfo);
@@ -499,6 +521,7 @@ namespace Secretary.Forms
             {
                 Text = categoria.Nome,
                 AutoSize = true,
+                MaximumSize = new Size(400, 0),
                 Location = new Point(20, 15),
                 Font = new Font("Verdana", 10F)
             };
@@ -568,122 +591,25 @@ namespace Secretary.Forms
         #region ====== LAYOUT E DESENHO ======
         private void AjustarLarguraDosPanels()
         {
-            // Ajusta painéis de documentos
-            foreach (Control ctrl in flowLayoutPanelDocumentos.Controls)
+            AjustarFlow(flowLayoutPanelDocumentos);
+            AjustarFlow(flowLayoutPanelUsuarios);
+            AjustarFlow(flowLayoutPanelUsuariosInativos);
+            AjustarFlow(flowLayoutPanelFaq);
+        }
+
+        private void AjustarFlow(FlowLayoutPanel flow)
+        {
+            if (flow.ClientSize.Width <= 0)
+                return;
+
+            foreach (Control ctrl in flow.Controls)
             {
-                if (ctrl is Panel panel && panel.Name.StartsWith("panelDoc"))
-                {
-                    panel.Width = flowLayoutPanelDocumentos.Width - 5;
-                    Label lblNome = null;
-                    Label lblStatus = null;
-
-                    foreach (Control innerCtrl in panel.Controls)
-                    {
-                        if (innerCtrl is Label lbl)
-                        {
-                            if (lbl.Tag != null && lbl.Tag is int)
-                                lblNome = lbl;
-                            else
-                                lblStatus = lbl;
-                        }
-                        else if (innerCtrl is Button btn)
-                        {
-                            btn.Location = new Point(panel.Width - 100, 12);
-                        }
-                    }
-
-                    if (lblNome != null) lblNome.Location = new Point(20, 15);
-                    if (lblStatus != null && lblNome != null)
-                        lblStatus.Location = new Point(lblNome.Right + 10, lblNome.Top);
-                }
-            }
-
-            // Ajusta painéis de usuários
-            foreach (Control ctrl in flowLayoutPanelUsuarios.Controls)
-            {
-                if (ctrl is Panel panel)
-                {
-                    if (panel.Name.StartsWith("panelUsu"))
-                    {
-                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
-
-                        Label lblNome = null;
-                        Label lblInfo = null;
-                        Button btnEditar = null;
-
-                        foreach (Control innerCtrl in panel.Controls)
-                        {
-                            if (innerCtrl is Label lbl)
-                            {
-                                if (lbl.Tag != null && lbl.Tag is int)
-                                    lblNome = lbl;
-                                else
-                                    lblInfo = lbl;
-                            }
-                            else if (innerCtrl is Button btn)
-                            {
-                                btnEditar = btn;
-                            }
-                        }
-
-                        if (lblNome != null) lblNome.Location = new Point(20, 15);
-                        if (lblInfo != null && lblNome != null)
-                            lblInfo.Location = new Point(lblNome.Right + 10, 15);
-                        if (btnEditar != null)
-                            btnEditar.Location = new Point(panel.Width - 100, 12);
-                    }
-                    else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
-                    {
-                        panel.Width = flowLayoutPanelUsuarios.ClientSize.Width - 5;
-                        btn.Location = new Point(20, 10);
-                    }
-                }
-            }
-
-            // Ajusta painéis de usuários inativos
-
-            foreach (Control ctrl in flowLayoutPanelUsuariosInativos.Controls)
-            {
-                if (ctrl is Panel panel)
-                {
-                    if (panel.Name.StartsWith("panelUsu"))
-                    {
-                        panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 5;
-
-                        Label lblNome = null;
-                        Label lblInfo = null;
-                        Button btnReativar = null;
-
-                        foreach (Control innerCtrl in panel.Controls)
-                        {
-                            if (innerCtrl is Label lbl)
-                            {
-                                if (lbl.Tag != null && lbl.Tag is int)
-                                    lblNome = lbl;
-                                else
-                                    lblInfo = lbl;
-                            }
-                            else if (innerCtrl is Button btn)
-                            {
-                                btnReativar = btn;
-                            }
-                        }
-
-                        if (lblNome != null) lblNome.Location = new Point(20, 15);
-                        if (lblInfo != null && lblNome != null)
-                            lblInfo.Location = new Point(lblNome.Right + 10, 15);
-                        if (btnReativar != null)
-                            btnReativar.Location = new Point(panel.Width - 100, 12);
-                    }
-                    else if (panel.Controls.Count == 1 && panel.Controls[0] is Button btn && btn.Text == "Novo Usuário")
-                    {
-                        panel.Width = flowLayoutPanelUsuariosInativos.ClientSize.Width - 5;
-                        btn.Location = new Point(20, 10);
-                    }
-                }
+                if (ctrl is Panel p)
+                    p.Width = flow.ClientSize.Width - 10;
             }
         }
-        
+
+
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tabControl = (TabControl)sender;

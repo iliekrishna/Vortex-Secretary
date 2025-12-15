@@ -113,6 +113,7 @@ namespace Secretary
             this.btnGerenciamento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGerenciamento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGerenciamento.UseVisualStyleBackColor = true;
+            this.btnGerenciamento.Click += new System.EventHandler(this.btnGerenciamento_Click);
             // 
             // btnRelatorio
             // 

@@ -1,4 +1,6 @@
-﻿namespace Secretary.Forms
+﻿using System.Windows.Forms;
+
+namespace Secretary.Forms
 {
     partial class FormEstatisticasFuncionarios
     {
@@ -29,12 +31,13 @@
         private void InitializeComponent()
         {
             this.panelFiltros = new System.Windows.Forms.Panel();
+            this.tableFiltros = new System.Windows.Forms.TableLayoutPanel();
             this.dtpFim = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblDataFim = new System.Windows.Forms.Label();
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
-            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblDataInicio = new System.Windows.Forms.Label();
             this.cmbCurso = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblCurso = new System.Windows.Forms.Label();
             this.cmbUsuario = new System.Windows.Forms.ComboBox();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.panelConteudo = new System.Windows.Forms.Panel();
@@ -52,8 +55,9 @@
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
             this.lblTotalRequerimentos = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblResultado = new System.Windows.Forms.Label();
             this.panelFiltros.SuspendLayout();
+            this.tableFiltros.SuspendLayout();
             this.panelConteudo.SuspendLayout();
             this.paneTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
@@ -67,99 +71,122 @@
             // 
             // panelFiltros
             // 
-            this.panelFiltros.Controls.Add(this.dtpFim);
-            this.panelFiltros.Controls.Add(this.label1);
-            this.panelFiltros.Controls.Add(this.dtpInicio);
-            this.panelFiltros.Controls.Add(this.lblStatus);
-            this.panelFiltros.Controls.Add(this.cmbCurso);
-            this.panelFiltros.Controls.Add(this.label4);
-            this.panelFiltros.Controls.Add(this.cmbUsuario);
-            this.panelFiltros.Controls.Add(this.lblUsuario);
+            this.panelFiltros.AutoSize = true;
+            this.panelFiltros.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelFiltros.Controls.Add(this.tableFiltros);
             this.panelFiltros.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFiltros.Location = new System.Drawing.Point(0, 0);
             this.panelFiltros.Name = "panelFiltros";
-            this.panelFiltros.Padding = new System.Windows.Forms.Padding(34);
-            this.panelFiltros.Size = new System.Drawing.Size(1370, 79);
+            this.panelFiltros.Padding = new System.Windows.Forms.Padding(34, 34, 34, 10);
+            this.panelFiltros.Size = new System.Drawing.Size(1370, 76);
             this.panelFiltros.TabIndex = 3;
+            // 
+            // tableFiltros
+            // 
+            this.tableFiltros.AutoSize = true;
+            this.tableFiltros.ColumnCount = 8;
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableFiltros.Controls.Add(this.dtpFim, 7, 0);
+            this.tableFiltros.Controls.Add(this.lblDataFim, 6, 0);
+            this.tableFiltros.Controls.Add(this.dtpInicio, 5, 0);
+            this.tableFiltros.Controls.Add(this.lblDataInicio, 4, 0);
+            this.tableFiltros.Controls.Add(this.cmbCurso, 3, 0);
+            this.tableFiltros.Controls.Add(this.lblCurso, 2, 0);
+            this.tableFiltros.Controls.Add(this.cmbUsuario, 1, 0);
+            this.tableFiltros.Controls.Add(this.lblUsuario, 0, 0);
+            this.tableFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableFiltros.Location = new System.Drawing.Point(34, 34);
+            this.tableFiltros.Name = "tableFiltros";
+            this.tableFiltros.RowCount = 1;
+            this.tableFiltros.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableFiltros.Size = new System.Drawing.Size(1302, 32);
+            this.tableFiltros.TabIndex = 54;
             // 
             // dtpFim
             // 
-            this.dtpFim.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtpFim.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtpFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFim.Location = new System.Drawing.Point(1219, 34);
+            this.dtpFim.Location = new System.Drawing.Point(1090, 3);
             this.dtpFim.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpFim.Name = "dtpFim";
-            this.dtpFim.Size = new System.Drawing.Size(148, 26);
-            this.dtpFim.TabIndex = 59;
+            this.dtpFim.Size = new System.Drawing.Size(209, 26);
+            this.dtpFim.TabIndex = 60;
             this.dtpFim.ValueChanged += new System.EventHandler(this.dtpFim_ValueChanged);
             // 
-            // label1
+            // lblDataFim
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1149, 34);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(30, 3, 0, 0);
-            this.label1.Size = new System.Drawing.Size(70, 21);
-            this.label1.TabIndex = 58;
-            this.label1.Text = "Até:";
+            this.lblDataFim.AutoSize = true;
+            this.lblDataFim.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDataFim.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDataFim.Location = new System.Drawing.Point(1044, 0);
+            this.lblDataFim.Name = "lblDataFim";
+            this.lblDataFim.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.lblDataFim.Size = new System.Drawing.Size(40, 32);
+            this.lblDataFim.TabIndex = 59;
+            this.lblDataFim.Text = "Até:";
             // 
             // dtpInicio
             // 
-            this.dtpInicio.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtpInicio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtpInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpInicio.Location = new System.Drawing.Point(1006, 34);
+            this.dtpInicio.Location = new System.Drawing.Point(831, 3);
             this.dtpInicio.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpInicio.Name = "dtpInicio";
-            this.dtpInicio.Size = new System.Drawing.Size(143, 26);
-            this.dtpInicio.TabIndex = 57;
+            this.dtpInicio.Size = new System.Drawing.Size(207, 26);
+            this.dtpInicio.TabIndex = 58;
             this.dtpInicio.ValueChanged += new System.EventHandler(this.dtpInicio_ValueChanged);
             // 
-            // lblStatus
+            // lblDataInicio
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblStatus.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.Location = new System.Drawing.Point(871, 34);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Padding = new System.Windows.Forms.Padding(100, 3, 0, 0);
-            this.lblStatus.Size = new System.Drawing.Size(135, 21);
-            this.lblStatus.TabIndex = 56;
-            this.lblStatus.Text = "De:";
+            this.lblDataInicio.AutoSize = true;
+            this.lblDataInicio.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDataInicio.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDataInicio.Location = new System.Drawing.Point(785, 0);
+            this.lblDataInicio.Name = "lblDataInicio";
+            this.lblDataInicio.Padding = new System.Windows.Forms.Padding(5, 5, 0, 0);
+            this.lblDataInicio.Size = new System.Drawing.Size(40, 32);
+            this.lblDataInicio.TabIndex = 57;
+            this.lblDataInicio.Text = "De:";
             // 
             // cmbCurso
             // 
-            this.cmbCurso.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbCurso.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurso.FormattingEnabled = true;
-            this.cmbCurso.Location = new System.Drawing.Point(497, 34);
+            this.cmbCurso.Location = new System.Drawing.Point(465, 3);
             this.cmbCurso.Name = "cmbCurso";
-            this.cmbCurso.Size = new System.Drawing.Size(374, 26);
-            this.cmbCurso.TabIndex = 55;
+            this.cmbCurso.Size = new System.Drawing.Size(314, 26);
+            this.cmbCurso.TabIndex = 56;
             this.cmbCurso.SelectedIndexChanged += new System.EventHandler(this.cmbCurso_SelectedIndexChanged);
             // 
-            // label4
+            // lblCurso
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(388, 34);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(50, 3, 0, 0);
-            this.label4.Size = new System.Drawing.Size(109, 21);
-            this.label4.TabIndex = 54;
-            this.label4.Text = "Curso:";
+            this.lblCurso.AutoSize = true;
+            this.lblCurso.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCurso.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurso.Location = new System.Drawing.Point(400, 0);
+            this.lblCurso.Name = "lblCurso";
+            this.lblCurso.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.lblCurso.Size = new System.Drawing.Size(59, 32);
+            this.lblCurso.TabIndex = 55;
+            this.lblCurso.Text = "Curso:";
             // 
             // cmbUsuario
             // 
-            this.cmbUsuario.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbUsuario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbUsuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUsuario.FormattingEnabled = true;
-            this.cmbUsuario.Location = new System.Drawing.Point(105, 34);
+            this.cmbUsuario.Location = new System.Drawing.Point(80, 3);
             this.cmbUsuario.Name = "cmbUsuario";
-            this.cmbUsuario.Size = new System.Drawing.Size(283, 26);
-            this.cmbUsuario.TabIndex = 49;
+            this.cmbUsuario.Size = new System.Drawing.Size(314, 26);
+            this.cmbUsuario.TabIndex = 50;
             this.cmbUsuario.SelectedIndexChanged += new System.EventHandler(this.cmbUsuario_SelectedIndexChanged);
             // 
             // lblUsuario
@@ -167,20 +194,20 @@
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblUsuario.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(34, 34);
+            this.lblUsuario.Location = new System.Drawing.Point(3, 0);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.lblUsuario.Size = new System.Drawing.Size(71, 21);
-            this.lblUsuario.TabIndex = 40;
+            this.lblUsuario.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.lblUsuario.Size = new System.Drawing.Size(71, 32);
+            this.lblUsuario.TabIndex = 41;
             this.lblUsuario.Text = "Usuário:";
             // 
             // panelConteudo
             // 
             this.panelConteudo.Controls.Add(this.paneTable);
             this.panelConteudo.Controls.Add(this.panelCards);
-            this.panelConteudo.Controls.Add(this.label2);
+            this.panelConteudo.Controls.Add(this.lblResultado);
             this.panelConteudo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelConteudo.Location = new System.Drawing.Point(0, 79);
+            this.panelConteudo.Location = new System.Drawing.Point(0, 76);
             this.panelConteudo.Margin = new System.Windows.Forms.Padding(34);
             this.panelConteudo.Name = "panelConteudo";
             this.panelConteudo.Padding = new System.Windows.Forms.Padding(34);
@@ -377,18 +404,18 @@
             this.label3.Text = "Requerimentos Atendidos";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblResultado
             // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(34, 34);
-            this.label2.Margin = new System.Windows.Forms.Padding(30);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.label2.Size = new System.Drawing.Size(275, 49);
-            this.label2.TabIndex = 45;
-            this.label2.Text = "Resultado da consulta";
+            this.lblResultado.AutoSize = true;
+            this.lblResultado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResultado.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResultado.Location = new System.Drawing.Point(34, 34);
+            this.lblResultado.Margin = new System.Windows.Forms.Padding(30);
+            this.lblResultado.Name = "lblResultado";
+            this.lblResultado.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
+            this.lblResultado.Size = new System.Drawing.Size(275, 49);
+            this.lblResultado.TabIndex = 45;
+            this.lblResultado.Text = "Resultado da consulta";
             // 
             // FormEstatisticasFuncionarios
             // 
@@ -404,6 +431,8 @@
             this.Load += new System.EventHandler(this.FormEstatisticasFuncionarios_Load);
             this.panelFiltros.ResumeLayout(false);
             this.panelFiltros.PerformLayout();
+            this.tableFiltros.ResumeLayout(false);
+            this.tableFiltros.PerformLayout();
             this.panelConteudo.ResumeLayout(false);
             this.panelConteudo.PerformLayout();
             this.paneTable.ResumeLayout(false);
@@ -415,22 +444,15 @@
             this.panel2.ResumeLayout(false);
             this.materialCard3.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Panel panelFiltros;
-        private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.ComboBox cmbUsuario;
-        private System.Windows.Forms.DateTimePicker dtpFim;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtpInicio;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.ComboBox cmbCurso;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panelConteudo;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblResultado;
         private System.Windows.Forms.Button btnBaixarExcel;
         private System.Windows.Forms.Panel panelCards;
         private System.Windows.Forms.Panel panel1;
@@ -445,5 +467,14 @@
         private System.Windows.Forms.Panel panelBotao;
         private System.Windows.Forms.DataGridView dgvDados;
         private System.Windows.Forms.Button btnBaixarPDF;
+        private System.Windows.Forms.TableLayoutPanel tableFiltros;
+        private System.Windows.Forms.DateTimePicker dtpFim;
+        private System.Windows.Forms.Label lblDataFim;
+        private System.Windows.Forms.DateTimePicker dtpInicio;
+        private System.Windows.Forms.Label lblDataInicio;
+        private System.Windows.Forms.ComboBox cmbCurso;
+        private System.Windows.Forms.Label lblCurso;
+        private System.Windows.Forms.ComboBox cmbUsuario;
+        private System.Windows.Forms.Label lblUsuario;
     }
 }
